@@ -1,0 +1,84 @@
+# Bright Pattern
+
+> Bright Pattern is a cloud contact center (CCaaS) platform for omnichannel customer service across
+> voice, IVR, email, chat, SMS/MMS, video and social messengers, with quality management, workforce
+> management, outbound dialing and AI assistance. The platform is multi-tenant: every API call is made
+> against the customer's own tenant hostname, `https://<tenant>.brightpattern.com`. Bright Pattern
+> publishes nine public REST API families; the API reference is published as Postman documenter
+> collections linked from the documentation wiki. There is no OpenAPI document, no MCP server, no A2A
+> agent card, no AsyncAPI, no webhook catalog and no `/.well-known/` discovery surface.
+
+## Authentication
+
+All back-office APIs use an OAuth 2.0 client-credentials grant against
+`POST https://<tenant>.brightpattern.com/configapi/v2/oauth/token` (v3 for List Management), returning a
+bearer token sent as `Authorization: Bearer <token>`. Authorization is **privilege-based, not
+scope-based**: the contact-center user role behind the token must hold the named privilege for each API
+(e.g. "Use Task Routing API"). There are no OAuth scopes.
+
+## APIs
+
+- [Configuration API](https://documenter.getpostman.com/view/6711197/S1EUtanN): users, teams, phone directory and access numbers. 10 operations.
+- [SCIM-Compliant User Provisioning API](https://documenter.getpostman.com/view/8336025/SVYwJbLw): SCIM 2.0 user provisioning at `/configapi/v2/scim/users`. 7 operations.
+- [List Management API v3.2](https://documenter.getpostman.com/view/8336025/2sB3WmV3UC): outbound campaigns, calling lists, Do Not Call lists, link groups. 62 operations — the largest surface.
+- [List Management API v3.0](https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z): previous v3 release, still published. 34 operations.
+- [List Management API v2.0](https://documenter.getpostman.com/view/6735878/T1DtdFDu): legacy, addresses lists by name. 14 operations.
+- [Task Routing API](https://documenter.getpostman.com/view/31590362/2sA3XTfLhk): queue, query, update and cancel tasks from an external CRM. 6 operations.
+- [SMS/MMS API](https://documenter.getpostman.com/view/6711197/S1ETRbny): send messages and track delivery. 3 operations.
+- [Interaction Content API](https://documenter.getpostman.com/view/6711197/S1EUtb1f): call recording audio, interaction metadata, recording erasure. 6 operations.
+- [Real-Time Statistics API](https://documenter.getpostman.com/view/6735878/T1DwbtSk): statistics subscriptions, dispositions, teams, agent availability. 8 operations.
+- [Mobile/Web Messaging API v2](https://documenter.getpostman.com/view/6735878/TzXwFJFP): customer-facing chat, voice and video; long-polled event stream; push subscription. 16 operations.
+- [Mobile/Web Messaging API v1](https://documenter.getpostman.com/view/6735877/T1LHGpBY): previous version, still published. 12 operations.
+
+## SDKs and embeddable components
+
+- iOS Mobile SDK — CocoaPods `pod 'BPMobileMessaging'` (v2.0.0), source at https://github.com/ServicePattern/MobileAPI_IOS
+- Android Mobile SDK — JitPack `com.github.ServicePattern:MobileAPI_Android` (v2.0.0), source at https://github.com/ServicePattern/MobileAPI_Android
+- [Communicator Widget SDK](https://help.brightpattern.com/latest:AgentDesktop-client-side-javascript-api-specification/APIMethods)
+- [Embedded Agent Desktop 1.0 SDK](https://help.brightpattern.com/latest:Embedded-agent-desktop-sdk-specification/Purpose)
+- [Desktop JavaScript API](https://help.brightpattern.com/latest:Desktop-javascript-api-specification/Purpose) for screen-popped pages
+- [Simplified Desktop .NET API](https://help.brightpattern.com/latest:Simplified-desktop-net-api-specification/Purpose) and the [full .NET Desktop Integration API](https://help.brightpattern.com/latest:Desktop-integration-api-net-version-tutorial/GeneralInformation)
+
+There is no server-side SDK for the REST APIs on npm, PyPI, Maven Central, NuGet, Go modules, RubyGems,
+Packagist or crates.io.
+
+## Docs
+
+- [API index](https://help.brightpattern.com/latest:Api)
+- [Documentation wiki](https://help.brightpattern.com/)
+- [Getting API access — privileges and API secrets](https://help.brightpattern.com/latest:Tutorials-for-admins/API/Access)
+- [Release notes / What's New](https://help.brightpattern.com/WhatsNew) — current: BPCC 5.36
+- [Real-Time Statistics: list of statistics](https://help.brightpattern.com/latest:Real-time-statistics-api/ListofStatistics)
+- [Mobile SDK Instruction Manual](https://help.brightpattern.com/latest:Mobile-SDK-Instruction-Manual/About)
+
+## Conventions
+
+- **Idempotency**: only on the Task Routing API, via client-supplied `extTaskId` / `extCaseId` /
+  `extContactId` external identifiers. Re-queueing a known `extTaskId` returns error code 5 rather than
+  creating a duplicate. No other API has an idempotency contract.
+- **Pagination**: none is documented. Long-running list operations are polled asynchronously via
+  `GET /configapi/v3/job/{job_id}`.
+- **Errors**: not RFC 9457. List Management v3.x returns `{"error", "error_description"}`; Task Routing
+  returns a numeric application code 0–14 alongside the HTTP status.
+- **Rate limits**: HTTP 429 is documented but no numeric limit, quota or `RateLimit-*` header is published.
+- **Versioning**: URI-path major version per API family; no deprecation policy and no RFC 8594
+  Sunset/Deprecation headers. Deprecated operations are marked only by "DEPRECATED" in their names.
+
+## Company
+
+- [Website](https://www.brightpattern.com/)
+- [Pricing](https://www.brightpattern.com/call-center-software-pricing/)
+- [Compliance](https://www.brightpattern.com/compliance/) — PCI DSS 3.2 (certified by CompliancePoint), SOC 2, HIPAA, GDPR, TCPA
+- [Security](https://www.brightpattern.com/security/)
+- [Support](https://www.brightpattern.com/contact-center-support/)
+- [Blog](https://www.brightpattern.com/blog/)
+- [GitHub](https://github.com/ServicePattern)
+- [Terms & conditions](https://www.brightpattern.com/terms-conditions/) · [Privacy policy](https://www.brightpattern.com/privacy-policy/)
+
+## Notes for agents
+
+Bright Pattern does not publish a status page (`status.brightpattern.com` does not resolve), a
+`security.txt`, a vulnerability disclosure or bug bounty program, an OpenAPI document, or any
+`/.well-known/` discovery document. The OpenAPI specifications in this repository were mechanically
+derived by API Evangelist from the Postman collections Bright Pattern publishes; they are faithful to
+those collections but are not authored or endorsed by Bright Pattern.

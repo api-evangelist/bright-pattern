@@ -1,0 +1,61 @@
+generated: '2026-08-08'
+method: searched
+source: https://help.brightpattern.com/latest:Api + openapi/ + https://www.brightpattern.com/compliance/
+standards:
+- id: oauth2-client-credentials
+  conforms: true
+  evidence: Every REST API family authenticates with an OAuth 2.0 client-credentials grant against POST
+    /configapi/v{2,3}/oauth/token, returning a bearer access token.
+- id: rfc6750-bearer-token
+  conforms: true
+  evidence: 'Access tokens are sent as Authorization: Bearer <token> on every non-token operation.'
+- id: scim-2.0
+  conforms: true
+  evidence: Bright Pattern publishes a dedicated "SCIM-Compliant User Provisioning API" at /configapi/v2/scim/users
+    implementing create/get/replace/patch/delete plus filter=userName eq "…" lookup.
+  spec: openapi/bright-pattern-scim-user-provisioning-openapi.yml
+- id: oidc-discovery
+  conforms: false
+  evidence: No /.well-known/openid-configuration on any probed host (see well-known/bright-pattern-well-known.yml).
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: false
+  evidence: No /.well-known/oauth-authorization-server on any probed host.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'Errors use a bespoke {"error": name, "error_description": text} envelope (List Management
+    v3.x) or numeric error codes (Task Routing), not application/problem+json.'
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt published on any host.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header documented; deprecation is signalled only by "DEPRECATED"
+    in operation names in the List Management collections.
+- id: webrtc
+  conforms: true
+  evidence: The Mobile/Web Messaging APIs expose GET /clientweb/api/v{1,2}/iceservers to supply ICE servers
+    for WebRTC voice and video sessions.
+- id: pci-dss
+  conforms: true
+  evidence: Third-party certified for PCI DSS 3.2 by CompliancePoint — https://www.brightpattern.com/compliance/pci-compliant-contact-center-software/
+- id: soc-2
+  conforms: true
+  evidence: https://www.brightpattern.com/compliance/soc-2/
+- id: hipaa
+  conforms: true
+  evidence: https://www.brightpattern.com/compliance/hipaa/
+- id: gdpr
+  conforms: true
+  evidence: https://www.brightpattern.com/compliance/gdpr-compliance/
+- id: tcpa
+  conforms: true
+  evidence: https://www.brightpattern.com/compliance/tcpa-compliance/
+- id: json-api
+  conforms: false
+  evidence: Plain JSON payloads; no JSON:API media type or document structure.
+- id: odata
+  conforms: false
+  evidence: No OData conventions in any published operation.
+- id: fhir
+  conforms: false
+  evidence: Not a healthcare data API; HIPAA compliance covers the platform, not FHIR resources.

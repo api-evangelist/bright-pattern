@@ -1,0 +1,49 @@
+generated: '2026-08-08'
+method: derived
+source: openapi/bright-pattern-configuration-openapi.yml, openapi/bright-pattern-interaction-content-openapi.yml,
+  openapi/bright-pattern-list-management-v2-openapi.yml, openapi/bright-pattern-list-management-v3-2-openapi.yml,
+  openapi/bright-pattern-list-management-v3-openapi.yml, openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml,
+  openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml, openapi/bright-pattern-real-time-statistics-openapi.yml,
+  openapi/bright-pattern-scim-user-provisioning-openapi.yml, openapi/bright-pattern-sms-mms-openapi.yml,
+  openapi/bright-pattern-task-routing-openapi.yml
+summary:
+  types:
+  - http
+  - oauth2
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as
+    `Authorization: Bearer <token>`.'
+  sources:
+  - openapi/bright-pattern-configuration-openapi.yml
+  - openapi/bright-pattern-interaction-content-openapi.yml
+  - openapi/bright-pattern-list-management-v2-openapi.yml
+  - openapi/bright-pattern-list-management-v3-2-openapi.yml
+  - openapi/bright-pattern-list-management-v3-openapi.yml
+  - openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml
+  - openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml
+  - openapi/bright-pattern-real-time-statistics-openapi.yml
+  - openapi/bright-pattern-scim-user-provisioning-openapi.yml
+  - openapi/bright-pattern-sms-mms-openapi.yml
+  - openapi/bright-pattern-task-routing-openapi.yml
+- name: oauth2ClientCredentials
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{tenant_url}/configapi/v2/oauth/token
+    scopes: 0
+  description: OAuth 2.0 client-credentials grant against the Bright Pattern tenant token endpoint.
+  sources:
+  - openapi/bright-pattern-configuration-openapi.yml
+  - openapi/bright-pattern-interaction-content-openapi.yml
+  - openapi/bright-pattern-list-management-v2-openapi.yml
+  - openapi/bright-pattern-list-management-v3-2-openapi.yml
+  - openapi/bright-pattern-list-management-v3-openapi.yml
+  - openapi/bright-pattern-real-time-statistics-openapi.yml
+  - openapi/bright-pattern-scim-user-provisioning-openapi.yml
+  - openapi/bright-pattern-sms-mms-openapi.yml
+  - openapi/bright-pattern-task-routing-openapi.yml

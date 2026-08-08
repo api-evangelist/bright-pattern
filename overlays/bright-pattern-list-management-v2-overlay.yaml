@@ -1,0 +1,31 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for BPCC List Management API v2.0
+  version: 1.0.0
+extends: openapi/bright-pattern-list-management-v2-openapi.yml
+x-generated: '2026-08-08'
+x-method: generated
+x-note: Captures the API Evangelist enrichment layer over the derived specification. The specification
+  itself is a mechanical conversion of the Postman collection Bright Pattern publishes; this overlay records
+  what API Evangelist added on top and is never merged back into the source.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: bright-pattern
+    x-apievangelist-artifacts:
+      authentication: authentication/bright-pattern-authentication.yml
+      conventions: conventions/bright-pattern-conventions.yml
+      errors: errors/bright-pattern-problem-types.yml
+      lifecycle: lifecycle/bright-pattern-lifecycle.yml
+      conformance: conformance/bright-pattern-conformance.yml
+      data_model: data-model/bright-pattern-data-model.yml
+      postman_source: postman/bright-pattern-postman.yml
+    x-operation-count: 14
+- target: $.servers[0]
+  update:
+    x-multi-tenant: true
+    x-tenant-note: The base host is the customer contact-center tenant domain; there is no shared production
+      host.
+- target: $.components.securitySchemes.bearerAuth
+  update:
+    x-authorization-model: privilege-based (contact-center user role privileges), not OAuth scopes

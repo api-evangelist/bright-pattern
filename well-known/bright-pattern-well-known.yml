@@ -1,0 +1,167 @@
+generated: '2026-08-08'
+method: probed
+source: live GET probes of every apis.yml host
+summary:
+  documents_found: 0
+  security_txt: false
+  openid_configuration: false
+  oauth_authorization_server: false
+  api_catalog: false
+  ai_plugin: false
+  agent_card: false
+note: Bright Pattern publishes no RFC 8615 well-known documents on any host we could reach. Two of the
+  three hosts answer HTTP 200 with an HTML catch-all for every /.well-known/* path, which is a soft-404
+  and was rejected — only www.brightpattern.com returns an honest 404. The API itself is multi-tenant,
+  so a customer tenant host may differ; no public tenant exists to probe.
+documents:
+- host: www.brightpattern.com
+  path: /.well-known/security.txt
+  status: 404
+  found: false
+- host: www.brightpattern.com
+  path: /.well-known/openid-configuration
+  status: 404
+  found: false
+- host: www.brightpattern.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  found: false
+- host: www.brightpattern.com
+  path: /.well-known/oauth-protected-resource
+  status: 404
+  found: false
+- host: www.brightpattern.com
+  path: /.well-known/api-catalog
+  status: 404
+  found: false
+- host: www.brightpattern.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+  found: false
+- host: www.brightpattern.com
+  path: /.well-known/agent-card.json
+  status: 404
+  found: false
+- host: www.brightpattern.com
+  path: /.well-known/agent.json
+  status: 404
+  found: false
+- host: help.brightpattern.com
+  path: /.well-known/security.txt
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: help.brightpattern.com
+  path: /.well-known/openid-configuration
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: help.brightpattern.com
+  path: /.well-known/oauth-authorization-server
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: help.brightpattern.com
+  path: /.well-known/oauth-protected-resource
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: help.brightpattern.com
+  path: /.well-known/api-catalog
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: help.brightpattern.com
+  path: /.well-known/ai-plugin.json
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: help.brightpattern.com
+  path: /.well-known/agent-card.json
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: help.brightpattern.com
+  path: /.well-known/agent.json
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: partner.brightpattern.com
+  path: /.well-known/security.txt
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: partner.brightpattern.com
+  path: /.well-known/openid-configuration
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: partner.brightpattern.com
+  path: /.well-known/oauth-authorization-server
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: partner.brightpattern.com
+  path: /.well-known/oauth-protected-resource
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: partner.brightpattern.com
+  path: /.well-known/api-catalog
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: partner.brightpattern.com
+  path: /.well-known/ai-plugin.json
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: partner.brightpattern.com
+  path: /.well-known/agent-card.json
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+- host: partner.brightpattern.com
+  path: /.well-known/agent.json
+  status: 200
+  found: false
+  content_type: text/html; charset=UTF-8
+  note: 'soft-404: the host answers 200 with an HTML catch-all page for every /.well-known/* path (MediaWiki
+    "Login required" on help, WordPress login on partner). Not a well-known document.'
+x-evidence:
+  fetched: '2026-08-08'
+  hosts:
+  - www.brightpattern.com
+  - help.brightpattern.com
+  - partner.brightpattern.com
+  control_path_diffed: true

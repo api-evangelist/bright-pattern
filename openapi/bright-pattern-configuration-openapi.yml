@@ -1,0 +1,549 @@
+openapi: 3.1.0
+info:
+  title: BPCC Configuration API
+  version: 1.0.0
+  description: 'With the Bright Pattern Contact Center (BPCC) Configuraiton API you currently can:
+
+
+    Create, update and delete your contact center users.
+
+
+    Assign and change agent skills and update skill levels.
+
+
+    Unlock a user account that may have been locked according to the security policy.
+
+
+    Get a list of all existing users with their internal and external (DID) phone numbers.
+
+
+    Get a list of all existing extenal numbers with thier current assignments (DID, routing points, etc.)
+
+
+    This document specifies the corresponding REST API methods, with example requests and responses. You
+    can load this API into the Postman API Development Environment to interact with the API with your
+    own access tokens.
+
+
+    Notes
+
+
+    Either HTTP or HTTPS transport can be configured. The same setting applies to the entire Configuration
+    Web Portal server. For production deployments on public Internet only, HTTPS is enabled.'
+  contact:
+    name: Bright Pattern
+    url: https://www.brightpattern.com/contact/
+  x-origin:
+  - format: postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+    version: '2.1'
+  x-evidence:
+    fetched: '2026-08-08'
+    source: https://documenter.gw.postman.com/api/collections/6711197/S1EUtanN?segregateAuth=true&versionTag=latest
+    http_status: 200
+    method: derived-from-published-postman-collection
+    note: Mechanically converted from the Postman collection Bright Pattern publishes as its public API
+      reference. No operations, paths, parameters or examples were invented.
+servers:
+- url: https://{tenant_url}
+  description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+  variables:
+    tenant_url:
+      default: example.brightpattern.com
+      description: Your Bright Pattern Contact Center tenant hostname.
+tags:
+- name: Authentication
+  description: 'The OAuth 2.0 Client Credentials Grant is used to authenticate clients of this API. The
+    authenticated user is checked for having appropriate privileges to perform the requested operation.
+    The complete list of privileges can be found here. Privileges are assigned to users via one or more
+    Roles.
+
+
+    To obtain an access token:
+
+
+    Login to your BPCC configuraiton portal.
+
+
+    Navigate to Users page.
+
+
+    Select or create a user with privileges corresponding to the tasks you wish to perform via the BPCC
+    Configuraiton API.
+
+
+    Click the Generate button to generate an API secret key. Copy the generated key and note the username
+    for the next steps.
+
+
+    Use the Get Access Token method to obtain an access token. Set the client_id to the username and client_secret
+    to the generated API secrect key.
+
+
+    Use the value of access_token returned in the response to set the Authorization: Bearer [access token]
+    header of each subsequent request made via the BPCC Configuraiton API.'
+- name: Users
+  description: 'With the https://:tenant_url/configapi/v2/user endpoint you can:
+
+
+    Create new users and define most of their attributes
+
+
+    Update existing users
+
+
+    Check and clear user lockout state
+
+
+    Manage agents'' skills
+
+
+    Delete existing users
+
+
+    Below is a brief description of all user attributes that can be accessed via this API. More detailed
+    descriptions of these attributes can be found here.
+
+
+    All attributes are strings unless otherwise noted.
+
+
+    All attributes are optional unless otherwise noted.
+
+
+    Attribute
+
+    Description
+
+
+    loginId
+
+    Username. Required to create user. Used to identify the user in all subsequent User Management API
+    operations.
+
+
+    password
+
+    Password. Format must comply with security policy.
+
+
+    changePassword
+
+    Indicates whether user must change password on next login. Boolean. Default is false.
+
+
+    firstName
+
+    First name. Required to create user.
+
+
+    lastName
+
+    Last name. Required to create user.
+
+
+    team
+
+    Team that the user is assigned to. Required to create user.
+
+
+    extension
+
+    User''s extension number. If not specified, an extension will be created and assigned automatically.
+
+
+    workPhone
+
+    User''s work phone number.
+
+
+    mobilePhone
+
+    User''s mobile phone number.
+
+
+    email
+
+    User''s email address.
+
+
+    disabled
+
+    Indication whether the user account is disabled or enabled. Boolean (true/flase).
+
+
+    skills
+
+    For agents an array of skills with levels (e.g., "Support": 75).
+
+
+    roles
+
+    An array of user''s roles (e.g., Agent).'
+- name: Phones
+  description: 'With the https://:tenant/configapi/v2/phone endpoint you can:
+
+
+    Get a list of all contact center users with their extensions and DID numbers
+
+
+    Get a list of all access numbers with thier current assignments (assigned users for DIDs and assigned
+    scenarios for routing points)'
+- name: Error Codes
+  description: "400 Bad Request - Indicates that the requested operation cannot be performed either because\
+    \ it violates data integrity rules or not supported by the API. The body of the error message may\
+    \ contain information about a specific element of the request (e.g., a specific object property) that\
+    \ is causing the request to be rejected.\n\n404 Not Found - For GET methods, indicates that the requested\
+    \ object cannot be found. For POST and PUT methods, indicates that one of the objects referred to\
+    \ in the properties specified in the request cannot be found. The body of the error message may indicate\
+    \ the type of object that could not be found (e.g., user team not found). \n\n409 Conlict - Indicates\
+    \ that an object with the given value of a unique parameter (e.g., username) already exists.\n\n415\
+    \ Unsupported Media Type - The media type is either not specified or specified incorrectly.\n\n500\
+    \ Request Failed - Incorrect endpoint specification."
+paths:
+  /configapi/v2/oauth/token:
+    post:
+      operationId: getAccessToken
+      summary: Get Access Token
+      description: Returns an access token that will be used to authenticate each subsequent request made
+        via this API.
+      tags:
+      - Authentication
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  description: Username of a BP user authorized to manage users and/or phones.
+                client_secret:
+                  type: string
+                  description: API secret key generated for the above user.
+                scope:
+                  type: string
+                  description: Your contact center domain name, e.g., example.brightpattern.com.
+                grant_type:
+                  type: string
+                  description: Grant type. Must be set to client_credentials.
+            example:
+              client_id: ''
+              client_secret: ''
+              scope: ''
+              grant_type: ''
+      responses:
+        '200':
+          description: Get Access Token
+          content:
+            application/json:
+              example:
+                access_token: CCE2C2EB964827XXXXXXXXXX3E1DEB2867C86D6C7ECDCE36C18D56XXXXXXXXXX
+                token_type: Bearer
+                expires_in: '3600'
+                scope: yourcompany.brightpattern.com
+      security: []
+  /configapi/v2/user:
+    post:
+      operationId: createUser
+      summary: Create User
+      description: Creates a new user in your contact center configuration.
+      tags:
+      - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              loginId: testuser006
+              password: $$$999aaa
+              firstName: Test
+              lastName: User006
+              team: Support Team
+              workPhone: '6373335656'
+              mobilePhone: '6374128990'
+              email: testuser006@nowhere.net
+              disabled: false
+              changePassword: true
+              skills:
+                Support: 100
+                Mobile: 100
+                Cable: 70
+              roles:
+              - Agent
+      responses:
+        '200':
+          description: Create user with a complete data set
+          content:
+            application/json:
+              example: OK
+      security:
+      - bearerAuth: []
+  /configapi/v2/user/{username}:
+    get:
+      operationId: getUserData
+      summary: Get User Data
+      description: Returns user data, such as name, team, extension, skills, and login information
+      tags:
+      - Users
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get user data
+          content:
+            application/json:
+              example: "{\n \"disabled\":false,\n \"changePassword\":false,\n \"skills\":{},\n \"loginId\"\
+                :\"frank.zappa\",\n \"firstName\":\"Frank\",\n \"lastName\":\"Zappa\",\n \"team\":\"Customer\
+                \ Service\",\n \"extension\":\"1048\",\n \"email\":\"frank.zappa@gmail.com\",\n \"roles\"\
+                :[\"Agent\"]\n \"loginInfo\": {\n    \"isLoggedIn\": true,\n    \"lastLogin\": \"2024-01-11T20:39:16.000Z\"\
+                ,\n    \"lastLogout\": \"2024-01-11T20:39:16.000Z\",\n    \"browser\": \"Chrome 120.0.0\"\
+                ,\n    \"phoneMode\": \"Browser Secure\",\n    \"os\": \"Linux\",\n    \"ipAddress\":\
+                \ \"172.27.0.1\",\n    \"userAgent\": \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36\
+                \ (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",\n    \"adHelperVersion\": \"5.20.0.604\"\
+                ,\n    \"appType\": \"Agent Desktop\",\n    \"appVersion\": \"5.24.99.755\"\n  }\n }"
+      security:
+      - bearerAuth: []
+    put:
+      operationId: updateUser
+      summary: 'Update User '
+      description: 'Updates one or more attributes of an existing user. Currently the can be used to update
+        the following properties:
+
+
+        skills
+
+
+        disabled
+
+
+        password
+
+
+        changePassword
+
+
+        team'
+      tags:
+      - Users
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              disabled: 'true'
+              team: Accounting
+      responses:
+        '200':
+          description: Disable user via Update User
+          content:
+            application/json:
+              example: OK
+      security:
+      - bearerAuth: []
+    delete:
+      operationId: deleteUser
+      summary: Delete User
+      description: Deletes an existing user.
+      tags:
+      - Users
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Delete User
+          content:
+            application/json:
+              example: OK
+      security:
+      - bearerAuth: []
+  /configapi/v2/user/lock/{username}:
+    get:
+      operationId: getUserLockState
+      summary: Get User Lock State
+      description: Checks whether user's account has been temporarily locked out after too many invalid
+        login attempts.
+      tags:
+      - Users
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get User Lock State
+          content:
+            application/json:
+              example:
+                lockedOut: true
+      security:
+      - bearerAuth: []
+    put:
+      operationId: clearUserLockState
+      summary: Clear User Lock State
+      description: Unlocks user's account that has been temporarily locked out after too many invalid
+        login attempts.
+      tags:
+      - Users
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Clear User Lock State
+          content:
+            application/json:
+              example:
+                lockedOut: false
+      security:
+      - bearerAuth: []
+  /configapi/v2/team:
+    get:
+      operationId: getTeams
+      summary: Get Teams
+      description: This method returns a list of all existing teams in your contact center.
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Get Teams
+          content:
+            application/json:
+              example:
+              - name: Administrators
+              - name: Contact Center Support
+              - name: CSIM Support
+              - name: Customer Service
+              - name: Maintenance Renewal
+              - name: Management
+      security:
+      - bearerAuth: []
+  /configapi/v2/phone/user:
+    get:
+      operationId: getDirectory
+      summary: Get Directory
+      description: Returns list of users with thier extensions and assigned external (DID) numbers.
+      tags:
+      - Phones
+      responses:
+        '200':
+          description: Get Directory
+          content:
+            application/json:
+              example:
+              - extension: '1000'
+                loginId: user
+                firstName: User
+                lastName: Lastname
+                external: '16505555555'
+                voiceMail: true
+                greeting: false
+              - extension: '1001'
+                loginId: navarro
+                firstName: Jose
+                lastName: Navarro
+                voiceMail: false
+                greeting: false
+              - extension: '1002'
+                loginId: wandabui
+                firstName: Wanda
+                lastName: Bui
+                voiceMail: false
+                greeting: false
+              - extension: '1004'
+                loginId: dale.turner
+                firstName: Dale
+                lastName: Turner
+                voiceMail: false
+                greeting: false
+              - extension: '1005'
+                loginId: edna.partee
+                firstName: Edna
+                lastName: Partee
+                voiceMail: false
+                greeting: false
+              - extension: '1006'
+                loginId: eric.chen
+                firstName: Eric
+                lastName: Chen
+                voiceMail: false
+                greeting: false
+              - extension: '1007'
+                loginId: admin
+                firstName: API
+                lastName: User
+                voiceMail: false
+                greeting: false
+              - extension: '2004'
+                loginId: testuser004
+                firstName: Test
+                lastName: User004
+                voiceMail: false
+                greeting: false
+              - extension: '2005'
+                loginId: testuser005
+                firstName: Test
+                lastName: User005
+                voiceMail: false
+                greeting: false
+      security:
+      - bearerAuth: []
+  /configapi/v2/phone/ext:
+    get:
+      operationId: getAccessNumbers
+      summary: Get Access Numbers
+      description: Returns a list of access numbers with current assignments.
+      tags:
+      - Phones
+      responses:
+        '200':
+          description: Get Access Numbers
+          content:
+            application/json:
+              example:
+              - number: '16505555555'
+                media: voice_text
+                type: scenario
+                scenario: Main Inbound
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as `Authorization:
+        Bearer <token>`.'
+    oauth2ClientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client-credentials grant against the Bright Pattern tenant token endpoint.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant_url}/configapi/v2/oauth/token
+          scopes: {}
+security:
+- bearerAuth: []

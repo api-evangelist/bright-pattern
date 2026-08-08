@@ -1,0 +1,870 @@
+generated: '2026-08-08'
+method: derived
+status: candidate
+source: openapi/ (derived from the published Bright Pattern Postman collections)
+published: false
+note: 'Bright Pattern publishes NO Model Context Protocol server. Searches of the Bright Pattern website,
+  the documentation wiki, the ServicePattern GitHub organization and the public MCP registries found no
+  hosted or packaged MCP server, and there is no /mcp endpoint to introspect. This file is an API Evangelist
+  DERIVED CANDIDATE tool surface computed from the 178 published REST operations — it is a proposal, not
+  a Bright Pattern artifact, and deliberately carries NO type: MCPServer pointer in apis.yml so it cannot
+  be read as a shipped agent surface.'
+searched:
+- source: https://www.brightpattern.com/
+  result: no MCP server referenced
+- source: https://help.brightpattern.com/latest:Api
+  result: nine REST API families, no MCP
+- source: https://github.com/ServicePattern
+  result: 8 public repos, none an MCP server
+server:
+  name: bright-pattern
+  transport: http
+  url: null
+tool_count: 169
+tools:
+- name: bp_configuration_create_user
+  description: Create User
+  source_operation: openapi/bright-pattern-configuration-openapi.yml#createUser
+  method: POST
+  path: /configapi/v2/user
+- name: bp_configuration_get_user_data
+  description: Get User Data
+  source_operation: openapi/bright-pattern-configuration-openapi.yml#getUserData
+  method: GET
+  path: /configapi/v2/user/{username}
+- name: bp_configuration_update_user
+  description: 'Update User '
+  source_operation: openapi/bright-pattern-configuration-openapi.yml#updateUser
+  method: PUT
+  path: /configapi/v2/user/{username}
+- name: bp_configuration_delete_user
+  description: Delete User
+  source_operation: openapi/bright-pattern-configuration-openapi.yml#deleteUser
+  method: DELETE
+  path: /configapi/v2/user/{username}
+- name: bp_configuration_get_user_lock_state
+  description: Get User Lock State
+  source_operation: openapi/bright-pattern-configuration-openapi.yml#getUserLockState
+  method: GET
+  path: /configapi/v2/user/lock/{username}
+- name: bp_configuration_clear_user_lock_state
+  description: Clear User Lock State
+  source_operation: openapi/bright-pattern-configuration-openapi.yml#clearUserLockState
+  method: PUT
+  path: /configapi/v2/user/lock/{username}
+- name: bp_configuration_get_teams
+  description: Get Teams
+  source_operation: openapi/bright-pattern-configuration-openapi.yml#getTeams
+  method: GET
+  path: /configapi/v2/team
+- name: bp_configuration_get_directory
+  description: Get Directory
+  source_operation: openapi/bright-pattern-configuration-openapi.yml#getDirectory
+  method: GET
+  path: /configapi/v2/phone/user
+- name: bp_configuration_get_access_numbers
+  description: Get Access Numbers
+  source_operation: openapi/bright-pattern-configuration-openapi.yml#getAccessNumbers
+  method: GET
+  path: /configapi/v2/phone/ext
+- name: bp_interaction_content_get_regular_recording_audio_file
+  description: Get Regular Recording Audio File
+  source_operation: openapi/bright-pattern-interaction-content-openapi.yml#getRegularRecordingAudioFile
+  method: GET
+  path: /configapi/v2/recordings/audio
+- name: bp_interaction_content_erase_call_recordings
+  description: Erase Call Recordings
+  source_operation: openapi/bright-pattern-interaction-content-openapi.yml#eraseCallRecordings
+  method: DELETE
+  path: /configapi/v2/recordings/audio
+- name: bp_interaction_content_get_interaction_metadata
+  description: Get Interaction Metadata
+  source_operation: openapi/bright-pattern-interaction-content-openapi.yml#getInteractionMetadata
+  method: GET
+  path: /configapi/v2/recordings/metadata
+- name: bp_interaction_content_get_multichannel_recording_structure
+  description: Get Multichannel Recording Structure
+  source_operation: openapi/bright-pattern-interaction-content-openapi.yml#getMultichannelRecordingStructure
+  method: GET
+  path: /configapi/v2/multi_channel_recordings
+- name: bp_interaction_content_get_multichannel_recording_segment_audio_
+  description: Get Multichannel Recording Segment Audio File
+  source_operation: openapi/bright-pattern-interaction-content-openapi.yml#getMultichannelRecordingSegmentAudioFile
+  method: GET
+  path: /configapi/v2/multi_channel_recordings/audio
+- name: bp_list_management_v2_add_many_records
+  description: Add Many Records
+  source_operation: openapi/bright-pattern-list-management-v2-openapi.yml#addManyRecords
+  method: POST
+  path: /configapi/v2/callinglist/addAll/{list_name}
+- name: bp_list_management_v2_add_record
+  description: Add Record
+  source_operation: openapi/bright-pattern-list-management-v2-openapi.yml#addRecord
+  method: POST
+  path: /configapi/v2/callinglist/add/{list_name}
+- name: bp_list_management_v2_delete_all_records
+  description: Delete All Records
+  source_operation: openapi/bright-pattern-list-management-v2-openapi.yml#deleteAllRecords
+  method: POST
+  path: /configapi/v2/callinglist/deleteAll/{list_name}
+- name: bp_list_management_v2_get_all_records
+  description: Get All Records
+  source_operation: openapi/bright-pattern-list-management-v2-openapi.yml#getAllRecords
+  method: POST
+  path: /configapi/v2/callinglist/getAll/{list_name}/{campaign_name}
+- name: bp_list_management_v2_get_completed_records
+  description: Get Completed Records
+  source_operation: openapi/bright-pattern-list-management-v2-openapi.yml#getCompletedRecords
+  method: POST
+  path: /configapi/v2/callinglist/getCompleted/{list_name}/{campaign_name}
+- name: bp_list_management_v2_get_updated_records
+  description: Get Updated Records
+  source_operation: openapi/bright-pattern-list-management-v2-openapi.yml#getUpdatedRecords
+  method: POST
+  path: /configapi/v2/callinglist/getChanged/{list_name}/{campaign_name}
+- name: bp_list_management_v2_query_a_record
+  description: Query a Record
+  source_operation: openapi/bright-pattern-list-management-v2-openapi.yml#queryARecord
+  method: POST
+  path: /configapi/v2/callinglist/get/{list_name}/{campaignname}
+- name: bp_list_management_v2_update_record
+  description: Update Record
+  source_operation: openapi/bright-pattern-list-management-v2-openapi.yml#updateRecord
+  method: POST
+  path: /configapi/v2/callinglist/update/{list_name}
+- name: bp_list_management_v2_get_campaigns
+  description: Get Campaigns
+  source_operation: openapi/bright-pattern-list-management-v2-openapi.yml#getCampaigns
+  method: GET
+  path: /configapi/v2/campaign/getAll
+- name: bp_list_management_v2_add_records_to_dnc
+  description: Add Records to DNC
+  source_operation: openapi/bright-pattern-list-management-v2-openapi.yml#addRecordsToDnc
+  method: POST
+  path: /configapi/v2/donotcalllist/add/{do_not_call_list_name}
+- name: bp_list_management_v2_replace_records_in_dnc
+  description: Replace Records in DNC
+  source_operation: openapi/bright-pattern-list-management-v2-openapi.yml#replaceRecordsInDnc
+  method: POST
+  path: /configapi/v2/donotcalllist/replaceAll/{do_not_call_list_name}
+- name: bp_list_management_v2_delete_all_records_do_not_call_list
+  description: Delete All Records
+  source_operation: openapi/bright-pattern-list-management-v2-openapi.yml#deleteAllRecordsDoNotCallList
+  method: POST
+  path: /configapi/v2/donotcalllist/deleteAll/{do_not_call_list_name}
+- name: bp_list_management_v2_delete_records
+  description: Delete Records
+  source_operation: openapi/bright-pattern-list-management-v2-openapi.yml#deleteRecords
+  method: POST
+  path: /configapi/v2/donotcalllist/delete/{do_not_call_list_name}
+- name: bp_list_management_v3_2_get_campaign
+  description: Get Campaign
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getCampaign
+  method: GET
+  path: /configapi/v3/campaign/getCampaign/{campaign_id}
+- name: bp_list_management_v3_2_get_campaigns
+  description: Get Campaigns
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getCampaigns
+  method: GET
+  path: /configapi/v3/campaign/getAll
+- name: bp_list_management_v3_2_get_campaign_status
+  description: Get Campaign Status
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getCampaignStatus
+  method: GET
+  path: /configapi/v3/campaign/getStatus/{campaign_id}
+- name: bp_list_management_v3_2_start
+  description: Start
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#start
+  method: POST
+  path: /configapi/v3/campaign/start/{campaign_id}
+- name: bp_list_management_v3_2_stop
+  description: Stop
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#stop
+  method: POST
+  path: /configapi/v3/campaign/stop/{campaign_id}
+- name: bp_list_management_v3_2_bind_list
+  description: Bind List
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#bindList
+  method: POST
+  path: /configapi/v3/campaign/bindList/{campaign_id}
+- name: bp_list_management_v3_2_update_list
+  description: Update List
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#updateList
+  method: PATCH
+  path: /configapi/v3/campaign/updateList/{campaign_id}
+- name: bp_list_management_v3_2_unbind_list
+  description: Unbind List
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#unbindList
+  method: POST
+  path: /configapi/v3/campaign/unbindList/{campaign_id}
+- name: bp_list_management_v3_2_get_all_records
+  description: Get All Records
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getAllRecords
+  method: POST
+  path: /configapi/v3/campaign/getAllRecords/{campaign_id}
+- name: bp_list_management_v3_2_get_completed_records
+  description: Get Completed Records
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getCompletedRecords
+  method: POST
+  path: /configapi/v3/campaign/getCompletedRecords/{campaign_id}
+- name: bp_list_management_v3_2_get_updated_records
+  description: Get Updated Records
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getUpdatedRecords
+  method: POST
+  path: /configapi/v3/campaign/getUpdatedRecords/{campaign_id}
+- name: bp_list_management_v3_2_query_a_record
+  description: Query a Record
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#queryARecord
+  method: POST
+  path: /configapi/v3/campaign/queryRecord/{campaign_id}
+- name: bp_list_management_v3_2_delete_campaign
+  description: Delete Campaign
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#deleteCampaign
+  method: DELETE
+  path: /configapi/v3/campaign/deleteCampaign/{campaign_id}
+- name: bp_list_management_v3_2_unlink_a_campaign
+  description: Unlink a Campaign
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#unlinkACampaign
+  method: POST
+  path: /configapi/v3/campaign/unlinkCampaign/{campaign_id}
+- name: bp_list_management_v3_2_link_a_campaign
+  description: Link a Campaign
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#linkACampaign
+  method: POST
+  path: /configapi/v3/campaign/linkCampaign/{campaign_id}
+- name: bp_list_management_v3_2_update_disposition
+  description: Update Disposition
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#updateDisposition
+  method: PATCH
+  path: /configapi/v3/campaign/updateDisposition/{campaign_id}
+- name: bp_list_management_v3_2_delete_dispositions
+  description: Delete Dispositions
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#deleteDispositions
+  method: POST
+  path: /configapi/v3/campaign/deleteDispositions/{campaign_id}
+- name: bp_list_management_v3_2_add_disposition
+  description: Add Disposition
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#addDisposition
+  method: POST
+  path: /configapi/v3/campaign/addDisposition/{campaign_id}
+- name: bp_list_management_v3_2_add_dispositions
+  description: Add Dispositions
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#addDispositions
+  method: POST
+  path: /configapi/v3/campaign/addDispositions/{campaign_id}
+- name: bp_list_management_v3_2_unassign_caller_ids
+  description: Unassign Caller IDs
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#unassignCallerIds
+  method: POST
+  path: /configapi/v3/campaign/unassignCallerIds/{campaign_id}
+- name: bp_list_management_v3_2_assign_caller_ids
+  description: Assign Caller IDs
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#assignCallerIds
+  method: POST
+  path: /configapi/v3/campaign/assignCallerIds/{campaign_id}
+- name: bp_list_management_v3_2_unassign_teams
+  description: Unassign Teams
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#unassignTeams
+  method: POST
+  path: /configapi/v3/campaign/unassignTeams/{campaign_id}
+- name: bp_list_management_v3_2_assign_teams
+  description: Assign Teams
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#assignTeams
+  method: POST
+  path: /configapi/v3/campaign/assignTeams/{campaign_id}
+- name: bp_list_management_v3_2_update_caller_id_settings
+  description: Update Caller ID Settings
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#updateCallerIdSettings
+  method: PATCH
+  path: /configapi/v3/campaign/updateCallerIDSettings/{campaign_id}
+- name: bp_list_management_v3_2_update_general_and_outbound_settings
+  description: Update General and Outbound Settings
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#updateGeneralAndOutboundSettings
+  method: PATCH
+  path: /configapi/v3/campaign/updateGeneralSettings/{campaign_id}
+- name: bp_list_management_v3_2_duplicate_campaign
+  description: Duplicate Campaign
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#duplicateCampaign
+  method: POST
+  path: /configapi/v3/campaign/duplicateCampaign
+- name: bp_list_management_v3_2_get_all_records_deprecated
+  description: Get All Records DEPRECATED
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getAllRecordsDeprecated
+  method: POST
+  path: /configapi/v3/callinglist/getAll/{list_id}/{campaign_id}
+- name: bp_list_management_v3_2_get_updated_records_deprecated
+  description: Get Updated Records DEPRECATED
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getUpdatedRecordsDeprecated
+  method: POST
+  path: /configapi/v3/callinglist/getChanged/{list_id}/{campaign_id}
+- name: bp_list_management_v3_2_query_a_record_deprecated
+  description: Query a Record DEPRECATED
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#queryARecordDeprecated
+  method: POST
+  path: /configapi/v3/callinglist/get/{list_id}/{campaign_id}
+- name: bp_list_management_v3_2_fetch_all_records
+  description: Fetch All Records
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#fetchAllRecords
+  method: POST
+  path: /configapi/v3/callinglist/fetchAll/{list_id}
+- name: bp_list_management_v3_2_fetch_record
+  description: Fetch Record
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#fetchRecord
+  method: POST
+  path: /configapi/v3/callinglist/fetch/{list_id}
+- name: bp_list_management_v3_2_get_lists
+  description: Get Lists
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getLists
+  method: POST
+  path: /configapi/v3/callinglist/getAll
+- name: bp_list_management_v3_2_get_list
+  description: Get List
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getList
+  method: GET
+  path: /configapi/v3/callinglist/getList/{list_id}
+- name: bp_list_management_v3_2_delete_list_and_orphaned_format
+  description: Delete List and Orphaned Format
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#deleteListAndOrphanedFormat
+  method: DELETE
+  path: /configapi/v3/callinglist/deleteList/{list_id}
+- name: bp_list_management_v3_2_create_list
+  description: Create List
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#createList
+  method: POST
+  path: /configapi/v3/callinglist/createList
+- name: bp_list_management_v3_2_create_list_with_new_format
+  description: Create List with New Format
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#createListWithNewFormat
+  method: POST
+  path: /configapi/v3/callinglist/createListWithNewFormat
+- name: bp_list_management_v3_2_update_list_properties
+  description: Update List Properties
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#updateListProperties
+  method: PATCH
+  path: /configapi/v3/callinglist/updateListProperties/{list_id}
+- name: bp_list_management_v3_2_add_many_records
+  description: Add Many Records
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#addManyRecords
+  method: POST
+  path: /configapi/v3/callinglist/addAll/{list_id}
+- name: bp_list_management_v3_2_add_record
+  description: Add Record
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#addRecord
+  method: POST
+  path: /configapi/v3/callinglist/add/{list_id}
+- name: bp_list_management_v3_2_update_many_records
+  description: Update Many Records
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#updateManyRecords
+  method: POST
+  path: /configapi/v3/callinglist/updateAll/{list_id}
+- name: bp_list_management_v3_2_update_record
+  description: Update Record
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#updateRecord
+  method: POST
+  path: /configapi/v3/callinglist/update/{list_id}
+- name: bp_list_management_v3_2_delete_many_records
+  description: Delete Many Records
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#deleteManyRecords
+  method: POST
+  path: /configapi/v3/callinglist/delete/{list_id}
+- name: bp_list_management_v3_2_erase_record
+  description: Erase Record
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#eraseRecord
+  method: POST
+  path: /configapi/v3/callinglist/erase/{list_id}
+- name: bp_list_management_v3_2_delete_all_records
+  description: Delete All Records
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#deleteAllRecords
+  method: POST
+  path: /configapi/v3/callinglist/deleteAll/{list_id}
+- name: bp_list_management_v3_2_delete_all_records_d_n_c_lists
+  description: Delete All Records
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#deleteAllRecordsDNCLists
+  method: POST
+  path: /configapi/v3/donotcalllist/deleteAll/{do_not_call_list_id}
+- name: bp_list_management_v3_2_delete_many_records_d_n_c_lists
+  description: Delete Many Records
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#deleteManyRecordsDNCLists
+  method: POST
+  path: /configapi/v3/donotcalllist/delete/{do_not_call_list_id}
+- name: bp_list_management_v3_2_add_many_records_d_n_c_lists
+  description: Add Many Records
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#addManyRecordsDNCLists
+  method: POST
+  path: /configapi/v3/donotcalllist/addAll/{do_not_call_list_id}
+- name: bp_list_management_v3_2_add_records_deprecated
+  description: Add Records DEPRECATED
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#addRecordsDeprecated
+  method: POST
+  path: /configapi/v3/donotcalllist/add/{do_not_call_list_id}
+- name: bp_list_management_v3_2_replace_records_deprecated
+  description: Replace Records DEPRECATED
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#replaceRecordsDeprecated
+  method: POST
+  path: /configapi/v3/donotcalllist/replaceAll/{do_not_call_list_id}
+- name: bp_list_management_v3_2_get_dnc_records
+  description: Get DNC Records
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getDncRecords
+  method: GET
+  path: /configapi/v3/donotcalllist/getDNCRecords/{do_not_call_list_id}
+- name: bp_list_management_v3_2_get_dnc_lists
+  description: Get DNC Lists
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getDncLists
+  method: GET
+  path: /configapi/v3/donotcalllist/getAll
+- name: bp_list_management_v3_2_get_dnc_list
+  description: Get DNC List
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getDncList
+  method: GET
+  path: /configapi/v3/donotcalllist/getDNCList/{do_not_call_list_id}
+- name: bp_list_management_v3_2_create_dnc_list
+  description: Create DNC List
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#createDncList
+  method: POST
+  path: /configapi/v3/donotcalllist/createDNCList
+- name: bp_list_management_v3_2_update_dnc_list_properties
+  description: Update DNC List Properties
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#updateDncListProperties
+  method: PATCH
+  path: /configapi/v3/donotcalllist/updateDNCProperties/do_not_call_list_id
+- name: bp_list_management_v3_2_delete_dnc_list
+  description: Delete DNC List
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#deleteDncList
+  method: DELETE
+  path: /configapi/v3/donotcalllist/deleteDNCList/{do_not_call_list_id}
+- name: bp_list_management_v3_2_bind_dnc_list
+  description: Bind DNC List
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#bindDncList
+  method: POST
+  path: /configapi/v3/campaign/bindDNCList/{campaign_id}
+- name: bp_list_management_v3_2_unbind_dnc_list
+  description: Unbind DNC List
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#unbindDncList
+  method: POST
+  path: /configapi/v3/campaign/unbindDNCList/{campaign_id}
+- name: bp_list_management_v3_2_get_link_groups
+  description: Get Link Groups
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getLinkGroups
+  method: POST
+  path: /configapi/v3/campaignlinkgroup/getAll
+- name: bp_list_management_v3_2_get_link_group
+  description: Get Link Group
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#getLinkGroup
+  method: GET
+  path: /configapi/v3/campaignlinkgroup/getLinkGroup/{group_id}
+- name: bp_list_management_v3_2_create_link_group
+  description: Create Link Group
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#createLinkGroup
+  method: POST
+  path: /configapi/v3/campaignlinkgroup/createLinkGroup
+- name: bp_list_management_v3_2_delete_link_group
+  description: Delete Link Group
+  source_operation: openapi/bright-pattern-list-management-v3-2-openapi.yml#deleteLinkGroup
+  method: DELETE
+  path: /configapi/v3/campaignlinkgroup/deleteLinkGroup/{group_id}
+- name: bp_list_management_v3_get_campaigns
+  description: Get Campaigns
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#getCampaigns
+  method: GET
+  path: /configapi/v3/campaign/getAll
+- name: bp_list_management_v3_get_campaign
+  description: Get Campaign
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#getCampaign
+  method: GET
+  path: /configapi/v3/campaign/getCampaign/{campaign_id}
+- name: bp_list_management_v3_get_campaign_status
+  description: Get Campaign Status
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#getCampaignStatus
+  method: GET
+  path: /configapi/v3/campaign/getStatus/{campaign_id}
+- name: bp_list_management_v3_start
+  description: Start
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#start
+  method: POST
+  path: /configapi/v3/campaign/start/{campaign_id}
+- name: bp_list_management_v3_stop
+  description: Stop
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#stop
+  method: POST
+  path: /configapi/v3/campaign/stop/{campaign_id}
+- name: bp_list_management_v3_bind_list
+  description: Bind List
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#bindList
+  method: POST
+  path: /configapi/v3/campaign/bindList/{campaign_id}
+- name: bp_list_management_v3_update_list
+  description: Update List
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#updateList
+  method: PATCH
+  path: /configapi/v3/campaign/updateList/{campaign_id}
+- name: bp_list_management_v3_unbind_list
+  description: Unbind List
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#unbindList
+  method: POST
+  path: /configapi/v3/campaign/unbindList/{campaign_id}
+- name: bp_list_management_v3_get_all_records
+  description: Get All Records
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#getAllRecords
+  method: POST
+  path: /configapi/v3/campaign/getAllRecords/{campaign_id}
+- name: bp_list_management_v3_get_completed_records
+  description: Get Completed Records
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#getCompletedRecords
+  method: POST
+  path: /configapi/v3/campaign/getCompletedRecords/{campaign_id}
+- name: bp_list_management_v3_get_updated_records
+  description: Get Updated Records
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#getUpdatedRecords
+  method: POST
+  path: /configapi/v3/campaign/getUpdatedRecords/{campaign_id}
+- name: bp_list_management_v3_query_a_record
+  description: Query a Record
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#queryARecord
+  method: POST
+  path: /configapi/v3/campaign/queryRecord/{campaign_id}
+- name: bp_list_management_v3_get_all_records_deprecated
+  description: Get All Records DEPRECATED
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#getAllRecordsDeprecated
+  method: POST
+  path: /configapi/v3/callinglist/getAll/{list_id}/{campaign_id}
+- name: bp_list_management_v3_get_updated_records_deprecated
+  description: Get Updated Records DEPRECATED
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#getUpdatedRecordsDeprecated
+  method: POST
+  path: /configapi/v3/callinglist/getChanged/{list_id}/{campaign_id}
+- name: bp_list_management_v3_query_a_record_deprecated
+  description: Query a Record DEPRECATED
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#queryARecordDeprecated
+  method: POST
+  path: /configapi/v3/callinglist/get/{list_id}/{campaign_id}
+- name: bp_list_management_v3_get_lists
+  description: Get Lists
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#getLists
+  method: POST
+  path: /configapi/v3/callinglist/getAll
+- name: bp_list_management_v3_get_list
+  description: Get List
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#getList
+  method: GET
+  path: /configapi/v3/callinglist/getList/{list_id}
+- name: bp_list_management_v3_delete_list_and_orphaned_format
+  description: Delete List and Orphaned Format
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#deleteListAndOrphanedFormat
+  method: DELETE
+  path: /configapi/v3/callinglist/deleteList/{list_id}
+- name: bp_list_management_v3_create_list
+  description: Create List
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#createList
+  method: POST
+  path: /configapi/v3/callinglist/createList
+- name: bp_list_management_v3_create_list_with_new_format
+  description: Create List with New Format
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#createListWithNewFormat
+  method: POST
+  path: /configapi/v3/callinglist/createListWithNewFormat
+- name: bp_list_management_v3_add_many_records
+  description: Add Many Records
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#addManyRecords
+  method: POST
+  path: /configapi/v3/callinglist/addAll/{list_id}
+- name: bp_list_management_v3_add_record
+  description: Add Record
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#addRecord
+  method: POST
+  path: /configapi/v3/callinglist/add/{list_id}
+- name: bp_list_management_v3_update_many_records
+  description: Update Many Records
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#updateManyRecords
+  method: POST
+  path: /configapi/v3/callinglist/updateAll/{list_id}
+- name: bp_list_management_v3_update_record
+  description: Update Record
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#updateRecord
+  method: POST
+  path: /configapi/v3/callinglist/update/{list_id}
+- name: bp_list_management_v3_erase_record
+  description: Erase Record
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#eraseRecord
+  method: POST
+  path: /configapi/v3/callinglist/erase/{list_id}
+- name: bp_list_management_v3_delete_many_records
+  description: Delete Many Records
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#deleteManyRecords
+  method: POST
+  path: /configapi/v3/callinglist/delete/{list_id}
+- name: bp_list_management_v3_delete_all_records
+  description: Delete All Records
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#deleteAllRecords
+  method: POST
+  path: /configapi/v3/callinglist/deleteAll/{list_id}
+- name: bp_list_management_v3_get_job_status
+  description: Get Job Status
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#getJobStatus
+  method: GET
+  path: /configapi/v3/job/{job_id}
+- name: bp_list_management_v3_delete_all_records_d_n_c_lists
+  description: Delete All Records
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#deleteAllRecordsDNCLists
+  method: POST
+  path: /configapi/v3/donotcalllist/deleteAll/{do_not_call_list_id}
+- name: bp_list_management_v3_delete_many_records_d_n_c_lists
+  description: Delete Many Records
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#deleteManyRecordsDNCLists
+  method: POST
+  path: /configapi/v3/donotcalllist/delete/{do_not_call_list_id}
+- name: bp_list_management_v3_add_many_records_d_n_c_lists
+  description: Add Many Records
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#addManyRecordsDNCLists
+  method: POST
+  path: /configapi/v3/donotcalllist/addAll/{do_not_call_list_id}
+- name: bp_list_management_v3_add_records_deprecated
+  description: Add Records DEPRECATED
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#addRecordsDeprecated
+  method: POST
+  path: /configapi/v3/donotcalllist/add/{do_not_call_list_id}
+- name: bp_list_management_v3_replace_records_deprecated
+  description: Replace Records DEPRECATED
+  source_operation: openapi/bright-pattern-list-management-v3-openapi.yml#replaceRecordsDeprecated
+  method: POST
+  path: /configapi/v3/donotcalllist/replaceAll/{do_not_call_list_id}
+- name: bp_mobile_web_messaging_v1_check_availability
+  description: Check Availability
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml#checkAvailability
+  method: GET
+  path: /clientweb/api/v1/availability
+- name: bp_mobile_web_messaging_v1_expected_parameters
+  description: Expected Parameters
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml#expectedParameters
+  method: GET
+  path: /clientweb/api/v1/parameters
+- name: bp_mobile_web_messaging_v1_request_chat
+  description: Request Chat
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml#requestChat
+  method: POST
+  path: /clientweb/api/v1/chats
+- name: bp_mobile_web_messaging_v1_get_active_chat
+  description: Get Active Chat
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml#getActiveChat
+  method: GET
+  path: /clientweb/api/v1/chats/active
+- name: bp_mobile_web_messaging_v1_send_events
+  description: Send Events
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml#sendEvents
+  method: POST
+  path: /clientweb/api/v1/chats/{chatId}/events
+- name: bp_mobile_web_messaging_v1_get_new_chat_events
+  description: Get New Chat Events
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml#getNewChatEvents
+  method: GET
+  path: /clientweb/api/v1/chats/{chatId}/events
+- name: bp_mobile_web_messaging_v1_get_chat_history
+  description: Get Chat History
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml#getChatHistory
+  method: GET
+  path: /clientweb/api/v1/chats/{chatId}/history
+- name: bp_mobile_web_messaging_v1_upload_file
+  description: Upload File
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml#uploadFile
+  method: POST
+  path: /clientweb/api/v1/files
+- name: bp_mobile_web_messaging_v1_get_file
+  description: Get File
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml#getFile
+  method: GET
+  path: /clientweb/api/v1/chats/{chatId}/files/{fileId}
+- name: bp_mobile_web_messaging_v1_get_agent_profile_photo
+  description: Get Agent Profile Photo
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml#getAgentProfilePhoto
+  method: GET
+  path: /clientweb/api/v1/chats/{chatId}/profilephotos/{partyId}
+- name: bp_mobile_web_messaging_v1_get_ice_servers
+  description: Get ICE servers
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml#getIceServers
+  method: GET
+  path: /clientweb/api/v1/iceservers
+- name: bp_mobile_web_messaging_v1_get_chat_widget_configuration
+  description: Get Chat Widget Configuration
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml#getChatWidgetConfiguration
+  method: GET
+  path: /clientweb/api/v1/configuration
+- name: bp_mobile_web_messaging_v2_check_availability
+  description: Check Availability
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#checkAvailability
+  method: GET
+  path: /clientweb/api/v2/availability
+- name: bp_mobile_web_messaging_v2_expected_parameters
+  description: Expected Parameters
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#expectedParameters
+  method: GET
+  path: /clientweb/api/v2/parameters
+- name: bp_mobile_web_messaging_v2_request_chat
+  description: Request Chat
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#requestChat
+  method: POST
+  path: /clientweb/api/v2/chats
+- name: bp_mobile_web_messaging_v2_mobile_notification_subscription
+  description: Mobile Notification Subscription
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#mobileNotificationSubscription
+  method: POST
+  path: /clientweb/api/v2/chats/{chatId}/notifications
+- name: bp_mobile_web_messaging_v2_get_active_chat
+  description: Get Active Chat
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#getActiveChat
+  method: GET
+  path: /clientweb/api/v2/chats/active
+- name: bp_mobile_web_messaging_v2_send_events
+  description: Send Events
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#sendEvents
+  method: POST
+  path: /clientweb/api/v2/chats/{chatId}/events
+- name: bp_mobile_web_messaging_v2_get_new_chat_events
+  description: Get New Chat Events
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#getNewChatEvents
+  method: GET
+  path: /clientweb/api/v2/chats/{chatId}/events
+- name: bp_mobile_web_messaging_v2_get_chat_history
+  description: Get Chat History
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#getChatHistory
+  method: GET
+  path: /clientweb/api/v2/chats/{chatId}/history
+- name: bp_mobile_web_messaging_v2_upload_file
+  description: Upload File
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#uploadFile
+  method: POST
+  path: /clientweb/api/v2/files
+- name: bp_mobile_web_messaging_v2_get_file
+  description: Get File
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#getFile
+  method: GET
+  path: /clientweb/api/v2/chats/{chatId}/files/{fileId}
+- name: bp_mobile_web_messaging_v2_get_agent_profile_photo
+  description: Get Agent Profile Photo
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#getAgentProfilePhoto
+  method: GET
+  path: /clientweb/api/v2/chats/{chatId}/profilephotos/{partyId}
+- name: bp_mobile_web_messaging_v2_get_ice_servers
+  description: Get ICE servers
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#getIceServers
+  method: GET
+  path: /clientweb/api/v2/iceservers
+- name: bp_mobile_web_messaging_v2_get_chat_widget_configuration
+  description: Get Chat Widget Configuration
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#getChatWidgetConfiguration
+  method: GET
+  path: /clientweb/api/v2/configuration
+- name: bp_mobile_web_messaging_v2_get_case_history
+  description: Get Case History
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#getCaseHistory
+  method: GET
+  path: /clientweb/api/v2/casehistory
+- name: bp_mobile_web_messaging_v2_close_case
+  description: Close Case
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#closeCase
+  method: POST
+  path: /clientweb/api/v2/closecase
+- name: bp_mobile_web_messaging_v2_get_version
+  description: Get Version
+  source_operation: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml#getVersion
+  method: GET
+  path: /clientweb/api/v2/version
+- name: bp_real_time_statistics_authenticate
+  description: Authenticate
+  source_operation: openapi/bright-pattern-real-time-statistics-openapi.yml#authenticate
+  method: POST
+  path: /statsapi/auth
+- name: bp_real_time_statistics_create_subscription
+  description: Create Subscription
+  source_operation: openapi/bright-pattern-real-time-statistics-openapi.yml#createSubscription
+  method: POST
+  path: /statsapi/subscription
+- name: bp_real_time_statistics_get_subscription_data
+  description: Get Subscription Data
+  source_operation: openapi/bright-pattern-real-time-statistics-openapi.yml#getSubscriptionData
+  method: GET
+  path: /statsapi/subscription/data
+- name: bp_real_time_statistics_delete_subscription
+  description: Delete Subscription
+  source_operation: openapi/bright-pattern-real-time-statistics-openapi.yml#deleteSubscription
+  method: DELETE
+  path: /statsapi/subscription/active
+- name: bp_real_time_statistics_get_dispositions
+  description: Get Dispositions
+  source_operation: openapi/bright-pattern-real-time-statistics-openapi.yml#getDispositions
+  method: GET
+  path: /statsapi/cfg/dispositions
+- name: bp_real_time_statistics_get_available_agents
+  description: Get Available Agents
+  source_operation: openapi/bright-pattern-real-time-statistics-openapi.yml#getAvailableAgents
+  method: GET
+  path: /statsapi/info/check_available_agents
+- name: bp_real_time_statistics_get_teams
+  description: Get Teams
+  source_operation: openapi/bright-pattern-real-time-statistics-openapi.yml#getTeams
+  method: GET
+  path: /statsapi/cfg/teams
+- name: bp_scim_user_provisioning_create_user
+  description: Create User
+  source_operation: openapi/bright-pattern-scim-user-provisioning-openapi.yml#createUser
+  method: POST
+  path: /configapi/v2/scim/users
+- name: bp_scim_user_provisioning_get_user_by_username
+  description: Get User by userName
+  source_operation: openapi/bright-pattern-scim-user-provisioning-openapi.yml#getUserByUsername
+  method: GET
+  path: /configapi/v2/scim/users
+- name: bp_scim_user_provisioning_get_user_by_id
+  description: Get User by ID
+  source_operation: openapi/bright-pattern-scim-user-provisioning-openapi.yml#getUserById
+  method: GET
+  path: /configapi/v2/scim/users/{id}
+- name: bp_scim_user_provisioning_replace_user_properties
+  description: Replace User Properties (by replacing all existing attributes with a specified set of replacement
+    attributes)
+  source_operation: openapi/bright-pattern-scim-user-provisioning-openapi.yml#replaceUserProperties
+  method: PUT
+  path: /configapi/v2/scim/users/{id}
+- name: bp_scim_user_provisioning_delete_user
+  description: Delete User
+  source_operation: openapi/bright-pattern-scim-user-provisioning-openapi.yml#deleteUser
+  method: DELETE
+  path: /configapi/v2/scim/users/{id}
+- name: bp_scim_user_provisioning_update_user
+  description: Update User (updates only the properties indicated in the specified set)
+  source_operation: openapi/bright-pattern-scim-user-provisioning-openapi.yml#updateUser
+  method: PATCH
+  path: /configapi/v2/scim/users/6BE15F09-BF39-4E20-AB31-A9355CBC01FC
+- name: bp_sms_mms_send_message
+  description: Send Message
+  source_operation: openapi/bright-pattern-sms-mms-openapi.yml#sendMessage
+  method: POST
+  path: /clientweb/smsapi/v1/Messages
+- name: bp_sms_mms_get_message
+  description: Get Message
+  source_operation: openapi/bright-pattern-sms-mms-openapi.yml#getMessage
+  method: GET
+  path: /clientweb/smsapi/v1/Messages/{message_sid}
+- name: bp_task_routing_queue_task
+  description: Queue Task
+  source_operation: openapi/bright-pattern-task-routing-openapi.yml#queueTask
+  method: POST
+  path: /taskroutingapi/v1/task
+- name: bp_task_routing_cancel_task
+  description: Cancel Task
+  source_operation: openapi/bright-pattern-task-routing-openapi.yml#cancelTask
+  method: DELETE
+  path: /taskroutingapi/v1/task/{taskid}
+- name: bp_task_routing_update_task
+  description: Update Task
+  source_operation: openapi/bright-pattern-task-routing-openapi.yml#updateTask
+  method: PATCH
+  path: /taskroutingapi/v1/task/{taskid}
+- name: bp_task_routing_query_task
+  description: Query Task
+  source_operation: openapi/bright-pattern-task-routing-openapi.yml#queryTask
+  method: GET
+  path: /taskroutingapi/v1/task/{taskid}
+- name: bp_task_routing_cancel_service_tasks
+  description: Cancel Service Tasks
+  source_operation: openapi/bright-pattern-task-routing-openapi.yml#cancelServiceTasks
+  method: DELETE
+  path: /taskroutingapi/v1/service

@@ -1,0 +1,156 @@
+generated: '2026-08-08'
+method: searched
+source: Error Codes / Error Handling sections of the published Bright Pattern Postman collections (postman/)
+format: vendor-specific
+note: 'Bright Pattern does NOT use RFC 9457 application/problem+json. Two distinct error contracts are
+  published: the List Management v3.x APIs return an OAuth-style {"error", "error_description"} envelope,
+  while the Task Routing API returns a numeric application error code alongside the HTTP status. The Configuration,
+  Interaction Content and Mobile/Web Messaging APIs document HTTP status semantics only.'
+envelopes:
+- name: list-management-error-envelope
+  applies_to:
+  - openapi/bright-pattern-list-management-v3-2-openapi.yml
+  - openapi/bright-pattern-list-management-v3-openapi.yml
+  shape:
+    error: human-readable error name, e.g. bad_request
+    error_description: 'detailed cause, e.g. "''parameter_name'' has unsupported value ''parameter_value'':
+      integer is expected"'
+  source: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+- name: task-routing-numeric-code
+  applies_to:
+  - openapi/bright-pattern-task-routing-openapi.yml
+  shape:
+    code: integer application error code 0-14
+    text: error text
+  source: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+problems:
+- status: 400
+  name: bad_request
+  title: Request cannot be processed due to a format error
+  causes:
+  - Empty or missing required parameter
+  - Duplicated parameter
+  - Unsupported parameter
+  - Wrong value format or value out of boundaries
+  applies_to: list-management
+- status: 401
+  name: unauthorized
+  title: Authentication failed
+  causes:
+  - Wrong Client ID/Secret or grant type
+  - Tenant is inactive
+  - Client is disabled or locked out
+  - Token is expired or has an invalid format
+  applies_to: all
+- status: 403
+  name: forbidden
+  title: Insufficient privileges on the current user profile
+  causes:
+  - User is authenticated but does not hold the required API privilege (e.g. "Use Task Routing API")
+  applies_to: all
+- status: 404
+  name: not_found
+  title: Specified resource cannot be found
+  causes:
+  - Wrong path or key
+  - Wrong or missing object ID
+  applies_to: all
+- status: 405
+  name: method_not_allowed
+  title: Requested method cannot be performed for the specified resource
+  causes:
+  - Wrong request type
+  - HEAD request type
+  applies_to: list-management
+- status: 409
+  name: conflict
+  title: Request conflicts with the current state of the server
+  causes:
+  - Duplicate or missing value
+  - Campaign is already in the requested state
+  - List is not bound to the specified campaign
+  - An object with the given unique value (e.g. username) already exists
+  applies_to: list-management, configuration
+- status: 415
+  name: unsupported_media_type
+  title: Media format of the requested data is not supported
+  causes:
+  - No Content-Type in the HTTP header
+  - Content-Type is text/plain but JSON is expected
+  applies_to: all
+- status: 429
+  name: too_many_requests
+  title: API limit exceeded
+  causes:
+  - Rate limit exceeded
+  applies_to: task-routing, mobile-web-messaging
+- status: 500
+  name: request_failed
+  title: Request failed / internal server error
+  causes:
+  - Incorrect endpoint specification
+  - Database exception
+  applies_to: all
+- status: 502
+  name: no_servers_available
+  title: No servers available
+  causes:
+  - All activity servers down, all CRM servers down, or an invalid response from a CRM server
+  applies_to: task-routing
+task_routing_codes:
+- code: 0
+  text: Success
+  http: 200
+- code: 1
+  text: Authentication failed
+  http: 401
+  description: Authorization header is missing or the provided access token does not exist.
+- code: 2
+  text: Access token expired
+  http: 401
+  description: Access token exists but has expired. The client should request a new access token.
+- code: 3
+  text: Privilege not granted
+  http: 403
+  description: The user the token was granted to does not have the required "Use Task Routing API" privilege.
+- code: 4
+  text: Missing parameter(s) [param_name]
+  http: 400
+  description: A required parameter is missing; the missing names are included in the text.
+- code: 5
+  text: Task is or already was in the queue
+  http: 400
+  description: Duplicate task — a task with the same id was queued in the past. This is the Task Routing
+    idempotency signal.
+- code: 6
+  text: Service not found or invalid
+  http: 400
+  description: Specified service does not exist or is not of "Task" type.
+- code: 7
+  text: Disposition not found
+  http: 400
+- code: 8
+  text: Task not found
+  http: 404
+  description: Specified task not found or not queued.
+- code: 9
+  text: Task not in queue
+  http: 400
+  description: Task exists but is not in the queue (already routed or canceled).
+- code: 10
+  text: Task already routed to an agent
+  http: 400
+- code: 11
+  text: No servers available
+  http: 502
+- code: 12
+  text: API limit exceeded
+  http: 429
+- code: 13
+  text: Internal server error
+  http: 500
+  description: Database exception.
+- code: 14
+  text: Feature not enabled
+  http: 403
+  description: The feature is not enabled for the tenant.

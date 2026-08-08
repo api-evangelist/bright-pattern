@@ -1,0 +1,79 @@
+generated: '2026-08-08'
+method: generated
+source: openapi/ operationIds + conventions/ + errors/ + packages/
+note: Bright Pattern publishes no AGENTS.md or provider-authored agent skills; searches of the website,
+  the documentation wiki and the ServicePattern GitHub org found none. These are API Evangelist generated
+  operating instructions, and every operationId referenced was grepped out of the specs in openapi/.
+skills:
+- file: bright-pattern-embed-web-chat.md
+  name: Build a customer-facing web or mobile chat against Bright Pattern
+  description: Check service availability, request a chat session, long-poll the event stream, send events
+    and files, and close the case using the Mobile/Web Messaging API v2.
+  api: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml
+  operations:
+  - checkAvailability
+  - expectedParameters
+  - getChatWidgetConfiguration
+  - requestChat
+  - getActiveChat
+  - getNewChatEvents
+  - sendEvents
+  - uploadFile
+  - getFile
+  - getIceServers
+  - mobileNotificationSubscription
+  - getCaseHistory
+  - closeCase
+- file: bright-pattern-export-recordings.md
+  name: Export call recordings and interaction metadata for compliance
+  description: Pull regular and multichannel call recording audio plus interaction metadata out of Bright
+    Pattern, and erase recordings with a recorded reason.
+  api: openapi/bright-pattern-interaction-content-openapi.yml
+  operations:
+  - getAccessToken
+  - getInteractionMetadata
+  - getRegularRecordingAudioFile
+  - getMultichannelRecordingStructure
+  - getMultichannelRecordingSegmentAudioFile
+  - eraseCallRecordings
+- file: bright-pattern-provision-users-scim.md
+  name: Provision Bright Pattern users over SCIM 2.0
+  description: Create, read, update, replace and delete contact-center users through the SCIM-compliant
+    provisioning endpoint, and fall back to the Configuration API for team and lock-state operations.
+  api: openapi/bright-pattern-scim-user-provisioning-openapi.yml
+  operations:
+  - getAccessToken
+  - createUser
+  - getUserById
+  - getUserByUsername
+  - replaceUserProperties
+  - updateUser
+  - deleteUser
+- file: bright-pattern-queue-crm-task.md
+  name: Queue a CRM task into Bright Pattern and track it to completion
+  description: Authenticate against a Bright Pattern tenant, queue a task from an external CRM with de-duplicating
+    external identifiers, then query, update or cancel it.
+  api: openapi/bright-pattern-task-routing-openapi.yml
+  operations:
+  - getAccessToken
+  - queueTask
+  - queryTask
+  - updateTask
+  - cancelTask
+  - cancelServiceTasks
+- file: bright-pattern-run-outbound-campaign.md
+  name: Load a calling list and run an outbound campaign
+  description: Create a calling list, load records into it, bind it plus a Do Not Call list to a campaign,
+    start and stop the campaign, and read completed records back.
+  api: openapi/bright-pattern-list-management-v3-2-openapi.yml
+  operations:
+  - getAccessToken
+  - createList
+  - addManyRecords
+  - bindList
+  - bindDncList
+  - start
+  - getCampaignStatus
+  - stop
+  - getCompletedRecords
+  - getUpdatedRecords

@@ -1,0 +1,111 @@
+generated: '2026-08-08'
+method: searched
+source: https://help.brightpattern.com/latest:Api
+note: Bright Pattern publishes its entire public API reference as Postman documenter collections linked
+  from the help wiki API index. Each collection was fetched verbatim from the Postman documenter API and
+  is the source the openapi/ specs were mechanically derived from.
+workspace_style: postman-documenter (public, no login required)
+collections:
+- key: configuration
+  name: BPCC Configuration API
+  documentation: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  collection_json: https://documenter.gw.postman.com/api/collections/6711197/S1EUtanN?segregateAuth=true&versionTag=latest
+  file: bright-pattern-configuration-collection.json
+  schema: https://schema.getpostman.com/json/collection/v2.0.0/collection.json
+  requests: 10
+  openapi: openapi/bright-pattern-configuration-openapi.yml
+  http_status: 200
+- key: interaction-content
+  name: BPCC Interaction Content API
+  documentation: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  collection_json: https://documenter.gw.postman.com/api/collections/6711197/S1EUtb1f?segregateAuth=true&versionTag=latest
+  file: bright-pattern-interaction-content-collection.json
+  schema: https://schema.getpostman.com/json/collection/v2.0.0/collection.json
+  requests: 6
+  openapi: openapi/bright-pattern-interaction-content-openapi.yml
+  http_status: 200
+- key: list-management-v2
+  name: BPCC List Management API v2.0
+  documentation: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  collection_json: https://documenter.gw.postman.com/api/collections/6735878/T1DtdFDu?segregateAuth=true&versionTag=latest
+  file: bright-pattern-list-management-v2-collection.json
+  schema: https://schema.getpostman.com/json/collection/v2.0.0/collection.json
+  requests: 14
+  openapi: openapi/bright-pattern-list-management-v2-openapi.yml
+  http_status: 200
+- key: list-management-v3
+  name: BPCC List Management API v3.0
+  documentation: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  collection_json: https://documenter.gw.postman.com/api/collections/8336025/2sA3Qy5U4z?segregateAuth=true&versionTag=latest
+  file: bright-pattern-list-management-v3-collection.json
+  schema: https://schema.getpostman.com/json/collection/v2.0.0/collection.json
+  requests: 34
+  openapi: openapi/bright-pattern-list-management-v3-openapi.yml
+  http_status: 200
+- key: list-management-v3-2
+  name: BPCC List Management API v3.2
+  documentation: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+  collection_json: https://documenter.gw.postman.com/api/collections/8336025/2sB3WmV3UC?segregateAuth=true&versionTag=latest
+  file: bright-pattern-list-management-v3-2-collection.json
+  schema: https://schema.getpostman.com/json/collection/v2.0.0/collection.json
+  requests: 62
+  openapi: openapi/bright-pattern-list-management-v3-2-openapi.yml
+  http_status: 200
+- key: mobile-web-messaging-v1
+  name: BPCC Mobile/Web Messaging API v1
+  documentation: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+  collection_json: https://documenter.gw.postman.com/api/collections/6735877/T1LHGpBY?segregateAuth=true&versionTag=latest
+  file: bright-pattern-mobile-web-messaging-v1-collection.json
+  schema: https://schema.getpostman.com/json/collection/v2.0.0/collection.json
+  requests: 12
+  openapi: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml
+  http_status: 200
+- key: mobile-web-messaging-v2
+  name: BPCC Mobile/Web Messaging API v2
+  documentation: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+  collection_json: https://documenter.gw.postman.com/api/collections/6735878/TzXwFJFP?segregateAuth=true&versionTag=latest
+  file: bright-pattern-mobile-web-messaging-v2-collection.json
+  schema: https://schema.getpostman.com/json/collection/v2.0.0/collection.json
+  requests: 16
+  openapi: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml
+  http_status: 200
+- key: real-time-statistics
+  name: BPCC Real-Time Statistics API
+  documentation: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  collection_json: https://documenter.gw.postman.com/api/collections/6735878/T1DwbtSk?segregateAuth=true&versionTag=latest
+  file: bright-pattern-real-time-statistics-collection.json
+  schema: https://schema.getpostman.com/json/collection/v2.0.0/collection.json
+  requests: 8
+  openapi: openapi/bright-pattern-real-time-statistics-openapi.yml
+  http_status: 200
+- key: scim-user-provisioning
+  name: BPCC SCIM-Compliant User Provisioning API
+  documentation: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  collection_json: https://documenter.gw.postman.com/api/collections/8336025/SVYwJbLw?segregateAuth=true&versionTag=latest
+  file: bright-pattern-scim-user-provisioning-collection.json
+  schema: https://schema.getpostman.com/json/collection/v2.0.0/collection.json
+  requests: 7
+  openapi: openapi/bright-pattern-scim-user-provisioning-openapi.yml
+  http_status: 200
+- key: sms-mms
+  name: BPCC SMS/MMS API
+  documentation: https://documenter.getpostman.com/view/6711197/S1ETRbny
+  collection_json: https://documenter.gw.postman.com/api/collections/6711197/S1ETRbny?segregateAuth=true&versionTag=latest
+  file: bright-pattern-sms-mms-collection.json
+  schema: https://schema.getpostman.com/json/collection/v2.0.0/collection.json
+  requests: 3
+  openapi: openapi/bright-pattern-sms-mms-openapi.yml
+  http_status: 200
+- key: task-routing
+  name: BPCC Task Routing API
+  documentation: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  collection_json: https://documenter.gw.postman.com/api/collections/31590362/2sA3XTfLhk?segregateAuth=true&versionTag=latest
+  file: bright-pattern-task-routing-collection.json
+  schema: https://schema.getpostman.com/json/collection/v2.0.0/collection.json
+  requests: 6
+  openapi: openapi/bright-pattern-task-routing-openapi.yml
+  http_status: 200
+x-evidence:
+  fetched: '2026-08-08'
+  url: https://help.brightpattern.com/latest:Api
+  http_status: 200

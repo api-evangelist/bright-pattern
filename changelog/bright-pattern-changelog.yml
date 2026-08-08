@@ -1,0 +1,48 @@
+generated: '2026-08-08'
+method: searched
+source: https://help.brightpattern.com/WhatsNew
+scheme: semver-ish per product (major.minor[.patch]); no publication dates given
+note: Bright Pattern maintains a "What's New" index on the documentation wiki listing the current release
+  of each product plus an archive of 80+ historical versions back to BPCC 5.2.0. Entries are version-numbered
+  release-note pages; the index does not carry release dates, so no dates are recorded here rather than
+  inferring any.
+current:
+  product: Bright Pattern Contact Center
+  version: '5.36'
+  url: https://help.brightpattern.com/WhatsNew/BPCC-5.36.0
+entries:
+- product: Bright Pattern Contact Center
+  version: '5.36'
+  url: https://help.brightpattern.com/WhatsNew/BPCC-5.36.0
+- product: Agent Desktop
+  version: '2.0'
+  url: https://help.brightpattern.com/WhatsNew/Agent-desktop-2.0
+- product: Intelligence Engine
+  version: '1.6'
+  url: https://help.brightpattern.com/WhatsNew/Intelligence-Engine-1.6
+- product: Users Authentication
+  version: '1.4'
+  url: https://help.brightpattern.com/WhatsNew/User-Auth-1.4
+- product: Workforce Management
+  version: 1.4.1
+  url: https://help.brightpattern.com/WhatsNew/wfm-1.4.1
+- product: Mobile App
+  version: 3.0.81
+  url: https://help.brightpattern.com/WhatsNew/Version3.0.81
+- product: List Management API
+  version: '3.2'
+  archived: true
+- product: Intelligence Engine
+  version: '1.5'
+  archived: true
+- product: Bright Pattern Contact Center
+  version: '5.35'
+  archived: true
+- product: Bright Pattern Contact Center
+  version: 5.34.2
+  archived: true
+archive_note: The archive on the same page lists releases back to BPCC 5.2.0.
+x-evidence:
+  fetched: '2026-08-08'
+  url: https://help.brightpattern.com/WhatsNew
+  http_status: 200

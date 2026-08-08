@@ -1,0 +1,504 @@
+openapi: 3.1.0
+info:
+  title: BPCC Real-Time Statistics API
+  version: 1.0.0
+  description: 'With the Bright Pattern Contact Center Real-Time Statistics API, you can currently do
+    the following:
+
+
+    Create and manage a real-time statistics subcription
+
+
+    Retrieve dispositions
+
+
+    See if agents are available for a specified service
+
+
+    Notes:
+
+
+    Users attempting to use this API must have the privileges "Access Realtime Stats API", "View real-time
+    agent metrics", and "View real-time service metrics" enabled, as well as be the assigned supervisor
+    for the corresponding teams.
+
+
+    For a list of statistics to use, please see Bright Pattern Contact Center Help Documentation.'
+  contact:
+    name: Bright Pattern
+    url: https://www.brightpattern.com/contact/
+  x-origin:
+  - format: postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+    version: '2.1'
+  x-evidence:
+    fetched: '2026-08-08'
+    source: https://documenter.gw.postman.com/api/collections/6735878/T1DwbtSk?segregateAuth=true&versionTag=latest
+    http_status: 200
+    method: derived-from-published-postman-collection
+    note: Mechanically converted from the Postman collection Bright Pattern publishes as its public API
+      reference. No operations, paths, parameters or examples were invented.
+servers:
+- url: https://{tenant_url}
+  description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+  variables:
+    tenant_url:
+      default: example.brightpattern.com
+      description: Your Bright Pattern Contact Center tenant hostname.
+tags:
+- name: Authentication
+  description: "Authentication\n\nThis API supports authentication via OAuth 2.0.\n\nOAuth 2.0 Authentication\n\
+    \nThe OAuth 2.0 Client Credentials Grant is used to authenticate clients of this API, using the Get\
+    \ Access Token method. The authenticated user is checked for having appropriate privileges to perform\
+    \ the requested operation. The complete list of privileges can be found here. Privileges are assigned\
+    \ to users via one or more Roles.\n\nTo obtain an access token:\n\nLogin to your BPCC configuration\
+    \ portal.\n\nNavigate to the Users page.\n\nSelect or create a user; the user must:\n\nHave the following\
+    \ privileges:\n\nAccess Realtime Stats API\n\nView real-time agent metrics\n\nView real-time service\
+    \ metrics\n\nBe assigned as a team supervisor (i.e., they will get metrics for agents of this team\
+    \ and services handled by this team)\n\nClick the Generate button to generate an API secret key. Copy\
+    \ the generated key and note the username for the next steps.\n\nUse the Get Access Token method to\
+    \ obtain an access token. Set the client_id to the above username and the client_secret to the generated\
+    \ API secret key. A successful response returns an access_token:\n\n{\n  \"access_token\": \"<access\
+    \ token value>\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": \"3600\",\n  \"scope\": \"yourcompany.brightpattern.com\"\
+    \n}\n\nUse the value of access_token in the Authorization header of each subsequent request made via\
+    \ the BPCC Real-Time Stats API:\n\nAuthorization: Bearer <access token value>\n\nBasic Authentication\
+    \ (Deprecated)\n\nNote: This authentication method is deprecated since the release of the User Authentication\
+    \ service. Requests to Authenticate (POST /statsapi/auth) will return a 403 Forbidden response with\
+    \ {\"error\": \"illegal login attempt\". Use OAuth 2.0 Authentication instead.\n\nBasic authentication\
+    \ authenticates a user on a server using the Authenticate method. In the case of successful authentication,\
+    \ the server sets session cookies.\n\nThe authentication token retrieved by the Authenticate method\
+    \ must be included in the Cookie header of other methods:\n\nCookie:X-STATSAPI-TOKEN=61XXXXX2-XEX5-4XBX-81C3-14CXXXXXX721;\
+    \ X-STATSAPI-TENANT=tenant_URL; X-STATSAPI-LOGIN=user.name\n\nNote that this cookie is valid until\
+    \ the next user logs into any wallboard (i.e., one cookie per user)."
+- name: Methods
+  description: 'The Bright Pattern Contact Center Real-Time Statistics API methods are as follows.
+
+
+    Note:
+
+
+    For a list of statistics to use, please see Bright Pattern Contact Center Help Documentation.'
+paths:
+  /configapi/v2/oauth/token:
+    post:
+      operationId: getAccessToken
+      summary: Get Access Token
+      description: Returns an access token that will be used to authenticate each subsequent request made
+        via this API.
+      tags:
+      - Authentication
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  description: Username of a Bright Pattern user authorized to access the Real-time Stats
+                    API, View real-time agent metrics, and View real-time service metrics
+                client_secret:
+                  type: string
+                  description: API secret key generated for the above user
+                scope:
+                  type: string
+                  description: Your contact center URL (e.g., yourcompany.brightpattern.com)
+                grant_type:
+                  type: string
+                  description: Grant type; must be set to client_credentials
+            example:
+              client_id: ''
+              client_secret: ''
+              scope: ''
+              grant_type: ''
+      responses:
+        '200':
+          description: Get Access Token
+          content:
+            application/json:
+              example:
+                access_token: 15490315E83EBC929978DB0AE84D0AC63F0DC38AAB701A949FDEF6054E4A1AF9
+                token_type: Bearer
+                expires_in: '3600'
+                scope: yourcompany.brightpattern.com
+      security: []
+  /statsapi/auth:
+    post:
+      operationId: authenticate
+      summary: Authenticate
+      description: 'Authenticate - Deprecated
+
+
+        Note: This method is no longer supported; use the Get Access Token method instead.
+
+
+        This method authenticates a user on a server. In the case of successful authentication, the server
+        sets session cookies.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        OK
+
+
+        401
+
+        Unauthorized
+
+
+        403
+
+        Forbidden (BPCC version 5.36 and later; Basic Authentication no longer supported)'
+      tags:
+      - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              tenant_url: <tenant_url>
+              username: <username>
+              password: <password>
+      responses:
+        '200':
+          description: Authenticate
+          content:
+            application/json:
+              example:
+                token: 61XXXXX2-XEX5-4XBX-81C3-14CXXXXXX721
+                privileges:
+                - PUSH_PULL_GLOBAL_WALLBOARDS
+                - CUSTOMIZE_WALLBOARDS
+                - SYS_USE_AGENT_SEAT_MAPS
+                user_id: XXXC49E4-E9XX-4XFX-X4X4-62XXXXXXXX8E
+      security:
+      - bearerAuth: []
+  /statsapi/subscription:
+    post:
+      operationId: createSubscription
+      summary: Create Subscription
+      description: 'This method creates a subscription for a specific set of metrics. Each client can
+        have only one active subscription.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        OK subscription was created
+
+
+        400
+
+        Bad request
+
+
+        401
+
+        Unauthorized
+
+
+        409
+
+        Limit of active subscriptions exceeded for tenant'
+      tags:
+      - Methods
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "{\r\n    \"<app id>\": {\r\n        \"stats_totals\": [\"statistic name\" ], //array\
+              \ of statistics\r\n        \"service_grids\": [//array of service grid definitions \r\n\
+              \            {\r\n                \"id\": \"<grid Id>\",\r\n                \"columns\"\
+              : [//array of stats for columns\r\n                    {\r\n                        \"id\"\
+              : \"<column id>\",\r\n                        \"stat_name\": \"<statistic protocol name>\"\
+              \r\n                    }\r\n                ], \r\n                \"order_by\": \"<column\
+              \ id>\",\r\n                \"order_dir\": \"ASC|DESC\",\r\n                \"limit\": \"\
+              <count of top records>\",\r\n                \"filter_by\": \"<column id>\",\r\n       \
+              \         \"filter_value\": \"<value>\",\r\n                \"filter_operation\": \"EQ|NE|LT|GT|LE|GE\"\
+              \r\n            }\r\n        ],\r\n        \"agent_grids\": [ //array of agent grid definitions\
+              \  \r\n            {\r\n                \"id\": \"<grid Id>\",\r\n                \"columns\"\
+              : [//array of stats for columns\r\n                    {\r\n                        \"id\"\
+              : \"<column id>\",\r\n                        \"stat_name\": \"<statistic protocol name>\"\
+              , \r\n                        \"dispositions\": [\"<(optional)list of dispositions>\"]\r\
+              \n                    }\r\n                ], \r\n                \"order_by\": \"<column\
+              \ id>\",\r\n                \"order_dir\": \"ASC|DESC\",\r\n                \"limit\": \"\
+              <count of top records>\",\r\n                \"filter_by\": \"<column id>\",\r\n       \
+              \         \"filter_value\": \"<value>\",\r\n                \"filter_operation\": \"EQ|NE|LT|GT|LE|GE\"\
+              \r\n            }\r\n        ],\r\n        \"chat_messages\": {//top of internal chat messages\
+              \  \r\n        \"filter\": \"<filter by message content>\",\r\n        \"limit\": \"<count\
+              \ of top records>\"\r\n        }\r\n    }\r\n}"
+      responses:
+        '200':
+          description: Create Subscription
+      security:
+      - bearerAuth: []
+  /statsapi/subscription/data:
+    get:
+      operationId: getSubscriptionData
+      summary: Get Subscription Data
+      description: 'This method gets the statistics data of an active subscription.
+
+
+        Note:
+
+
+        Your user must be the supervisor of a team in order to retrieve agent_grid information.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        OK
+
+
+        204
+
+        No content (data is not ready yet)
+
+
+        401
+
+        Unauthorized
+
+
+        404
+
+        Bad request (there is no active subscription)'
+      tags:
+      - Methods
+      responses:
+        '200':
+          description: Get Subscription Data
+          content:
+            application/json:
+              example:
+                example.subscription.string:
+                  agent_grids:
+                  - id: example.agent.grid
+                    values:
+                    - '1': christy.borden
+                      '2': '0'
+                    - '1': marky.mark
+                      '2': '0'
+                    - '1': allen.fawcett
+                      '2': '0'
+                    - '1': jeffery.lozada
+                      '2': '0'
+                    - '1': liza.smith
+                      '2': '1'
+                  service_grids:
+                  - id: example.service.grid
+                    values:
+                    - '1': Chat Service
+                      '2': '2'
+                    - '1': '1'
+                      '2': '1'
+                    - '1': Outbound Voice
+                      '2': '2'
+                    - '1': '3'
+                      '2': '1'
+                    - '1': Best Chat Service
+                      '2': '1'
+                    - '1': Voice Inbound
+                      '2': '2'
+                    - '1': Support for CSIM
+                      '2': '2'
+                    - '1': Email Svc
+                      '2': '2'
+                    - '1': Nice Inbound
+                      '2': '1'
+                    - '1': '2'
+                      '2': '1'
+                  stats_totals:
+                    agents_logged: '2'
+                    in_average_speed_of_answer: ''
+                    agents_ready: '2'
+                  chat_messages: []
+      security:
+      - bearerAuth: []
+  /statsapi/subscription/active:
+    delete:
+      operationId: deleteSubscription
+      summary: Delete Subscription
+      description: This method deletes the active subscription, and clears the data cache on the server.
+      tags:
+      - Methods
+      responses:
+        '200':
+          description: Delete Subscription
+      security:
+      - bearerAuth: []
+  /statsapi/cfg/dispositions:
+    get:
+      operationId: getDispositions
+      summary: Get Dispositions
+      description: 'This method gets the disposition names for all supervised services.
+
+
+        Optional URL Parameters
+
+
+        agentCanSelect = 1
+
+
+        inbound = 1
+
+
+        outbound = 1
+
+
+        preview = 1
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        OK
+
+
+        401
+
+        Unauthorized'
+      tags:
+      - Methods
+      responses:
+        '200':
+          description: Get Dispositions
+          content:
+            application/json:
+              example:
+              - Agent failure
+              - Disposition not found
+              - Dropped while talking
+              - Offer rejected
+              - Phone number out of service
+              - Product sold
+              - Silence
+              - System failure
+              - Wrong number
+      security:
+      - bearerAuth: []
+  /statsapi/info/check_available_agents:
+    get:
+      operationId: getAvailableAgents
+      summary: Get Available Agents
+      description: 'This method gets either the "true" or the "false" value for agents ready to handle
+        a specific service.
+
+
+        Note:
+
+
+        No authentication or subscription is needed for this method.
+
+
+        Response
+
+
+        Code
+
+        Description
+
+
+        200
+
+        OK
+
+
+        True
+
+        "Number of ready agents" > 0 for the specific service (i.e., at least one agent is available)
+
+
+        False
+
+        "Number of ready agents" is 0 for the specific service (i.e., no agent is available)'
+      tags:
+      - Methods
+      parameters:
+      - name: service
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Available Agents
+          content:
+            application/json:
+              example:
+                availability: true
+      security:
+      - bearerAuth: []
+  /statsapi/cfg/teams:
+    get:
+      operationId: getTeams
+      summary: Get Teams
+      description: 'This method returns the names and internal object IDs of teams configured for the
+        given tenant.
+
+
+        Note that in order to get the above information about a specific team, the account used for API
+        authentication must be assigned as a supervisor to that team.'
+      tags:
+      - Methods
+      responses:
+        '200':
+          description: Get Teams
+          content:
+            application/json:
+              example:
+              - id: F4ED90FA-5A49-4D76-9487-4E41B24CA45F
+                name: Customer Service
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as `Authorization:
+        Bearer <token>`.'
+    oauth2ClientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client-credentials grant against the Bright Pattern tenant token endpoint.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant_url}/configapi/v2/oauth/token
+          scopes: {}
+security:
+- bearerAuth: []

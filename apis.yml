@@ -1,23 +1,286 @@
 aid: bright-pattern
 name: Bright Pattern
-description: 'Bright Pattern is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Bright Pattern is a cloud contact center (CCaaS) software company whose omnichannel platform
+  routes voice, IVR, email, chat, SMS/MMS, video and social messenger conversations to agents, with built-in
+  quality management, workforce management, outbound dialing and AI/bot assistance. The platform is multi-tenant:
+  every customer contact center runs on its own tenant hostname, and Bright Pattern exposes nine public
+  REST API families against that tenant — Configuration, SCIM-compliant user provisioning, List Management
+  (v2, v3.0, v3.2), Task Routing, SMS/MMS, Interaction Content (call recordings and metadata), Real-Time
+  Statistics, and the Mobile/Web Messaging APIs (v1 and v2) that back the iOS and Android Mobile SDKs.
+  The public API reference is published as Postman documenter collections linked from the Bright Pattern
+  documentation wiki.'
+image: https://www.brightpattern.com/wp-content/uploads/2025/02/Brightpattern-Homepage-Logo.png
 url: https://raw.githubusercontent.com/api-evangelist/bright-pattern/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-08'
 modified: '2026-08-08'
 tags:
 - Company
-apis: []
+- Contact Center
+- CCaaS
+- Customer Experience
+- Omnichannel
+- Call Center
+- Telephony
+- Messaging
+- SMS
+- Voice
+- Customer Service
+- Workforce Management
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: bright-pattern-configuration
+  name: Bright Pattern Configuration API
+  description: Automate user provisioning and read contact-center configuration from third-party systems.
+    Create, read, update, delete and unlock users; list teams; and read the phone directory and access
+    numbers on a Bright Pattern tenant.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
+  tags:
+  - Configuration
+  - Users
+  - Provisioning
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-configuration-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+- aid: bright-pattern-scim-user-provisioning
+  name: Bright Pattern SCIM-Compliant User Provisioning API
+  description: SCIM 2.0 compliant user provisioning endpoint for communicating user identity data between
+    an identity provider and Bright Pattern Contact Center, supporting create, get, replace, patch, delete
+    and filtered lookup of users.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2/scim
+  tags:
+  - SCIM
+  - Identity
+  - Provisioning
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-scim-user-provisioning-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+- aid: bright-pattern-list-management-v3-2
+  name: Bright Pattern List Management API v3.2
+  description: Manage outbound calling campaigns, calling lists, Do Not Call lists and campaign link groups
+    from third-party applications — the current major version of the List Management API, with campaign
+    start/stop, dispositions, caller IDs, team assignment and record-level fetch, add, update, erase and
+    delete.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v3
+  tags:
+  - List Management
+  - Outbound
+  - Campaigns
+  - Do Not Call
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-list-management-v3-2-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+- aid: bright-pattern-list-management-v3
+  name: Bright Pattern List Management API v3.0
+  description: Version 3.0 of the List Management API for outbound calling campaigns, calling lists and
+    Do Not Call lists, including job status polling for long-running list operations.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v3
+  tags:
+  - List Management
+  - Outbound
+  - Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-list-management-v3-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+- aid: bright-pattern-list-management-v2
+  name: Bright Pattern List Management API v2.0
+  description: Version 2.0 of the List Management API, addressing calling lists and Do Not Call lists
+    by name rather than by id. Superseded by v3.x but still published.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
+  tags:
+  - List Management
+  - Outbound
+  - Legacy
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-list-management-v2-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+- aid: bright-pattern-task-routing
+  name: Bright Pattern Task Routing API
+  description: Enables external systems such as CRMs to create, route, modify, cancel and query tasks
+    in Bright Pattern Contact Center, associating each task with a case and a contact and supporting external
+    identifiers so records are not duplicated across systems.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/taskroutingapi/v1
+  tags:
+  - Task Routing
+  - Routing
+  - CRM
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-task-routing-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+- aid: bright-pattern-sms-mms
+  name: Bright Pattern SMS/MMS API
+  description: Send SMS and MMS messages from the text-capable access numbers of a Bright Pattern tenant,
+    and track delivery status. Replies can be directed into a chat service for agent handling.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/clientweb/smsapi/v1
+  tags:
+  - SMS
+  - MMS
+  - Messaging
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-sms-mms-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+- aid: bright-pattern-interaction-content
+  name: Bright Pattern Interaction Content API
+  description: Download call recordings as audio files together with their interaction metadata, including
+    multichannel recording structure and per-segment audio, and erase recordings with a recorded reason.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
+  tags:
+  - Recordings
+  - Interactions
+  - Compliance
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-interaction-content-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+- aid: bright-pattern-real-time-statistics
+  name: Bright Pattern Real-Time Statistics API
+  description: Subscribe to real-time contact-center statistics and poll subscription data, plus read
+    dispositions, teams and agent availability for a service.
+  humanURL: https://help.brightpattern.com/latest:Real-time-statistics-api/ListofStatistics
+  baseURL: https://{tenant}.brightpattern.com/statsapi
+  tags:
+  - Statistics
+  - Real-Time
+  - Reporting
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-real-time-statistics-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+- aid: bright-pattern-mobile-web-messaging-v2
+  name: Bright Pattern Mobile/Web Messaging API v2
+  description: Customer-facing chat, voice and video messaging API used to build mobile and web messaging
+    experiences against a Bright Pattern tenant — availability checks, chat requests, event streams, file
+    upload, agent profile photos, ICE servers for WebRTC, case history and mobile push notification subscription.
+    Backs the iOS and Android Mobile SDKs.
+  humanURL: https://help.brightpattern.com/latest:Mobile-SDK-Instruction-Manual/About
+  baseURL: https://{tenant}.brightpattern.com/clientweb/api/v2
+  tags:
+  - Messaging
+  - Chat
+  - Mobile
+  - WebRTC
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+- aid: bright-pattern-mobile-web-messaging-v1
+  name: Bright Pattern Mobile/Web Messaging API v1
+  description: Version 1 of the customer-facing chat, voice and video messaging API for mobile and web
+    applications. Superseded by v2 but still published.
+  humanURL: https://help.brightpattern.com/latest:Mobile-SDK-Instruction-Manual/About
+  baseURL: https://{tenant}.brightpattern.com/clientweb/api/v1
+  tags:
+  - Messaging
+  - Chat
+  - Mobile
+  - Legacy
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
 common:
+- type: AgenticAccess
+  url: agentic-access/bright-pattern-agentic-access.yml
+- type: TrustCenter
+  url: security/bright-pattern-trust-center.yml
+- type: DomainSecurity
+  url: security/bright-pattern-domain-security.yml
+- type: Authentication
+  url: authentication/bright-pattern-authentication.yml
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://www.brightpattern.com/
+- type: DeveloperPortal
+  url: https://help.brightpattern.com/latest:Api
+- type: Documentation
+  url: https://help.brightpattern.com/
+- type: APIReference
+  url: https://help.brightpattern.com/latest:Api
+- type: GettingStarted
+  url: https://help.brightpattern.com/latest:Tutorials-for-admins/API/Access
+- type: Postman
+  url: postman/bright-pattern-postman.yml
+- type: Support
+  url: https://www.brightpattern.com/contact-center-support/
+- type: Blog
+  url: https://www.brightpattern.com/blog/
+- type: BlogRSS
+  url: https://www.brightpattern.com/feed/
+- type: GitHubOrganization
+  url: https://github.com/ServicePattern
+- type: Pricing
+  url: https://www.brightpattern.com/call-center-software-pricing/
+- type: SignUp
+  url: https://www.brightpattern.com/contact-bright-pattern/
+- type: TermsOfService
+  url: https://www.brightpattern.com/terms-conditions/
+- type: PrivacyPolicy
+  url: https://www.brightpattern.com/privacy-policy/
+- type: Compliance
+  url: https://www.brightpattern.com/compliance/
+- type: ChangeLog
+  url: https://help.brightpattern.com/WhatsNew
+- type: OpenAPI
+  url: openapi/bright-pattern-list-management-v3-2-openapi.yml
+- type: Packages
+  url: packages/bright-pattern-packages.yml
+- type: SDKs
+  url: packages/bright-pattern-packages.yml
+- type: WellKnown
+  url: well-known/bright-pattern-well-known.yml
+- type: LLMsTxt
+  url: llms/bright-pattern-llms.txt
+- type: Conformance
+  url: conformance/bright-pattern-conformance.yml
+- type: ErrorCatalog
+  url: errors/bright-pattern-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/bright-pattern-lifecycle.yml
+- type: Conventions
+  url: conventions/bright-pattern-conventions.yml
+- type: Idempotency
+  url: conventions/bright-pattern-conventions.yml
+- type: Components
+  url: components/bright-pattern-components.yml
+- type: DataModel
+  url: data-model/bright-pattern-data-model.yml
+- type: Overlay
+  url: overlays/bright-pattern-list-management-v3-2-overlay.yaml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-08-08'
+  status: enriched
+  artifacts_added: 55
+  pass: local-v1

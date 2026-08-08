@@ -1,0 +1,52 @@
+generated: '2026-08-08'
+method: searched
+source: https://help.brightpattern.com/WhatsNew + https://help.brightpattern.com/latest:Api
+versioning:
+  scheme: uri-path
+  note: Each API family carries its own major version in the path (/configapi/v2, /configapi/v3, /taskroutingapi/v1,
+    /clientweb/api/v1, /clientweb/api/v2, /clientweb/smsapi/v1). The platform itself is versioned separately
+    as BPCC 5.x and documented per version on the wiki, where each release has its own documentation namespace
+    (5.2:, 5.8:, 5.19:, latest:).
+  current_platform_version: BPCC 5.36
+  api_versions:
+    configuration: v2
+    scim: v2
+    list-management: v3.2 (v3.0 and v2.0 still published)
+    task-routing: v1
+    sms-mms: v1
+    interaction-content: v2
+    real-time-statistics: unversioned (/statsapi)
+    mobile-web-messaging: v2 (v1 still published)
+  docs: https://help.brightpattern.com/latest:Api
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: No written deprecation or sunset policy is published, and no RFC 8594 Sunset/Deprecation headers
+    are documented. Deprecation is signalled only by the word DEPRECATED in operation names inside the
+    List Management collections, and by superseded API versions remaining published alongside current
+    ones (Mobile/Web Messaging v1, List Management v2.0/v3.0).
+sla:
+  url: null
+  uptime_target: null
+  note: No public SLA or uptime commitment found on the website or the documentation wiki.
+status_page: null
+status_page_note: No public status page found. status.brightpattern.com does not resolve (NXDOMAIN), and
+  no status/uptime link appears on the website footer, the support page or the documentation wiki.
+release_notes: https://help.brightpattern.com/WhatsNew
+deprecated_operations:
+- openapi/bright-pattern-list-management-v3-2-openapi.yml#getAllRecordsDeprecated
+- openapi/bright-pattern-list-management-v3-2-openapi.yml#getUpdatedRecordsDeprecated
+- openapi/bright-pattern-list-management-v3-2-openapi.yml#queryARecordDeprecated
+- openapi/bright-pattern-list-management-v3-2-openapi.yml#addRecordsDeprecated
+- openapi/bright-pattern-list-management-v3-2-openapi.yml#replaceRecordsDeprecated
+- openapi/bright-pattern-list-management-v3-openapi.yml#getAllRecordsDeprecated
+- openapi/bright-pattern-list-management-v3-openapi.yml#getUpdatedRecordsDeprecated
+- openapi/bright-pattern-list-management-v3-openapi.yml#queryARecordDeprecated
+- openapi/bright-pattern-list-management-v3-openapi.yml#addRecordsDeprecated
+- openapi/bright-pattern-list-management-v3-openapi.yml#replaceRecordsDeprecated
+x-evidence:
+- url: https://status.brightpattern.com/
+  result: NXDOMAIN
+- url: https://help.brightpattern.com/WhatsNew
+  status: 200

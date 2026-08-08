@@ -1,0 +1,1208 @@
+openapi: 3.1.0
+info:
+  title: BPCC List Management API v2.0
+  version: 1.0.0
+  description: 'Introduction
+
+
+    With the BPCC List Management API you currently can:
+
+
+    Manage the contents of outbound calling lists
+
+
+    Manage the contents of Do Not Call lists
+
+
+    Get information about enabled outbound campaigns
+
+
+    This document specifies the corresponding REST API methods, with example requests and responses. You
+    can load this API into the Postman API Development Environment to interact with the API with your
+    own access tokens.'
+  contact:
+    name: Bright Pattern
+    url: https://www.brightpattern.com/contact/
+  x-origin:
+  - format: postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+    version: '2.1'
+  x-evidence:
+    fetched: '2026-08-08'
+    source: https://documenter.gw.postman.com/api/collections/6735878/T1DtdFDu?segregateAuth=true&versionTag=latest
+    http_status: 200
+    method: derived-from-published-postman-collection
+    note: Mechanically converted from the Postman collection Bright Pattern publishes as its public API
+      reference. No operations, paths, parameters or examples were invented.
+servers:
+- url: https://{tenant_url}
+  description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+  variables:
+    tenant_url:
+      default: example.brightpattern.com
+      description: Your Bright Pattern Contact Center tenant hostname.
+tags:
+- name: Authentication
+  description: 'The OAuth 2.0 Client Credentials Grant is used to authenticate clients of this API. The
+    authenticated user is checked for having appropriate privileges to perform the requested operation.
+    The complete list of privileges can be found here. Privileges are assigned to users via one or more
+    roles.
+
+
+    To obtain an access token:
+
+
+    Login to the Contact Center Administrator application.
+
+
+    Navigate to the Users page. Select or create a user with privileges corresponding to the tasks you
+    wish to perform via the BPCC List Management API.
+
+
+    Click the Generate button to generate an API secret key. Copy the generated key and note the username
+    for the next steps.
+
+
+    Use the Get Access Token method to obtain an access token. Set the client_id to the username and client_secret
+    to the generated API secret key.
+
+
+    Use the value of access_token returned in the response to set the Authorization: Bearer [access token]
+    header of each subsequent request made via the BPCC List Management API.'
+- name: Calling List
+- name: Campaigns
+- name: Do Not Call List
+paths:
+  /configapi/v2/oauth/token:
+    post:
+      operationId: getAccessToken
+      summary: Get Access Token
+      description: Returns an access token that will be used to authenticate each subsequent request made
+        via this API.
+      tags:
+      - Authentication
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  description: Username of a Bright Pattern user authorized to manage users and manage
+                    all teams
+                client_secret:
+                  type: string
+                  description: API secret key generated for the above user
+                scope:
+                  type: string
+                  description: Your contact center URL (e.g., yourcompany.brightpattern.com)
+                grant_type:
+                  type: string
+                  description: Grant type; must be set to client_credentials
+            example:
+              client_id: ''
+              client_secret: ''
+              scope: ''
+              grant_type: ''
+      responses:
+        '200':
+          description: Get Access Token
+          content:
+            application/json:
+              example:
+                access_token: 15490315E83EBC929978DB0AE84D0AC63F0DC38AAB701A949FDEF6054E4A1AF9
+                token_type: Bearer
+                expires_in: '3600'
+                scope: yourcompany.brightpattern.com
+      security: []
+  /configapi/v2/callinglist/addAll/{list_name}:
+    post:
+      operationId: addManyRecords
+      summary: Add Many Records
+      description: "This method adds multiple new records to the specified calling list. It returns an\
+        \ error if a record with the same values of unique keys as configured in the list definition already\
+        \ exists. \n\nNotes:\n\nField names are provided as they were defined during list creation.\n\n\
+        Key fields and required fields are mandatory.\n\nlist_name is the name of the calling list (e.g.,\
+        \ list.csv).\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess (may be partial success; additional\
+        \ problem description contained in response)\n\n400\nBad request (format not understood)\n\n401\n\
+        Authentication failed\n\n403\nUser authenticated but does not have sufficient privileges\n\n404\n\
+        Calling List is not found or invalid URL"
+      tags:
+      - Calling List
+      parameters:
+      - name: list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "[\r\n    {\r\n        \"fieldName_1\": \"value_1\", \r\n        \"fieldName_n\"\
+              : \"value_n\"\r\n    },\r\n          ...\r\n]"
+      responses:
+        '200':
+          description: Add Many Records
+          content:
+            application/json:
+              example:
+                added: 2
+      security:
+      - bearerAuth: []
+  /configapi/v2/callinglist/add/{list_name}:
+    post:
+      operationId: addRecord
+      summary: Add Record
+      description: 'This method adds a single new record to the specified calling list. It returns an
+        error if a record with the same values of unique keys as configured in the list definition already
+        exists.
+
+
+        Notes:
+
+
+        Field names are provided as they were defined during list creation.
+
+
+        Key fields and required fields are mandatory.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success (response body is empty)
+
+
+        400
+
+        Bad request (missing required fields or format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges
+
+
+        404
+
+        Calling List is not found or invalid URL
+
+
+        409
+
+        Duplicate key error'
+      tags:
+      - Calling List
+      parameters:
+      - name: list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "{\r\n    \"fieldName_1\": \"value_1\",\r\n    ...\r\n    \"fieldName_n\": \"value_n\"\
+              \r\n}"
+      responses:
+        '200':
+          description: Add Record
+      security:
+      - bearerAuth: []
+  /configapi/v2/callinglist/deleteAll/{list_name}:
+    post:
+      operationId: deleteAllRecords
+      summary: Delete All Records
+      description: 'This method deletes all records from the calling list. List results are also deleted.
+        It returns OK if the list exists but is empty already. Note that this method erases calling list
+        results and it will do so regardless of whether the results have been exported or not.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (missing required fields or format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges, or modification of this type of list
+        is not allowed
+
+
+        404
+
+        Calling List is not found or invalid URL'
+      tags:
+      - Calling List
+      parameters:
+      - name: list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Delete All Records
+      security:
+      - bearerAuth: []
+  /configapi/v2/callinglist/getAll/{list_name}/{campaign_name}:
+    post:
+      operationId: getAllRecords
+      summary: Get All Records
+      description: 'Calling list records are sequentially numbered in order of insertion, beginning from
+        zero. This method returns a list of records in the calling list that has an index that is greater
+        than or to equal to the requested record index.
+
+
+        Input parameters are "initial record index" and "maximum size of returned list." Current implementation
+        limits "maxSize" to 1000 records. All time values are returned in UTC.
+
+
+        Notes:
+
+
+        The returned list contains JSON objects sorted by index.
+
+
+        The “entry” field of these objects contains a copy of the list entry
+
+
+        Field names are provided as they were defined during list creation.
+
+
+        The “status” field contains the results of calling this record in this campaign.
+
+
+        Field names are predefined.
+
+
+        “Completed” is always present; all other fields may be absent if the record was never called or
+        never reached the agent.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (missing required fields or format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges
+
+
+        404
+
+        Calling List is not found, campaign is not found, or invalid URL'
+      tags:
+      - Calling List
+      parameters:
+      - name: list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: campaign_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              fromIndex: 123456
+              maxSize: 100
+      responses:
+        '200':
+          description: Get All Records
+          content:
+            application/json:
+              example:
+              - entry:
+                  firstname: Graham
+                  phone: '16509999999'
+                  id: '1'
+                  lastname: Smith
+                  status: Gold
+                index: 0
+                status:
+                  globalInteractionID: 0B767156-D012-4F63-A3E2-12ACFC2F26EA
+                  lastCallDuration: 0
+                  lastDisposition: No disposition
+                  totalAttempts: 1
+                  completed: false
+                  lastAgent: elizabeth
+                  lastPhone: '16509999999'
+                  lastDate: '2021-02-19T19:11:40.000'
+              - entry:
+                  firstname: Mike
+                  phone: '16507777777'
+                  id: '2'
+                  lastname: Miller
+                  status: Platinum
+                index: 1
+                status:
+                  globalInteractionID: 3F4F2ACD-1233-42E3-8092-3A9F7D9D84BC
+                  lastCallDuration: 0
+                  lastDisposition: Try again later
+                  totalAttempts: 1
+                  completed: false
+                  lastAgent: elizabeth
+                  lastPhone: '16507777777'
+                  lastDate: '2021-02-19T19:12:21.000'
+              - entry:
+                  firstname: Katrina
+                  phone: '16505555555'
+                  id: '3'
+                  lastname: Johnson
+                  status: Silver
+                index: 2
+                status:
+                  globalInteractionID: 9D914127-C1C4-4587-8B30-4E2A9790D184
+                  lastCallDuration: 0
+                  lastDisposition: Product sold
+                  totalAttempts: 1
+                  completed: true
+                  lastAgent: elizabeth
+                  lastPhone: '16505555555'
+                  lastDate: '2021-02-19T19:12:37.000'
+              - entry:
+                  firstname: Jenny
+                  phone: '16502222222'
+                  id: '4'
+                  lastname: Green
+                  status: Gold
+                index: 3
+                status:
+                  globalInteractionID: 35DE77AC-5A37-4907-97CA-50B09B30ECDF
+                  lastCallDuration: 0
+                  lastDisposition: Fast busy
+                  totalAttempts: 1
+                  completed: false
+                  lastAgent: elizabeth
+                  lastPhone: '16502222222'
+                  lastDate: '2021-02-19T19:13:08.000'
+      security:
+      - bearerAuth: []
+  /configapi/v2/callinglist/getCompleted/{list_name}/{campaign_name}:
+    post:
+      operationId: getCompletedRecords
+      summary: Get Completed Records
+      description: 'This method returns a list of completed records in the calling list that have a completion
+        time that is greater than or equal to the requested initial time (UTC). Input parameters are the
+        initial time in ISO format and the maximum size of the returned list. Current implementation limits
+        "maxSize" to 1000 records. All time values are returned in UTC.
+
+
+        Notes:
+
+
+        The returned list contains JSON objects sorted by completion time.
+
+
+        The “entry” field of these objects contains a copy of the list entry.
+
+
+        Field names are provided as they were defined during list creation.
+
+
+        The “status” field contains the results of calling this record in this campaign.
+
+
+        Field names are predefined.
+
+
+        “Completed” is always present; all other fields may be absent if record was never called or never
+        reached agent.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (missing required fields or format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges
+
+
+        404
+
+        Calling List is not found, campaign is not found, or invalid URL'
+      tags:
+      - Calling List
+      parameters:
+      - name: list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: campaign_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              fromTime: '2013-03-01T13:15:06.456'
+              maxSize: '100'
+      responses:
+        '200':
+          description: Get Completed Records
+          content:
+            application/json:
+              example:
+              - completedTime: '2021-02-19T19:12:37.000'
+                entry:
+                  firstname: Katrina
+                  phone: '16502222222'
+                  id: '3'
+                  lastname: Johnson
+                  status: Silver
+                status:
+                  globalInteractionID: 9D914127-C1C4-4587-8B30-4E2A9790D184
+                  lastCallDuration: 0
+                  lastDisposition: Product sold
+                  totalAttempts: 1
+                  completed: true
+                  lastAgent: elizabeth
+                  lastPhone: '16502222222'
+                  lastDate: '2021-02-19T19:12:37.000'
+      security:
+      - bearerAuth: []
+  /configapi/v2/callinglist/getChanged/{list_name}/{campaign_name}:
+    post:
+      operationId: getUpdatedRecords
+      summary: Get Updated Records
+      description: This method returns records of the specified calling list that have had any activity
+        within the specified campaign since the requested initial time.
+      tags:
+      - Calling List
+      parameters:
+      - name: list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: campaign_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              fromTime: '2013-03-01T13:15:06.456'
+              maxSize: '100'
+      responses:
+        '200':
+          description: Get Updated Records
+          content:
+            application/json:
+              example:
+              - entry:
+                  firstname: Graham
+                  phone: '16509999999'
+                  id: '1'
+                  lastname: Smith
+                  status: Gold
+                completed: false
+                recordDisposition: ''
+                recordDispositionCode: ''
+                totalAttempts: 1
+                attempts:
+                - call_attempted: false
+                  disposition: No disposition
+                  dispositionCode: ''
+                  date: '2021-02-19T19:11:40.000'
+                  phone: '16509999999'
+                  callDuration: 0
+                  dialingDuration: 0
+                  callNotes: ''
+                  agent: elizabeth
+                  globalInteractionID: 0B767156-D012-4F63-A3E2-12ACFC2F26EA
+                  CPADuration: 0
+              - entry:
+                  firstname: Mike
+                  phone: '16507777777'
+                  id: '2'
+                  lastname: Miller
+                  status: Platinum
+                completed: false
+                recordDisposition: ''
+                recordDispositionCode: ''
+                totalAttempts: 1
+                attempts:
+                - call_attempted: false
+                  disposition: Try again later
+                  dispositionCode: ''
+                  date: '2021-02-19T19:12:21.000'
+                  phone: '16507777777'
+                  callDuration: 0
+                  dialingDuration: 0
+                  callNotes: ''
+                  agent: elizabeth
+                  globalInteractionID: 3F4F2ACD-1233-42E3-8092-3A9F7D9D84BC
+                  CPADuration: 0
+              - entry:
+                  firstname: Katrina
+                  phone: '16505555555'
+                  id: '3'
+                  lastname: Johnson
+                  status: Silver
+                completed: true
+                recordDisposition: Product sold
+                recordDispositionCode: ''
+                totalAttempts: 1
+                attempts:
+                - call_attempted: false
+                  disposition: Product sold
+                  dispositionCode: ''
+                  date: '2021-02-19T19:12:37.000'
+                  phone: '16505555555'
+                  callDuration: 0
+                  dialingDuration: 0
+                  callNotes: ''
+                  agent: elizabeth
+                  globalInteractionID: 9D914127-C1C4-4587-8B30-4E2A9790D184
+                  CPADuration: 0
+              - entry:
+                  firstname: Jenny
+                  phone: '16502222222'
+                  id: '4'
+                  lastname: Green
+                  status: Gold
+                completed: false
+                recordDisposition: ''
+                recordDispositionCode: ''
+                totalAttempts: 1
+                attempts:
+                - call_attempted: false
+                  disposition: Fast busy
+                  dispositionCode: ''
+                  date: '2021-02-19T19:13:08.000'
+                  phone: '16502222222'
+                  callDuration: 0
+                  dialingDuration: 0
+                  callNotes: ''
+                  agent: elizabeth
+                  globalInteractionID: 35DE77AC-5A37-4907-97CA-50B09B30ECDF
+                  CPADuration: 0
+      security:
+      - bearerAuth: []
+  /configapi/v2/callinglist/get/{list_name}/{campaignname}:
+    post:
+      operationId: queryARecord
+      summary: Query a Record
+      description: 'This method queries the status of an existing record in the specified calling list
+        in the specified campaign. It returns an error if a record with the same values of unique keys
+        as configured in the list definition does not exist. All time values are returned in UTC.
+
+
+        Notes:
+
+
+        Campaign name is optional but has to be present.
+
+
+        Use any string value instead.
+
+
+        The request can contain either a full or partial set of fields for the object, but the key fields
+        are mandatory.
+
+
+        Only key fields are used for the object search; the non-key fields are ignored.
+
+
+        There are two sub-objects in the returned JSON.
+
+
+        The “entry” contains a copy of the list entry.
+
+
+        Field names are provided as they were defined during list creation.
+
+
+        The “status” contains the results of calling this record in this campaign.
+
+
+        Field names are predefined.
+
+
+        “Completed” is always present; all other fields may be absent if the record was never called or
+        never reached agent.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (missing required fields or format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges
+
+
+        404
+
+        Calling List is not found, record is not found, or invalid URL'
+      tags:
+      - Calling List
+      parameters:
+      - name: list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: campaignname
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "{\r\n    \"keyfieldName_1\": \"value_1\",\r\n    ...\r\n    \"keyfieldName_n\":\
+              \ \"value_n\"\r\n}"
+      responses:
+        '200':
+          description: Query a Record
+          content:
+            application/json:
+              example:
+                entry:
+                  firstname: Mike
+                  phone: '16505555555'
+                  id: '2'
+                  lastname: Miller
+                  status: Platinum
+                status:
+                  globalInteractionID: 3F4F2ACD-1233-42E3-8092-3A9F7D9D84BC
+                  lastCallDuration: 0
+                  lastDisposition: Try again later
+                  totalAttempts: 1
+                  completed: false
+                  lastAgent: elizabeth
+                  lastPhone: '16505555555'
+                  lastDate: '2021-02-19T19:12:21.000'
+      security:
+      - bearerAuth: []
+  /configapi/v2/callinglist/update/{list_name}:
+    post:
+      operationId: updateRecord
+      summary: Update Record
+      description: 'This method updates fields in an existing record in the specified calling list. It
+        returns an error if a record with the same values of unique keys as configured in the list definition
+        does not exist. The unique keys cannot be changed.
+
+
+        Note: Updating a list record requires internal reprocessing of the entire calling list. Thus,
+        if this method is applied to a list within a running campaign, the use of this list within the
+        given campaign will be suspended until list reprocessing is complete. The suspension time will
+        depend on the list size and, for long lists, may amount to tens of minutes. Other lists associated
+        with the same campaign will not be affected.
+
+
+        Other Notes:
+
+
+        Field names are provided as they were defined during list creation.
+
+
+        The request can contain either a full or partial set of fields for the object, but the key fields
+        are mandatory.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (missing required fields or format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges
+
+
+        404
+
+        Calling List is not found, record is not found, or invalid URL (body is empty)'
+      tags:
+      - Calling List
+      parameters:
+      - name: list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "{\r\n    \"fieldName_1\": \"value_1\",\r\n    ...\r\n    \"fieldName_n\": \"value_n\"\
+              \r\n}"
+      responses:
+        '200':
+          description: Update Record
+      security:
+      - bearerAuth: []
+  /configapi/v2/campaign/getAll:
+    get:
+      operationId: getCampaigns
+      summary: Get Campaigns
+      description: 'This method returns the list of enabled campaigns and the calling lists currently
+        associated with such campaigns. It does not return any disabled campaigns.
+
+
+        Notes:
+
+
+        An empty array can be returned if there are no enabled campaigns.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        OK
+
+
+        400
+
+        Bad request (missing required fields or format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges'
+      tags:
+      - Campaigns
+      responses:
+        '200':
+          description: Get Campaigns
+          content:
+            application/json:
+              example:
+              - name: CupIQ Dynamics Preview
+                state: STOPPED
+                lists:
+                - CupIQ Dynamics Preview.csv
+      security:
+      - bearerAuth: []
+  /configapi/v2/donotcalllist/add/{do_not_call_list_name}:
+    post:
+      operationId: addRecordsToDnc
+      summary: Add Records to DNC
+      description: 'This method adds new records to the specified Do Not Call (DNC) list and returns the
+        number of added (i.e., appended) records. Duplicates are ignored.
+
+
+        An optional comment field value is inserted in the comment field of a geographic (postal) DNC
+        record, campaign name field of an internal DNC record, and in the comment field of area codes
+        DNC record. This method is supported for internal, geographic postal, area codes, and record exclusion
+        DNC lists.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges, or modification of this type of list
+        is not allowed
+
+
+        404
+
+        Calling List is not found or invalid URL'
+      tags:
+      - Do Not Call List
+      parameters:
+      - name: do_not_call_list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "[\r\n    [\r\n        \"123456789\",\r\n        \"optional comment\"\r\n    ],\r\
+              \n   …\r\n   [\r\n        \"9999999999\",\r\n        \"optional comment\"\r\n    ]\r\n]"
+      responses:
+        '200':
+          description: Add Records to DNC
+          content:
+            application/json:
+              example:
+                added: 2
+      security:
+      - bearerAuth: []
+  /configapi/v2/donotcalllist/replaceAll/{do_not_call_list_name}:
+    post:
+      operationId: replaceRecordsInDnc
+      summary: Replace Records in DNC
+      description: 'The method replaces all records in the specified Do Not Call (DNC) list and returns
+        the number of newly inserted records. Duplicates are ignored. An optional comment field value
+        is inserted in the comment field of a geographic (postal) DNC record, campaign name field of an
+        internal DNC record, and in the comment field of area codes DNC record. This method is supported
+        for internal, geographic postal area codes, and accounts'' DNC lists.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges, or modification of this type of list
+        is not allowed
+
+
+        404
+
+        Calling List is not found or invalid URL'
+      tags:
+      - Do Not Call List
+      parameters:
+      - name: do_not_call_list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "[\r\n    [\r\n        \"123456789\",\r\n        \"optional comment\"\r\n    ],\r\
+              \n   …\r\n   [\r\n        \"9999999999\",\r\n        \"optional comment\"\r\n    ]\r\n]"
+      responses:
+        '200':
+          description: Replace Records in DNC
+          content:
+            application/json:
+              example:
+                added: 2
+      security:
+      - bearerAuth: []
+  /configapi/v2/donotcalllist/deleteAll/{do_not_call_list_name}:
+    post:
+      operationId: deleteAllRecordsDoNotCallList
+      summary: Delete All Records
+      description: 'This method deletes all records from the specified DNC List and returns the number
+        of deleted records.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges, or modification of this type of list
+        is not allowed
+
+
+        404
+
+        DNC List is not found or invalid URL'
+      tags:
+      - Do Not Call List
+      parameters:
+      - name: do_not_call_list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Delete All Records
+      security:
+      - bearerAuth: []
+  /configapi/v2/donotcalllist/delete/{do_not_call_list_name}:
+    post:
+      operationId: deleteRecords
+      summary: Delete Records
+      description: 'This method deletes the list of specified records from the DNC List, returns the number
+        of deleted records and list of errors if there are.
+
+
+        Input parameters:
+
+
+        List of DNC list record JSON objects
+
+
+        Only the "key" field is required.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges, or modification of this type of list
+        is not allowed
+
+
+        404
+
+        DNC List is not found or invalid URL'
+      tags:
+      - Do Not Call List
+      parameters:
+      - name: do_not_call_list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+            example:
+            - key: '9999999'
+            - key: '8888888'
+      responses:
+        '200':
+          description: Delete Records
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as `Authorization:
+        Bearer <token>`.'
+    oauth2ClientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client-credentials grant against the Bright Pattern tenant token endpoint.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant_url}/configapi/v2/oauth/token
+          scopes: {}
+security:
+- bearerAuth: []

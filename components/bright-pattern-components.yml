@@ -1,0 +1,36 @@
+generated: '2026-08-08'
+method: searched
+source: https://help.brightpattern.com/latest:Api
+note: Bright Pattern ships client-side embeddable surfaces for putting the Agent Desktop, or parts of
+  it, inside another web application or CRM — these are distinct from the REST APIs and from the mobile
+  SDKs in packages/.
+families:
+- name: Communicator Widget SDK
+  kind: embeddable web widget
+  description: Client-side JavaScript API for embedding and controlling the Bright Pattern communicator
+    widget in a host web page.
+  docs: https://help.brightpattern.com/latest:AgentDesktop-client-side-javascript-api-specification/APIMethods
+- name: Agent Desktop 1.0 SDK
+  kind: embedded application
+  description: SDK for embedding the full Agent Desktop application into a third-party web page or CRM,
+    with a demo.
+  docs: https://help.brightpattern.com/latest:Embedded-agent-desktop-sdk-specification/Purpose
+- name: Desktop JavaScript API
+  kind: in-page JavaScript API
+  description: Simple JavaScript API available to web pages and iFrames screen-popped into the Agent Desktop,
+    for reading interaction context and driving agent actions.
+  docs: https://help.brightpattern.com/latest:Desktop-javascript-api-specification/Purpose
+- name: Simplified Desktop .NET API
+  kind: desktop integration library
+  description: Simple .NET API for controlling agent states and handling calls from .NET-based desktop
+    applications.
+  docs: https://help.brightpattern.com/latest:Simplified-desktop-net-api-specification/Purpose
+- name: Desktop Integration API (.NET, full)
+  kind: desktop integration library
+  description: Full .NET desktop integration API for deeper control of agent state and interaction handling.
+  docs: https://help.brightpattern.com/latest:Desktop-integration-api-net-version-tutorial/GeneralInformation
+- name: Web chat client application source
+  kind: downloadable reference client
+  description: Source code of a sample customer-facing web chat application, downloadable from the Messaging/Chat
+    Scenario Entry page of the Contact Center Administrator application.
+  docs: https://help.brightpattern.com/latest:Mobile-SDK-Instruction-Manual/About

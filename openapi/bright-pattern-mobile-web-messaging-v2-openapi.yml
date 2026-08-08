@@ -1,0 +1,1422 @@
+openapi: 3.1.0
+info:
+  title: BPCC Mobile/Web Messaging API v2
+  version: 1.0.0
+  description: 'The Bright Pattern Contact Center (BPCC) Mobile/Web Messaging API v2 is a RESTful API
+    that allows developers to integrate chat and voice interactions with mobile devices or third-party
+    applications. The BPCC Mobile/Web Messaging API v2 expands on our existing Mobile/Web Messaging API
+    v1, and can be used for development of rich contact applications, such as customer-facing mobile,
+    web, and messaging applications for advanced chat, voice, and video communications with Bright Pattern
+    Contact Center-based contact centers.
+
+
+    Features
+
+
+    In addition to all the methods and events included in the v1 API, the Mobile/Web Messaging API v2
+    includes the following:
+
+
+    Support for the Apple Push Notification service (iOS) and Firebase Cloud Messaging push notifications
+    (Android and iOS) with the Mobile Notification Subscription method
+
+
+    The Get Case History method, which returns the combined transcripts of all chat sessions linked to
+    a specific CRM Case object
+
+
+    The Close Case method, which allows a client application request to close the case associated with
+    the chat session
+
+
+    The Get Version method, which returns the version of Bright Pattern Contact Center used on the server.
+
+
+    Server and client events indicating that a chat session message was delivered or read
+
+
+    A server event indicating if a chat session case was set
+
+
+    Note
+
+
+    The BPCC Mobile/Web Messaging API v2 endpoint prefix is as follows:
+
+
+    https://[tenant_url]/clientweb/api/v2/
+
+
+    Audience
+
+
+    This documentation is intended for the IT personnel and developers of custom applications for Bright
+    Pattern Contact Center-based contact centers. Readers of this documentation are expected to have expertise
+    in web and mobile application development as well as a solid understanding of contact center operations
+    and resources that are involved in such operations.
+
+
+    Sample Applications
+
+
+    Bright Pattern provides source code of sample customer-facing rich contact applications. This source
+    code can be used as a reference for in-house application development or it can be embedded directly
+    into the customer-facing mobile applications and/or web applications of your organization.
+
+
+    For web chat applications, you can download the source code by clicking the Client application button
+    on the Messaging/Chat Scenario Entry page of the Contact Center Administrator application.
+
+
+    For mobile applications, you can obtain the source code by submitting a service request to Bright
+    Pattern Customer Success Management.'
+  contact:
+    name: Bright Pattern
+    url: https://www.brightpattern.com/contact/
+  x-origin:
+  - format: postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+    version: '2.1'
+  x-evidence:
+    fetched: '2026-08-08'
+    source: https://documenter.gw.postman.com/api/collections/6735878/TzXwFJFP?segregateAuth=true&versionTag=latest
+    http_status: 200
+    method: derived-from-published-postman-collection
+    note: Mechanically converted from the Postman collection Bright Pattern publishes as its public API
+      reference. No operations, paths, parameters or examples were invented.
+servers:
+- url: https://{tenant_url}
+  description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+  variables:
+    tenant_url:
+      default: example.brightpattern.com
+      description: Your Bright Pattern Contact Center tenant hostname.
+tags:
+- name: General Information
+  description: "Example Request\n\nThe following is an example of an API request:\n\nURL: https://yourcompany.brightpattern.com/clientweb/api/v2/chats?tenantUrl=yourcompany.brightpattern.com\n\
+    Method: POST\nAuthorization: MOBILE-API-140-327-PLAIN appId=\"test\", clientId=\"123\"\nContent-Type:\
+    \ application/json; charset=UTF-8\nUser-Agent: MobileClient\n{\n    \"phone_number\":\"3001\",\n \
+    \   \"parameters\": {\n        \"first_name\":\"John\",\n        \"last_name\":\"Lee\"\n        }\n\
+    }\n\nClient Authentication Elements\n\nThe following elements are used for client authentication and\
+    \ must be specified in every client request:\n\nElement\nDescription\n\ntenantUrl\nIdentifies your\
+    \ contact center. It corresponds to the domain name of your contact center that you see in the upper\
+    \ right corner of the Contact Center Administrator application after login.\n\nappId\nUnique identifier\
+    \ of the Messaging/Chat scenario entry that will be used to associate your application with a specific\
+    \ scenario\n\nclientId\nUnique identifier of the client application. It is used to identify communication\
+    \ sessions of a particular instance of the mobile application (i.e., of a specific mobile device).\
+    \ It must be generated by the mobile application and should be unique for each client application/device\
+    \ combination. If clientId is set to WebChat, HTTP cookies will be used for client identification.\n\
+    \nUser-Agent\nSpecifies the type of client interface. For web applications, it is determined by the\
+    \ browser type. For mobile applications, this parameter shall always be set to MobileClient.\n\nAdditional\
+    \ Information\n\nStandard HTTP response codes whose meaning conforms to the original specification\
+    \ (RFC 2616) are not discussed in this document. For specification of such responses, see section\
+    \ 10 of http://www.ietf.org/rfc/rfc2616.txt. This document only specifies the response codes whose\
+    \ description deviates from the original specification (e.g., is defined more narrowly or has a different\
+    \ meaning).\n\nNote: A client application can only have one active communication session at a time.\n\
+    \nError Body\n\nWhen the response status code indicates an error, a JSON response body is provided\
+    \ by the server to\ngive more details about the error:\n{\"error_code\": \"error code\", \"error_message\"\
+    :\"error message\"}\n\nAuthorization Errors\n\nHere is a list of the possible values of authorization-related\
+    \ error codes and error messages that are\ncommon to all requests that require authorization.\n\n\
+    error_code\nerror_message\n\n1000\nMissing or invalid tenantUrl\n\n2000\nAuthorization header is missing\n\
+    \n2001\nAuthorization parameter format is incorrect\n\n2002\nAuthorization scheme is incorrect\n\n\
+    2003\nAuthorization parameter is missing: appId\n\n2004\nAuthorization parameter is missing: clientId\n\
+    \nOther Errors\n\nHere is a list of the possible values of other error codes and error messages.\n\
+    \nerror_code\nerror_message\n\n3000\nMissing or invalid application unique id\n\n5000\nTimeout - chat\
+    \ server takes too long to respond\n\n5001\nNo server is available to accept chat connection\n\n5003\n\
+    Error decoding JSON request bod…"
+- name: Methods
+- name: Events
+- name: Client Events
+  description: "chat_session_message\n\nThis event contains a new chat message.\n\nParameters\n\nParameter\n\
+    Description\n\nmsg_id\nUnique identifier of the message in the following format (chatId:messageNumber)\n\
+    \nmsg\nThe content of the message\n\nchannel\nThe chat channel (e.g., web, Twitter, WhatsApp, etc.)\n\
+    \nFormat\n\n{\n    \"event\": \"chat_session_message\",\n    \"msg_id\": \"<message id>\",\n    \"\
+    msg\": \"<chat message>\",\n    \"channel\": \"chat channel>\n}\n\nchat_session_message_delivered\n\
+    \nThe mobile application sends this event when it receives the message from another party.\n\nParameters\n\
+    \nParameter\nDescription\n\nref_msg_id\nUnique identifier of the message that has been delivered\n\
+    \nFormat\n\n{\n    \"event\": \"chat_session_message_delivered\",\n    \"ref_msg_id\": \"<message\
+    \ id>\"\n}\n\nchat_session_message_read\n\nThe mobile application sends this event when the user reads\
+    \ the message.\n\nParameters\n\nParameter\nDescription\n\nref_msg_id\nUnique identifier of the message\
+    \ that has been read\n\nFormat\n\n{\n    \"event\": \"chat_session_message_read\",\n    \"ref_msg_id\"\
+    : \"<message id>\"\n}\n\nchat_session_typing\n\nThis event is sent when the user of the client application\
+    \ starts typing.\n\nFormat\n\n{\n    \"event\": \"chat_session_typing\"\n}\n\nchat_session_not_typing\n\
+    \nThis event is sent when the user of the client application stops typing.\n\nFormat\n\n{\n    \"\
+    event\": \"chat_session_not_typing\"\n}\n\nchat_session_form_data\n\nThis event contains the data\
+    \ requested by the server via the event chat_session_form_show.\n\nFormat\n\n{\n    \"event\": \"\
+    chat_session_form_data\",\n    \"form_request_id\": \"<form request ID from the corresponding server\
+    \ event>\",\n    \"form_name\": \"<form name>\",\n    \"data\": {\n        \"param1\": \"value1\"\
+    ,\n        …\n        }\n}\n\nchat_session_secure_form_data\n\nThis event contains the data requested\
+    \ by the server via the event chat_session_secure_form_show.\n\nFormat\n\n{\n    \"event\": \"chat_session_secure_form_data\"\
+    ,\n    \"form_request_id\": \"<form request ID from the corresponding server event>\",\n    \"form_name\"\
+    : \"<form name>\",\n    \"data\": {\n        \"param1\": \"value1\",\n        …\n        }\n}\n\n\
+    chat_session_secure_form_cancel\n\nThis event is sent from or to the server to notify that the secure\
+    \ form was canceled.\n\nFormat\n\n{\n    \"event\": \"chat_session_secure_form_cancel\",\n    \"form_request_id\"\
+    : \"<form request ID from the corresponding server event>\"\n}\n\nchat_session_end\n\nThis event ends\
+    \ the chat session.\n\nFormat\n\n{\n    \"event\": \"chat_session_end\"\n}\n\nchat_session_disconnect\n\
+    \nThis event ends the current chat conversation but keeps the session open (i.e., controlled by the\
+    \ scenario). This message can be used instead of chat_session_end when additional information may\
+    \ be expected from the server (e.g., a survey form).\n\nFormat\n\n{\n    \"event\": \"chat_session_disconnect\"\
+    \n}\n\nchat_session_signaling\n\nThis event is a container message for WebRTC signaling messages from\
+    \ client to server. These messages are not stored in the chat session history.\n\nParameters\n\nParameter\n\
+    Description\n\nmsg_id\nUnique identifier of the message in the following format (chatId:messageNumber)…"
+- name: Server Events
+  description: "chat_session_status\n\nThis event updates the current state of the chat session. If the\
+    \ state is failed, the client application will assume that the chat session no longer exists.\n\n\
+    Format\n\n{\n    \"event\": \"chat_session_status\",\n    \"state\": \"queued|connecting|connected|failed|completed\"\
+    ,\n    \"ewt\": \"<estimated waiting time for queued status>\"\n}\n\nchat_session_ended\n\nThis event\
+    \ indicates a normal termination of the chat session (e.g., when the chat session is closed by the\
+    \ agent). The client application will assume that the chat session no longer exists.\n\nFormat\n\n\
+    {\n    \"event\": \"chat_session_ended\"\n}\n\nchat_session_party_joined\n\nThis event indicates that\
+    \ a new party (i.e., a new agent) has joined the chat session. \n\nParameters\n\nParameter\nDescription\n\
+    \nparty_id\nUnique identifier of the chat party on the server side. A separate identifier is generated\
+    \ for each party (agent) that handles this chat session.\n\nFormat\n\n{\n    \"event\": \"chat_session_party_joined\"\
+    ,\n    \"party_id\": \"<party id>\",\n    \"first_name\": \"<party first name>\",\n    \"last_name\"\
+    : \"<party last name>\",\n    \"display_name\": \"<party display name>\",\n    \"type\": \"<scenario|external|internal>\"\
+    ,\n    \"timestamp\": \"<UTC timestamp in milliseconds>\"\n}\n\nchat_session_party_left\n\nThis event\
+    \ indicates that one of the existing parties (e.g., an agent) has left the chat session.\n\nParameters\n\
+    \nParameter\nDescription\n\nparty_id\nUnique identifier of the chat session on the server side. A\
+    \ separate identifier is generated for each party (e.g., an agent) that handles this chat session.\n\
+    \nFormat\n\n{\n    \"event\": \"chat_session_party_left\",\n    \"party_id\": \"<party id>\",\n  \
+    \  \"timestamp\": \"<UTC timestamp in milliseconds>\"\n}\n\nchat_session_message\n\nThis event contains\
+    \ a new chat message.\n\nParameters\n\nParameter\nDescription\n\nmsg_id\nUnique identifier of the\
+    \ party that sends this message\n\nparty_id\nUnique identifier of the chat session on the server side.\
+    \ A separate identifier is generated for each party (e.g., an agent) that handles this chat session.\
+    \ Note that party ID always matches the chat ID (i.e., when the event is received as part of chat\
+    \ session history).\n\nFormat\n\n{\n    \"event\": \"chat_session_message\",\n    \"party_id\": \"\
+    <party id>\",\n    \"msg_id\": \"<message id>\",\n    \"msg\": \"<chat message>\",\n    \"timestamp\"\
+    : \"<UTC timestamp in milliseconds>\"\n}\n\nchat_session_message_delivered\n\nThe mobile application\
+    \ will receive this event when an agent or another party in the chat receives the message sent by\
+    \ the client application.\n\nParameters\n\nParameter\nDescription\n\nref_msg_id\nUnique identifier\
+    \ of the message that has been sent\n\nparty_id\nUnique identifier of the party that the message was\
+    \ delivered to\n\nFormat\n\n{\n    \"event\": \"chat_session_message_delivered\",\n    \"party_id\"\
+    : \"<party id>\",\n    \"ref_msg_id\": \"<message id>\",\n    \"timestamp\": \"<UTC timestamp in seconds>\"\
+    \n}\n\nchat_session_message_read\n\nThe mobile application will receive this event when an agent or\
+    \ another party in the chat reads the message sent by the client application.\n\nParamet…"
+- name: Signaling Message Types
+  description: "Request Call\n\nThis message is sent from the client to request a WebRTC call.\n\nFormat\n\
+    \n{\n    \"type\": \"REQUEST_CALL”,\n    \"offerVideo\": \"true|false\"\n}\n\nCall Rejected\n\nThis\
+    \ message is sent from the server to indicate that a requested call was rejected.\n\nFormat\n\n{\n\
+    \    \"type\": \"CALL_REJECTED\",\n    \"reason_code\": \"<reject reason code>\",\n    \"reason\"\
+    : \"TBD\"\n}\n\nOffer Call\n\nThis message is sent from the server to start a WebRTC session.\n\n\
+    Format\n\n{\n    \"type\": \"OFFER_CALL\",\n    \"offerVideo\": \"true|false\",\n    \"sdp\": \"<session\
+    \ description string\"\n}\n\nAnswer Call\n\nThis message is sent from the client to confirm the WebRTC\
+    \ session started by the server.\n\nFormat\n\n{\n    \"type\": \"ANSWER_CALL\",\n    \"sdp\": \"<session\
+    \ description string>\"\n}\n\nICE Candidate\n\nThis message is sent from the client or server with\
+    \ ICE candidate description.\n\nFormat\n\n{\n    \"type\": \"ICE_CANDIDATE\",\n    \"sdpMid\": \"\
+    <candidate id>\",\n    \"sdpMLineIndex\": \"<candidate index>\",\n    \"candidate\": \"<candidate\
+    \ description>\"\n}\n\nEnd Call\n\nThis message is sent from the client or server to end the current\
+    \ WebRTC session.\n\nFormat\n\n{\n    \"type\": \"END_CALL\"\n}"
+paths:
+  /clientweb/api/v2/availability:
+    get:
+      operationId: checkAvailability
+      summary: Check Availability
+      description: 'This method returns the availability status of the configured hours of operation of
+        the associated Messaging/Chat scenario entry. Optionally, Estimated Wait time (EWT) (in seconds)
+        may be returned but could be missing if the server does not have enough data to estimate the EWT
+        value. Note that the API does not check if there are any agents actually logged in.
+
+
+        Status Meanings
+
+
+        Status Name
+
+        Description
+
+
+        available
+
+        The requested service is available.
+
+
+        notAvailable
+
+        The office providing the requested service is currently closed.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success: Returns the scenario entry’s current status / EWT (optionally)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        503
+
+        Service Unavailable'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Check Availability Example
+          content:
+            application/json:
+              example:
+                chat: available
+                ewt: '3'
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/parameters:
+    get:
+      operationId: expectedParameters
+      summary: Expected Parameters
+      description: 'This method returns an array of expected parameters. The parameters are optional.
+        They may be used, for example, to look for the most qualified agents to handle the requested chat
+        sessions and/or to display user information for the agents. These parameters are initially specified
+        for the Messaging/Chat scenario entry through which this mobile application will communicate with
+        the contact center.
+
+
+        Currently, the following parameter types are supported:
+
+
+        PHONE
+
+
+        TEXT
+
+
+        EMAIL
+
+
+        FIRST_NAME
+
+
+        LAST_NAME
+
+
+        ACCOUNT
+
+
+        COMPANY
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        application/json with names and types of parameters that may be expected from the client application
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Expected Parameters Example
+          content:
+            application/json:
+              example:
+                parameters:
+                - <name>: <type>
+                - '...'
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats:
+    post:
+      operationId: requestChat
+      summary: Request Chat
+      description: 'This method initiates a chat session. It provides values of all or some of the expected
+        parameters, and it may also contain the phone number of the mobile device. Depending on the scenario
+        entry configuration, a callback can be initiated automatically to the specified number as soon
+        as the chat request is delivered to the agent.
+
+
+        Notes:
+
+
+        The Request Chat method may return the ID and parameters of an existing chat session if there
+        are any currently existing chat sessions associated with this specific client. For example, the
+        client app created a chat session, which was then closed or crashed, then restarted before the
+        session timed out on the server.
+
+
+        The is_new_chat response attribute is specified if the chat is a new session or existing session.
+        The client application will handle these differently (e.g., if in an existing session the app
+        may request session history and show the previous content.
+
+
+        If the associated mobile/web scenario entry is not configured for automatic callback, the agent
+        can still use this number to call the mobile user manually, either upon the agent''s own initiative
+        or when asked to do this via a chat message from the mobile user.
+
+
+        The parameter from may be used to specify either the device owner’s name or phone number. It will
+        be placed in the scenario variable $(item.from).
+
+
+        Parameters returned in the parameters attribute are propagated into the scenario variable $(item.externalChatData).
+
+
+        Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the
+        server does not have enough data to estimate the EWT value. This might be important for the clients
+        with strict JSON serialization (i.e., the client app may fail deserializing the JSON if the attribute
+        is missing).
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Chat session properties (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        503
+
+        Service Unavailable'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: Content
+        in: header
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "{\r\n    \"phone_number\":\"<phone number for callback, if necessary>\",\r\n   \
+              \ \"from\":\"<propagated into scenario variable $(item.from)>\",\r\n    \"parameters\":{\r\
+              \n        \"parameter_1\":\"value_1\",\r\n        \"...\",\r\n        \"parameter_n\":\"\
+              value_n\"\r\n    }\r\n}"
+      responses:
+        '200':
+          description: Request Chat Example
+          content:
+            application/json:
+              example:
+                state: ivr
+                ewt: '0'
+                chat_id: d6c1adc2-385b-42e5-9e0a-1883c2bc5f81
+                is_new_chat: true
+                phone_number: '16508888888'
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats/{chatId}/notifications:
+    post:
+      operationId: mobileNotificationSubscription
+      summary: Mobile Notification Subscription
+      description: 'This method is a client application request for either subscribing to or canceling
+        mobile notifications for a chat session.
+
+
+        Notes
+
+
+        This method should be invoked after invoking the Request Chat method (i.e., the chatId value required
+        for this method is returned in the Request Chat method).
+
+
+        Additionally, this method should be invoked when its device token is changed.
+
+
+        The client application may also opt to stop receiving mobile notifications by using this API method
+
+        with an empty JSON body: {}
+
+
+        Request Parameters
+
+
+        The mobile application will specify one of the following parameters, depending on the application’s
+
+        operating system and used notification framework.
+
+
+        Parameter Name
+
+        Description
+
+
+        ios_apns_device_token
+
+        The iOS application using native APNs
+
+
+        ios_app_bundle_id
+
+        For iOS devices using native APNs, this parameter is required and is used as the APNs topic
+
+
+        ios_firebase_device_token
+
+        The iOS application using Firebase notifications
+
+
+        android_firebase_device_token
+
+        The android application using Firebase notifications
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Names of configured services with current status
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        406
+
+        Not acceptable: Too many parameters/corresponding notifications are not configured for the Messaging/Chat
+        entry'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "// For Apple Push Notification service (APNs):\r\n{\r\n    \"ios_apns_device_token\"\
+              : \"<iOS APNs device token>\",\r\n    \"ios_app_bundle_id\": \"<iOS app ID>\"\r\n}\r\n//\
+              \ For Apple Firebase:\r\n{\r\n    \"ios_firebase_device_token\": \"<Firebase token>\"\r\n\
+              }\r\n//For Android Firebase:\r\n{\r\n    \"android_firebase_device_token\": \"<Firebase\
+              \ token>\"\r\n}"
+      responses:
+        '200':
+          description: Mobile Notification Subscription
+          content:
+            application/json:
+              example: {}
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats/active:
+    get:
+      operationId: getActiveChat
+      summary: Get Active Chat
+      description: 'This method returns the properties of an active chat session. Optionally, Estimated
+        Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have
+        enough data to estimate the EWT value.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Chat session properties (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Active Chat Example
+          content:
+            application/json:
+              example:
+                chat_id: <chat ID>
+                state: <queued|connected|ivr>
+                ewt: <estimated wait time for a chat in state queued>
+                phone_number: <phone number that will be used for callback>
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats/{chatId}/events:
+    post:
+      operationId: sendEvents
+      summary: Send Events
+      description: 'This method sends events from the client to the server side.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        400
+
+        Bad Request
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not Found'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              events:
+              - <array of new chat events from server>
+      responses:
+        '200':
+          description: Send Events Example
+      security:
+      - bearerAuth: []
+    get:
+      operationId: getNewChatEvents
+      summary: Get New Chat Events
+      description: 'This method returns new chat events for the current session. If there are no new events,
+        the server can keep the request active during a timeout (i.e., for about 5–15 seconds). If the
+        client sends another request to get new events while the previous request is kept active, the
+        server will respond with error 400 (Bad request).
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Array of chat events (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not Found
+
+
+        429
+
+        Too many requests'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get New Chat Events Example
+          content:
+            application/json:
+              example:
+                events:
+                - <array of chat events>
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats/{chatId}/history:
+    get:
+      operationId: getChatHistory
+      summary: Get Chat History
+      description: 'This method returns all client events and all server events for the current session.
+        Multiple event objects can be returned; each event''s timestamp attribute can be used to restore
+        the correct message order.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Array of chat events (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Chat History Example
+          content:
+            application/json:
+              example:
+                events:
+                - <array of chat events>
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/files:
+    post:
+      operationId: uploadFile
+      summary: Upload File
+      description: 'This method uploads a file to the server. The maximum file size is 25 MB. The server
+        will store up to 1000 files. Newly received files will replace the oldest files. This method can
+        be used, for example, to send pictures from the client mobile application to the contact center
+        agents.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        File ID to be used in the chat_session_file message (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        400
+
+        Bad Request
+
+
+        403
+
+        Forbidden'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Upload File Example
+          content:
+            application/json:
+              example:
+                file_id: file ID to use in chat_session_file message
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats/{chatId}/files/{fileId}:
+    get:
+      operationId: getFile
+      summary: Get File
+      description: 'This method downloads a file from the server using the received file ID. See server
+        event Chat Session File.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        File content type
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get File Example
+          content:
+            application/json:
+              example: File content type
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats/{chatId}/profilephotos/{partyId}:
+    get:
+      operationId: getAgentProfilePhoto
+      summary: Get Agent Profile Photo
+      description: 'This method downloads a profile photo of the specified agent.
+
+
+        Request Body
+
+
+        The request body is the party ID of the agent participating in the current chat session.
+
+
+        Note: The party ID is provided with the chat event (polled at https://{host:port}/clientweb/api/v1/chats/{chatId}/events?tenantUrl={tenantUrl}).
+        For example, you can see party_ID in the event message for chat_session_party_joined.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        File content type
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: partyId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Agent Profile Photo Example
+          content:
+            application/json:
+              example: File content type
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/iceservers:
+    get:
+      operationId: getIceServers
+      summary: Get ICE servers
+      description: 'This method returns a list of configured ICE servers to provide to the browser so
+        that an audio-visual session could be added to the chat.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success: JSON response with information of ICE servers
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get ICE servers
+          content:
+            application/json:
+              example:
+                servers:
+                - url: <url>
+                  username: <(optional) username>
+                  credential: <(optional) password>
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/configuration:
+    get:
+      operationId: getChatWidgetConfiguration
+      summary: Get Chat Widget Configuration
+      description: 'This method returns the chat widget configuration for the launch point.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success: JSON response with information of ICE servers
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Chat Widget Configuration
+          content:
+            application/json:
+              example: "{\r\n  \"widgets\":[\r\n     {\r\n       \"name\": \"<widget name>\",\r\n    \
+                \   \"urls\":[\"<url>\", …],\r\n       \"definition\": {\r\n         \"contact_tab\":{\r\
+                \n           \"enabled\": true|false,\r\n           \"location\": \"top_left|top_middle|top_right\r\
+                \n                       |right_top|right_middle|right_bottom\r\n                    \
+                \   |bottom_left| bottom_middle|bottom_right\r\n                       |left_top|left_middle|left_bottom\"\
+                ,\r\n           \"color\": \"<color>\",\r\n           \"bg_color\": \"color\",\r\n   \
+                \        \"font\": {\r\n             \"family\": \"<font family>\",\r\n             \"\
+                size\": \"<font size>\",\r\n             \"style\": \"<font style>\",\r\n            \
+                \ \"weight\": \"<font weight>\"   \r\n           },\r\n           \"agents_available_msg\"\
+                : \"<msg>\",\r\n           \"agents_not_available_msg\": \"<msg>\",\r\n           \"out_of_hours_msg\"\
+                : \"<msg>\",\r\n           \"show_ewt_out_of_hours\": true|false  \r\n         }\r\n \
+                \      },\r\n\t    \"styles\":{\r\n\t\t    \"style1\":{\r\n                \"contentMargin\"\
+                \ : {\r\n                    \"margin\": \"\"\r\n                },\r\n              \
+                \  \"titleFont\" : {\r\n                    \"font-family\": \"\",\r\n               \
+                \     \"font-style\": \"\",\r\n                    \"font-size\": \"\",\r\n          \
+                \          \"font-weight\": \"\"\t\r\n                },\r\n                \"contactTabFont\"\
+                \ : {\r\n                    \"font-family\": \"\",\r\n                    \"font-style\"\
+                : \"\",\r\n                    \"font-size\": \"\",\r\n                    \"font-weight\"\
+                : \"\"\t\r\n                },\r\n                \"systemMessage\" : {\r\n          \
+                \          \"background-color\": \"\"\r\n                },\r\n                \"agentMessage\"\
+                \ : {\r\n                    \"background-color\": \"\"\r\n                },\r\n    \
+                \            \"widgetBorder\" : {\r\n                    \"border\": \"1px solid etc...\"\
+                ,\r\n                    \"border-radius\": \"\"\r\n                },\r\n           \
+                \     \"contactTabBorder\": {\r\n                    \"border\": \"1px solid etc...\"\
+                ,\r\n                    \"border-radius\": \"\"\r\n                },\r\n           \
+                \     \"widgetBackground\" {\r\n                    \"background\": \"url(img.png) #fff\
+                \ repeat-y\"        \r\n                },\r\n                \"baseFont\": {\r\n    \
+                \                \"font-family\": \"\",\r\n                    \"font-style\": \"\",\r\
+                \n                    \"font-size\": \"\",\r\n                    \"font-weight\": \"\"\
+                ,\r\n                    \"color\": \"\"\r\n                },    \r\n               \
+                \ \"dialogShadow\": {\r\n                    \"box-shadow\":\"\"\r\n                }\
+                \    \r\n            }\r\n        } \r\n     }\r\n  ]\r\n}\r\n"
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/casehistory:
+    get:
+      operationId: getCaseHistory
+      summary: Get Case History
+      description: 'This method returns the combined transcripts of all chat sessions (i.e., the chat
+        thread) linked to the specific CRM case object. Note that this request should be made only after
+        the chat_session_case_set server event is received; if the scenario has not specified a case,
+        the request will return an error.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success: application/json
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found
+
+
+        406
+
+        Not acceptable: If the scenario did not specify a case'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Case History
+          content:
+            application/json:
+              example: "{\r\n    \"sessions\": [\r\n        {\r\n            \"chat_id\":\"<session 1\
+                \ ID>\",\r\n            \"created_time\":<Unix timestamp in seconds>,\r\n            \"\
+                events\":<array of events from this chat session>\r\n        },\r\n        ...\r\n   \
+                \     {\r\n            \"chat_id\":\"<session 4 ID>\",\r\n            \"created_time\"\
+                :<Unix timestamp in seconds>,\r\n            \"events\":<array of events from this chat\
+                \ session>\r\n        },\r\n        ...     \r\n    ]\r\n}"
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/closecase:
+    post:
+      operationId: closeCase
+      summary: Close Case
+      description: 'This method invokes a client application request to close the case associated with
+        the chat session. Note that this request should be made only after the chat_session_case_set server
+        event is received; if the scenario has not specified a case, the request will return an error.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Case successfully closed
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found
+
+
+        406
+
+        Not acceptable: If scenario did not specify a case
+
+
+        500
+
+        Server error: Case is specified but cannot be closed (i.e., the CRM server responded with an error)'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Close Case
+          content:
+            application/json:
+              example: {}
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/version:
+    get:
+      operationId: getVersion
+      summary: Get Version
+      description: 'This method returns the Bright Pattern Contact Center software version of the server.
+        It may be used for informational purposes (e.g., adding the version number to the bottom of an
+        application window or in an informational dialog window, as well as seeing the server version
+        in the client application logs). Note that this method is not available in the Mobile/Web Messaging
+        API v1.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        OK: success
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        404
+
+        Not found: For example, if the existing Mobile/Web Messaging API v1 endpoint is called instead
+        of the v2 endpoint'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Version
+          content:
+            application/json:
+              example:
+                server_version: 5.5.6.12345 (Stable)
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as `Authorization:
+        Bearer <token>`.'
+security:
+- bearerAuth: []

@@ -1,0 +1,68 @@
+generated: '2026-08-08'
+method: searched
+source: postman/ collections + https://help.brightpattern.com/latest:Api
+authentication:
+  style: OAuth 2.0 client credentials -> bearer token
+  token_endpoint: POST https://{tenant}.brightpattern.com/configapi/v{2|3}/oauth/token
+  header: 'Authorization: Bearer <access_token>'
+  scopes: null
+  authorization_model: Privilege-based, not scope-based. Authorization is carried by the contact-center
+    user role the API client authenticates as; each API requires a named privilege (e.g. "Use Task Routing
+    API"), and a token that lacks it fails 403.
+  detail: authentication/bright-pattern-authentication.yml
+idempotency:
+  supported: true
+  style: client-supplied external identifiers (not an Idempotency-Key header)
+  scope: Task Routing API only
+  keys:
+  - extTaskId
+  - extCaseId
+  - extContactId
+  behaviour: 'On POST /taskroutingapi/v1/task/, supplying an external ID makes the call de-duplicating:
+    Bright Pattern looks for an existing task, case or contact already linked to that external ID, reuses
+    it if found and creates it if not. Re-queueing a task whose extTaskId was already queued returns application
+    error code 5 "Task is or already was in the queue" with HTTP 400 rather than creating a duplicate.'
+  retention: null
+  retention_note: No retention window for external identifiers is documented.
+  gaps: There is no platform-wide idempotency contract. The Configuration, SCIM, List Management, SMS/MMS,
+    Interaction Content and Mobile/Web Messaging APIs document no idempotency key or safe-retry semantics,
+    so retries against those write operations are not guaranteed to be safe.
+  source: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+pagination:
+  supported: false
+  note: No cursor or offset pagination is documented on any published operation. Bulk list reads instead
+    use POST "get all"/"fetch all" operations against a calling list or campaign, and long-running list
+    jobs are polled asynchronously via GET /configapi/v3/job/{job_id}.
+  async_job_polling: GET /configapi/v3/job/{job_id}
+field_expansion:
+  supported: true
+  style: comma-separated include= query parameter
+  example: GET /configapi/v3/campaign/getCampaign/{campaign_id}?include=generalSettings,callerIdSettings,outboundGeneral,teams,callerIDs,dispositions,lists,dncLists
+  scope: List Management API v3.2 campaign reads
+filtering:
+  supported: true
+  scope: SCIM API only
+  style: SCIM 2.0 filter expression
+  example: GET /configapi/v2/scim/users?filter=userName eq "carlos.clapper"
+request_tracing:
+  request_id_header: null
+  note: No request-id or correlation header is documented on any API.
+versioning:
+  style: uri-path major version per API family
+  detail: lifecycle/bright-pattern-lifecycle.yml
+error_envelope:
+  style: two distinct vendor envelopes; NOT RFC 9457
+  detail: errors/bright-pattern-problem-types.yml
+rate_limits:
+  documented_values: false
+  signal: HTTP 429 is documented — Task Routing returns application error code 12 "API limit exceeded"
+    with 429, and Mobile/Web Messaging returns 429 "Too many requests" on Get New Chat Events. No numeric
+    limit, quota or RateLimit-* response header is published.
+long_polling:
+  supported: true
+  note: 'GET /clientweb/api/v{1,2}/chats/{chatId}/events long-polls: with no new events the server holds
+    the request open for roughly 5-15 seconds. Issuing a second events request while one is held returns
+    400.'
+multi_tenancy:
+  note: Every API is addressed against the customer tenant hostname (https://<tenant>.brightpattern.com).
+    The Mobile/Web Messaging APIs additionally require a tenantUrl query parameter on every call.

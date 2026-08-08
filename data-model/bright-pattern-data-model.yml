@@ -1,0 +1,183 @@
+generated: '2026-08-08'
+method: derived
+source: openapi/ path parameters + request/response examples in the published Postman collections
+note: Bright Pattern publishes no schema components — the Postman collections carry example payloads rather
+  than named schemas, so no $ref graph exists to walk. This model is derived from the entity identifiers
+  that appear as path parameters plus the documented containment relationships stated in the collection
+  descriptions. Attribute-level detail is deliberately absent rather than invented.
+entities:
+- name: Campaign
+  identified_by:
+  - campaign_id
+  - campaign_name
+  - campaignname
+  operations: 47
+  specs:
+  - openapi/bright-pattern-list-management-v2-openapi.yml
+  - openapi/bright-pattern-list-management-v3-2-openapi.yml
+  - openapi/bright-pattern-list-management-v3-openapi.yml
+- name: CallingList
+  identified_by:
+  - list_id
+  - list_name
+  operations: 35
+  specs:
+  - openapi/bright-pattern-list-management-v2-openapi.yml
+  - openapi/bright-pattern-list-management-v3-2-openapi.yml
+  - openapi/bright-pattern-list-management-v3-openapi.yml
+- name: DoNotCallList
+  identified_by:
+  - do_not_call_list_id
+  - do_not_call_list_name
+  operations: 17
+  specs:
+  - openapi/bright-pattern-list-management-v2-openapi.yml
+  - openapi/bright-pattern-list-management-v3-2-openapi.yml
+  - openapi/bright-pattern-list-management-v3-openapi.yml
+- name: ChatSession
+  identified_by:
+  - chatId
+  operations: 11
+  specs:
+  - openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml
+  - openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml
+- name: User
+  identified_by:
+  - id
+  - username
+  operations: 8
+  specs:
+  - openapi/bright-pattern-configuration-openapi.yml
+  - openapi/bright-pattern-scim-user-provisioning-openapi.yml
+- name: Task
+  identified_by:
+  - taskid
+  operations: 3
+  specs:
+  - openapi/bright-pattern-task-routing-openapi.yml
+- name: CampaignLinkGroup
+  identified_by:
+  - group_id
+  operations: 2
+  specs:
+  - openapi/bright-pattern-list-management-v3-2-openapi.yml
+- name: File
+  identified_by:
+  - fileId
+  operations: 2
+  specs:
+  - openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml
+  - openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml
+- name: Party
+  identified_by:
+  - partyId
+  operations: 2
+  specs:
+  - openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml
+  - openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml
+- name: Job
+  identified_by:
+  - job_id
+  operations: 1
+  specs:
+  - openapi/bright-pattern-list-management-v3-openapi.yml
+- name: Message
+  identified_by:
+  - message_sid
+  operations: 1
+  specs:
+  - openapi/bright-pattern-sms-mms-openapi.yml
+relationships:
+- from: Campaign
+  to: CallingList
+  kind: has_many
+  via: bindList / unbindList / updateList
+  evidence: POST /configapi/v3/campaign/bindList/{campaign_id}
+- from: Campaign
+  to: DoNotCallList
+  kind: has_many
+  via: bindDNCList / unbindDNCList
+  evidence: POST /configapi/v3/campaign/bindDNCList/{campaign_id}
+- from: Campaign
+  to: Disposition
+  kind: has_many
+  via: addDisposition / deleteDispositions
+  evidence: POST /configapi/v3/campaign/addDispositions/{campaign_id}
+- from: Campaign
+  to: Team
+  kind: has_many
+  via: assignTeams / unassignTeams
+  evidence: POST /configapi/v3/campaign/assignTeams/{campaign_id}
+- from: Campaign
+  to: CallerID
+  kind: has_many
+  via: assignCallerIds / unassignCallerIds
+  evidence: POST /configapi/v3/campaign/assignCallerIds/{campaign_id}
+- from: CampaignLinkGroup
+  to: Campaign
+  kind: has_many
+  via: linkCampaign / unlinkCampaign
+  evidence: POST /configapi/v3/campaign/linkCampaign/{campaign_id}
+- from: CallingList
+  to: ListRecord
+  kind: has_many
+  via: add / addAll / update / delete / erase
+  evidence: POST /configapi/v3/callinglist/addAll/{list_id}
+- from: CallingList
+  to: Job
+  kind: has_many
+  via: job_id returned by long-running list operations
+  evidence: GET /configapi/v3/job/{job_id}
+- from: Task
+  to: Case
+  kind: belongs_to
+  via: extCaseId / caseInfo
+  evidence: POST /taskroutingapi/v1/task/ — "Tasks are always associated with a case and contact"
+- from: Case
+  to: Contact
+  kind: belongs_to
+  via: extContactId / contactInfo
+  evidence: POST /taskroutingapi/v1/task/ — "Cases are always associated with a contact"
+- from: Task
+  to: Service
+  kind: belongs_to
+  via: serviceName
+  evidence: DELETE /taskroutingapi/v1/service cancels all queued tasks for a service
+- from: ChatSession
+  to: ChatEvent
+  kind: has_many
+  via: chatId
+  evidence: GET /clientweb/api/v2/chats/{chatId}/events
+- from: ChatSession
+  to: File
+  kind: has_many
+  via: fileId
+  evidence: GET /clientweb/api/v2/chats/{chatId}/files/{fileId}
+- from: ChatSession
+  to: Case
+  kind: belongs_to
+  via: CRM case linked to the chat session
+  evidence: GET /clientweb/api/v2/casehistory, POST /clientweb/api/v2/closecase
+- from: User
+  to: Team
+  kind: belongs_to
+  via: user team
+  evidence: GET /configapi/v2/team; Configuration API 404 body may report "user team not found"
+- from: Interaction
+  to: Recording
+  kind: has_many
+  via: giid + stepid
+  evidence: GET /configapi/v2/recordings/audio?giid=&stepid=
+- from: Interaction
+  to: MultichannelRecordingSegment
+  kind: has_many
+  via: giid + iid + party + recid
+  evidence: GET /configapi/v2/multi_channel_recordings/audio
+identifier_conventions:
+- name: giid
+  description: Global interaction ID — uppercase UUID identifying an interaction across the platform.
+- name: stepid
+  description: Uppercase UUID identifying one step/segment within an interaction.
+- name: external IDs
+  description: Client-supplied extTaskId / extCaseId / extContactId used by the Task Routing API to link
+    and de-duplicate against records in an external CRM.

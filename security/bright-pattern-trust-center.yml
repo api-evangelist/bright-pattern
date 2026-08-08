@@ -1,0 +1,61 @@
+generated: '2026-08-08'
+method: searched
+probe: true
+source: https://www.brightpattern.com/compliance/
+url: https://www.brightpattern.com/compliance/
+certifications:
+- PCI DSS 3.2
+- SOC 2
+- HIPAA
+- GDPR
+- TCPA
+evidence:
+- source: https://www.brightpattern.com/compliance/
+  keywords:
+  - soc 2
+  - hipaa
+  - gdpr
+certification_detail:
+- name: PCI DSS 3.2
+  url: https://www.brightpattern.com/compliance/pci-compliant-contact-center-software/
+  auditor: CompliancePoint
+  note: Third-party certified; announced 2018.
+- name: SOC 2
+  url: https://www.brightpattern.com/compliance/soc-2/
+  auditor: null
+  note: Compliance claimed against the SOC 2 trust service criteria; no auditor or report date published.
+- name: HIPAA
+  url: https://www.brightpattern.com/compliance/hipaa/
+- name: GDPR
+  url: https://www.brightpattern.com/compliance/gdpr-compliance/
+- name: TCPA
+  url: https://www.brightpattern.com/compliance/tcpa-compliance/
+security_page: https://www.brightpattern.com/security/
+security_controls_published:
+- encryption in transit and at rest
+- TLS (SSL explicitly rejected)
+- MFA for network devices and remote access
+- VPN / SSH / SFTP
+- firewalls with audited rules
+- IDS and IPS
+- file integrity monitoring
+- audit logging with 1-year minimum retention
+- least-privilege role-based access
+- password complexity, 90-day rotation, lockout after 6 failed attempts
+no_dedicated_trust_center: There is no trust.brightpattern.com (NXDOMAIN) and no automated trust portal;
+  the compliance and security pages are marketing pages, and no SOC 2 report, ISO 27001 certificate or
+  pen-test summary is downloadable.
+vulnerability_disclosure:
+  published: false
+  note: No security.txt, no responsible-disclosure page, no bug bounty on HackerOne, Bugcrowd or Intigriti,
+    and no security@ reporting address on the security or compliance pages. A vendor that sells PCI DSS
+    and HIPAA compliance publishes no way to report a vulnerability to it.
+x-evidence:
+- url: https://www.brightpattern.com/compliance/
+  status: 200
+- url: https://www.brightpattern.com/security/
+  status: 200
+- url: https://www.brightpattern.com/.well-known/security.txt
+  status: 404
+- url: https://trust.brightpattern.com/
+  status: NXDOMAIN

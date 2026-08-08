@@ -1,0 +1,43 @@
+generated: '2026-08-08'
+method: searched
+source: https://github.com/ServicePattern + https://cocoapods.org/pods/BPMobileMessaging + https://jitpack.io/#ServicePattern/MobileAPI_Android
+note: Bright Pattern ships two first-party mobile SDKs for the Mobile/Web Messaging API v2, both from
+  the ServicePattern GitHub organization. There is no published server-side SDK (no npm, PyPI, Maven Central,
+  NuGet, Go module, RubyGems, Packagist or crates.io package) for the REST APIs — server integrations
+  are expected to call the REST endpoints directly using the published Postman collections.
+packages:
+- language: swift
+  registry: cocoapods
+  name: BPMobileMessaging
+  url: https://cocoapods.org/pods/BPMobileMessaging
+  install: pod 'BPMobileMessaging'
+  version: 2.0.0
+  source: https://github.com/ServicePattern/MobileAPI_IOS
+  covers: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml
+  official: true
+  evidence: CocoaPods trunk owner alexander.lobastov@brightpattern.com
+- language: kotlin
+  registry: jitpack
+  name: com.github.ServicePattern:MobileAPI_Android
+  url: https://jitpack.io/#ServicePattern/MobileAPI_Android
+  install: implementation 'com.github.ServicePattern:MobileAPI_Android:2.0.0'
+  version: 2.0.0
+  source: https://github.com/ServicePattern/MobileAPI_Android
+  covers: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml
+  official: true
+  evidence: Published from the Bright Pattern ServicePattern GitHub org; JitPack latestOk build reports
+    version 2.0.0
+registries_checked_with_no_first_party_package:
+- registry: npm
+  query: brightpattern
+  result: no first-party package
+- registry: pypi
+  query: brightpattern
+  result: '404'
+- registry: maven-central
+  result: not published; Android SDK distributed via JitPack instead
+- registry: nuget
+  result: no first-party package (the .NET Desktop Integration API ships as a documented assembly, not
+    a NuGet package)
+- registry: rubygems / packagist / crates.io / pkg.go.dev
+  result: no first-party package
