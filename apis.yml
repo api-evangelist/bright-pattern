@@ -35,182 +35,832 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 apis:
-- aid: bright-pattern-configuration
-  name: Bright Pattern Configuration API
-  description: Automate user provisioning and read contact-center configuration from third-party systems.
-    Create, read, update, delete and unlock users; list teams; and read the phone directory and access
-    numbers on a Bright Pattern tenant.
+- aid: bright-pattern:bright-pattern-authentication-api
+  name: Bright Pattern Authentication API
+  description: >-
+    The OAuth 2.0 Client Credentials Grant is used to authenticate clients of this API. The authenticated
+    user is checked for having appropriate privileges to perform the requested operation. The complete
+    list of privileges can be found here. Privileges are assigned to users via one or more Roles.
+
+
+    To obtain an access token:
+
+
+    Login to your BPCC configuraiton portal.
+
+
+    Navigate to Users page.
+
+
+    Select or create a user with privileges corresponding to the tasks you wish to perform via the BPCC
+    Configuraiton API.
+
+
+    Click the Generate button to generate an API secret key. Copy the generated key and note the username
+    for the next steps.
+
+
+    Use the Get Access Token method to obtain an access token. Set the client_id to the username and client_secret
+    to the generated API secrect key.
+
+
+    Use the value of access_token returned in the response to set the Authorization: Bearer [access token]
+    header of each subsequent request made via the BPCC Configuraiton API.
   humanURL: https://help.brightpattern.com/latest:Api
   baseURL: https://{tenant}.brightpattern.com/configapi/v2
   tags:
-  - Configuration
-  - Users
-  - Provisioning
+  - Authentication
   properties:
   - type: OpenAPI
-    url: openapi/bright-pattern-configuration-openapi.yml
+    url: openapi/bright-pattern-authentication-api-openapi.yml
   - type: Postman
     url: https://documenter.getpostman.com/view/6711197/S1EUtanN
-- aid: bright-pattern-scim-user-provisioning
-  name: Bright Pattern SCIM-Compliant User Provisioning API
-  description: SCIM 2.0 compliant user provisioning endpoint for communicating user identity data between
-    an identity provider and Bright Pattern Contact Center, supporting create, get, replace, patch, delete
-    and filtered lookup of users.
-  humanURL: https://help.brightpattern.com/latest:Api
-  baseURL: https://{tenant}.brightpattern.com/configapi/v2/scim
-  tags:
-  - SCIM
-  - Identity
-  - Provisioning
-  properties:
-  - type: OpenAPI
-    url: openapi/bright-pattern-scim-user-provisioning-openapi.yml
   - type: Postman
     url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
-- aid: bright-pattern-list-management-v3-2
-  name: Bright Pattern List Management API v3.2
-  description: Manage outbound calling campaigns, calling lists, Do Not Call lists and campaign link groups
-    from third-party applications — the current major version of the List Management API, with campaign
-    start/stop, dispositions, caller IDs, team assignment and record-level fetch, add, update, erase and
-    delete.
-  humanURL: https://help.brightpattern.com/latest:Api
-  baseURL: https://{tenant}.brightpattern.com/configapi/v3
-  tags:
-  - List Management
-  - Outbound
-  - Campaigns
-  - Do Not Call
-  properties:
-  - type: OpenAPI
-    url: openapi/bright-pattern-list-management-v3-2-openapi.yml
   - type: Postman
     url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
-- aid: bright-pattern-list-management-v3
-  name: Bright Pattern List Management API v3.0
-  description: Version 3.0 of the List Management API for outbound calling campaigns, calling lists and
-    Do Not Call lists, including job status polling for long-running list operations.
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+- aid: bright-pattern:bright-pattern-calling-list-api
+  name: Bright Pattern Calling List API
+  description: The Calling List API from Bright Pattern — 8 operation(s) for calling list.
   humanURL: https://help.brightpattern.com/latest:Api
-  baseURL: https://{tenant}.brightpattern.com/configapi/v3
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
   tags:
-  - List Management
-  - Outbound
+  - Calling List
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-calling-list-api-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+- aid: bright-pattern:bright-pattern-campaigns-api
+  name: Bright Pattern Campaigns API
+  description: The Campaigns API from Bright Pattern — 27 operation(s) for campaigns.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
+  tags:
   - Campaigns
   properties:
   - type: OpenAPI
-    url: openapi/bright-pattern-list-management-v3-openapi.yml
+    url: openapi/bright-pattern-campaigns-api-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
   - type: Postman
     url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
-- aid: bright-pattern-list-management-v2
-  name: Bright Pattern List Management API v2.0
-  description: Version 2.0 of the List Management API, addressing calling lists and Do Not Call lists
-    by name rather than by id. Superseded by v3.x but still published.
-  humanURL: https://help.brightpattern.com/latest:Api
-  baseURL: https://{tenant}.brightpattern.com/configapi/v2
-  tags:
-  - List Management
-  - Outbound
-  - Legacy
-  properties:
-  - type: OpenAPI
-    url: openapi/bright-pattern-list-management-v2-openapi.yml
   - type: Postman
     url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
-- aid: bright-pattern-task-routing
-  name: Bright Pattern Task Routing API
-  description: Enables external systems such as CRMs to create, route, modify, cancel and query tasks
-    in Bright Pattern Contact Center, associating each task with a case and a contact and supporting external
-    identifiers so records are not duplicated across systems.
-  humanURL: https://help.brightpattern.com/latest:Api
-  baseURL: https://{tenant}.brightpattern.com/taskroutingapi/v1
-  tags:
-  - Task Routing
-  - Routing
-  - CRM
-  properties:
-  - type: OpenAPI
-    url: openapi/bright-pattern-task-routing-openapi.yml
   - type: Postman
     url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
-- aid: bright-pattern-sms-mms
-  name: Bright Pattern SMS/MMS API
-  description: Send SMS and MMS messages from the text-capable access numbers of a Bright Pattern tenant,
-    and track delivery status. Replies can be directed into a chat service for agent handling.
-  humanURL: https://help.brightpattern.com/latest:Api
-  baseURL: https://{tenant}.brightpattern.com/clientweb/smsapi/v1
-  tags:
-  - SMS
-  - MMS
-  - Messaging
-  properties:
-  - type: OpenAPI
-    url: openapi/bright-pattern-sms-mms-openapi.yml
   - type: Postman
     url: https://documenter.getpostman.com/view/6711197/S1ETRbny
-- aid: bright-pattern-interaction-content
-  name: Bright Pattern Interaction Content API
-  description: Download call recordings as audio files together with their interaction metadata, including
-    multichannel recording structure and per-segment audio, and erase recordings with a recorded reason.
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+- aid: bright-pattern:bright-pattern-dnc-lists-api
+  name: Bright Pattern DNC Lists API
+  description: "Bright Pattern's List Management API makes it easy to manage the contents of Do Not Call\
+    \ (DNC) lists with bulk delete, add, and replace actions. The API methods described in this section\
+    \ fully support Internal, Geographic (Postal), Geographic (Area codes), and Record Exclusion DNC list\
+    \ types. Geographic (State/Province) DNC List type is not supported in the current implementation.\n\
+    \nNote: Performing operations on DNC lists requires the user to have the \"Manage Lists\" privilege,\
+    \ configured in the Contact Center Administrator application.\n\nThe functionality of the API methods\
+    \ described in this section is built upon a DNC List Record JSON Object with a required non-empty\
+    \ key field and an optional comment field. Depending on the DNC list type, the object's field values\
+    \ vary as follows:\n\nDNC List Type\nField Values\n\nInternal\nkey (required field): Phone number\
+    \  \ncomment (optional field): Campaign Name\n\nGeographic (Postal)\nkey (required field): Postal\
+    \ Code  \ncomment (optional field): Notes\n\nGeographic (Area Codes)\nkey (required field): Area code\
+    \  \ncomment (optional field): Notes\n\nRecord Exclusion\nkey (required field): Exclusion field  \n\
+    comment (optional field): -\n\nNote: When importing records or updating records it is important to\
+    \ remember that:\n\nAll leading and trailing whitespaces should be deleted.\n\nAll integer values\
+    \ should be converted to strings.\n\nCapitalization matters: values with different capitalizations\
+    \ are treated as distinct.\n\nThe search can be performed by both the original values created in third-party\
+    \ systems and their transformed equivalents visible in the Administrator Application and Agent Desktop."
   humanURL: https://help.brightpattern.com/latest:Api
   baseURL: https://{tenant}.brightpattern.com/configapi/v2
   tags:
-  - Recordings
-  - Interactions
-  - Compliance
+  - DNC Lists
   properties:
   - type: OpenAPI
-    url: openapi/bright-pattern-interaction-content-openapi.yml
+    url: openapi/bright-pattern-dnc-lists-api-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
   - type: Postman
     url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
-- aid: bright-pattern-real-time-statistics
-  name: Bright Pattern Real-Time Statistics API
-  description: Subscribe to real-time contact-center statistics and poll subscription data, plus read
-    dispositions, teams and agent availability for a service.
-  humanURL: https://help.brightpattern.com/latest:Real-time-statistics-api/ListofStatistics
-  baseURL: https://{tenant}.brightpattern.com/statsapi
-  tags:
-  - Statistics
-  - Real-Time
-  - Reporting
-  properties:
-  - type: OpenAPI
-    url: openapi/bright-pattern-real-time-statistics-openapi.yml
   - type: Postman
     url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
-- aid: bright-pattern-mobile-web-messaging-v2
-  name: Bright Pattern Mobile/Web Messaging API v2
-  description: Customer-facing chat, voice and video messaging API used to build mobile and web messaging
-    experiences against a Bright Pattern tenant — availability checks, chat requests, event streams, file
-    upload, agent profile photos, ICE servers for WebRTC, case history and mobile push notification subscription.
-    Backs the iOS and Android Mobile SDKs.
-  humanURL: https://help.brightpattern.com/latest:Mobile-SDK-Instruction-Manual/About
-  baseURL: https://{tenant}.brightpattern.com/clientweb/api/v2
-  tags:
-  - Messaging
-  - Chat
-  - Mobile
-  - WebRTC
-  properties:
-  - type: OpenAPI
-    url: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml
   - type: Postman
     url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
-- aid: bright-pattern-mobile-web-messaging-v1
-  name: Bright Pattern Mobile/Web Messaging API v1
-  description: Version 1 of the customer-facing chat, voice and video messaging API for mobile and web
-    applications. Superseded by v2 but still published.
-  humanURL: https://help.brightpattern.com/latest:Mobile-SDK-Instruction-Manual/About
-  baseURL: https://{tenant}.brightpattern.com/clientweb/api/v1
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+- aid: bright-pattern:bright-pattern-do-not-call-list-api
+  name: Bright Pattern Do Not Call List API
+  description: The Do Not Call List API from Bright Pattern — 4 operation(s) for do not call list.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
   tags:
-  - Messaging
-  - Chat
-  - Mobile
-  - Legacy
+  - Do Not Call List
   properties:
   - type: OpenAPI
-    url: openapi/bright-pattern-mobile-web-messaging-v1-openapi.yml
+    url: openapi/bright-pattern-do-not-call-list-api-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+- aid: bright-pattern:bright-pattern-link-groups-api
+  name: Bright Pattern Link Groups API
+  description: >-
+    Bright Pattern's List Management API provides the ability to manage Link Groups so several campaigns
+    can be linked together. When processing all records of one campaign is finished, the next campaign
+    in the group will be started automatically. Additionally, see the Link a Campaign and Unlink a Campaign
+    methods descriptions.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
+  tags:
+  - Link Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-link-groups-api-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+- aid: bright-pattern:bright-pattern-lists-api
+  name: Bright Pattern Lists API
+  description: >-
+    Bright Pattern's List Management API streamlines the creation and deletion of lists and formats and
+    provides a convenient way to manage list records.
+
+
+    Note: Performing operations on lists requires the user to have the "Manage Lists" privilege, configured
+    in the Contact Center Administrator application. Additional privileges required are explicitly specified
+    in the corresponding method description.
+
+
+    All of the methods described below use the path variable, list_id, to specify the list an operation
+    is to be performed on. The unique identifier of a list can be found by opening that list in the Contact
+    Center Administrator application, Lists section. The id will be displayed in the '#LISTS:LISTS_PROPERTIES:'
+    fragment of the URL.
+
+
+    Alternatively, list_id, can be found in the response body of the Get Lists method (see here).
+
+
+    Methods retained from the previous version of the List management API, tagged as "DEPRECIATED", require
+    an additional path variable, campaign_id, to reference the campaign associated with the selected list.
+    The unique identifier of a campaign can be found by opening that campaign in the Contact Center Administrator
+    application, Services & Campaigns section. The id will be displayed in the '#SERVICES_CAMPAIGNS:SERVICES_PROPERTIES:'
+    fragment of the URL.
+
+
+    Alternatively, campaign_id, can be found in the response body of the Get Campaigns method (see here).
+
+
+    Note: When importing records or updating records it is important to remember that:
+
+
+    All leading and trailing whitespaces should be deleted.
+
+
+    For all PHONE numbers:
+
+
+    If a number begins with “+”, the leading "+" sign will be removed.
+
+
+    If a number contains non-numeric characters, they will be removed.
+
+
+    At least one PHONE number is required.
+
+
+    For the United States and Canada PHONE numbers:
+
+
+    If a number begins with “011”, it will be kept as is.
+
+
+    If a number begins with “1” and has eleven digits, it will be kept as is.
+
+
+    If a number does not begin with “1” and has ten digits, “1” will be prepended.
+
+
+    If a number begins with “1” and has ten digits, the record will not be imported, returning a format
+    error.
+
+
+    In any other case, the record will not be imported, returning a format error.
+
+
+    Remove prefix and Default country code fields will be ignored.
+
+
+    For Other countries PHONE numbers:
+
+
+    If a number begins with prefix matching Remove prefix, the prefix will be deleted.
+
+
+    If a number does not begin with prefix matching Remove prefix, it will be kept as is.
+
+
+    If a number does not begin with prefix matching Default country code, Default country code will be
+    added.
+
+
+    For all INTEGER fields:
+
+
+    If the value is presented as a string, it should be converted to an integer.
+
+
+    Values presented as integers should be supported.
+
+
+    For all fields that expect strings (ACCOUNT, AGENT_LOGIN_ID, FIRST_NAME, LAST_NAME, etc.) integer
+    values should be converted to strings.
+
+
+    Capitalization matters: values with different capitalizations are treated as distinct.
+
+
+    For all DATE/TIME and DATE/TIME - SCHEDULE CALL AT fields:
+
+
+    If a…
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
+  tags:
+  - Lists
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-lists-api-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+- aid: bright-pattern:bright-pattern-methods-api
+  name: Bright Pattern Methods API
+  description: The Methods API from Bright Pattern — 32 operation(s) for methods.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
+  tags:
+  - Methods
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-methods-api-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+- aid: bright-pattern:bright-pattern-multichannel-call-recordings-api
+  name: Bright Pattern Multichannel Call Recordings API
+  description: "These methods are used to extract individual segments of multichannel call recordings\
+    \ (i.e., recordings where voice of each paricipating party is recorded into a separate audio file).\n\
+    \nThe Get Multichannel Recording Structure method should be used first to obtain the Interaction IDs,\
+    \ Party IDs, and optionally segments, to be used in the subsequent Get Multichannel Recording Segment\
+    \ Audio File requests.\n\nSegments of multichannel recordings are available for export immediately\
+    \ upon call termination. \n\nSegments of multichannel recordings are exported in uncompressed PCM\
+    \ format for maximun speech quality. Note that because of the large  size of multichannel PCM recording\
+    \ files, they are typically stored in the system for a limited amount of time. Check with your service\
+    \ provider about your limits, and consider overnight export of selected recordings for the previous\
+    \ working day."
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
+  tags:
+  - Multichannel Call Recordings
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-multichannel-call-recordings-api-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+- aid: bright-pattern:bright-pattern-phones-api
+  name: Bright Pattern Phones API
+  description: >-
+    With the https://:tenant/configapi/v2/phone endpoint you can:
+
+
+    Get a list of all contact center users with their extensions and DID numbers
+
+
+    Get a list of all access numbers with thier current assignments (assigned users for DIDs and assigned
+    scenarios for routing points)
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
+  tags:
+  - Phones
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-phones-api-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+- aid: bright-pattern:bright-pattern-regular-call-recordings-api
+  name: Bright Pattern Regular Call Recordings API
+  description: >-
+    These methods enable retrieval of regular voice recordings (i.e., recordings where voices of all participating
+    parties are recorded in the same audio file) and the related call metadata. Both audio files and metadata
+    can be retrieved immediately upon call termination. Parameters required for recording identificaiton
+    can be obtained via scenario variables $(item.globalInteractionId) and $(item.interactionStepId).
+
+    Regular call recordings are exported in GSM format.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
+  tags:
+  - Regular Call Recordings
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-regular-call-recordings-api-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+- aid: bright-pattern:bright-pattern-sms-mms-messaging-api
+  name: Bright Pattern SMS/MMS Messaging API
+  description: >-
+    These methods enable sending of SMS and MMS messages and checking the delivery status. The response
+    parameters are explained below.
+
+
+    Response parameters
+
+
+    Parameter
+
+    Description
+
+
+    tenant_id
+
+    Unique identifier of your contact center in BPCC configuraiton.
+
+
+    api_version
+
+    API version.
+
+
+    body
+
+    Text of the message.
+
+
+    num_segments
+
+    Number of segments in the transmitted message. Messages exceeding 160 characters are transmitted in
+    multiple segements. In the current verison of API this parameters is always set to 1.
+
+
+    num_media
+
+    Number of media files in the MMS message.
+
+
+    date_created
+
+    Timestamp of the original Send Message request.
+
+
+    date_sent
+
+    Timestamp of message transmission. Set to "null" in responses to Send Message requests. Set to actual
+    time when the message was sent in responses to Get Message requests.
+
+
+    date_updated
+
+    Reserved.
+
+
+    direction
+
+    Always set to outboound-api.
+
+
+    error_code
+
+    Error code.
+
+
+    error_message
+
+    Error message.
+
+
+    from
+
+    Origin number or, if a messenger integration is being used, the messenger type and integration ID.
+
+
+    price
+
+    Reserved. In the current version of the API always set to null.
+
+
+    sid
+
+    Unique identifier of the message. Retured in response to a Send Message request and can be used in
+    Get Message to check the delivery status of the message.
+
+
+    status
+
+    Status of message delivery. Possible values: queued (message queued to be sent), sent (message sent
+    to SMS/MMS service provider but delivery not confirmed), delivered (message confirmed by SMS service
+    provider to be delivered; currently not available for MMS), failed (message could not be sent; typically
+    more details will be provided in error_message). Note that a 200 OK response to a Send Message request
+    will always have status set to queued. Actual status of message delivery can be verified using the
+    Get Message method with a slight delay.
+
+
+    to
+
+    Destination number or, if a messenger integration is being used, the messenger type and the messenger
+    ID of the recipient.
+
+
+    uri
+
+    Reserved.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
+  tags:
+  - SMS/MMS Messaging
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-sms-mms-messaging-api-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+- aid: bright-pattern:bright-pattern-task-routing-api
+  name: Bright Pattern Task Routing API
+  description: >-
+    The following methods allow tasks within Bright Pattern Contact Center to be queued, canceled, updated,
+    and queried.
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
+  tags:
+  - Task Routing
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-task-routing-api-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
+- aid: bright-pattern:bright-pattern-users-api
+  name: Bright Pattern Users API
+  description: >-
+    With the https://:tenant_url/configapi/v2/user endpoint you can:
+
+
+    Create new users and define most of their attributes
+
+
+    Update existing users
+
+
+    Check and clear user lockout state
+
+
+    Manage agents' skills
+
+
+    Delete existing users
+
+
+    Below is a brief description of all user attributes that can be accessed via this API. More detailed
+    descriptions of these attributes can be found here.
+
+
+    All attributes are strings unless otherwise noted.
+
+
+    All attributes are optional unless otherwise noted.
+
+
+    Attribute
+
+    Description
+
+
+    loginId
+
+    Username. Required to create user. Used to identify the user in all subsequent User Management API
+    operations.
+
+
+    password
+
+    Password. Format must comply with security policy.
+
+
+    changePassword
+
+    Indicates whether user must change password on next login. Boolean. Default is false.
+
+
+    firstName
+
+    First name. Required to create user.
+
+
+    lastName
+
+    Last name. Required to create user.
+
+
+    team
+
+    Team that the user is assigned to. Required to create user.
+
+
+    extension
+
+    User's extension number. If not specified, an extension will be created and assigned automatically.
+
+
+    workPhone
+
+    User's work phone number.
+
+
+    mobilePhone
+
+    User's mobile phone number.
+
+
+    email
+
+    User's email address.
+
+
+    disabled
+
+    Indication whether the user account is disabled or enabled. Boolean (true/flase).
+
+
+    skills
+
+    For agents an array of skills with levels (e.g., "Support": 75).
+
+
+    roles
+
+    An array of user's roles (e.g., Agent).
+  humanURL: https://help.brightpattern.com/latest:Api
+  baseURL: https://{tenant}.brightpattern.com/configapi/v2
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/bright-pattern-users-api-openapi.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/SVYwJbLw
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8336025/2sA3Qy5U4z
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+  - type: Postman
+    url: https://documenter.getpostman.com/view/31590362/2sA3XTfLhk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/T1DwbtSk
+  - type: Postman
+    url: https://documenter.getpostman.com/view/6735878/TzXwFJFP
   - type: Postman
     url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
 common:
+- type: MCPServer
+  url: mcp/bright-pattern-mcp.yml
 - type: AgenticAccess
   url: agentic-access/bright-pattern-agentic-access.yml
 - type: TrustCenter
@@ -252,7 +902,7 @@ common:
 - type: ChangeLog
   url: https://help.brightpattern.com/WhatsNew
 - type: OpenAPI
-  url: openapi/bright-pattern-list-management-v3-2-openapi.yml
+  url: openapi/_original/bright-pattern-list-management-v3-2-openapi.yml
 - type: Packages
   url: packages/bright-pattern-packages.yml
 - type: SDKs
