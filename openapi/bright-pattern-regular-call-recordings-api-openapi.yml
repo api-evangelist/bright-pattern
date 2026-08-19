@@ -1,0 +1,248 @@
+openapi: 3.2.0
+info:
+  title: BPCC Interaction Content Regular Call Recordings API
+  version: 1.0.0
+  description: 'With the BPCC Interaction Content API you currently can:
+
+
+    Obtain general metadata for a service voice call.
+
+
+    Obtain a regular audio recording of a service voice call in GSM format (a regular recording includes all call segments and voices of all call participants).
+
+
+    Obtain audio recordings of individual participants in uncompressed PCM format (such recordings will be available if the multichannel call recording capability is enabled for your contact center).
+
+
+    This document specifies the corresponding REST API methods, with example requests and responses. You can load this API into the Postman API Development Environment to interact with the API with your own access tokens.'
+  contact:
+    name: Bright Pattern
+    url: https://www.brightpattern.com/contact/
+  x-origin:
+  - format: postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtb1f
+    version: '2.1'
+  x-evidence:
+    fetched: '2026-08-08'
+    source: https://documenter.gw.postman.com/api/collections/6711197/S1EUtb1f?segregateAuth=true&versionTag=latest
+    http_status: 200
+    method: derived-from-published-postman-collection
+    note: Mechanically converted from the Postman collection Bright Pattern publishes as its public API reference. No operations, paths, parameters or examples were invented.
+servers:
+- url: https://{tenant_url}
+  description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+  variables:
+    tenant_url:
+      default: example.brightpattern.com
+      description: Your Bright Pattern Contact Center tenant hostname.
+security:
+- bearerAuth: []
+tags:
+- name: Regular Call Recordings
+  description: 'These methods enable retrieval of regular voice recordings (i.e., recordings where voices of all participating parties are recorded in the same audio file) and the related call metadata. Both audio files and metadata can be retrieved immediately upon call termination. Parameters required for recording identificaiton can be obtained via scenario variables $(item.globalInteractionId) and $(item.interactionStepId).
+
+    Regular call recordings are exported in GSM format.'
+paths:
+  /configapi/v2/recordings/audio:
+    get:
+      operationId: getRegularRecordingAudioFile
+      summary: Get Regular Recording Audio File
+      description: Returns an audio file with voices of all participants for the specified call recording in the GSM format.
+      tags:
+      - Regular Call Recordings
+      parameters:
+      - name: giid
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stepid
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Audio File
+      security:
+      - bearerAuth: []
+    delete:
+      operationId: eraseCallRecordings
+      summary: Erase Call Recordings
+      description: 'This method erases locally stored call recordings; the interaction’s Global Interaction Identifier (GIID) must be included as a query parameter in the request URL
+
+
+        Notes
+
+
+        Reason is an optional query parameter.
+
+
+        This method applies to locally stored recordings only.
+
+
+        If multiple recordings are associated with the specified GIID, all of them will be erased.
+
+
+        The erasure of recordings is:
+
+        Tracked via the Audit Log
+
+
+        Reflected in Interaction Records Search Results
+
+
+        Reflected in case activity history'
+      tags:
+      - Regular Call Recordings
+      parameters:
+      - name: giid
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: reason
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Erase Call Recordings
+      security:
+      - bearerAuth: []
+  /configapi/v2/recordings/metadata:
+    get:
+      operationId: getInteractionMetadata
+      summary: Get Interaction Metadata
+      description: 'Returns the following metadata for the specified interaction:
+
+
+        Data Item
+
+        Description
+
+
+        Start Time
+
+        Interaction start time
+
+
+        Agent loginId
+
+        Username of the agent who last handled this call
+
+
+        Agent First Name
+
+        First name of the agent who last handled this call
+
+
+        Agent Last Name
+
+        Last name of the agent who last handled this call
+
+
+        Customer phone
+
+        Customer’s phone number (technically, the phone number of the party opposite to the above agent)
+
+
+        Direction
+
+        Call direction relative to the above agent, Inbound or Outbound
+
+
+        Service
+
+        Name of the service or campaign associated with this call
+
+
+        Disposition
+
+        Disposition selected by the agent for this interaction
+
+
+        Notes
+
+        Notes entered by the agent for this interaction
+
+
+        Voice Signature
+
+        Indicates whether the recording contains a vocie signature.
+
+
+        Flagged
+
+        Indicates whether the interaction was flagged by the agent.
+
+
+        Talk Time
+
+        Overall call duration.
+
+
+        RecordingId
+
+        Name of the file that contains the recording of this interaction.
+
+
+        Review URL
+
+        Link for direct access to the recording via the Contact Center Administrator application (login required).
+
+
+        Screen Recording
+
+        Indicates whether an agent screen recording is available for this interaction.'
+      tags:
+      - Regular Call Recordings
+      parameters:
+      - name: giid
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stepid
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Metadata for a call with a live agent
+          content:
+            application/json:
+              example:
+                Start Time: 03/15/2019 07:49:31 PM UTC +00:00
+                Agent loginId: navarro
+                Agent First Name: Jose
+                Agent Last Name: Navarro
+                Customer phone: Restricted
+                Direction: INBOUND
+                Service: Support
+                Disposition: Solved
+                Notes: ''
+                Voice Signature: '0'
+                Flagged: '0'
+                Talk Time: 0:38
+                RecordingId: 20190315124931_Restricted_navarro_C6A1ECF16C4E4D13B848718273ECB0CA.wav
+                Global Interaction ID: A44B62DE-75FB-47CD-A103-8F778CD1032A
+                Review URL: https://sasha.brightpattern.com/admin?giid=A44B62DE-75FB-47CD-A103-8F778CD1032A&stepId=C6A1ECF1-6C4E-4D13-B848-718273ECB0CA
+                Screen Recording: '0'
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as `Authorization: Bearer <token>`.'
+    oauth2ClientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client-credentials grant against the Bright Pattern tenant token endpoint.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant_url}/configapi/v2/oauth/token
+          scopes: {}

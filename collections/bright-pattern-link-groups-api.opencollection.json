@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BPCC List Management API v3.2 Link Groups API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Link Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Link Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaignlinkgroup/getAll",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns all Campaign Link Groups, sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlimit\ninteger, ≤ 100\nyes (specifies the maximum size of the returned list)\n1...100\n\ncursor\nstring\nno (used for pagination)\nFirst"
+        },
+        {
+          "info": {
+            "name": "Get Link Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v3/campaignlinkgroup/getLinkGroup/:group_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the information about a link group, including its name and amount of linked campaigns.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (wrong cursor; format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Link Group was not found;  \nInvalid URL"
+        },
+        {
+          "info": {
+            "name": "Create Link Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaignlinkgroup/createLinkGroup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method creates a new empty link group.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring\nyes\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Format was not found;  \nInvalid URL\n\n409\nDuplicate name "
+        },
+        {
+          "info": {
+            "name": "Delete Link Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant_url}/configapi/v3/campaignlinkgroup/deleteLinkGroup/:group_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method deletes an empty link group.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Link Group was not found;  \nInvalid URL\n\n409\nSpecified Link Group is not empty"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

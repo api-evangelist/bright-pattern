@@ -1,0 +1,262 @@
+{
+  "item": [
+    {
+      "id": "5eae9811-8ea0-4a53-82ee-dd81a7507987",
+      "name": "Phones",
+      "description": {
+        "content": "With the https://:tenant/configapi/v2/phone endpoint you can:\n\nGet a list of all contact center users with their extensions and DID numbers\n\nGet a list of all access numbers with thier current assignments (assigned users for DIDs and assigned scenarios for routing points)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e1217ecc-799b-4682-b2f7-52234dea257d",
+          "name": "Get Directory",
+          "request": {
+            "name": "Get Directory",
+            "description": {
+              "content": "Returns list of users with thier extensions and assigned external (DID) numbers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "phone",
+                "user"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a58cc300-2348-43f1-95ac-f316e209b2d6",
+              "name": "Get Directory",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "phone",
+                    "user"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"extension\": \"1000\",\n    \"loginId\": \"user\",\n    \"firstName\": \"User\",\n    \"lastName\": \"Lastname\",\n    \"external\": \"16505555555\",\n    \"voiceMail\": true,\n    \"greeting\": false\n  },\n  {\n    \"extension\": \"1001\",\n    \"loginId\": \"navarro\",\n    \"firstName\": \"Jose\",\n    \"lastName\": \"Navarro\",\n    \"voiceMail\": false,\n    \"greeting\": false\n  },\n  {\n    \"extension\": \"1002\",\n    \"loginId\": \"wandabui\",\n    \"firstName\": \"Wanda\",\n    \"lastName\": \"Bui\",\n    \"voiceMail\": false,\n    \"greeting\": false\n  },\n  {\n    \"extension\": \"1004\",\n    \"loginId\": \"dale.turner\",\n    \"firstName\": \"Dale\",\n    \"lastName\": \"Turner\",\n    \"voiceMail\": false,\n    \"greeting\": false\n  },\n  {\n    \"extension\": \"1005\",\n    \"loginId\": \"edna.partee\",\n    \"firstName\": \"Edna\",\n    \"lastName\": \"Partee\",\n    \"voiceMail\": false,\n    \"greeting\": false\n  },\n  {\n    \"extension\": \"1006\",\n    \"loginId\": \"eric.chen\",\n    \"firstName\": \"Eric\",\n    \"lastName\": \"Chen\",\n    \"voiceMail\": false,\n    \"greeting\": false\n  },\n  {\n    \"extension\": \"1007\",\n    \"loginId\": \"admin\",\n    \"firstName\": \"API\",\n    \"lastName\": \"User\",\n    \"voiceMail\": false,\n    \"greeting\": false\n  },\n  {\n    \"extension\": \"2004\",\n    \"loginId\": \"testuser004\",\n    \"firstName\": \"Test\",\n    \"lastName\": \"User004\",\n    \"voiceMail\": false,\n    \"greeting\": false\n  },\n  {\n    \"extension\": \"2005\",\n    \"loginId\": \"testuser005\",\n    \"firstName\": \"Test\",\n    \"lastName\": \"User005\",\n    \"voiceMail\": false,\n    \"greeting\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7dfe0028-a0ad-44cd-9900-6f0caa8bfce2",
+          "name": "Get Access Numbers",
+          "request": {
+            "name": "Get Access Numbers",
+            "description": {
+              "content": "Returns a list of access numbers with current assignments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "phone",
+                "ext"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e8ada450-e318-4d43-9361-58e36de61d58",
+              "name": "Get Access Numbers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "phone",
+                    "ext"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"number\": \"16505555555\",\n    \"media\": \"voice_text\",\n    \"type\": \"scenario\",\n    \"scenario\": \"Main Inbound\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "dd170b23-11a6-4050-a578-95d8f2c8f097",
+    "name": "BPCC Configuration Phones API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "With the Bright Pattern Contact Center (BPCC) Configuraiton API you currently can:\n\nCreate, update and delete your contact center users.\n\nAssign and change agent skills and update skill levels.\n\nUnlock a user account that may have been locked according to the security policy.\n\nGet a list of all existing users with their internal and external (DID) phone numbers.\n\nGet a list of all existing extenal numbers with thier current assignments (DID, routing points, etc.)\n\nThis document specifies the corresponding REST API methods, with example requests and responses. You can load this API into the Postman API Development Environment to interact with the API with your own access tokens.\n\nNotes\n\nEither HTTP or HTTPS transport can be configured. The same setting applies to the entire Configuration Web Portal server. For production deployments on public Internet only, HTTPS is enabled.\n\nContact Support:\n Name: Bright Pattern",
+      "type": "text/plain"
+    }
+  }
+}

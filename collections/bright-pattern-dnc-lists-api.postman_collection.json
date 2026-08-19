@@ -1,0 +1,1920 @@
+{
+  "item": [
+    {
+      "id": "d53b5473-1823-44ac-a167-04d389d9ab95",
+      "name": "DNC Lists",
+      "description": {
+        "content": "Bright Pattern's List Management API makes it easy to manage the contents of Do Not Call (DNC) lists with bulk delete, add, and replace actions. The API methods described in this section fully support Internal, Geographic (Postal), Geographic (Area codes), and Record Exclusion DNC list types. Geographic (State/Province) DNC List type is not supported in the current implementation.\n\nNote: Performing operations on DNC lists requires the user to have the \"Manage Lists\" privilege, configured in the Contact Center Administrator application.\n\nThe functionality of the API methods described in this section is built upon a DNC List Record JSON Object with a required non-empty key field and an optional comment field. Depending on the DNC list type, the object's field values vary as follows:\n\nDNC List Type\nField Values\n\nInternal\nkey (required field): Phone number  \ncomment (optional field): Campaign Name\n\nGeographic (Postal)\nkey (required field): Postal Code  \ncomment (optional field): Notes\n\nGeographic (Area Codes)\nkey (required field): Area code  \ncomment (optional field): Notes\n\nRecord Exclusion\nkey (required field): Exclusion field  \ncomment (optional field): -\n\nNote: When importing records or updating records it is important to remember that:\n\nAll leading and trailing whitespaces should be deleted.\n\nAll integer values should be converted to strings.\n\nCapitalization matters: values with different capitalizations are treated as distinct.\n\nThe search can be performed by both the original values created in third-party systems and their transformed equivalents visible in the Administrator Application and Agent Desktop.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "357edf08-9740-4615-9893-cfa5d0a66193",
+          "name": "Delete All Records",
+          "request": {
+            "name": "Delete All Records",
+            "description": {
+              "content": "Privileges required:\n\nService and Campaign Administration -> Manage Lists\n\nThis method deletes all records from the specified DNC List and returns the number of deleted records.\n\nResponse Codes:\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood/1 or more required fields are missed or have unsupported value)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges, or modification of this type of list is not allowed\n\n404\nDNC List is not found or invalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "donotcalllist",
+                "deleteAll",
+                ":do_not_call_list_id"
+              ],
+              "host": [
+                "{{configapi-v3-donotcalllist-deleteAll-do_not_call_list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "do_not_call_list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b27779c9-c5b3-46bf-9460-fe66de392a2f",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "donotcalllist",
+                    "deleteAll",
+                    ":do_not_call_list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-donotcalllist-deleteAll-do_not_call_list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "do_not_call_list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deleted\": 2\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "06be074c-6987-45d4-aed4-e10299bbc6d8",
+          "name": "Delete Many Records",
+          "request": {
+            "name": "Delete Many Records",
+            "description": {
+              "content": "Privileges required:\n\nService and Campaign Administration -> Manage Lists\n\nThis method deletes the list of specified records from the DNC List, returns the number of deleted records and list of errors if there are.\n\nThe following errors should be caught:\n\nmissingKey - one or more key fields are missed;\n\nformatError - one or more fields has wrong format (e.g. string value for an integer field).\n\nInput parameters: list of DNC list record JSON objects, only key field is required.\n\nResponse Codes:\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood/1 or more required fields are missed or have unsupported value)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges, or modification of this type of list is not allowed\n\n404\nDNC List is not found or invalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "donotcalllist",
+                "delete",
+                ":do_not_call_list_id"
+              ],
+              "host": [
+                "{{configapi-v3-donotcalllist-delete-do_not_call_list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "do_not_call_list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<array>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "984208c8-5366-4a39-9948-37f2eeb89aca",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "donotcalllist",
+                    "delete",
+                    ":do_not_call_list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-donotcalllist-delete-do_not_call_list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "do_not_call_list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"key\": \"9999999\"\n  },\n  {\n    \"key\": \"8888888\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deleted\": 1,\n  \"error\": {\n    \"keyNotFound\": [\n      {\n        \"key\": \"9999999\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45f40661-0c49-4e74-86c5-2c188ebfd624",
+          "name": "Add Many Records",
+          "request": {
+            "name": "Add Many Records",
+            "description": {
+              "content": "Privileges required:\n\nService and Campaign Administration -> Manage Lists\n\nThis method adds new records to the specified Do Not Call (DNC) list and returns the number of added (i.e., appended) records. Duplicates are ignored.\n\nThe following errors should be caught:\n\nmissingKey - one or more key fields are missed;\n\nduplicateKey - a record with the same key already exists;\n\nformatError - one or more fields has wrong format (e.g. string value for an integer field) or unsupported fields are sent;\n\nInput parameters: list of DNC list record JSON objects.\n\nResponse Codes:\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood/1 or more required fields are missed or have unsupported value)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges, or modification of this type of list is not allowed\n\n404\nDNC List is not found or invalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "donotcalllist",
+                "addAll",
+                ":do_not_call_list_id"
+              ],
+              "host": [
+                "{{configapi-v3-donotcalllist-addAll-do_not_call_list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "do_not_call_list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<array>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "011cfed3-9190-4950-9052-ba5edde37e6e",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "donotcalllist",
+                    "addAll",
+                    ":do_not_call_list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-donotcalllist-addAll-do_not_call_list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "do_not_call_list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"key\": \"9999999\",\n    \"expirationPeriod\": 3,\n    \"comment\": \"optional comment\"\n  },\n  {\n    \"key\": \"8888888\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"added\": 1,\n  \"error\": {\n    \"duplicateKey\": [\n      {\n        \"key\": \"8888888\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f672ed24-f903-4c4d-8a5a-09f6ec3d22a8",
+          "name": "Add Records DEPRECATED",
+          "request": {
+            "name": "Add Records DEPRECATED",
+            "description": {
+              "content": "Privileges required:\n\nService and Campaign Administration -> Manage Lists\n\nThis method adds new records to the specified Do Not Call (DNC) list and returns the number of added (i.e., appended) records. Duplicates are ignored.\n\nResponse Codes:\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood/1 or more required fields are missed or have unsupported value)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges, or modification of this type of list is not allowed\n\n404\nDNC List is not found or invalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "donotcalllist",
+                "add",
+                ":do_not_call_list_id"
+              ],
+              "host": [
+                "{{configapi-v3-donotcalllist-add-do_not_call_list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "do_not_call_list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<array>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "469b4787-d4c6-46b9-adeb-bbb80e63c4bf",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "donotcalllist",
+                    "add",
+                    ":do_not_call_list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-donotcalllist-add-do_not_call_list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "do_not_call_list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  [\n    \"123456789\",\n    \"optional comment\"\n  ],\n  [\n    \"9999999999\",\n    \"optional comment\"\n  ]\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"added\": 2\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7a2bdfe9-c172-43be-8a16-2670b6fb1697",
+          "name": "Replace Records DEPRECATED",
+          "request": {
+            "name": "Replace Records DEPRECATED",
+            "description": {
+              "content": "Privileges required:\n\nService and Campaign Administration -> Manage Lists\n\nThe method deletes all records in the specified Do Not Call (DNC) list, inserts new ones and returns the number of newly inserted records. Duplicates are ignored.\n\nResponse Codes:\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood/1 or more required fields are missed or have unsupported value)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges, or modification of this type of list is not allowed\n\n404\nDNC List is not found or invalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "donotcalllist",
+                "replaceAll",
+                ":do_not_call_list_id"
+              ],
+              "host": [
+                "{{configapi-v3-donotcalllist-replaceAll-do_not_call_list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "do_not_call_list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<array>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ea5b1690-466f-454b-bd94-69a6af2829ff",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "donotcalllist",
+                    "replaceAll",
+                    ":do_not_call_list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-donotcalllist-replaceAll-do_not_call_list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "do_not_call_list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  [\n    \"123456789\",\n    \"optional comment\"\n  ],\n  [\n    \"9999999999\",\n    \"optional comment\"\n  ]\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"added\": 2\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b7e62d5b-8980-46b5-a95e-c3ca6d191d3b",
+          "name": "Get DNC Records",
+          "request": {
+            "name": "Get DNC Records",
+            "description": {
+              "content": "This method returns a list of all records, including their in an existing DNC List, specified in the path variable, do_not_call_list_id. The records are returned and sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlimit\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\ncursor\nstring\nno (used for pagination)\nFirst request: null  \nSubsequent request: value received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges;  \nModification of this type of list is not allowed\n\n404\nSpecified DNC List was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "donotcalllist",
+                "getDNCRecords",
+                ":do_not_call_list_id"
+              ],
+              "host": [
+                "{{configapi-v3-donotcalllist-getDNCRecords-do_not_call_list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "do_not_call_list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a99f032c-5aad-48f3-a6b7-f746cb1795b1",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "donotcalllist",
+                    "getDNCRecords",
+                    ":do_not_call_list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-donotcalllist-getDNCRecords-do_not_call_list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "do_not_call_list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next_cursor\": \"590e9abd4abbf1165862d342\",\n  \"records\": [\n    {\n      \"key\": \"8888888\",\n      \"added\": \"2023-01-19T20:46:34.000\",\n      \"comment\": \"optional comment\",\n      \"setOn\": \"2023-01-19T20:46:35.000\",\n      \"expireAt\": \"2023-04-19T20:46:35.000\"\n    },\n    {\n      \"key\": \"9999999\",\n      \"comment\": \"optional comment\",\n      \"setOn\": \"2023-01-19T20:48:35.000\",\n      \"expireAt\": \"2023-02-09T20:46:35.000\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "96b0aec3-c6b6-42cc-a852-f567733d479d",
+          "name": "Get DNC Lists",
+          "request": {
+            "name": "Get DNC Lists",
+            "description": {
+              "content": "This method returns all DNC Lists, sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlimit\ninteger, ≤ 100\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...100\n\ncursor\nstring\nno (used for pagination)\nFirst request: null  \nSubsequent request: value received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; limit exceeded; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "donotcalllist",
+                "getAll"
+              ],
+              "host": [
+                "{{configapi-v3-donotcalllist-getAll-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8f2fb14a-012e-4eb0-a0df-c63de226662f",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "donotcalllist",
+                    "getAll"
+                  ],
+                  "host": [
+                    "{{configapi-v3-donotcalllist-getAll-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"next_cursor\\\": \\\"590e9abd4abbf1165862d342\\\",\\n    \\\"records\\\": [\\n        {\\n            \\\"id\\\": \\\"635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D\\\",\\n            \\\"name\\\": \\\"DNC - July\\\",\\n            \\\"type\\\": \\\"Internal\\\"\\n            \\\"creationDate\\\": \\\"2024-07-01T19:11:40.000\\\",\\n            \\\"totalRecords\\\": 29\\n        },\\n        {\\n            \\\"id\\\": \\\"635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2C\\\",\\n            \\\"name\\\": \\\"DNC - June\\\",\\n            \\\"type\\\": \\\"Internal\\\"\\n            \\\"creationDate\\\": \\\"2025-06-01T19:11:41.000\\\",\\n            \\\"totalRecords\\\": 34\\n        }\\n    ]\\n}\\n\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "998b9426-f973-4d2a-b0b2-7c004f019831",
+          "name": "Get DNC List",
+          "request": {
+            "name": "Get DNC List",
+            "description": {
+              "content": "This method returns the detailed information about a specified DNC list, including it's name, type and total number of records, as well as exipartion and reset settings, if applicable.\n\nAdditionally, this method returns information about the campaigns associated with that DNC list, if any.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; limit exceeded; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "donotcalllist",
+                "getDNCList",
+                ":do_not_call_list_id"
+              ],
+              "host": [
+                "{{configapi-v3-donotcalllist-getDNCList-do_not_call_list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "do_not_call_list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b4f4c525-b421-45d6-8c65-259b07072ef5",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "donotcalllist",
+                    "getDNCList",
+                    ":do_not_call_list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-donotcalllist-getDNCList-do_not_call_list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "do_not_call_list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\n  \\\"id\\\": \\\"635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D\\\",\\n  \\\"name\\\": \\\"DNC - July\\\",\\n  \\\"type\\\": \\\"INTERNAL\\\",\\n  \\\"creationDate\\\": \\\"2024-07-01T19:11:40.000\\\",\\n  \\\"totalRecords\\\": 100,\\n  \\\"expireRecords\\\": true,\\n  \\\"defaultExpirationPeriod\\\": 120,\\n  \\\"resetDaily\\\" : true,\\n  \\\"resetTime\\\" : \\\"12:00:00 PM -08:00\\\"\\n\\n  \\\"campaigns\\\": [\\n    {\\n      \\\"campaignName\\\": \\\"Campaign name 1\\\",\\n      \\\"campaignId\\\": \\\"99B6B870-6CC5-11EE-807C-0800200C9A66\\\",\\n      \\\"disposition\\\": \\\"Requested DNC\\\",\\n\\t  \\\"allowAppend\\\": true\\n    },\\n    {\\n      \\\"campaignName\\\": \\\"Campaign name 2\\\",\\n      \\\"campaignId\\\": \\\"99B6B870-6CC5-11EE-807C-0800200C9A66\\\",\\n      \\\"disposition\\\": \\\"Requested DNC\\\",\\n      \\\"allowAppend\\\": true\\n    },\\n    {\\n      \\\"campaignName\\\": \\\"Campaign name 3\\\",\\n      \\\"campaignId\\\": \\\"7E57DE70-6CF1-11EE-807C-0800200C9A66\\\",\\n      \\\"disposition\\\": \\\"Matched DNC\\\",\\n      \\\"allowAppend\\\": false\\n    }\\n  ]\\n} \"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd7ae5c5-7325-4c3c-aa29-837b267bd6fc",
+          "name": "Create DNC List",
+          "request": {
+            "name": "Create DNC List",
+            "description": {
+              "content": "This method creates a new empty DNC list. Depending on the specified DNC list type, the creation process is as follows:\n\nFor Internal, Geographic, Area Codes - new DNC lists are created using the fixed format corresponding to the list type\n\nFor Record Exclusion - the exclusion field has to be explicitly specified in the request body\n\nAdditionally, for DNC lists of Area Codes and Geographic Postal types, the ISO country code has to be explicitly specified in the request body.\n\nNote: For Area Codes, additional option “Each area code had country prefix” is available. This option can be specified using “Prefixed” as the country value.\n\nOn succesfull excution, the response should contain the ID of the newly created DNC list.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring, ≤ 255 characters  \n  \nNote: DNC list name must be unique within the contact center\nyes\n-\n\ntype\nstring\nyes\n“INTERNAL”  \n“GEOGRAPHIC_POSTAL”  \n“AREA_CODES”  \n“EXCLUSION”\n\ncountry\nISO country code;  \nOR “prefixed” (applicable only to DNC lists of Area Codes type)\nonly required for DNC lists of Area Codes and Geographic Postal types\n\nexpireRecords\nboolean\nonly required for DNC lists of Internal and Record Exclusion types\nDefault = false\n\ndefaultExpirationPeriod\ninteger, [0, 365]  \nNote: Specifies number of days since record was added to the DNC list, after which that records is considered expired by the Dialer\nrequired, if expireRecords = true\nDefault = 90 days\n\nexclusionField\nFiled name to be set as \"key\" for records exclusion  \n  \nNote: Must contain a valid field from the available calling list formats.\nonly required for DNC lists of Record Exclusion type\n-\n\nresetDaily\nboolean\nonly required for DNC lists of Record Exclusion type\nDefault = false\n\nresetPeriod\nJSON object, consisting of:  \n  \nresetTime, formatted as HH:mm:ss  \nAND  \n  \ntimezoneID, formatted as {Area}/{Location}  \ne.g., \"America/New_York\"\nrequired, if resetDaily = true\nDefault resetTime = 00:00:00  \n  \nDefault timezoneID = user’s timezone\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL\n\n409\nDuplicate name error",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "donotcalllist",
+                "createDNCList"
+              ],
+              "host": [
+                "{{configapi-v3-donotcalllist-createDNCList-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<string>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a09fb0b0-335a-4f5a-9222-2d22a068d387",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "donotcalllist",
+                    "createDNCList"
+                  ],
+                  "host": [
+                    "{{configapi-v3-donotcalllist-createDNCList-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "//FOR INTERNAL, GEOGRAPHIC POSTAL, AREA CODES\n\n{\n    \"name\": \"DNC - June\",\n    \"type\": \"INTERNAL\",\n    \"expireRecords\": true, \n    \"defaultExpirationPeriod\": 120\n}\n\n//FOR GEOGRAPHIC POSTAL, AREA CODES\n\n{\n    \"name\": \"DNC - June\",\n    \"type\": \"AREA_CODES\",\n    \"country\": \"US\"\n}\n\n//FOR RECORD EXCLUSION\n\n{\n    \"name\": \"Account Exclusion List\",\n    \"type\": \"EXCLUSION\",\n    \"expireRecords\": true, \n    \"defaultExpirationPeriod\": 120, \n    \"exclusionField\": \"Account Number\",\n    \"resetDaily\" : true,\n    \"resetPeriod\": \n        { \n        \"time\": \"04:00:00\",\n        \"timezoneID\" : \"America/Los_Angeles\" \t\n        }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"31CAA7DA-0AE2-4D1A-BE8C-07CA1A4C39AE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6d86224-4970-4bba-ae40-4f9e4be3678b",
+          "name": "Delete DNC List",
+          "request": {
+            "name": "Delete DNC List",
+            "description": {
+              "content": "This method deletes the DNC list specified in the path variable, do_not_call_list_id.\n\nOnce the DNC List is deleted, all records previously blocked by it in the associated campaign(s) become dialable again.\n\nNote: Archivation of DNC Lists and DNS List records is not supported in the Admin Portal, so no special considerations should be made for List API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "donotcalllist",
+                "deleteDNCList",
+                ":do_not_call_list_id"
+              ],
+              "host": [
+                "{{configapi-v3-donotcalllist-deleteDNCList-do_not_call_list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "do_not_call_list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f05ad359-8240-479f-98ac-44349df4e4a1",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "donotcalllist",
+                    "deleteDNCList",
+                    ":do_not_call_list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-donotcalllist-deleteDNCList-do_not_call_list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "do_not_call_list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "27464f9b-bd41-47d7-9d9c-803a7565d04c",
+          "name": "Bind DNC List",
+          "request": {
+            "name": "Bind DNC List",
+            "description": {
+              "content": "This method adds a DNC list to the campaign, referenced by its ID in the path variable.\n\nNote: Manipulating calling lists associated with a campaign requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ndncListId\nstring\nyes\n-\n\ndisposition\nstring  \n  \nNote: Specifies disposition to be attached to call attempts and completed records in case of a match against DNC record\nyes\n-\n\napplyToLinkGroup\nboolean  \n  \nNote: Allows to automatically apply DNC to all other campaigns in link group\nno\n-\n\nallowAppend\nboolean  \n  \nNote: Allows numbers to be added to Internal DNC list based on “Add to DNC” disposition set by agents during the given campaign\nonly required for DNC lists of Internal type\nDefault = false\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nSpecifed DNC list was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "bindDNCList",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-bindDNCList-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9d86f44a-629f-4195-833c-61ffdc2bde76",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "bindDNCList",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-bindDNCList-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dncListid\": \"31CAA7DA-0AE0-4D1A-BE8C-07CA1A4C39AC\",\n  \"disposition\": \"Number matched DNC\",\n  \"applyToLinkGroup\": false,\n  \"allowAppend\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "70bcb6b0-5703-4b00-ae6d-8723a63a92aa",
+          "name": "Unbind DNC List",
+          "request": {
+            "name": "Unbind DNC List",
+            "description": {
+              "content": "This method removes the DNC list from the associated campaign, referenced by its ID in the path variable., campaign_id.\n\nThe DNC list to be removed is specified in the request body by its unique identifier, dncListId.\n\nNote: Manipulating calling lists associated with a campaign requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ndncListId\nstring\nyes\n-",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "unbindDNCList",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-unbindDNCList-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "025226be-511e-4e67-8bb2-ab49cf982cb1",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "unbindDNCList",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-unbindDNCList-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dncListId\": \"DBA3A9B0-6CC4-11EE-807C-0800200C9A66\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7f8f6216-f1a9-4f99-b587-f2b36551d894",
+          "name": "Update DNC List Properties",
+          "request": {
+            "name": "Update DNC List Properties",
+            "description": {
+              "content": "This method allows to change properties and settings of an existing DNC list, specified in the path variable, do_not_call_list_id.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring, ≤ 255 characters  \n  \nNote: DNC list name must be unique within the contact center\nno\n-\n\ntype\nstring\nno\n“INTERNAL”  \n“GEOGRAPHIC_POSTAL”  \n“AREA_CODES”  \n“EXCLUSION”\n\ncountry\nISO country code;  \nOR “prefixed” (applicable only to DNC lists of Area Codes type)\nno, only applicable to DNC lists of Area Codes and Geographic Postal types\n\nexpireRecords\nboolean\nno, only applicable to DNC lists of Internal and Record Exclusion types\nDefault = false\n\ndefaultExpirationPeriod\ninteger, [0, 365]  \nNote: Specifies number of days since record was added to the DNC list, after which that records is considered expired by the Dialer\nrequired, if expireRecords = true\nDefault = 90 days\n\nexclusionField\nFiled name to be set as \"key\" for records exclusion  \n  \nNote: Must contain a valid field from the available calling list formats.\nno, only applicable to DNC lists of Record Exclusion type\n-\n\nresetDaily\nboolean\nno, only applicable to DNC lists of Record Exclusion type\nDefault = false\n\nresetPeriod\nJSON object, consisting of:  \n  \nresetTime, formatted as HH:mm:ss  \nAND  \n  \ntimezoneID, formatted as {Area}/{Location}  \ne.g., \"America/New_York\"\nrequired, if resetDaily = true\nDefault resetTime = 00:00:00  \n  \nDefault timezoneID = user’s timezone\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL\n\n409\nDuplicate name error",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "donotcalllist",
+                "updateDNCProperties",
+                ":do_not_call_list_id"
+              ],
+              "host": [
+                "{{configapi-v3-donotcalllist-updateDNCProperties-do_not_call_list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "do_not_call_list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c6ee86b1-8f88-4fd2-9963-8777469083d8",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "donotcalllist",
+                    "updateDNCProperties",
+                    ":do_not_call_list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-donotcalllist-updateDNCProperties-do_not_call_list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "do_not_call_list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"new DNC name\",\n  \"expireRecords\": true,\n  \"defaultExpirationPeriod\": 180,\n  \"resetDaily\": true,\n  \"resetTime\": \"12:00:00 PM -08:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "baseUrl"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-donotcalllist-deleteAll-do_not_call_list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-donotcalllist-delete-do_not_call_list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-donotcalllist-addAll-do_not_call_list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-donotcalllist-add-do_not_call_list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-donotcalllist-replaceAll-do_not_call_list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-donotcalllist-getDNCRecords-do_not_call_list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-donotcalllist-getAll-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-donotcalllist-getDNCList-do_not_call_list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-donotcalllist-createDNCList-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-donotcalllist-deleteDNCList-do_not_call_list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-bindDNCList-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-unbindDNCList-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-donotcalllist-updateDNCProperties-do_not_call_list_id-Url"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "454f5d82-a9fa-454f-a72a-e717f23df23d",
+    "name": "Bright Pattern DNC Lists API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Operations tagged DNC Lists across 2 of this provider's published API definitions: bright-pattern-list-management-v3-2-openapi.yml, bright-pattern-list-management-v3-openapi.yml. Each path carries the servers of the definition it was published in.\n\nContact Support:\n Name: Bright Pattern",
+      "type": "text/plain"
+    }
+  }
+}

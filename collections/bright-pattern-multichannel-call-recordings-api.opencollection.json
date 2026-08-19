@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BPCC Interaction Content Multichannel Call Recordings API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Multichannel Call Recordings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Multichannel Recording Structure",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v2/multi_channel_recordings",
+            "params": [
+              {
+                "name": "giid",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method is used to get information about the structure of a specific multichannel call recording. The call is identified by the Global Interaction Identifier (GIID). This article describes the various ways the GIID of a call can be obtained.\n\nThe API response is an array of objects, where each object contains the metadata for a specific interaction related to the GIID.\n\nResponse Body\n\nAttribute\nDescription\n\n_id\nInternal use only.\n\ntenant_id\nInternal use only.\n\nglobal_interaction_id\nThe GIID "
+        },
+        {
+          "info": {
+            "name": "Get Multichannel Recording Segment Audio File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v2/multi_channel_recordings/audio",
+            "params": [
+              {
+                "name": "giid",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "iid",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "party",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "recid",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the desired segment of a multichannel recording identified by the GIID, interaction ID, party ID, and optionally the ordinal number of the desired segement. The latter is essential only if according to your practices recording may be stopped and started again while a call is in progress."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

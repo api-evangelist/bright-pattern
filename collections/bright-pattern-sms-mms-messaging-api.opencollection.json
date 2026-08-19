@@ -1,0 +1,65 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BPCC SMS/MMS SMS/MMS Messaging API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SMS/MMS Messaging",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/clientweb/smsapi/v1/Messages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sends an SMS, MMS, or messenger integration message to the designated recipient.\n\nParameters\n\nParameter\nDescription\n\nTo\nDestination number or recipient identifier. Mandatory.  \n- For messages via SMS or MMS: the destination number in E.164 format.  \n- For messages via a messenger integration: the destination expressed in the format :, for example viber:Akj8ntzD7CVmB3Q7V2JqSB== or whatsapp:5552223456\n\nFrom\nOrigin number or messenger integration ID. Mandatory.  \n- For messages via SMS or MMS: Must"
+        },
+        {
+          "info": {
+            "name": "Get Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/smsapi/v1/Messages/:message_sid",
+            "params": [
+              {
+                "name": "message_sid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the current status of a previously sent SMS or MMS message. Depending on the time of the request, network conditions, etc., one of the following statuses may be returned: queued, sent, delivered, failed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

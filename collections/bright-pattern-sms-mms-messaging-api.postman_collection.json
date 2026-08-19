@@ -1,0 +1,299 @@
+{
+  "item": [
+    {
+      "id": "4f7d2442-a749-4656-aca5-0bac1c9e05d3",
+      "name": "SMS/MMS Messaging",
+      "description": {
+        "content": "These methods enable sending of SMS and MMS messages and checking the delivery status. The response parameters are explained below.\n\nResponse parameters\n\nParameter\nDescription\n\ntenant_id\nUnique identifier of your contact center in BPCC configuraiton.\n\napi_version\nAPI version.\n\nbody\nText of the message.\n\nnum_segments\nNumber of segments in the transmitted message. Messages exceeding 160 characters are transmitted in multiple segements. In the current verison of API this parameters is always set to 1.\n\nnum_media\nNumber of media files in the MMS message.\n\ndate_created\nTimestamp of the original Send Message request.\n\ndate_sent\nTimestamp of message transmission. Set to \"null\" in responses to Send Message requests. Set to actual time when the message was sent in responses to Get Message requests.\n\ndate_updated\nReserved.\n\ndirection\nAlways set to outboound-api.\n\nerror_code\nError code.\n\nerror_message\nError message.\n\nfrom\nOrigin number or, if a messenger integration is being used, the messenger type and integration ID.\n\nprice\nReserved. In the current version of the API always set to null.\n\nsid\nUnique identifier of the message. Retured in response to a Send Message request and can be used in Get Message to check the delivery status of the message.\n\nstatus\nStatus of message delivery. Possible values: queued (message queued to be sent), sent (message sent to SMS/MMS service provider but delivery not confirmed), delivered (message confirmed by SMS service provider to be delivered; currently not available for MMS), failed (message could not be sent; typically more details will be provided in error_message). Note that a 200 OK response to a Send Message request will always have status set to queued. Actual status of message delivery can be verified using the Get Message method with a slight delay.\n\nto\nDestination number or, if a messenger integration is being used, the messenger type and the messenger ID of the recipient.\n\nuri\nReserved.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f1d03933-8d78-419a-b1a4-a3613568ddd8",
+          "name": "Send Message",
+          "request": {
+            "name": "Send Message",
+            "description": {
+              "content": "Sends an SMS, MMS, or messenger integration message to the designated recipient.\n\nParameters\n\nParameter\nDescription\n\nTo\nDestination number or recipient identifier. Mandatory.  \n- For messages via SMS or MMS: the destination number in E.164 format.  \n- For messages via a messenger integration: the destination expressed in the format :, for example viber:Akj8ntzD7CVmB3Q7V2JqSB== or whatsapp:5552223456\n\nFrom\nOrigin number or messenger integration ID. Mandatory.  \n- For messages via SMS or MMS: Must be specified in E.164 format. The number must be configured in BPCC as an access number of Text Out type. If you intend to process possible replies, this number must also be specified as an SMS/MMS access number for the messaging scenario entry that directs such replies to a chat service. Alphanumeric Sender IDs are not currently supported.  \n- For messages via a messenger integration: the origin integration expressed in the format :, for example whatsapp:76BD05F0-FB19-4C3A-BA7C-30150B8D9826 or viber:3A07AE4D-6D3E-4AA7-8417-0EE6B34824C9.\n\nBody\nText of the message to be sent. Mandatory for SMS (text-only) or messenger integration messages. Optional for MMS messages if the MediaURLs parameter is defined (see below). SMS and MMS messages longer than 160 characters will be segmented for transmission.\n\nMediaURLs\nAn array of URLs for the media files to be sent in the MMS message. Optional and applies only to messages sent via MMS. May contain up to 10 items.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "smsapi",
+                "v1",
+                "Messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6e5dd232-06bb-41e9-a4d6-a9c60a542507",
+              "name": "Send MMS Message",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "smsapi",
+                    "v1",
+                    "Messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"To\": \"+5219843111460\",\n  \"Body\": \"Sending a test message for BPCC SMS-MMS API.\",\n  \"From\": \"16502505674\",\n  \"MediaURLs\": [\n    \"https://www.leithcars.com/assets/shared/CustomHTMLFiles/Responsive/MRP/Ford/2017/Mustang/images/2017-Ford-Mustang-01.jpg\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_sid\": \"2B699762-370C-4F76-A684-A85B5F93DF84\",\n  \"api_version\": \"1\",\n  \"body\": \"Sending a test message for BPCC SMS-MMS API.\",\n  \"num_segments\": \"1\",\n  \"num_media\": \"0\",\n  \"date_created\": \"Wed, 06 Feb 2019 08:24:08 +0000\",\n  \"date_sent\": null,\n  \"date_updated\": \"Wed, 06 Feb 2019 08:24:08 +0000\",\n  \"direction\": \"outbound-api\",\n  \"error_code\": null,\n  \"error_message\": null,\n  \"from\": \"16502505674\",\n  \"price\": null,\n  \"sid\": \"cbbb47e2-23be-452f-9b81-4a1f69300051\",\n  \"status\": \"queued\",\n  \"to\": \"16046496025\",\n  \"uri\": \"/clientweb/smsapi/v1/Messages/cbbb47e2-23be-452f-9b81-4a1f69300051\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db279139-338f-4fb5-8c57-7b213a56f481",
+          "name": "Get Message",
+          "request": {
+            "name": "Get Message",
+            "description": {
+              "content": "Gets the current status of a previously sent SMS or MMS message. Depending on the time of the request, network conditions, etc., one of the following statuses may be returned: queued, sent, delivered, failed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "smsapi",
+                "v1",
+                "Messages",
+                ":message_sid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "message_sid",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ccced70f-7106-4c09-ad13-457f1576b3a4",
+              "name": "Get Status of Previously Sent Message",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "smsapi",
+                    "v1",
+                    "Messages",
+                    ":message_sid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_sid",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_sid\": \"2B699762-370C-4F76-A684-A85B5F93DF84\",\n  \"api_version\": \"1\",\n  \"body\": \"Sending a test message for BPCC SMS-MMS API.\",\n  \"num_segments\": \"1\",\n  \"num_media\": \"0\",\n  \"date_created\": \"Wed, 06 Feb 2019 08:24:08 +0000\",\n  \"date_sent\": \"Wed, 06 Feb 2019 08:24:08 +0000\",\n  \"date_updated\": \"Wed, 06 Feb 2019 08:24:08 +0000\",\n  \"direction\": \"outbound-api\",\n  \"error_code\": null,\n  \"error_message\": null,\n  \"from\": \"16502505674\",\n  \"price\": null,\n  \"sid\": null,\n  \"status\": \"delivered\",\n  \"to\": \"16046496025\",\n  \"uri\": \"/clientweb/smsapi/v1/Messages/cbbb47e2-23be-452f-9b81-4a1f69300051\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "82c6dbdb-d64c-41ab-a061-3497f472c59b",
+    "name": "BPCC SMS/MMS SMS/MMS Messaging API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The SMS/MMS API allows external applications to send messages using text-capable access numbers of the Bright Pattern platform and through supported messenger integrations. This API also enables tracking the delivery status of these messages, regardless of the channel used.\n\nThis document specifies the corresponding REST API methods, with example requests and responses. You can load this API into the Postman API Development Environment to interact with the API with your own access tokens.\n\nNote the following:\n\nThe user account used for authentication of the SMS/MMS API requests must have the privilege Use SMS/MMS API.\n\nA 200 OK response to a Send Message request will always show the message status as queued. The actual delivery status can be verified using the Get Message method with a slight delay\n\nThe only records created in BPCC for the messages sent via this API will be records in the Carrier Usage reports.\n\nPossible replies to the messages sent via the API can be directed to a chat service associated with the access number or messenger integration specified by the sender ID (field From:) in the Send Message request. If it is important that you receive and process possible replies, consider sending your messages within the service hours and stop sending them well in advance of service closure.\n\nIf replies are still received outside of the service hours, you can configure your scenario to:\n\nUse the Send Message+ scenario block to send an automatic reply advising the customer of the service hours.\n\nCopy the content of the message to an Email scenario block and send this email to someone who can follow up the next day.\n\nContact Support:\n Name: Bright Pattern",
+      "type": "text/plain"
+    }
+  }
+}

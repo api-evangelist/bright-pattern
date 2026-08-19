@@ -1,0 +1,408 @@
+{
+  "item": [
+    {
+      "id": "d909efee-17d2-48a0-ab0e-3299815937c7",
+      "name": "Regular Call Recordings",
+      "description": {
+        "content": "These methods enable retrieval of regular voice recordings (i.e., recordings where voices of all participating parties are recorded in the same audio file) and the related call metadata. Both audio files and metadata can be retrieved immediately upon call termination. Parameters required for recording identificaiton can be obtained via scenario variables $(item.globalInteractionId) and $(item.interactionStepId).\nRegular call recordings are exported in GSM format.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "45764018-dd60-4225-b694-32eea63d0317",
+          "name": "Get Regular Recording Audio File",
+          "request": {
+            "name": "Get Regular Recording Audio File",
+            "description": {
+              "content": "Returns an audio file with voices of all participants for the specified call recording in the GSM format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "recordings",
+                "audio"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "giid",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "stepid",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ac65a69c-71af-4fcd-9057-3e67c895a851",
+              "name": "Get Audio File",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "recordings",
+                    "audio"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "giid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stepid",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6536a3e6-5c84-47ea-a25e-bc2fd7c65226",
+          "name": "Erase Call Recordings",
+          "request": {
+            "name": "Erase Call Recordings",
+            "description": {
+              "content": "This method erases locally stored call recordings; the interaction’s Global Interaction Identifier (GIID) must be included as a query parameter in the request URL\n\nNotes\n\nReason is an optional query parameter.\n\nThis method applies to locally stored recordings only.\n\nIf multiple recordings are associated with the specified GIID, all of them will be erased.\n\nThe erasure of recordings is:\nTracked via the Audit Log\n\nReflected in Interaction Records Search Results\n\nReflected in case activity history",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "recordings",
+                "audio"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "giid",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "reason",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3086fa8d-5275-42ce-8be9-75a0a3a639e8",
+              "name": "Erase Call Recordings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "recordings",
+                    "audio"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "giid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reason",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "59aa6c25-bd58-429d-a0b9-cb6a36782292",
+          "name": "Get Interaction Metadata",
+          "request": {
+            "name": "Get Interaction Metadata",
+            "description": {
+              "content": "Returns the following metadata for the specified interaction:\n\nData Item\nDescription\n\nStart Time\nInteraction start time\n\nAgent loginId\nUsername of the agent who last handled this call\n\nAgent First Name\nFirst name of the agent who last handled this call\n\nAgent Last Name\nLast name of the agent who last handled this call\n\nCustomer phone\nCustomer’s phone number (technically, the phone number of the party opposite to the above agent)\n\nDirection\nCall direction relative to the above agent, Inbound or Outbound\n\nService\nName of the service or campaign associated with this call\n\nDisposition\nDisposition selected by the agent for this interaction\n\nNotes\nNotes entered by the agent for this interaction\n\nVoice Signature\nIndicates whether the recording contains a vocie signature.\n\nFlagged\nIndicates whether the interaction was flagged by the agent.\n\nTalk Time\nOverall call duration.\n\nRecordingId\nName of the file that contains the recording of this interaction.\n\nReview URL\nLink for direct access to the recording via the Contact Center Administrator application (login required).\n\nScreen Recording\nIndicates whether an agent screen recording is available for this interaction.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "recordings",
+                "metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "giid",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "stepid",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1489f9ee-7fa6-4dea-88ba-3ac77fe9f3d1",
+              "name": "Metadata for a call with a live agent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "recordings",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "giid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stepid",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Start Time\": \"03/15/2019 07:49:31 PM UTC +00:00\",\n  \"Agent loginId\": \"navarro\",\n  \"Agent First Name\": \"Jose\",\n  \"Agent Last Name\": \"Navarro\",\n  \"Customer phone\": \"Restricted\",\n  \"Direction\": \"INBOUND\",\n  \"Service\": \"Support\",\n  \"Disposition\": \"Solved\",\n  \"Notes\": \"\",\n  \"Voice Signature\": \"0\",\n  \"Flagged\": \"0\",\n  \"Talk Time\": \"0:38\",\n  \"RecordingId\": \"20190315124931_Restricted_navarro_C6A1ECF16C4E4D13B848718273ECB0CA.wav\",\n  \"Global Interaction ID\": \"A44B62DE-75FB-47CD-A103-8F778CD1032A\",\n  \"Review URL\": \"https://sasha.brightpattern.com/admin?giid=A44B62DE-75FB-47CD-A103-8F778CD1032A&stepId=C6A1ECF1-6C4E-4D13-B848-718273ECB0CA\",\n  \"Screen Recording\": \"0\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a09c2abf-edfa-4713-bbfc-f0d22ae6db4e",
+    "name": "BPCC Interaction Content Regular Call Recordings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "With the BPCC Interaction Content API you currently can:\n\nObtain general metadata for a service voice call.\n\nObtain a regular audio recording of a service voice call in GSM format (a regular recording includes all call segments and voices of all call participants).\n\nObtain audio recordings of individual participants in uncompressed PCM format (such recordings will be available if the multichannel call recording capability is enabled for your contact center).\n\nThis document specifies the corresponding REST API methods, with example requests and responses. You can load this API into the Postman API Development Environment to interact with the API with your own access tokens.\n\nContact Support:\n Name: Bright Pattern",
+      "type": "text/plain"
+    }
+  }
+}

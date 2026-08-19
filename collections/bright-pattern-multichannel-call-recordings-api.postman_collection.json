@@ -1,0 +1,299 @@
+{
+  "item": [
+    {
+      "id": "7d2146fe-d009-4cd4-b7ba-3447e97db297",
+      "name": "Multichannel Call Recordings",
+      "description": {
+        "content": "These methods are used to extract individual segments of multichannel call recordings (i.e., recordings where voice of each paricipating party is recorded into a separate audio file).\n\nThe Get Multichannel Recording Structure method should be used first to obtain the Interaction IDs, Party IDs, and optionally segments, to be used in the subsequent Get Multichannel Recording Segment Audio File requests.\n\nSegments of multichannel recordings are available for export immediately upon call termination. \n\nSegments of multichannel recordings are exported in uncompressed PCM format for maximun speech quality. Note that because of the large  size of multichannel PCM recording files, they are typically stored in the system for a limited amount of time. Check with your service provider about your limits, and consider overnight export of selected recordings for the previous working day.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0963970b-8da3-4274-a73a-bf9a0c1f9fb5",
+          "name": "Get Multichannel Recording Structure",
+          "request": {
+            "name": "Get Multichannel Recording Structure",
+            "description": {
+              "content": "This method is used to get information about the structure of a specific multichannel call recording. The call is identified by the Global Interaction Identifier (GIID). This article describes the various ways the GIID of a call can be obtained.\n\nThe API response is an array of objects, where each object contains the metadata for a specific interaction related to the GIID.\n\nResponse Body\n\nAttribute\nDescription\n\n_id\nInternal use only.\n\ntenant_id\nInternal use only.\n\nglobal_interaction_id\nThe GIID of this interaction. (The same GIID that was used to get this metadata.)\n\ninteraction_id\nThe GIID may refer to several related interactions (for example, a primary customer-agent call and a related consult call). Thus, in addition to the GIID, each interaction has a globally unique interaction_id. Each interaction has a list of parties.\n\nparties\nAn array of Party Objects, where each object contains information about a participant in the call. See the Party Object structure below.\n\nParty Object\n\nThe parties array contains one or more Party Objects.\n\nAttribute\nDescription\n\nparty_id\nIdentifier of a party within the interaction identified by the interaction_id. Note that this identifier is used exclusively for retrieval of the party's audio via the Get Party Audio File method and is not intended to be used for any other purposes.\n\nparty_type\nUSER - the given party is a configured BPCC user (typically, an agent);  \nCONTACT - the given party is a known customer;  \nUNIDENTIFIED - the given party could not be identified as either a BPCC user or a known customer.\n\nfirst_name\nParty's first name if available.\n\nlast_name\nParty's last name if available.\n\nphone\nParty's phone number used for the given call if available.\n\nuser_id\nInternal use only.\n\nrecordings\nAn array of Recording Segment Objects. Because call recording can be stopped and started, each party can have multiple segments. See the Recording Segment Object structure below.\n\nRecording Segment Object\n\nThe recordings array contains one or more Recording Segment Objects.\n\nAttribute\nDescription\n\nduration\nThe duration of this specific recording segment, in seconds (returned as a string).\n\nstart_time\nThe UTC timestamp for when the recording segment began, in ISO 8601 format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "multi_channel_recordings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "giid",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d84b7139-f756-4a2f-97ec-b9e1a65e975a",
+              "name": "Multichannel recording description for a simple call",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "multi_channel_recordings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "giid",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"_id\": \"685a29343a36e54583e5952c\",\n    \"tenant_id\": \"C809D1F5-84C2-447E-AA03-E3D5000BA779\",\n    \"global_interaction_id\": \"6F5D2671-0574-46F8-8417-EB0EA985A751\",\n    \"interaction_id\": \"0FABD496-A231-4411-82BD-C68262862F36\",\n    \"parties\": [\n      {\n        \"first_name\": \"Susan\",\n        \"last_name\": \"Mallorie\",\n        \"party_id\": \"6C631399-D74A-4F6E-AF17-523A286817DA\",\n        \"party_type\": \"USER\",\n        \"phone\": \"1000\",\n        \"recordings\": [\n          {\n            \"duration\": \"37\",\n            \"start_time\": \"2025-06-24T04:26:32.427Z\"\n          }\n        ],\n        \"user_id\": \"0EB98877-9517-4CB6-87C3-4A46EF6E6087\"\n      },\n      {\n        \"first_name\": \"Allen\",\n        \"last_name\": \"Hartzell\",\n        \"party_id\": \"AB694080-1C65-4C5D-B893-0FEEE9CBCFDA\",\n        \"party_type\": \"USER\",\n        \"phone\": \"2042\",\n        \"recordings\": [\n          {\n            \"duration\": \"37\",\n            \"start_time\": \"2025-06-24T04:26:32.427Z\"\n          }\n        ],\n        \"user_id\": \"390FE1FC-1FBE-43C2-A527-32B39BD63036\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "36363307-edb5-4305-9918-6b3cff97e88a",
+          "name": "Get Multichannel Recording Segment Audio File",
+          "request": {
+            "name": "Get Multichannel Recording Segment Audio File",
+            "description": {
+              "content": "Gets the desired segment of a multichannel recording identified by the GIID, interaction ID, party ID, and optionally the ordinal number of the desired segement. The latter is essential only if according to your practices recording may be stopped and started again while a call is in progress.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "multi_channel_recordings",
+                "audio"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "giid",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "iid",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "party",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "recid",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "85179580-fcf5-4aca-b32d-f9ff84034d7b",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "multi_channel_recordings",
+                    "audio"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "giid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "iid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "party",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recid",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "67439bd5-e7b9-46cf-9bb3-e1391a245c35",
+    "name": "BPCC Interaction Content Multichannel Call Recordings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "With the BPCC Interaction Content API you currently can:\n\nObtain general metadata for a service voice call.\n\nObtain a regular audio recording of a service voice call in GSM format (a regular recording includes all call segments and voices of all call participants).\n\nObtain audio recordings of individual participants in uncompressed PCM format (such recordings will be available if the multichannel call recording capability is enabled for your contact center).\n\nThis document specifies the corresponding REST API methods, with example requests and responses. You can load this API into the Postman API Development Environment to interact with the API with your own access tokens.\n\nContact Support:\n Name: Bright Pattern",
+      "type": "text/plain"
+    }
+  }
+}

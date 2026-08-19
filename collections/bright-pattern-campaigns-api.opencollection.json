@@ -1,0 +1,678 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bright Pattern Campaigns API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v2/campaign/getAll",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the list of enabled campaigns and the calling lists currently associated with such campaigns. It does not return any disabled campaigns.\n\nNotes:\n\nAn empty array can be returned if there are no enabled campaigns.\n\nResponse Codes\n\nCode\nDescription\n\n200\nOK\n\n400\nBad request (missing required fields or format not understood)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges"
+        },
+        {
+          "info": {
+            "name": "Get Campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v3/campaign/getCampaign/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns all campaign settings. To request only specific parts of the settings (e.g., only assigned teams), use the include query parameter with comma-separated values. If include is not specified, the method behaves the same as Get Campaign 3.1 (backward compatible). Possible values for include are:\n\n\\\\*: Returns all settings\n\ngeneralSettings\n\ncallerIdSettings\n\noutboundGeneral\n\nteams\n\ncallerIDs\n\ndispositions\n\nlists\n\ndncLists\n\nNote: The include query parameter is not supported for Out"
+        },
+        {
+          "info": {
+            "name": "Get Campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v3/campaign/getAll",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a list of enabled outbound campaigns, their current states, and unique identifiers. Based on the user privileges configured, the list will contain all campaigns or only those assigned to this user (see here). An empty list will be returned if no outbound campaign is currently enabled or the user has no assigned campaigns.\n\nNote: A campaign's unique identifier returned in the response body can be used to reference that campaign in the path variables of further API requests.\n\nR"
+        },
+        {
+          "info": {
+            "name": "Get Campaign Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v3/campaign/getStatus/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the current state, i.e. STOPPED or RUNNING, of an enabled or disabled campaign.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL"
+        },
+        {
+          "info": {
+            "name": "Start",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/start/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method starts an enabled campaign, first checking that the campaign is not disabled or already running.\n\nNote: Manipulating campaign states requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user do"
+        },
+        {
+          "info": {
+            "name": "Stop",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/stop/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method stops an enabled campaign, first checking that the campaign is not disabled or already stopped.\n\nNote: Manipulating campaign states requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user doe"
+        },
+        {
+          "info": {
+            "name": "Bind List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/bindList/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method adds a list to the selected campaign.\n\nOnce added, an instance of the list associated with this particular campaign is created. The ID of such an instance is returned in the response body, together with the total number of records inside the original list.\n\nNote: The instance's unique identifier can be further used to unbind or update the list, get campaign results, or query a record from that list.\n\nNote: Manipulating calling lists associated with a campaign requires the user to hav"
+        },
+        {
+          "info": {
+            "name": "Update List",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant_url}/configapi/v3/campaign/updateList/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method changes the properties of an instance of a list in the associated campaign. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here). Additionally, this method can reset an optional parameter to its default value by passing \" \" or null to that parameter.\n\nBefore the list is updated, its binding to the specified campaign is checked. If the instance is bound to the specified campaign, the list is updated success"
+        },
+        {
+          "info": {
+            "name": "Unbind List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/unbindList/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method removes the instance of a list from the associated campaign. The instance to be removed is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here).\n\nNote: Bright Pattern Contact Center solution supports several voice campaign modes (see here). Depending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns\nUpon instance deletion,"
+        },
+        {
+          "info": {
+            "name": "Get All Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/getAllRecords/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a list of all records in an instance. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here). Optionally, this method can also display request attempts made. The records are returned and sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the "
+        },
+        {
+          "info": {
+            "name": "Get Completed Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/getCompletedRecords/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a list of all completed records within an instance. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here). Optionally, the user can view request attempts and specify the completion time frame for which they want to display the completed records list. The records are returned and sorted by completion time (MongoDB completedTime field).\n\nNote: To accommodate the display of large numbers of list record"
+        },
+        {
+          "info": {
+            "name": "Get Updated Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/getUpdatedRecords/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a list of all updated records within an instance. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method. Optionally, the user can view request attempts and specify the time frame for which they want to display the updated records list. The records are returned and sorted by the last date attempted (MongoDB lastDate field).\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Conta"
+        },
+        {
+          "info": {
+            "name": "Query a Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/queryRecord/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a copy of an existing record in an instance, as well as the information about the last interaction associated with this record. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here). The search for the record is performed based on the defined key fields.\n\nBefore the record is queried, its existence in the specified list is checked. If the record does exist in the specified list, the record is querie"
+        },
+        {
+          "info": {
+            "name": "Delete Campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant_url}/configapi/v3/campaign/deleteCampaign/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method deletes the campaign and erases call results, including all archived results for the campaign.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nDepending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns: Upon instance deletion, all active, i.e. in a dialing state, within a script, or connected to an agent, calls are dropped.\n\nPreview campaigns: Upon instance del"
+        },
+        {
+          "info": {
+            "name": "Unlink a Campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/unlinkCampaign/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method removes the selected campaign from its link group. Once deleted, the group becomes re-ordered.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified link "
+        },
+        {
+          "info": {
+            "name": "Link a Campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/linkCampaign/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method adds a campaign to the selected link group or changes its order. When adding, this will reset campaign type, teams assigned, hours, additional skills, and term to the settings of campaigns already in the group. Also call quota will be disabled. Once added, the group becomes re-ordered.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ngroupId\nstring\nyes\n-\n\nstartAfterCampaignId\nstring\nno\n- (will be add"
+        },
+        {
+          "info": {
+            "name": "Update Disposition",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant_url}/configapi/v3/campaign/updateDisposition/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method updates the selected disposition and associated dial rule by its id (both custom and system).\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nSee Add Disposition format.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient pri"
+        },
+        {
+          "info": {
+            "name": "Delete Dispositions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/deleteDispositions/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method deletes multiple custom dispositions from the campaign by matching the provided identifiers. The disposition IDs can be obtained using the Get Campaign method with ?include=dispositions (see here).\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nidsNotFound - dispositions were not found or not associated with the selected campaign;\n\nisSystem - system d"
+        },
+        {
+          "info": {
+            "name": "Add Disposition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/addDisposition/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method add a disposition to the campaign.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nscope.outbound\nboolean\nno\ntrue (Default);  \nfalse\n\nscope.inbound\nboolean\nno\nfalse (Default);  \ntrue\n\nscope.preview\nboolean\nno\nfalse (Default);  \ntrue\n\nfolder\nstring\nyes\nFolder name for grouping\n\norderNumber\ninteger\nno\nDefault: last + 1\n\nname\nstring\nyes\nDisposition label shown to users\n\ndescription\nstring\nno\n-\n\ncode\nst"
+        },
+        {
+          "info": {
+            "name": "Add Dispositions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/addDispositions/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method adds multiple custom dispositions to the campaign.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nmissingRequired - one or more required field values were not found;\n\nformatError - format was mismatched in one or more field values (e.g. string value was defined for an integer field); one or more unsupported fields were defined in the request body;\n\ndu"
+        },
+        {
+          "info": {
+            "name": "Unassign Caller IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/unassignCallerIds/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method removes one or more caller IDs from the campaign by matching the provided identifiers. The caller IDs can be obtained using the Get Campaign method with ?include=callerIds (see here).\n\nNote: Manipulating Caller IDs requires the user to have an additional \"Manage caller IDs within services and campaigns\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request exe"
+        },
+        {
+          "info": {
+            "name": "Assign Caller IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/assignCallerIds/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method assigns one or more caller IDs to the campaign by matching the provided phone numbers.\n\nNote: Manipulating Caller IDs requires the user to have an additional \"Manage caller IDs within services and campaigns\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nnumbersNotFound - numbers were not found;\n\nformatError - format was mismatched in one o"
+        },
+        {
+          "info": {
+            "name": "Unassign Teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/unassignTeams/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method unassigns multiple teams from the campaign by matching the provided identifiers. The team ID can be found by opening that team in the Contact Center Administrator application, Teams section. The id will be displayed in the '#GROUPS:GROUP_PROPERTIES:' fragment of the URL.\n\nNote: Manipulating teams requires the user to have an additional \"Manage all teams\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following er"
+        },
+        {
+          "info": {
+            "name": "Assign Teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/assignTeams/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method assigns multiple teams to a campaign and specifies the Service skill level to be assigned to the team members. Teams are matched by the provided identifiers. The team ID can be found by opening that team in the Contact Center Administrator application, Teams section. The id will be displayed in the '#GROUPS:GROUP_PROPERTIES:' fragment of the URL.\n\nNote: Manipulating teams requires the user to have an additional \"Manage all teams\" privilege.\n\nNote: This method is not supported for Out"
+        },
+        {
+          "info": {
+            "name": "Update Caller ID Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant_url}/configapi/v3/campaign/updateCallerIDSettings/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method changes the specified properties of the selected campaign. Additionally, this method can reset an optional parameter to its default value by passing \" \" or null to that parameter.\n\nNote: Manipulating Caller ID Settings requires the user to have an additional \"Manage caller IDs within services and campaigns\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ncallerIdSelectionMethod\nstring\nno\n"
+        },
+        {
+          "info": {
+            "name": "Update General and Outbound Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant_url}/configapi/v3/campaign/updateGeneralSettings/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method changes the specified properties of the selected campaign. Additionally, this method can reset an optional parameter to its default value by passing \" \" or null to that parameter.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring\nno\n-\n\nenabled\nboolean\nno\nfalse (Default);  \ntrue\n\noutboundGeneral.type\nstring\nno\nPREVIEW (Default);  \nPROGRESSIVE;  \nPREDICTIVE;  \nAUTOMATIC\n\noutboundGeneral.prog"
+        },
+        {
+          "info": {
+            "name": "Duplicate Campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/duplicateCampaign",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method creates a copy of the specified campaign.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThe new campaign is always created disabled and in the STOPPED state.\n\nCalling lists are not inherited.\n\nDisposition IDs are newly generated, while disposition names and all other settings are inherited.\n\nSettings, dialing mode, teams, roles, caller ids, and calling hours are also inherited from the original campaign.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

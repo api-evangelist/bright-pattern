@@ -1,0 +1,178 @@
+openapi: 3.2.0
+info:
+  title: BPCC List Management API v3.2 Link Groups API
+  version: 1.0.0
+  description: 'Overview
+
+
+    Bright Pattern''s List Management API supports a wide range of functionalities previously only accessible within the Contact Center Administrator application. Version 3.2 delivers expanded list and campaign management functionality, introducing comprehensive API support for Do Not Call (DNC) lists and improved methods for accessing Calling List records.
+
+
+    Bright Pattern''s List Management API 3.2 enables you to:
+
+
+    Manage outbound campaigns, including their DNC list (new*) and calling list associations
+
+
+    Update outbound campaign states, access their information, and view their results
+
+
+    Create new lists and new formats
+
+
+    View and update (new*) calling list properties
+
+
+    Manage calling list and DNC list records individually or in bulk
+
+
+    Retrieve the contents of Calling Lists not associated with campaigns (new*)
+
+
+    Create, retrieve, update, and delete DNC lists (new*)
+
+
+    Note: To ensure compatibility with the last API version and facilitate seamless migration, all previously available methods are retained as is. However, methods with a "DEPRECIATED" tag in their name are not recommended for usage and have new corresponding methods defined for their respective functionalities.
+
+
+    This document describes the available REST API methods, specifies their functionality, and provides example requests and responses. Individual methods, as well as the entire List Management API 3.1 collection, can be loaded into Postman and interacted with via your unique Bright Pattern Contact Center access token.
+
+
+    new* - added since List API 3.0'
+  contact:
+    name: Bright Pattern
+    url: https://www.brightpattern.com/contact/
+  x-origin:
+  - format: postman
+    url: https://documenter.getpostman.com/view/8336025/2sB3WmV3UC
+    version: '2.1'
+  x-evidence:
+    fetched: '2026-08-08'
+    source: https://documenter.gw.postman.com/api/collections/8336025/2sB3WmV3UC?segregateAuth=true&versionTag=latest
+    http_status: 200
+    method: derived-from-published-postman-collection
+    note: Mechanically converted from the Postman collection Bright Pattern publishes as its public API reference. No operations, paths, parameters or examples were invented.
+servers:
+- url: https://{tenant_url}
+  description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+  variables:
+    tenant_url:
+      default: example.brightpattern.com
+      description: Your Bright Pattern Contact Center tenant hostname.
+security:
+- bearerAuth: []
+tags:
+- name: Link Groups
+  description: Bright Pattern's List Management API provides the ability to manage Link Groups so several campaigns can be linked together. When processing all records of one campaign is finished, the next campaign in the group will be started automatically. Additionally, see the Link a Campaign and Unlink a Campaign methods descriptions.
+paths:
+  /configapi/v3/campaignlinkgroup/getAll:
+    post:
+      operationId: getLinkGroups
+      summary: Get Link Groups
+      description: "This method returns all Campaign Link Groups, sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlimit\ninteger, ≤ 100\nyes (specifies the maximum size of the returned list)\n1...100\n\ncursor\nstring\nno (used for pagination)\nFirst request: null  \nSubsequent request: value received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; limit exceeded; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL"
+      tags:
+      - Link Groups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              limit: 100
+              cursor: 590e9abd4abbf1165862d342
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+              - id: 6D7C2A7E-7E7A-4D43-9F6D-AB7D6F2B1F1E
+                name: New
+                campaignsCount: 2
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaignlinkgroup/getLinkGroup/{group_id}:
+    get:
+      operationId: getLinkGroup
+      summary: Get Link Group
+      description: "This method returns the information about a link group, including its name and amount of linked campaigns.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (wrong cursor; format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Link Group was not found;  \nInvalid URL"
+      tags:
+      - Link Groups
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                name: New
+                campaigns:
+                - campaignId: 85389D39-E05C-4CE7-B36D-4401BEA52E14
+                  name: Campaign 1
+                  order: 0
+                - campaignId: 48B91DC5-A8CD-4FCA-9AF8-EC20A4ACC14B
+                  name: Campaign 2
+                  order: 1
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaignlinkgroup/createLinkGroup:
+    post:
+      operationId: createLinkGroup
+      summary: Create Link Group
+      description: "This method creates a new empty link group.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring\nyes\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Format was not found;  \nInvalid URL\n\n409\nDuplicate name error"
+      tags:
+      - Link Groups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              name: New
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                id: 6D7C2A7E-7E7A-4D43-9F6D-AB7D6F2B1F1E
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaignlinkgroup/deleteLinkGroup/{group_id}:
+    delete:
+      operationId: deleteLinkGroup
+      summary: Delete Link Group
+      description: "This method deletes an empty link group.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Link Group was not found;  \nInvalid URL\n\n409\nSpecified Link Group is not empty"
+      tags:
+      - Link Groups
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as `Authorization: Bearer <token>`.'
+    oauth2ClientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client-credentials grant against the Bright Pattern tenant token endpoint.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant_url}/configapi/v3/oauth/token
+          scopes: {}

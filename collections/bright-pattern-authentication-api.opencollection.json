@@ -1,0 +1,107 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bright Pattern Authentication API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/oauth/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                },
+                {
+                  "name": "scope",
+                  "value": ""
+                },
+                {
+                  "name": "grant_type",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Returns an access token that will be used to authenticate each subsequent request made via this API."
+        },
+        {
+          "info": {
+            "name": "Get Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/oauth/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                },
+                {
+                  "name": "scope",
+                  "value": ""
+                },
+                {
+                  "name": "grant_type",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This method returns an access token that will be used to authenticate each subsequent request made via this API.\n\nNote: Access Tokens expire after 1 hour and require renewal.\n\nSupplementing invalid credentials in any of the parameters will return a 401 Authentification failed response. Client authentification will also fail if the selected user is locked out or disabled, or the chosen tenant is inactive.\n\nNote: Clients are authenticated using OAuth 2.0 Client Credentials Grant, therefore, thegra"
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/statsapi/auth",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Authenticate - Deprecated\n\nNote: This method is no longer supported; use the Get Access Token method instead.\n\nThis method authenticates a user on a server. In the case of successful authentication, the server sets session cookies.\n\nResponse Codes\n\nCode\nDescription\n\n200\nOK\n\n401\nUnauthorized\n\n403\nForbidden (BPCC version 5.36 and later; Basic Authentication no longer supported)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

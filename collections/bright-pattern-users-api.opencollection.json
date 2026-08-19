@@ -1,0 +1,309 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bright Pattern Users API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/user",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new user in your contact center configuration."
+        },
+        {
+          "info": {
+            "name": "Get User Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v2/user/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns user data, such as name, team, extension, skills, and login information"
+        },
+        {
+          "info": {
+            "name": "Update User ",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{tenant_url}/configapi/v2/user/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates one or more attributes of an existing user. Currently the can be used to update the following properties:\n\nskills\n\ndisabled\n\npassword\n\nchangePassword\n\nteam"
+        },
+        {
+          "info": {
+            "name": "Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant_url}/configapi/v2/user/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an existing user."
+        },
+        {
+          "info": {
+            "name": "Get User Lock State",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v2/user/lock/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Checks whether user's account has been temporarily locked out after too many invalid login attempts."
+        },
+        {
+          "info": {
+            "name": "Clear User Lock State",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{tenant_url}/configapi/v2/user/lock/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Unlocks user's account that has been temporarily locked out after too many invalid login attempts."
+        },
+        {
+          "info": {
+            "name": "Get Teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v2/team",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a list of all existing teams in your contact center."
+        },
+        {
+          "info": {
+            "name": "Get User by userName",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v2/scim/users",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns detailed configuration information about an existing user via the userName filter."
+        },
+        {
+          "info": {
+            "name": "Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/scim/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method creates a new user in your contact center configuration."
+        },
+        {
+          "info": {
+            "name": "Get User by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v2/scim/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns detailed configuration information about an existing user via the user’s ID."
+        },
+        {
+          "info": {
+            "name": "Replace User Properties (by replacing all existing attributes with a specified set of replacement attributes)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{tenant_url}/configapi/v2/scim/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replaces all attributes of an existing user with a specified set of replacement attributes. Note that in accordance with RFC7644, the PUT method updates users by replacing all of their current attributes with the ones specified in the body of the method.\n\nNote also that in order for usernames to be changed, service providers must allow this feature for your contact center. For more information, see the Contact Center Administrator Guide, section Users."
+        },
+        {
+          "info": {
+            "name": "Update User (updates only the properties indicated in the specified set)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant_url}/configapi/v2/scim/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates attributes of an existing user. Note that in accordance with RFC7644, the PATCH method modifies a user with a set of client-specified changes (partial update).\n\nNote also that in order for usernames to be changed, service providers must allow this feature for your contact center. For more information, see the Contact Center Administrator Guide, section Users."
+        },
+        {
+          "info": {
+            "name": "Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant_url}/configapi/v2/scim/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an existing user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

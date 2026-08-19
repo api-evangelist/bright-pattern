@@ -1,0 +1,246 @@
+openapi: 3.2.0
+info:
+  title: BPCC SMS/MMS SMS/MMS Messaging API
+  version: 1.0.0
+  description: 'The SMS/MMS API allows external applications to send messages using text-capable access numbers of the Bright Pattern platform and through supported messenger integrations. This API also enables tracking the delivery status of these messages, regardless of the channel used.
+
+
+    This document specifies the corresponding REST API methods, with example requests and responses. You can load this API into the Postman API Development Environment to interact with the API with your own access tokens.
+
+
+    Note the following:
+
+
+    The user account used for authentication of the SMS/MMS API requests must have the privilege Use SMS/MMS API.
+
+
+    A 200 OK response to a Send Message request will always show the message status as queued. The actual delivery status can be verified using the Get Message method with a slight delay
+
+
+    The only records created in BPCC for the messages sent via this API will be records in the Carrier Usage reports.
+
+
+    Possible replies to the messages sent via the API can be directed to a chat service associated with the access number or messenger integration specified by the sender ID (field From:) in the Send Message request. If it is important that you receive and process possible replies, consider sending your messages within the service hours and stop sending them well in advance of service closure.
+
+
+    If replies are still received outside of the service hours, you can configure your scenario to:
+
+
+    Use the Send Message+ scenario block to send an automatic reply advising the customer of the service hours.
+
+
+    Copy the content of the message to an Email scenario block and send this email to someone who can follow up the next day.'
+  contact:
+    name: Bright Pattern
+    url: https://www.brightpattern.com/contact/
+  x-origin:
+  - format: postman
+    url: https://documenter.getpostman.com/view/6711197/S1ETRbny
+    version: '2.1'
+  x-evidence:
+    fetched: '2026-08-08'
+    source: https://documenter.gw.postman.com/api/collections/6711197/S1ETRbny?segregateAuth=true&versionTag=latest
+    http_status: 200
+    method: derived-from-published-postman-collection
+    note: Mechanically converted from the Postman collection Bright Pattern publishes as its public API reference. No operations, paths, parameters or examples were invented.
+servers:
+- url: https://{tenant_url}
+  description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+  variables:
+    tenant_url:
+      default: example.brightpattern.com
+      description: Your Bright Pattern Contact Center tenant hostname.
+security:
+- bearerAuth: []
+tags:
+- name: SMS/MMS Messaging
+  description: 'These methods enable sending of SMS and MMS messages and checking the delivery status. The response parameters are explained below.
+
+
+    Response parameters
+
+
+    Parameter
+
+    Description
+
+
+    tenant_id
+
+    Unique identifier of your contact center in BPCC configuraiton.
+
+
+    api_version
+
+    API version.
+
+
+    body
+
+    Text of the message.
+
+
+    num_segments
+
+    Number of segments in the transmitted message. Messages exceeding 160 characters are transmitted in multiple segements. In the current verison of API this parameters is always set to 1.
+
+
+    num_media
+
+    Number of media files in the MMS message.
+
+
+    date_created
+
+    Timestamp of the original Send Message request.
+
+
+    date_sent
+
+    Timestamp of message transmission. Set to "null" in responses to Send Message requests. Set to actual time when the message was sent in responses to Get Message requests.
+
+
+    date_updated
+
+    Reserved.
+
+
+    direction
+
+    Always set to outboound-api.
+
+
+    error_code
+
+    Error code.
+
+
+    error_message
+
+    Error message.
+
+
+    from
+
+    Origin number or, if a messenger integration is being used, the messenger type and integration ID.
+
+
+    price
+
+    Reserved. In the current version of the API always set to null.
+
+
+    sid
+
+    Unique identifier of the message. Retured in response to a Send Message request and can be used in Get Message to check the delivery status of the message.
+
+
+    status
+
+    Status of message delivery. Possible values: queued (message queued to be sent), sent (message sent to SMS/MMS service provider but delivery not confirmed), delivered (message confirmed by SMS service provider to be delivered; currently not available for MMS), failed (message could not be sent; typically more details will be provided in error_message). Note that a 200 OK response to a Send Message request will always have status set to queued. Actual status of message delivery can be verified using the Get Message method with a slight delay.
+
+
+    to
+
+    Destination number or, if a messenger integration is being used, the messenger type and the messenger ID of the recipient.
+
+
+    uri
+
+    Reserved.'
+paths:
+  /clientweb/smsapi/v1/Messages:
+    post:
+      operationId: sendMessage
+      summary: Send Message
+      description: "Sends an SMS, MMS, or messenger integration message to the designated recipient.\n\nParameters\n\nParameter\nDescription\n\nTo\nDestination number or recipient identifier. Mandatory.  \n- For messages via SMS or MMS: the destination number in E.164 format.  \n- For messages via a messenger integration: the destination expressed in the format :, for example viber:Akj8ntzD7CVmB3Q7V2JqSB== or whatsapp:5552223456\n\nFrom\nOrigin number or messenger integration ID. Mandatory.  \n- For messages via SMS or MMS: Must be specified in E.164 format. The number must be configured in BPCC as an access number of Text Out type. If you intend to process possible replies, this number must also be specified as an SMS/MMS access number for the messaging scenario entry that directs such replies to a chat service. Alphanumeric Sender IDs are not currently supported.  \n- For messages via a messenger integration: the origin integration expressed in the format :, for example whatsapp:76BD05F0-FB19-4C3A-BA7C-30150B8D9826 or viber:3A07AE4D-6D3E-4AA7-8417-0EE6B34824C9.\n\nBody\nText of the message to be sent. Mandatory for SMS (text-only) or messenger integration messages. Optional for MMS messages if the MediaURLs parameter is defined (see below). SMS and MMS messages longer than 160 characters will be segmented for transmission.\n\nMediaURLs\nAn array of URLs for the media files to be sent in the MMS message. Optional and applies only to messages sent via MMS. May contain up to 10 items."
+      tags:
+      - SMS/MMS Messaging
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              To: '+5219843111460'
+              Body: Sending a test message for BPCC SMS-MMS API.
+              From: '16502505674'
+              MediaURLs:
+              - https://www.leithcars.com/assets/shared/CustomHTMLFiles/Responsive/MRP/Ford/2017/Mustang/images/2017-Ford-Mustang-01.jpg
+      responses:
+        '200':
+          description: Send MMS Message
+          content:
+            application/json:
+              example:
+                account_sid: 2B699762-370C-4F76-A684-A85B5F93DF84
+                api_version: '1'
+                body: Sending a test message for BPCC SMS-MMS API.
+                num_segments: '1'
+                num_media: '0'
+                date_created: Wed, 06 Feb 2019 08:24:08 +0000
+                date_sent: null
+                date_updated: Wed, 06 Feb 2019 08:24:08 +0000
+                direction: outbound-api
+                error_code: null
+                error_message: null
+                from: '16502505674'
+                price: null
+                sid: cbbb47e2-23be-452f-9b81-4a1f69300051
+                status: queued
+                to: '16046496025'
+                uri: /clientweb/smsapi/v1/Messages/cbbb47e2-23be-452f-9b81-4a1f69300051
+      security:
+      - bearerAuth: []
+  /clientweb/smsapi/v1/Messages/{message_sid}:
+    get:
+      operationId: getMessage
+      summary: Get Message
+      description: 'Gets the current status of a previously sent SMS or MMS message. Depending on the time of the request, network conditions, etc., one of the following statuses may be returned: queued, sent, delivered, failed.'
+      tags:
+      - SMS/MMS Messaging
+      parameters:
+      - name: message_sid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Status of Previously Sent Message
+          content:
+            application/json:
+              example:
+                account_sid: 2B699762-370C-4F76-A684-A85B5F93DF84
+                api_version: '1'
+                body: Sending a test message for BPCC SMS-MMS API.
+                num_segments: '1'
+                num_media: '0'
+                date_created: Wed, 06 Feb 2019 08:24:08 +0000
+                date_sent: Wed, 06 Feb 2019 08:24:08 +0000
+                date_updated: Wed, 06 Feb 2019 08:24:08 +0000
+                direction: outbound-api
+                error_code: null
+                error_message: null
+                from: '16502505674'
+                price: null
+                sid: null
+                status: delivered
+                to: '16046496025'
+                uri: /clientweb/smsapi/v1/Messages/cbbb47e2-23be-452f-9b81-4a1f69300051
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as `Authorization: Bearer <token>`.'
+    oauth2ClientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client-credentials grant against the Bright Pattern tenant token endpoint.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant_url}/configapi/v2/oauth/token
+          scopes: {}

@@ -1,0 +1,1100 @@
+openapi: 3.2.0
+info:
+  title: Bright Pattern Lists API
+  version: 1.0.0
+  contact:
+    name: Bright Pattern
+    url: https://www.brightpattern.com/contact/
+  description: 'Operations tagged Lists across 2 of this provider''s published API definitions: bright-pattern-list-management-v3-2-openapi.yml, bright-pattern-list-management-v3-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://{tenant_url}
+  description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+  variables:
+    tenant_url:
+      default: example.brightpattern.com
+      description: Your Bright Pattern Contact Center tenant hostname.
+security:
+- bearerAuth: []
+tags:
+- name: Lists
+  description: 'Bright Pattern''s List Management API streamlines the creation and deletion of lists and formats and provides a convenient way to manage list records.
+
+
+    Note: Performing operations on lists requires the user to have the "Manage Lists" privilege, configured in the Contact Center Administrator application. Additional privileges required are explicitly specified in the corresponding method description.
+
+
+    All of the methods described below use the path variable, list_id, to specify the list an operation is to be performed on. The unique identifier of a list can be found by opening that list in the Contact Center Administrator application, Lists section. The id will be displayed in the ''#LISTS:LISTS_PROPERTIES:'' fragment of the URL.
+
+
+    Alternatively, list_id, can be found in the response body of the Get Lists method (see here).
+
+
+    Methods retained from the previous version of the List management API, tagged as "DEPRECIATED", require an additional path variable, campaign_id, to reference the campaign associated with the selected list. The unique identifier of a campaign can be found by opening that campaign in the Contact Center Administrator application, Services & Campaigns section. The id will be displayed in the ''#SERVICES_CAMPAIGNS:SERVICES_PROPERTIES:'' fragment of the URL.
+
+
+    Alternatively, campaign_id, can be found in the response body of the Get Campaigns method (see here).
+
+
+    Note: When importing records or updating records it is important to remember that:
+
+
+    All leading and trailing whitespaces should be deleted.
+
+
+    For all PHONE numbers:
+
+
+    If a number begins with “+”, the leading "+" sign will be removed.
+
+
+    If a number contains non-numeric characters, they will be removed.
+
+
+    At least one PHONE number is required.
+
+
+    For the United States and Canada PHONE numbers:
+
+
+    If a number begins with “011”, it will be kept as is.
+
+
+    If a number begins with “1” and has eleven digits, it will be kept as is.
+
+
+    If a number does not begin with “1” and has ten digits, “1” will be prepended.
+
+
+    If a number begins with “1” and has ten digits, the record will not be imported, returning a format error.
+
+
+    In any other case, the record will not be imported, returning a format error.
+
+
+    Remove prefix and Default country code fields will be ignored.
+
+
+    For Other countries PHONE numbers:
+
+
+    If a number begins with prefix matching Remove prefix, the prefix will be deleted.
+
+
+    If a number does not begin with prefix matching Remove prefix, it will be kept as is.
+
+
+    If a number does not begin with prefix matching Default country code, Default country code will be added.
+
+
+    For all INTEGER fields:
+
+
+    If the value is presented as a string, it should be converted to an integer.
+
+
+    Values presented as integers should be supported.
+
+
+    For all fields that expect strings (ACCOUNT, AGENT_LOGIN_ID, FIRST_NAME, LAST_NAME, etc.) integer values should be converted to strings.
+
+
+    Capitalization matters: values with different capitalizations are treated as distinct.
+
+
+    For all DATE/TIME and DATE/TIME - SCHEDULE CALL AT fields:
+
+
+    If a…'
+paths:
+  /configapi/v3/callinglist/getAll/{list_id}/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: getAllRecordsDeprecated
+      summary: Get All Records DEPRECATED
+      description: "This method returns a list of records from a calling list associated with a campaign.\n\nRecords are referenced by indexes, assigned to each record in the list in sequential order of insertion (beginning from 0). All records with an index greater than or equal to the requested record index, fromIndex, are returned in the response.\n\nNote: The returned recordset contains JSON objects sorted by the index field. List Record JSON Object has two sub-objects, entry and status, defined as follows:\n\nentry object: contains a copy of the list entry\n\nfield names are retained as defined at list creation\n\ncustom fields are returned with the prefix 'custom_' added to the name defined in the Administrator Application\n\nNote: The value returned in the id field can be used to reference this record in further API requests.\n\nstatusobject: contains the campaign results for this specific record\n\nomitted if the list is not assigned to the campaign or the campaign doesn't exist\n\nfield names are predefined\n\ncompleted field is always present, while the other fields may be absent if the record was never called or never reached an agent.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nmaxSize\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\nfromIndex\nstring\nyes (specifies initial record index, used for pagination)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Campaign was not found;  \nSpecified List was not found;  \nInvalid URL"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              fromIndex: 0
+              maxSize: '100'
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+              - entry:
+                  firstname: Graham
+                  phone: '16509999999'
+                  id: '1'
+                  lastname: Smith
+                  status: Gold
+                index: 0
+                status:
+                  globalInteractionID: 0B767156-D012-4F63-A3E2-12ACFC2F26EA
+                  lastCallDuration: 0
+                  lastDisposition: No disposition
+                  totalAttempts: 1
+                  completed: false
+                  lastAgent: elizabeth
+                  lastPhone: '16509999999'
+                  lastDate: '2021-02-19T19:11:40.000'
+              - entry:
+                  firstname: Mike
+                  phone: '16507777777'
+                  id: '2'
+                  lastname: Miller
+                  status: Platinum
+                index: 1
+                status:
+                  globalInteractionID: 3F4F2ACD-1233-42E3-8092-3A9F7D9D84BC
+                  lastCallDuration: 0
+                  lastDisposition: Try again later
+                  totalAttempts: 1
+                  completed: false
+                  lastAgent: elizabeth
+                  lastPhone: '16507777777'
+                  lastDate: '2021-02-19T19:12:21.000'
+              - entry:
+                  firstname: Katrina
+                  phone: '16505555555'
+                  id: '3'
+                  lastname: Johnson
+                  status: Silver
+                index: 2
+                status:
+                  globalInteractionID: 9D914127-C1C4-4587-8B30-4E2A9790D184
+                  lastCallDuration: 0
+                  lastDisposition: Product sold
+                  totalAttempts: 1
+                  completed: true
+                  completedTime: '2021-02-19T19:12:37.000'
+                  lastAgent: elizabeth
+                  lastPhone: '16505555555'
+                  lastDate: '2021-02-19T19:12:37.000'
+              - entry:
+                  firstname: Jenny
+                  phone: '16502222222'
+                  id: '4'
+                  lastname: Green
+                  status: Gold
+                index: 3
+                status:
+                  globalInteractionID: 35DE77AC-5A37-4907-97CA-50B09B30ECDF
+                  lastCallDuration: 0
+                  lastDisposition: Fast busy
+                  totalAttempts: 1
+                  completed: false
+                  lastAgent: elizabeth
+                  lastPhone: '16502222222'
+                  lastDate: '2021-02-19T19:13:08.000'
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/getChanged/{list_id}/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: getUpdatedRecordsDeprecated
+      summary: Get Updated Records DEPRECATED
+      description: "This method returns a list of records from a calling list that have had any activity within the associated campaign since the requested initial time, fromTime.\n\nNote: The returned record set contains JSON objects sorted by the index field. List Record JSON Object has two sub-objects, entry and status, defined as follows:\n\nentry object: contains a copy of the list entry\n\nfield names are retained as defined at list creation\n\ncustom fields are returned with the prefix 'custom_' added to the name defined in the Administrator Application\n\ntime and date field values are returned in UTC format\n\nstatusobject: contains the campaign results for this specific record\n\nomitted if the list is not assigned to the campaign or the campaign doesn't exist\n\nfield names are predefined\n\ncompleted field is always present, while the other fields may be absent if the record was never called or never reached an agent.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nmaxSize\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\nfromTime\nstring\nyes (specifies initial time)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Campaign was not found;  \nSpecified List was not found;  \nInvalid URL"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              fromTime: '2013-03-01T13:15:06.456'
+              maxSize: '100'
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+              - entry:
+                  firstname: Graham
+                  phone: '16509999999'
+                  id: '1'
+                  lastname: Smith
+                  status: Gold
+                completed: false
+                recordDisposition: ''
+                recordDispositionCode: ''
+                totalAttempts: 1
+                attempts:
+                - call_attempted: false
+                  disposition: No disposition
+                  dispositionCode: ''
+                  date: '2021-02-19T19:11:40.000'
+                  phone: '16509999999'
+                  callDuration: 0
+                  dialingDuration: 0
+                  callNotes: ''
+                  agent: elizabeth
+                  globalInteractionID: 0B767156-D012-4F63-A3E2-12ACFC2F26EA
+                  CPADuration: 0
+              - entry:
+                  firstname: Mike
+                  phone: '16507777777'
+                  id: '2'
+                  lastname: Miller
+                  status: Platinum
+                completed: false
+                recordDisposition: ''
+                recordDispositionCode: ''
+                totalAttempts: 1
+                attempts:
+                - call_attempted: false
+                  disposition: Try again later
+                  dispositionCode: ''
+                  date: '2021-02-19T19:12:21.000'
+                  phone: '16507777777'
+                  callDuration: 0
+                  dialingDuration: 0
+                  callNotes: ''
+                  agent: elizabeth
+                  globalInteractionID: 3F4F2ACD-1233-42E3-8092-3A9F7D9D84BC
+                  CPADuration: 0
+              - entry:
+                  firstname: Katrina
+                  phone: '16505555555'
+                  id: '3'
+                  lastname: Johnson
+                  status: Silver
+                completed: true
+                recordDisposition: Product sold
+                recordDispositionCode: ''
+                totalAttempts: 1
+                attempts:
+                - call_attempted: false
+                  disposition: Product sold
+                  dispositionCode: ''
+                  date: '2021-02-19T19:12:37.000'
+                  phone: '16505555555'
+                  callDuration: 0
+                  dialingDuration: 0
+                  callNotes: ''
+                  agent: elizabeth
+                  globalInteractionID: 9D914127-C1C4-4587-8B30-4E2A9790D184
+                  CPADuration: 0
+              - entry:
+                  firstname: Jenny
+                  phone: '16502222222'
+                  id: '4'
+                  lastname: Green
+                  status: Gold
+                completed: false
+                recordDisposition: ''
+                recordDispositionCode: ''
+                totalAttempts: 1
+                attempts:
+                - call_attempted: false
+                  disposition: Fast busy
+                  dispositionCode: ''
+                  date: '2021-02-19T19:13:08.000'
+                  phone: '16502222222'
+                  callDuration: 0
+                  dialingDuration: 0
+                  callNotes: ''
+                  agent: elizabeth
+                  globalInteractionID: 35DE77AC-5A37-4907-97CA-50B09B30ECDF
+                  CPADuration: 0
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/get/{list_id}/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: queryARecordDeprecated
+      summary: Query a Record DEPRECATED
+      description: "This method returns a copy of an existing record in a calling list of an associated campaign. The list is specified in the path variable, list_id, by its unique identifier returned in the response body of the Get Campaign method (see here). The campaign is specified in the path variable, campaign_id, by its unique identifier returned in the response body of the Get Campaigns method (see here).\n\nThe record search is performed by its unique identifier, id, returned in the response body of the Get All Records method (see here). If the list has been added to the specified campaign more than once, the method returns an array of records. An error is returned if a record with the specified id does not exist in the selected list.\n\nNote: The response body contains the List Record JSON Object, defined by two sub-objects as follows:\n\nentry object: contains a copy of the list entry\nfield names are retained as defined at list creation\ncustom fields are returned with the prefix 'custom_' added to the name defined in the Administrator Application\n\ntime and date field values are returned in UTC format\n\nstatusobject: contains the campaign results for this specific record\nomitted if the list is not assigned to the campaign or the campaign doesn't exist\n\nfield names are predefined\n\ncompleted field is always present, while the other fields may be absent if the record was never called or never reached an agent.\n\nNote: If a PHONE type field is defined as a key, the record value is checked for a full match with the value stored in the database or the original source (if the data was modified upon loading into the database).\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nSpecified Record was not found;  \nInvalid URL"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              id: N4
+      responses:
+        '200':
+          description: 0 instances - 200 OK
+          content:
+            application/json:
+              example:
+                entry:
+                  firstname: Mike
+                  phone: '16505555555'
+                  id: '2'
+                  lastname: Miller
+                  status: Platinum
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/fetchAll/{list_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: fetchAllRecords
+      summary: Fetch All Records
+      description: "This method returns a list of records from an existing calling list, specified in the path variable, list_id.\n\nRecords are referenced by indexes, assigned to each record in the list in sequential order of insertion (beginning from 0). All records with an index greater than or equal to the requested record index, fromIndex, are returned in the response.\n\nNote: The returned recordset contains JSON objects sorted by the index field. List Record JSON Object contains:\n\nentry object: contains a copy of the list entry\n\nfield names are retained as defined at list creation\n\nNote: This method doesn't return custom fields\n\nNote: The value returned in the id field can be used to reference this record in further API requests.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nmaxSize\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\nfromIndex\nstring\nyes (specifies initial record index, used for pagination)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              fromIndex: 0
+              maxSize: '100'
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example: "[\n  {\n    \"entry\": {\n      \"firstname\": \"Graham\",\n      \"phone\": \"16509999999\",\n      \"id\": \"1\",\n      \"lastname\": \"Smith\",\n      \"status\": \"Gold\"\n    },\n    \"index\": 0,\n    },\n  {\n    \"entry\": {\n      \"firstname\": \"Mike\",\n      \"phone\": \"16507777777\",\n      \"id\": \"2\",\n      \"lastname\": \"Miller\",\n      \"status\": \"Platinum\"\n    },\n    \"index\": 1,\n    },\n  {\n    \"entry\": {\n      \"firstname\": \"Katrina\",\n      \"phone\": \"16505555555\",\n      \"id\": \"3\",\n      \"lastname\": \"Johnson\",\n      \"status\": \"Silver\"\n    },\n    \"index\": 2,\n    },\n  {\n    \"entry\": {\n      \"firstname\": \"Jenny\",\n      \"phone\": \"16502222222\",\n      \"id\": \"4\",\n      \"lastname\": \"Green\",\n      \"status\": \"Gold\"\n    },\n    \"index\": 3, \n    }\n  }\n]"
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/fetch/{list_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: fetchRecord
+      summary: Fetch Record
+      description: "This method returns a copy of one or more existing records in a calling list. The search for the records is performed based on the defined key fields.\n\nNote: Time and date field values are returned in UTC format.\n\nNote: If a PHONE type field is defined as a key, the record value is checked for a full match with the value stored in the database or the original source (if the data was modified upon loading into the database).\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              phone:
+              - '16505555555'
+              - '16505555556'
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                entry:
+                  firstname: Mike
+                  phone: '16505555555'
+                  id: '2'
+                  lastname: Miller
+                  status: Platinum
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/getAll:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: getLists
+      summary: Get Lists
+      description: "This method returns all Calling Lists, sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlimit\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\ncursor\nstring\nno (used for pagination)\nFirst request: null  \nSubsequent request: value received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (limit exceeded; format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL"
+      tags:
+      - Lists
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              limit: 100
+              cursor: 590e9abd4abbf1165862d342
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                next_cursor: 590e9abd4abbf1165862d342
+                records:
+                - id: 635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D
+                  name: List 1.csv
+                  formatId: 31002C90-7188-11EE-A565-0800200C9A66
+                  formatName: format 1
+                  allowUsingDefaultTimezone: true
+                  defaultTimezone: Europe/Dublin
+                  totalRecords: 100
+                - id: 635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D
+                  name: List 2.csv
+                  formatId: 31002C90-7188-11EE-A565-0800200C9A66
+                  formatName: format 1
+                  allowUsingDefaultTimezone: false
+                  totalRecords: 100
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/getList/{list_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getList
+      summary: Get List
+      description: "This method returns the information about a list, including its name, the format name, timezone settings, and amount of records of the specified list. Additionally, it returns the information about the associated campaign of that list, if any.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (wrong cursor; format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                name: List 1.csv
+                formatId: 31002C90-7188-11EE-A565-0800200C9A66
+                formatName: format 1
+                allowUsingDefaultTimezone: true
+                defaultTimezone: Europe/Dublin
+                totalRecords: 100
+                campaigns:
+                - campaignName: Campaign name 1
+                  campaignId: 99B6B870-6CC5-11EE-807C-0800200C9A66
+                  instanceId: 94D63B10-6CF1-11EE-807C-0800200C9A66
+                - campaignName: Campaign name 1
+                  campaignId: 99B6B870-6CC5-11EE-807C-0800200C9A66
+                  instanceId: 9EA07CA0-6CF1-11EE-807C-0800200C9A66
+                - campaignName: Campaign name 2
+                  campaignId: 7E57DE70-6CF1-11EE-807C-0800200C9A66
+                  instanceId: A5F55160-6CF1-11EE-807C-0800200C9A66
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/deleteList/{list_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    delete:
+      operationId: deleteListAndOrphanedFormat
+      summary: Delete List and Orphaned Format
+      description: "This method deletes a list, archiving all records with associated campaign results associated with that list. If the last list using a specific format was deleted, that format is removed as well.\n\nNote: Bright Pattern Contact Center solution supports several voice campaign modes (see here). Depending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns\nUpon instance deletion, all active, i.e. in a dialing state, within a script, or connected to an agent, calls are dropped\n\nPreview campaigns\nUpon instance deletion, only the calls not yet picked up by an agent are dropped. In-progress and connected calls are not affected\n\nThe results of completed calls are archived and available for downloading in the Contact Center Administrator application (see here). Interaction results for dropped calls are not saved.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/createList:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: createList
+      summary: Create List
+      description: "This method creates a new empty list using an existing format. The format is specified by its unique identifier, formatId, returned in the response body of the Get Lists method (see here).\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nformatId\nstring\nyes (can be found in the Get Lists  response)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Format was not found;  \nInvalid URL\n\n409\nDuplicate name error"
+      tags:
+      - Lists
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              name: List 3.csv
+              formatId: 31002C90-7188-11EE-A565-0800200C9A66
+              allowUsingDefaultTimezone: true
+              defaultTimezone: Europe/Dublin
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                id: 635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/createListWithNewFormat:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: createListWithNewFormat
+      summary: Create List with New Format
+      description: "This method creates a new empty list and a new format corresponding to that list.\n\nWhen creating the new list format, the fields must be defined with the following properties in mind:\n\nField Property\nDescription\n\nname (string)\nRequired property that defines field names. The names must be unique.  \nDefault value: -\n\ntype (string)\nRequired property that indicates the type of data the field contains.  \nNote: See the table below for available data types.  \nDefault value: -\n\nrequired (boolean)\nOptional property that indicates that the data in this field is required.  \nDefault value: false\n\nsearchable (boolean)\nOptional property that indicates that this field will be used for record lookups.  \nDefault value: false\n\nskip (boolean)\nOptional property that indicates that the data in this field is non-essential. Such data will not be included in Campaign Results/Archives, returned in API requests, or imported into the database. However, including such fields in the request body should not result in an error since the fields are simply ignored.  \nNote: Skipped fields cannot be set as required, searchable, or key.  \nDefault value: false\n\nkey (boolean)\nOptional property that indicates that this field will be used to identify list records uniquely. The key will be used to detect duplicated and reference Campgin Results data.  \nDefault value: false\n\nNote: The following properties are not used when the method is called: CUSTOM_DELIMITER(default 'COMMA' value is set), DEFAULT_ENCODING(default 'UTF-8' value is set), DELIMITER_TYPE, FORMAT_TYPE(default 'DELIMITED' value is set),NAMES_IN_FIRST_LINE, SOURCE_TYPE.\n\nField types\n\nField Type\nDescription\n\nACCOUNT\nAccount type fields can be used to store customer's unique identifiers. The values from such fields are stored in the Call History and can be used for interaction record search.  \nNote: List formats can only have one field of this type.\n\nAGENT_LOGIN_ID\nFields of this type are used to assign records to specific agents in preview and progressive campaign modes.  \nNote: This field will be ignored if used in predictive or automatic campaigns.\n\nCALLING_NUMBER\nFields of this type contain the numbers to be displayed as caller IDs when dialing the corresponding records from campaigns.  \nNOTE: Fields of this type are required to enable the From list field of type \"Caller ID\" caller id assignment method.\n\nCOMPANY\nCompany type fields can be used to store the information about a business/company the record belongs to, e.g. company name.\n\nDATETIME\nFields of this type can be used to specify the date and time a callback request was made. Typically, such information is provided in opt-in callback lists. Fields of this type have additional properties, timeZone and format.  \n  \nSupported formats:  \nMM/dd/yyyy ::mm(Default);  \ndd.MM.yyyy HH:mm;  \nyyyy-MM-dd HH:mm;  \nyyyy-MM-dd;  \ndd-MM-yyyy;  \nMM-dd-yyyy;  \nMM/dd/yyyy HH:mm:ss\n\nDATETIME_CALL_AT\nFields of this type can be used to specify the date and time the record should be called. Fields of this type have additional properties, timeZone and format(see above for details about supported formats).\n\nFIRST_NAME\nFields of this type store the first name of the contact.\n\nINTEGER\nInteger type fields store semantically numeric data, e.g. age or account balance. Such fields can be used to set campaign quotas.\n\nLAST_NAME\nFields of this type store the last name of the contact.\n\nOTHER\nOther is used to specify that the field has a type different than the predefined types outlined here.\n\nPHONE\nPhone type fields store the phone numbers to be dialed during campaigns.  \nNote: Fields of this type have additional properties defined in the table below.  \nNote: List formats must have at least one Phone field defined.\n\nZIP_CODE\nFields of this type store the postal code of the contact.  \nNote: Fields of this type are required to enable the Use safe calling hours setting.\n\nPRIORITY\nPriority type fields indicate that the record must be attempted before the other records in the list. Fileds of this type  \nhave additional properties:order,i.e. First-in-First-out or Last-in-FIrst-Out, andexpiresAfter,used to set the expiration date of the priority setting.\n\nSTATE\nFields of this type store the state the contact lives in.  \nNote: Fields of this or the ZIP_CODE type are required to enable the Comply with State calling hours setting.\n\nPhone Type Properties\n\nName\nType\nRequired?\nPossible/Default Values\n\nphoneType\nstring\nno (if =US_CANADA, sets hasCountryCode to true)\nOTHER (Default);  \nUS_CANADA\n\nremovePrefix\nstring\nyes ( ignore this field if phoneType = US_CANADA)\n-\n\ndefaultCoutryCode\nstring\nno (ignore this field if phoneType = US_CANADA)\n-\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nformatName\nstring\nyes\n-\n\nfields\nlist of JSON Objects\nyes\n-\n\nlistName\nstring\nno (appropriate list format must be defined by \"FORMAT: $(formatName)\")\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL\n\n409\nDuplicate name error"
+      tags:
+      - Lists
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              formatName: format 1
+              fields:
+              - name: id
+                type: OTHER
+                required: true
+                searchable: false
+                skip: false
+                key: false
+              - name: timeZone
+                type: TIMEZONE
+                required: true
+                searchable: false
+                skip: false
+                key: false
+                default: false
+              - name: phone
+                type: PHONE
+                required: true
+                searchable: true
+                skip: false
+                key: true
+                phoneType: OTHER
+                removePrefix: ''
+                defaultCountryCode: ''
+                overrideTimezone: timeZone
+              listName: List 3.csv
+              allowUsingDefaultTimezone: true
+              defaultTimezone: Europe/Dublin
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                id: 635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D
+                formatId: 31002C90-7188-11EE-A565-0800200C9A66
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/updateListProperties/{list_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    patch:
+      operationId: updateListProperties
+      summary: Update List Properties
+      description: "This method allows to change the name and the expiration settings of an existing calling list, specified in the path variable, list_id.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring, ≤ 255 characters  \n  \nNote: Calling list name must be unique within the contact center\nno\n-\n\nexpireRecords\nboolean\nno\nDefault = false\n\nexpirationPeriod\ninteger, [0, 365]  \n  \nNote: Specifies number of days since record was added to the Calling list, after which that records is considered expired by the Dialer\nrequired, if expireRecords = true\nDefault = 90 days\n\nexpirationMode\nFiled name to be set as \"key\" for records exclusion  \n  \nNote: Must contain a valid field from the available calling list formats.\nrequired, if expireRecords = true\n-“INSERTION”  \n-“DATE_FIELD”  \n  \nDefault = “INSERTION”\n\ndateField\nFiled name to be set as \"key\" for record expiration  \n  \nNote: Must contain a valid Date/time field from the available calling list formats.\nrequired, if expirationMode = “DATE_FIELD”\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL\n\n409\nDuplicate name error"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              name: Updated Calling List Name
+              expireRecords: true
+              expirationPeriod: 90
+              expirationMode: INSERTION
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/addAll/{list_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: addManyRecords
+      summary: Add Many Records
+      description: "This method updates fields in existing records of a calling list and returns the number of successfully updated records.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nlimitExceeded - the maximum total number of rows across all existing lists has been reached\n\nmissingKey - one or more key field values were not found;\n\nduplicateKey - a record with the same key already exists in the list;\n\nmissingRequired - one or more required fields are missing values;\n\nformatError - format was mismatched in one or more field values (e.g. string value was defined for an integer field); one or more unsupported fields were defined in the request body\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privilegesv\n\n404\nSpecified List was not found;  \nInvalid URL"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+            example:
+            - firstname: Firstname4
+              date_time: 01-11-2023
+              phone: '1004'
+              id: N4
+              lastname: Lastname4
+            - firstname: Firstname5
+              date_time: 12-11-2023
+              phone: '10045'
+              id: N5
+              lastname: Lastname5
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                added: 1
+                error:
+                  duplicateKey:
+                  - firstname: Firstname4
+                    date_time: 01-11-2023
+                    phone: '1004'
+                    id: N4
+                    lastname: Lastname4
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/add/{list_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: addRecord
+      summary: Add Record
+      description: "This method adds a single new record to a calling list.\n\nBefore the record is added, the uniqueness of its key values is checked against the contents of the list. If the list does not already have a record with the specified key values, the new record is added successfully.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL\n\n409\nDuplicate key error"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              firstname: Firstname4
+              date_time: 01-11-2023
+              phone: '1004'
+              id: N4
+              lastname: Lastname4
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/updateAll/{list_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: updateManyRecords
+      summary: Update Many Records
+      description: "This method updates fields in existing records of a calling list and returns the number of successfully updated records. Additionally, this method can reset optional parameters to their default values by passing \" \" or null to these parameters.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nmissingKey - one or more key field values were not found;\n\nkeyNotFound - a record with the same key already exists in the DNC list;\n\nformatError - format was mismatched in one or more field values (e.g. string value was defined for an integer field); one or more unsupported fields were defined in the request body\n\nNote: This method is similar to the Update Record method. However, the input parameters differ to accommodate updating multiple records within one request. This is done to account for the fact that each request requires reprocessing of the entire calling list.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nDNC List Record JSON Objects\nlist\nyes (only the key fields are required)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+            example:
+            - date_time: 01-11-2023
+              phone: '1004'
+            - date_time: 12-11-2023
+              phone: '10045'
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                updated: 1
+                error:
+                  keyNotFound:
+                  - phone: '1004'
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/update/{list_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: updateRecord
+      summary: Update Record
+      description: "This method updates fields in an existing record of a calling list. Additionally, this method can reset an optional parameter to its default value by passing \" \" or null to that parameter.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nThe search for the record is performed based on the defined key fields. The request can contain either a full or partial set of fields of the List Record JSON Object, but the key fields are mandatory and must be retained as configured during list creation.\n\nBefore the record is queried, its existence in the specified list is checked by its unique key values. If the record does exist in the specified list, the record is updated successfully.\n\nNote: If a PHONE type field is defined as a key, the record value is checked for a full match with the value stored in the database or the original source (if the data was modified upon loading into the database).\n\nTo avoid disruptions in the campaign work caused by the list reprocessing time, the Dialer ignores the changes made to the record until it makes a call attempt to that record. Thus, if a list containing the updated record has Filters or Sorting configured, the changes made to that record will not affect that filtering or sorting order.\n\nNote: Always remember to reapply the desired Filters or Sorting settings if you wish for it to reflect the changes made to the updated record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nDNC List Record JSON Object\nstring\nyes (can provide either all or some fields; key fields are mandatory and must have a value)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nSpecified Record was not found;  \nInvalid URL"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              date_time: 01-11-2023
+              phone: '1004'
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/delete/{list_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: deleteManyRecords
+      summary: Delete Many Records
+      description: "This method deletes records from a list and returns the number of successfully deleted records.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nRecords are searched for by one or many criteria defined in correspondence with the associated list fields. At least one of the available filtering criteria has to be specified. Otherwise, no record is deleted.\n\nThe method supports filtering records by:\n\nkey and searchable fields (defined in the fields.some_field parameter);\n\nstatus in the associated campaign (defined in the byCampaignResult.policy parameter);\n\ncreation date (defined in the createdFrom and createdTo parameters);\n\ncombination of the above\nNote: If several criteria are specified, the record should match all of them\n\nNote: Filtered records will be deleted from all campaigns the list is associated with.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nfields.some_field\nstring\nno (specifies the fields to be used for search; the field must be searchable or key)\n-\n\nbyCampaignResult.campaignId\nstring\nno (specifies that the records are to be filtered by their associated campaign; campaignId is required (can be found in the Get List response)\n-\n\nbyCampaignResult.policy\nstring\nno (specifies that the records are to be filtered by their state; if = ONLY_COMPLETED, both completed and expired records are removed)\nALL (Default);  \nONLY_COMPLETED;  \nONLY_NEVER_ATTEMPTED;\n\ncreatedFrom\ntime (UTC)\nno (allows filtering by creation date; must be less than createdTo, if configured)\n-\n\ncreatedTo\ntime (UTC)\nno (allows filtering by creation date; must be more than createdFrom, if configured)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL\n\n422\n????????????????????????????????????????1 or more required fields are missing"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              fields:
+                accountId:
+                - id1
+                - id2
+                - id3
+              byCampaignResult:
+                campaignId: 85389D39-E05C-4CE7-B36D-4401BEA52E14
+                policy: ALL
+              createdFrom: '2023-01-01T00:00:00.000'
+              createdTo: '2023-01-10T00:00:00.000'
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                deleted: 3
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/erase/{list_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: eraseRecord
+      summary: Erase Record
+      description: "This method removes a record from a list and all associated campaign results. The search for the record is performed based on the defined key fields. An error is returned if a record does not exist.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nBright Pattern Contact Center solution supports several voice campaign modes (see here). If the last record is being deleted, depending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns\nUpon instance deletion, all active, i.e. in a dialing state, within a script, or connected to an agent, calls are dropped\n\nPreview campaigns\nUpon instance deletion, only the calls not yet picked up by an agent are dropped. In-progress and connected calls are not affected\n\nOtherwise, if there are still other records in the list, the method won't impact any calls.\n\nThe list of deleted records with completed calls, as well as their results, are archived and available for downloading in the Contact Center Administrator application (see here). Interaction results for dropped calls are not saved.\n\nNote: This method does not delete contacts, activities, voice recordings, transcriptions, or screen recordings. This functionality is covered by other APIs.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nfields\nstring\nyes (specifies the key fields to be used for the object search; the non-key fields are ignored)\n-\n\nreason\nstring\nyes (used to specify the reason for audit log purposes)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nSpecified Record was not found;  \nInvalid URL"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              fields:
+                phone: '1004'
+              reason: for audit log
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+  /configapi/v3/callinglist/deleteAll/{list_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: deleteAllRecords
+      summary: Delete All Records
+      description: "This method removes all records from a list and returns the number of successfully deleted records.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nBright Pattern Contact Center solution supports several voice campaign modes (see here). Depending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns\nUpon instance deletion, all active, i.e. in a dialing state, within a script, or connected to an agent, calls are dropped\n\nPreview campaigns\nUpon instance deletion, only the calls not yet picked up by an agent are dropped. In-progress and connected calls are not affected\n\nThe list of deleted records with completed calls, as well as their results, are archived and available for downloading in the Contact Center Administrator application (see here). Interaction results for dropped calls are not saved.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL"
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                deleted: 2
+      security:
+      - bearerAuth: []
+  /configapi/v3/job/{job_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getJobStatus
+      summary: Get Job Status
+      description: 'This method returns the status of the record deletion job, requested in Delete Many Records or Delete All Records methods. The job is referenced in the path variable by its unique identifier, returned in the response body of the above methods.
+
+
+        Depending on the status of the record deletion job, the following parameters are retuned in the response body:
+
+
+        completion_percentage: calculated as the current number of succesfully deleted records over the total number of records to be deleted (multiplied by 100)
+
+
+        returned always
+
+
+        job_complete: status of the record deletion job, i.e. complete, processing, or failed
+
+
+        returned always
+
+
+        error_message: reason why the record deletion job could not be comleted
+
+
+        returned if the job was failed ( job_complete= failed)
+
+
+        deleted: the total number of successfully deleted records
+
+
+        retuned if the job was completed ( job_complete= complete)
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood; 1 or more required fields are missing or have an unsupported value)
+
+
+        401
+
+        Authentication failed (invalid token format; token is expired)
+
+
+        403
+
+        Authentication succeeded but the user does not have sufficient privileges
+
+
+        404
+
+        Specified Job was not found'
+      tags:
+      - Lists
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200 OK: Job Processing'
+          content:
+            application/json:
+              example:
+                completion_percentage: 31
+                job_complete: processing
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as `Authorization: Bearer <token>`.'
+    oauth2ClientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client-credentials grant against the Bright Pattern tenant token endpoint.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant_url}/configapi/v3/oauth/token
+          scopes: {}
+x-refined-from:
+- bright-pattern-list-management-v3-2-openapi.yml
+- bright-pattern-list-management-v3-openapi.yml

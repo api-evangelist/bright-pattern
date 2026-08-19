@@ -1,0 +1,5094 @@
+{
+  "item": [
+    {
+      "id": "c1f619a4-c429-450d-ba1b-4500745768f9",
+      "name": "Methods",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9415aa0e-eedc-4a7f-b505-5865f2c51d66",
+          "name": "Check Availability",
+          "request": {
+            "name": "Check Availability",
+            "description": {
+              "content": "This method returns the availability status of the configured hours of operation of the associated Messaging/Chat scenario entry. Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value. Note that the API does not check if there are any agents actually logged in.\n\nStatus Meanings\n\nStatus Name\nDescription\n\navailable\nThe requested service is available.\n\nnotAvailable\nThe office providing the requested service is currently closed.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess: Returns the scenario entry’s current status / EWT (optionally)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v1",
+                "availability"
+              ],
+              "host": [
+                "{{clientweb-api-v1-availability-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "757ae8de-135d-4719-8e56-2fb76cfb635c",
+              "name": "Check Availability Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v1",
+                    "availability"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v1-availability-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"chat\": \"<available|notAvailable>\",\n  \"ewt\": \"<estimated wait time in seconds for a chat in state queued>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "716542d2-32e4-4266-971d-cd4baf99cc5f",
+          "name": "Expected Parameters",
+          "request": {
+            "name": "Expected Parameters",
+            "description": {
+              "content": "This method returns an array of expected parameters. The parameters are optional. They may be used, for example, to look for the most qualified agents to handle the requested chat sessions and/or to display user information for the agents. These parameters are initially specified for the Messaging/Chat scenario entry through which this mobile application will communicate with the contact center.\n\nCurrently, the following parameter types are supported:\n\nPHONE\n\nTEXT\n\nEMAIL\n\nFIRST_NAME\n\nLAST_NAME\n\nACCOUNT\n\nCOMPANY\n\nReturns\n\nCode\nDescription\n\n200\napplication/json with names and types of parameters that may be expected from the client application\n\nErrors\n\nCode\nDescription\n\n403\nForbidden",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v1",
+                "parameters"
+              ],
+              "host": [
+                "{{clientweb-api-v1-parameters-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9a34ed27-39df-468c-9f0e-f96cf6bf7e4d",
+              "name": "Expected Parameters Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v1",
+                    "parameters"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v1-parameters-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"parameters\": [\n    {\n      \"<name>\": \"<type>\"\n    },\n    \"...\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77ee8247-25c2-4152-8e01-975ea9d06d0a",
+          "name": "Request Chat",
+          "request": {
+            "name": "Request Chat",
+            "description": {
+              "content": "This method initiates a chat session. It provides values of all or some of the expected parameters, and it may also contain the phone number of the mobile device. Depending on the scenario entry configuration, a callback can be initiated automatically to the specified number as soon as the chat request is delivered to the agent.\n\nNotes:\n\nThe Request Chat method may return the ID and parameters of an existing chat session if there are any currently existing chat sessions associated with this specific client. For example, the client app created a chat session, which was then closed or crashed, then restarted before the session timed out on the server. \n\nThe is_new_chat response attribute is specified if the chat is a new session or existing session. The client application will handle these differently (e.g., if in an existing session the app may request session history and show the previous content.\n\nIf the associated mobile/web scenario entry is not configured for automatic callback, the agent can still use this number to call the mobile user manually, either upon the agent's own initiative or when asked to do this via a chat message from the mobile user.\n\nThe parameter from may be used to specify either the device owner’s name or phone number. It will be placed in the scenario variable $(item.from).\n\nParameters returned in the parameters attribute are propagated into the scenario variable $(item.externalChatData).\n\nOptionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value. This might be important for the clients with strict JSON serialization (i.e., the client app may fail deserializing the JSON if the attribute is missing).\n\nReturns\n\nCode\nDescription\n\n200\nChat session properties (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n400\nBad request\n\n403\nForbidden",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v1",
+                "chats"
+              ],
+              "host": [
+                "{{clientweb-api-v1-chats-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "Content",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<string>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "18438020-dee0-4ec3-bea6-2710f0be4ed0",
+              "name": "Request Chat Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v1",
+                    "chats"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v1-chats-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"phone_number\":\"<phone number for callback, if necessary>\",\n    \"from\":\"<propagated into scenario variable $(item.from)>\",\n    \"parameters\":{\n        \"parameter_1\":\"value_1\",\n        \"...\",\n        \"parameter_n\":\"value_n\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"chat_id\": \"<chat ID>\",\n  \"state\": \"<queued|connected|ivr|establishing>\",\n  \"ewt\": \"<estimated wait time for a chat in state queued>\",\n  \"is_new_chat\": \"true|false\",\n  \"phone_number\": \"phone number that will be used for callback\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "64fd48f4-5aed-4504-9b80-f6226249cac7",
+          "name": "Get Active Chat",
+          "request": {
+            "name": "Get Active Chat",
+            "description": {
+              "content": "This method returns the properties of an active chat session. Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value.\n\nReturns\n\nCode\nDescription\n\n200\nChat session properties (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v1",
+                "chats",
+                "active"
+              ],
+              "host": [
+                "{{clientweb-api-v1-chats-active-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "637fb994-b03e-49f8-abe6-19e5ad03ebb0",
+              "name": "Get Active Chat Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v1",
+                    "chats",
+                    "active"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v1-chats-active-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"chat_id\": \"<chat ID>\",\n  \"state\": \"<queued|connected|ivr|establishing>\",\n  \"ewt\": \"<estimated wait time for a chat in state queued>\",\n  \"phone_number\": \"<phone number that will be used for callback>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3558d350-4a79-4aef-91c5-abc82e1db4a1",
+          "name": "Send Events",
+          "request": {
+            "name": "Send Events",
+            "description": {
+              "content": "This method sends events from the client to the server side.\n\nReturns\n\nCode\nDescription\n\n200\nArray of new chat events from the server side (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v1",
+                "chats",
+                ":chatId",
+                "events"
+              ],
+              "host": [
+                "{{clientweb-api-v1-chats-chatId-events-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chatId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<string>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c55f1aa2-9ebd-4380-99eb-8d43dad40648",
+              "name": "Send Events Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v1",
+                    "chats",
+                    ":chatId",
+                    "events"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v1-chats-chatId-events-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chatId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n “events”: [<array of chat events>\n    ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    \"<array of new chat events from server>\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6d812eca-6aa7-4184-ab50-e877dd0641e7",
+          "name": "Get New Chat Events",
+          "request": {
+            "name": "Get New Chat Events",
+            "description": {
+              "content": "This method returns new chat events for the current session. If there are no new events, the server can keep the request active during a timeout (i.e., for about 5–15 seconds). If the client sends another request to get new events while the previous request is kept active, the server will respond with error 400 (Bad request).\n\nReturns\n\nCode\nDescription\n\n200\nArray of chat events (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n400\nBad request\n\n403\nForbidden\n\n404\nNot found",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v1",
+                "chats",
+                ":chatId",
+                "events"
+              ],
+              "host": [
+                "{{clientweb-api-v1-chats-chatId-events-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chatId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "19bbcc4d-0c22-4eb6-99e3-99b33fedd3d5",
+              "name": "Get New Chat Events Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v1",
+                    "chats",
+                    ":chatId",
+                    "events"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v1-chats-chatId-events-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chatId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    \"<array of chat events>\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "baaf7c11-9eda-4c15-b73e-ec7daf179892",
+          "name": "Get Chat History",
+          "request": {
+            "name": "Get Chat History",
+            "description": {
+              "content": "This method returns all client events and all server events for the current session. Multiple event objects can be returned; each event's timestamp attribute can be used to restore the correct message order.\n\nReturns\n\nCode\nDescription\n\n200\nArray of chat events (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v1",
+                "chats",
+                ":chatId",
+                "history"
+              ],
+              "host": [
+                "{{clientweb-api-v1-chats-chatId-history-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chatId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bbd0fa1c-5e0d-446c-97d8-ee9ecdbf3df6",
+              "name": "Get Chat History Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v1",
+                    "chats",
+                    ":chatId",
+                    "history"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v1-chats-chatId-history-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chatId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    \"<array of chat events>\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9335d5e6-0974-4dfa-b29f-006ebd24b700",
+          "name": "Upload File",
+          "request": {
+            "name": "Upload File",
+            "description": {
+              "content": "This method uploads a file to the server. The maximum file size is 25 MB. The server will store up to 1000 files. Newly received files will replace the oldest files. This method can be used, for example, to send pictures from the client mobile application to the contact center agents.\n\nReturns\n\nCode\nDescription\n\n200\nFile ID to be used in the chat_session_file message (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v1",
+                "files"
+              ],
+              "host": [
+                "{{clientweb-api-v1-files-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "78653f5e-d456-49d5-adc6-5b56a08b3201",
+              "name": "Upload File Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v1",
+                    "files"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v1-files-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"file_id\": \"file ID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d3bca169-0a63-48db-9b3c-e0bbffff910c",
+          "name": "Get File",
+          "request": {
+            "name": "Get File",
+            "description": {
+              "content": "This method downloads a file from the server using the received file ID. See server event Chat Session File.\n\nReturns\n\nCode\nDescription\n\n200\nFile content type\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v1",
+                "chats",
+                ":chatId",
+                "files",
+                ":fileId"
+              ],
+              "host": [
+                "{{clientweb-api-v1-chats-chatId-files-fileId-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chatId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "fileId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ffa34735-03f0-4154-b97b-6aef12c590d1",
+              "name": "Get File Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v1",
+                    "chats",
+                    ":chatId",
+                    "files",
+                    ":fileId"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v1-chats-chatId-files-fileId-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chatId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fileId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"File content type\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63a00460-6ebd-409f-b847-d5168f8903bf",
+          "name": "Get Agent Profile Photo",
+          "request": {
+            "name": "Get Agent Profile Photo",
+            "description": {
+              "content": "This method downloads a profile photo of the specified agent.\n\nRequest Body\n\nThe request body is the party ID of the agent participating in the current chat session.\n\nNote: The party ID is provided with the chat event (polled at https://{host:port}/clientweb/api/v1/chats/{chatId}/events?tenantUrl={tenantUrl}). For example, you can see party_ID in the event message for chat_session_party_joined.\n\nReturns\n\nCode\nDescription\n\n200\nFile content type\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v1",
+                "chats",
+                ":chatId",
+                "profilephotos",
+                ":partyId"
+              ],
+              "host": [
+                "{{clientweb-api-v1-chats-chatId-profilephotos-partyId-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chatId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "partyId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8468951c-cb04-44b1-85e0-00dc4f60796a",
+              "name": "Get Agent Profile Photo Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v1",
+                    "chats",
+                    ":chatId",
+                    "profilephotos",
+                    ":partyId"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v1-chats-chatId-profilephotos-partyId-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chatId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partyId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"File content type\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1bfef6f7-61ff-477f-a202-6bf042201b9a",
+          "name": "Get ICE servers",
+          "request": {
+            "name": "Get ICE servers",
+            "description": {
+              "content": "This method returns a list of configured ICE servers to provide to the browser so that an audio-visual session could be added to the chat.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess: JSON response with information of ICE servers\n\nErrors\n\nCode\nDescription\n\n403\nForbidden",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v1",
+                "iceservers"
+              ],
+              "host": [
+                "{{clientweb-api-v1-iceservers-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "07c2216d-c01b-4f49-82e7-ec536a1a6053",
+              "name": "Get ICE servers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v1",
+                    "iceservers"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v1-iceservers-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"servers\": [\n    {\n      \"url\": \"<url>\",\n      \"username\": \"<(optional) username>\",\n      \"credential\": \"<(optional) password>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cffaeb8d-733a-4df2-a355-4eba0fe2ca6c",
+          "name": "Get Chat Widget Configuration",
+          "request": {
+            "name": "Get Chat Widget Configuration",
+            "description": {
+              "content": "This method returns the chat widget configuration for the launch point.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess: JSON response with information of ICE servers\n\nErrors\n\nCode\nDescription\n\n403\nForbidden",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v1",
+                "configuration"
+              ],
+              "host": [
+                "{{clientweb-api-v1-configuration-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a43c8cc6-830a-4c0d-8e80-2c27913774b5",
+              "name": "Get Chat Widget Configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v1",
+                    "configuration"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v1-configuration-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"widgets\\\":[\\n     {\\n       \\\"name\\\": \\\"<widget name>\\\",\\n       \\\"urls\\\":[\\\"<url>\\\", …],\\n       \\\"definition\\\": {\\n         \\\"contact_tab\\\":{\\n           \\\"enabled\\\": true|false,\\n           \\\"location\\\": \\\"top_left|top_middle|top_right\\n                       |right_top|right_middle|right_bottom\\n                       |bottom_left| bottom_middle|bottom_right\\n                       |left_top|left_middle|left_bottom\\\",\\n           \\\"color\\\": \\\"<color>\\\",\\n           \\\"bg_color\\\": \\\"color\\\",\\n           \\\"font\\\": {\\n             \\\"family\\\": \\\"<font family>\\\",\\n             \\\"size\\\": \\\"<font size>\\\",\\n             \\\"style\\\": \\\"<font style>\\\",\\n             \\\"weight\\\": \\\"<font weight>\\\"   \\n           },\\n           \\\"agents_available_msg\\\": \\\"<msg>\\\",\\n           \\\"agents_not_available_msg\\\": \\\"<msg>\\\",\\n           \\\"out_of_hours_msg\\\": \\\"<msg>\\\",\\n           \\\"show_ewt_out_of_hours\\\": true|false  \\n         }\\n       },\\n\\t    \\\"styles\\\":{\\n\\t\\t    \\\"style1\\\":{\\n                \\\"contentMargin\\\" : {\\n                    \\\"margin\\\": \\\"\\\"\\n                },\\n                \\\"titleFont\\\" : {\\n                    \\\"font-family\\\": \\\"\\\",\\n                    \\\"font-style\\\": \\\"\\\",\\n                    \\\"font-size\\\": \\\"\\\",\\n                    \\\"font-weight\\\": \\\"\\\"\\t\\n                },\\n                \\\"contactTabFont\\\" : {\\n                    \\\"font-family\\\": \\\"\\\",\\n                    \\\"font-style\\\": \\\"\\\",\\n                    \\\"font-size\\\": \\\"\\\",\\n                    \\\"font-weight\\\": \\\"\\\"\\t\\n                },\\n                \\\"systemMessage\\\" : {\\n                    \\\"background-color\\\": \\\"\\\"\\n                },\\n                \\\"agentMessage\\\" : {\\n                    \\\"background-color\\\": \\\"\\\"\\n                },\\n                \\\"widgetBorder\\\" : {\\n                    \\\"border\\\": \\\"1px solid etc...\\\",\\n                    \\\"border-radius\\\": \\\"\\\"\\n                },\\n                \\\"contactTabBorder\\\": {\\n                    \\\"border\\\": \\\"1px solid etc...\\\",\\n                    \\\"border-radius\\\": \\\"\\\"\\n                },\\n                \\\"widgetBackground\\\" {\\n                    \\\"background\\\": \\\"url(img.png) #fff repeat-y\\\"        \\n                },\\n                \\\"baseFont\\\": {\\n                    \\\"font-family\\\": \\\"\\\",\\n                    \\\"font-style\\\": \\\"\\\",\\n                    \\\"font-size\\\": \\\"\\\",\\n                    \\\"font-weight\\\": \\\"\\\",\\n                    \\\"color\\\": \\\"\\\"\\n                },    \\n                \\\"dialogShadow\\\": {\\n                    \\\"box-shadow\\\":\\\"\\\"\\n                }    \\n            }\\n        } \\n     }\\n  ]\\n}\\n\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2c7fb0b3-f28a-4b90-a2b6-9b8ecf7f5603",
+          "name": "Check Availability",
+          "request": {
+            "name": "Check Availability",
+            "description": {
+              "content": "This method returns the availability status of the configured hours of operation of the associated Messaging/Chat scenario entry. Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value. Note that the API does not check if there are any agents actually logged in.\n\nStatus Meanings\n\nStatus Name\nDescription\n\navailable\nThe requested service is available.\n\nnotAvailable\nThe office providing the requested service is currently closed.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess: Returns the scenario entry’s current status / EWT (optionally)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n503\nService Unavailable",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "availability"
+              ],
+              "host": [
+                "{{clientweb-api-v2-availability-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3520e0f3-f2d9-478d-8c0d-a49230bdfba5",
+              "name": "Check Availability Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "availability"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-availability-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"chat\": \"available\",\n  \"ewt\": \"3\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aef9fae3-30ef-45c1-b283-b70c009e2163",
+          "name": "Expected Parameters",
+          "request": {
+            "name": "Expected Parameters",
+            "description": {
+              "content": "This method returns an array of expected parameters. The parameters are optional. They may be used, for example, to look for the most qualified agents to handle the requested chat sessions and/or to display user information for the agents. These parameters are initially specified for the Messaging/Chat scenario entry through which this mobile application will communicate with the contact center.\n\nCurrently, the following parameter types are supported:\n\nPHONE\n\nTEXT\n\nEMAIL\n\nFIRST_NAME\n\nLAST_NAME\n\nACCOUNT\n\nCOMPANY\n\nReturns\n\nCode\nDescription\n\n200\napplication/json with names and types of parameters that may be expected from the client application\n\nErrors\n\nCode\nDescription\n\n403\nForbidden",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "parameters"
+              ],
+              "host": [
+                "{{clientweb-api-v2-parameters-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "de5e2d09-9e82-4ec5-8934-ffdfa2167148",
+              "name": "Expected Parameters Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "parameters"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-parameters-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"parameters\": [\n    {\n      \"<name>\": \"<type>\"\n    },\n    \"...\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5253dc5f-bffe-4a6b-825d-a67a4415487f",
+          "name": "Request Chat",
+          "request": {
+            "name": "Request Chat",
+            "description": {
+              "content": "This method initiates a chat session. It provides values of all or some of the expected parameters, and it may also contain the phone number of the mobile device. Depending on the scenario entry configuration, a callback can be initiated automatically to the specified number as soon as the chat request is delivered to the agent.\n\nNotes:\n\nThe Request Chat method may return the ID and parameters of an existing chat session if there are any currently existing chat sessions associated with this specific client. For example, the client app created a chat session, which was then closed or crashed, then restarted before the session timed out on the server.\n\nThe is_new_chat response attribute is specified if the chat is a new session or existing session. The client application will handle these differently (e.g., if in an existing session the app may request session history and show the previous content.\n\nIf the associated mobile/web scenario entry is not configured for automatic callback, the agent can still use this number to call the mobile user manually, either upon the agent's own initiative or when asked to do this via a chat message from the mobile user.\n\nThe parameter from may be used to specify either the device owner’s name or phone number. It will be placed in the scenario variable $(item.from).\n\nParameters returned in the parameters attribute are propagated into the scenario variable $(item.externalChatData).\n\nOptionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value. This might be important for the clients with strict JSON serialization (i.e., the client app may fail deserializing the JSON if the attribute is missing).\n\nReturns\n\nCode\nDescription\n\n200\nChat session properties (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n503\nService Unavailable",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "chats"
+              ],
+              "host": [
+                "{{clientweb-api-v2-chats-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "Content",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<string>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cdf482fa-bbcc-45dd-9827-6dd9822b1097",
+              "name": "Request Chat Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "chats"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-chats-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"phone_number\":\"<phone number for callback, if necessary>\",\n    \"from\":\"<propagated into scenario variable $(item.from)>\",\n    \"parameters\":{\n        \"parameter_1\":\"value_1\",\n        \"...\",\n        \"parameter_n\":\"value_n\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"state\": \"ivr\",\n  \"ewt\": \"0\",\n  \"chat_id\": \"d6c1adc2-385b-42e5-9e0a-1883c2bc5f81\",\n  \"is_new_chat\": true,\n  \"phone_number\": \"16508888888\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2260419d-2a39-4ccf-a546-568e6a0b6da5",
+          "name": "Mobile Notification Subscription",
+          "request": {
+            "name": "Mobile Notification Subscription",
+            "description": {
+              "content": "This method is a client application request for either subscribing to or canceling mobile notifications for a chat session.\n\nNotes\n\nThis method should be invoked after invoking the Request Chat method (i.e., the chatId value required for this method is returned in the Request Chat method).\n\nAdditionally, this method should be invoked when its device token is changed.\n\nThe client application may also opt to stop receiving mobile notifications by using this API method\nwith an empty JSON body: {}\n\nRequest Parameters\n\nThe mobile application will specify one of the following parameters, depending on the application’s\noperating system and used notification framework.\n\nParameter Name\nDescription\n\nios_apns_device_token\nThe iOS application using native APNs\n\nios_app_bundle_id\nFor iOS devices using native APNs, this parameter is required and is used as the APNs topic\n\nios_firebase_device_token\nThe iOS application using Firebase notifications\n\nandroid_firebase_device_token\nThe android application using Firebase notifications\n\nReturns\n\nCode\nDescription\n\n200\nNames of configured services with current status\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n406\nNot acceptable: Too many parameters/corresponding notifications are not configured for the Messaging/Chat entry",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "chats",
+                ":chatId",
+                "notifications"
+              ],
+              "host": [
+                "{{clientweb-api-v2-chats-chatId-notifications-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chatId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<string>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f93300e0-4a49-4ce6-9b17-7d865e254d26",
+              "name": "Mobile Notification Subscription",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "chats",
+                    ":chatId",
+                    "notifications"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-chats-chatId-notifications-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chatId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "// For Apple Push Notification service (APNs):\n{\n    \"ios_apns_device_token\": \"<iOS APNs device token>\",\n    \"ios_app_bundle_id\": \"<iOS app ID>\"\n}\n// For Apple Firebase:\n{\n    \"ios_firebase_device_token\": \"<Firebase token>\"\n}\n//For Android Firebase:\n{\n    \"android_firebase_device_token\": \"<Firebase token>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "04ae5636-1a5e-4ad8-84e0-9ed62ffa6cd8",
+          "name": "Get Active Chat",
+          "request": {
+            "name": "Get Active Chat",
+            "description": {
+              "content": "This method returns the properties of an active chat session. Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value.\n\nReturns\n\nCode\nDescription\n\n200\nChat session properties (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "chats",
+                "active"
+              ],
+              "host": [
+                "{{clientweb-api-v2-chats-active-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5859c830-4a2c-47c5-8cf3-d1a0530f39a4",
+              "name": "Get Active Chat Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "chats",
+                    "active"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-chats-active-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"chat_id\": \"<chat ID>\",\n  \"state\": \"<queued|connected|ivr>\",\n  \"ewt\": \"<estimated wait time for a chat in state queued>\",\n  \"phone_number\": \"<phone number that will be used for callback>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54e7f565-43fd-4232-94be-2630a0f8d05b",
+          "name": "Send Events",
+          "request": {
+            "name": "Send Events",
+            "description": {
+              "content": "This method sends events from the client to the server side.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess\n\nErrors\n\nCode\nDescription\n\n400\nBad Request\n\n403\nForbidden\n\n404\nNot Found",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "chats",
+                ":chatId",
+                "events"
+              ],
+              "host": [
+                "{{clientweb-api-v2-chats-chatId-events-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chatId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4dc739d4-ce2e-495f-9287-1305f87d8291",
+              "name": "Send Events Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "chats",
+                    ":chatId",
+                    "events"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-chats-chatId-events-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chatId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    \"<array of new chat events from server>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dcc24319-bb0d-4319-9c64-1ce0ebe829bd",
+          "name": "Get New Chat Events",
+          "request": {
+            "name": "Get New Chat Events",
+            "description": {
+              "content": "This method returns new chat events for the current session. If there are no new events, the server can keep the request active during a timeout (i.e., for about 5–15 seconds). If the client sends another request to get new events while the previous request is kept active, the server will respond with error 400 (Bad request).\n\nReturns\n\nCode\nDescription\n\n200\nArray of chat events (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot Found\n\n429\nToo many requests",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "chats",
+                ":chatId",
+                "events"
+              ],
+              "host": [
+                "{{clientweb-api-v2-chats-chatId-events-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chatId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f3fb4ec7-5c48-4434-802f-73d9b6a7ccc8",
+              "name": "Get New Chat Events Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "chats",
+                    ":chatId",
+                    "events"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-chats-chatId-events-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chatId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    \"<array of chat events>\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7033527e-923b-4869-a99d-9492731c2411",
+          "name": "Get Chat History",
+          "request": {
+            "name": "Get Chat History",
+            "description": {
+              "content": "This method returns all client events and all server events for the current session. Multiple event objects can be returned; each event's timestamp attribute can be used to restore the correct message order.\n\nReturns\n\nCode\nDescription\n\n200\nArray of chat events (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "chats",
+                ":chatId",
+                "history"
+              ],
+              "host": [
+                "{{clientweb-api-v2-chats-chatId-history-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chatId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3efae106-290a-4de6-8059-a988b191909c",
+              "name": "Get Chat History Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "chats",
+                    ":chatId",
+                    "history"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-chats-chatId-history-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chatId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    \"<array of chat events>\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6402c804-e47f-4438-8cf9-2853eb5bb80b",
+          "name": "Upload File",
+          "request": {
+            "name": "Upload File",
+            "description": {
+              "content": "This method uploads a file to the server. The maximum file size is 25 MB. The server will store up to 1000 files. Newly received files will replace the oldest files. This method can be used, for example, to send pictures from the client mobile application to the contact center agents.\n\nReturns\n\nCode\nDescription\n\n200\nFile ID to be used in the chat_session_file message (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n400\nBad Request\n\n403\nForbidden",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "files"
+              ],
+              "host": [
+                "{{clientweb-api-v2-files-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5641c28b-e972-414c-ab4d-0e3a6e1b89f5",
+              "name": "Upload File Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "files"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-files-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "type": "file"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"file_id\": \"file ID to use in chat_session_file message\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c0d5ff45-2fe5-4b91-ace2-d82cc9e537f3",
+          "name": "Get File",
+          "request": {
+            "name": "Get File",
+            "description": {
+              "content": "This method downloads a file from the server using the received file ID. See server event Chat Session File.\n\nReturns\n\nCode\nDescription\n\n200\nFile content type\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "chats",
+                ":chatId",
+                "files",
+                ":fileId"
+              ],
+              "host": [
+                "{{clientweb-api-v2-chats-chatId-files-fileId-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chatId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "fileId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4927f61e-cd9b-4343-9c57-199b718e3180",
+              "name": "Get File Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "chats",
+                    ":chatId",
+                    "files",
+                    ":fileId"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-chats-chatId-files-fileId-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chatId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fileId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"File content type\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4e3eef47-97ca-426e-807c-c1cc53ec85b0",
+          "name": "Get Agent Profile Photo",
+          "request": {
+            "name": "Get Agent Profile Photo",
+            "description": {
+              "content": "This method downloads a profile photo of the specified agent.\n\nRequest Body\n\nThe request body is the party ID of the agent participating in the current chat session.\n\nNote: The party ID is provided with the chat event (polled at https://{host:port}/clientweb/api/v1/chats/{chatId}/events?tenantUrl={tenantUrl}). For example, you can see party_ID in the event message for chat_session_party_joined.\n\nReturns\n\nCode\nDescription\n\n200\nFile content type\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "chats",
+                ":chatId",
+                "profilephotos",
+                ":partyId"
+              ],
+              "host": [
+                "{{clientweb-api-v2-chats-chatId-profilephotos-partyId-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chatId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "partyId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c7dc9885-a47c-451f-8dda-408b273f2544",
+              "name": "Get Agent Profile Photo Example",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "chats",
+                    ":chatId",
+                    "profilephotos",
+                    ":partyId"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-chats-chatId-profilephotos-partyId-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chatId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partyId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"File content type\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b332f808-863c-43ba-9de0-354d539352a0",
+          "name": "Get ICE servers",
+          "request": {
+            "name": "Get ICE servers",
+            "description": {
+              "content": "This method returns a list of configured ICE servers to provide to the browser so that an audio-visual session could be added to the chat.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess: JSON response with information of ICE servers\n\nErrors\n\nCode\nDescription\n\n403\nForbidden",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "iceservers"
+              ],
+              "host": [
+                "{{clientweb-api-v2-iceservers-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3c527312-d3a0-4f48-a39d-7f404c1e134b",
+              "name": "Get ICE servers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "iceservers"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-iceservers-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"servers\": [\n    {\n      \"url\": \"<url>\",\n      \"username\": \"<(optional) username>\",\n      \"credential\": \"<(optional) password>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "abe3580c-1e53-41ac-83ac-77c11d84da4e",
+          "name": "Get Chat Widget Configuration",
+          "request": {
+            "name": "Get Chat Widget Configuration",
+            "description": {
+              "content": "This method returns the chat widget configuration for the launch point.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess: JSON response with information of ICE servers\n\nErrors\n\nCode\nDescription\n\n403\nForbidden",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "configuration"
+              ],
+              "host": [
+                "{{clientweb-api-v2-configuration-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7d9014b6-3f64-431c-8039-c61a1b629866",
+              "name": "Get Chat Widget Configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "configuration"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-configuration-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"widgets\\\":[\\n     {\\n       \\\"name\\\": \\\"<widget name>\\\",\\n       \\\"urls\\\":[\\\"<url>\\\", …],\\n       \\\"definition\\\": {\\n         \\\"contact_tab\\\":{\\n           \\\"enabled\\\": true|false,\\n           \\\"location\\\": \\\"top_left|top_middle|top_right\\n                       |right_top|right_middle|right_bottom\\n                       |bottom_left| bottom_middle|bottom_right\\n                       |left_top|left_middle|left_bottom\\\",\\n           \\\"color\\\": \\\"<color>\\\",\\n           \\\"bg_color\\\": \\\"color\\\",\\n           \\\"font\\\": {\\n             \\\"family\\\": \\\"<font family>\\\",\\n             \\\"size\\\": \\\"<font size>\\\",\\n             \\\"style\\\": \\\"<font style>\\\",\\n             \\\"weight\\\": \\\"<font weight>\\\"   \\n           },\\n           \\\"agents_available_msg\\\": \\\"<msg>\\\",\\n           \\\"agents_not_available_msg\\\": \\\"<msg>\\\",\\n           \\\"out_of_hours_msg\\\": \\\"<msg>\\\",\\n           \\\"show_ewt_out_of_hours\\\": true|false  \\n         }\\n       },\\n\\t    \\\"styles\\\":{\\n\\t\\t    \\\"style1\\\":{\\n                \\\"contentMargin\\\" : {\\n                    \\\"margin\\\": \\\"\\\"\\n                },\\n                \\\"titleFont\\\" : {\\n                    \\\"font-family\\\": \\\"\\\",\\n                    \\\"font-style\\\": \\\"\\\",\\n                    \\\"font-size\\\": \\\"\\\",\\n                    \\\"font-weight\\\": \\\"\\\"\\t\\n                },\\n                \\\"contactTabFont\\\" : {\\n                    \\\"font-family\\\": \\\"\\\",\\n                    \\\"font-style\\\": \\\"\\\",\\n                    \\\"font-size\\\": \\\"\\\",\\n                    \\\"font-weight\\\": \\\"\\\"\\t\\n                },\\n                \\\"systemMessage\\\" : {\\n                    \\\"background-color\\\": \\\"\\\"\\n                },\\n                \\\"agentMessage\\\" : {\\n                    \\\"background-color\\\": \\\"\\\"\\n                },\\n                \\\"widgetBorder\\\" : {\\n                    \\\"border\\\": \\\"1px solid etc...\\\",\\n                    \\\"border-radius\\\": \\\"\\\"\\n                },\\n                \\\"contactTabBorder\\\": {\\n                    \\\"border\\\": \\\"1px solid etc...\\\",\\n                    \\\"border-radius\\\": \\\"\\\"\\n                },\\n                \\\"widgetBackground\\\" {\\n                    \\\"background\\\": \\\"url(img.png) #fff repeat-y\\\"        \\n                },\\n                \\\"baseFont\\\": {\\n                    \\\"font-family\\\": \\\"\\\",\\n                    \\\"font-style\\\": \\\"\\\",\\n                    \\\"font-size\\\": \\\"\\\",\\n                    \\\"font-weight\\\": \\\"\\\",\\n                    \\\"color\\\": \\\"\\\"\\n                },    \\n                \\\"dialogShadow\\\": {\\n                    \\\"box-shadow\\\":\\\"\\\"\\n                }    \\n            }\\n        } \\n     }\\n  ]\\n}\\n\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1144e3e2-a47b-4031-bbde-08bec36b2d91",
+          "name": "Get Case History",
+          "request": {
+            "name": "Get Case History",
+            "description": {
+              "content": "This method returns the combined transcripts of all chat sessions (i.e., the chat thread) linked to the specific CRM case object. Note that this request should be made only after the chat_session_case_set server event is received; if the scenario has not specified a case, the request will return an error.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess: application/json\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found\n\n406\nNot acceptable: If the scenario did not specify a case",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "casehistory"
+              ],
+              "host": [
+                "{{clientweb-api-v2-casehistory-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8f754a38-5562-4f02-8416-ae5706dab726",
+              "name": "Get Case History",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "casehistory"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-casehistory-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"sessions\\\": [\\n        {\\n            \\\"chat_id\\\":\\\"<session 1 ID>\\\",\\n            \\\"created_time\\\":<Unix timestamp in seconds>,\\n            \\\"events\\\":<array of events from this chat session>\\n        },\\n        ...\\n        {\\n            \\\"chat_id\\\":\\\"<session 4 ID>\\\",\\n            \\\"created_time\\\":<Unix timestamp in seconds>,\\n            \\\"events\\\":<array of events from this chat session>\\n        },\\n        ...     \\n    ]\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b60d2965-5310-4532-813f-44836adb1943",
+          "name": "Close Case",
+          "request": {
+            "name": "Close Case",
+            "description": {
+              "content": "This method invokes a client application request to close the case associated with the chat session. Note that this request should be made only after the chat_session_case_set server event is received; if the scenario has not specified a case, the request will return an error.\n\nReturns\n\nCode\nDescription\n\n200\nCase successfully closed\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found\n\n406\nNot acceptable: If scenario did not specify a case\n\n500\nServer error: Case is specified but cannot be closed (i.e., the CRM server responded with an error)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "closecase"
+              ],
+              "host": [
+                "{{clientweb-api-v2-closecase-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7a3bbd9d-ac24-49ac-80a3-fd0f642416ae",
+              "name": "Close Case",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "closecase"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-closecase-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d8ac7c74-3b97-497e-828e-6586320ef0c8",
+          "name": "Get Version",
+          "request": {
+            "name": "Get Version",
+            "description": {
+              "content": "This method returns the Bright Pattern Contact Center software version of the server. It may be used for informational purposes (e.g., adding the version number to the bottom of an application window or in an informational dialog window, as well as seeing the server version in the client application logs). Note that this method is not available in the Mobile/Web Messaging API v1.\n\nReturns\n\nCode\nDescription\n\n200\nOK: success\n\nErrors\n\nCode\nDescription\n\n404\nNot found: For example, if the existing Mobile/Web Messaging API v1 endpoint is called instead of the v2 endpoint",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clientweb",
+                "api",
+                "v2",
+                "version"
+              ],
+              "host": [
+                "{{clientweb-api-v2-version-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenantUrl",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "User-Agent",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0a2c257f-083d-4cb6-971c-43feedfcec01",
+              "name": "Get Version",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clientweb",
+                    "api",
+                    "v2",
+                    "version"
+                  ],
+                  "host": [
+                    "{{clientweb-api-v2-version-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenantUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "User-Agent",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"server_version\": \"5.5.6.12345 (Stable)\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6685b56c-2623-446b-b747-8484649984cf",
+          "name": "Create Subscription",
+          "request": {
+            "name": "Create Subscription",
+            "description": {
+              "content": "This method creates a subscription for a specific set of metrics. Each client can have only one active subscription.\n\nResponse Codes\n\nCode\nDescription\n\n200\nOK subscription was created\n\n400\nBad request\n\n401\nUnauthorized\n\n409\nLimit of active subscriptions exceeded for tenant",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "statsapi",
+                "subscription"
+              ],
+              "host": [
+                "{{statsapi-subscription-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<string>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0d489078-77a0-45d5-8363-d4b4c972d00f",
+              "name": "Create Subscription",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statsapi",
+                    "subscription"
+                  ],
+                  "host": [
+                    "{{statsapi-subscription-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"<app id>\": {\n        \"stats_totals\": [\"statistic name\" ], //array of statistics\n        \"service_grids\": [//array of service grid definitions \n            {\n                \"id\": \"<grid Id>\",\n                \"columns\": [//array of stats for columns\n                    {\n                        \"id\": \"<column id>\",\n                        \"stat_name\": \"<statistic protocol name>\"\n                    }\n                ], \n                \"order_by\": \"<column id>\",\n                \"order_dir\": \"ASC|DESC\",\n                \"limit\": \"<count of top records>\",\n                \"filter_by\": \"<column id>\",\n                \"filter_value\": \"<value>\",\n                \"filter_operation\": \"EQ|NE|LT|GT|LE|GE\"\n            }\n        ],\n        \"agent_grids\": [ //array of agent grid definitions  \n            {\n                \"id\": \"<grid Id>\",\n                \"columns\": [//array of stats for columns\n                    {\n                        \"id\": \"<column id>\",\n                        \"stat_name\": \"<statistic protocol name>\", \n                        \"dispositions\": [\"<(optional)list of dispositions>\"]\n                    }\n                ], \n                \"order_by\": \"<column id>\",\n                \"order_dir\": \"ASC|DESC\",\n                \"limit\": \"<count of top records>\",\n                \"filter_by\": \"<column id>\",\n                \"filter_value\": \"<value>\",\n                \"filter_operation\": \"EQ|NE|LT|GT|LE|GE\"\n            }\n        ],\n        \"chat_messages\": {//top of internal chat messages  \n        \"filter\": \"<filter by message content>\",\n        \"limit\": \"<count of top records>\"\n        }\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4306c4b-7c99-4e61-91b8-2b78263c5239",
+          "name": "Get Subscription Data",
+          "request": {
+            "name": "Get Subscription Data",
+            "description": {
+              "content": "This method gets the statistics data of an active subscription.\n\nNote:\n\nYour user must be the supervisor of a team in order to retrieve agent_grid information.\n\nResponse Codes\n\nCode\nDescription\n\n200\nOK\n\n204\nNo content (data is not ready yet)\n\n401\nUnauthorized\n\n404\nBad request (there is no active subscription)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "statsapi",
+                "subscription",
+                "data"
+              ],
+              "host": [
+                "{{statsapi-subscription-data-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d712c3b1-ee2b-46c4-811c-c1e2d7720338",
+              "name": "Get Subscription Data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statsapi",
+                    "subscription",
+                    "data"
+                  ],
+                  "host": [
+                    "{{statsapi-subscription-data-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"example.subscription.string\": {\n    \"agent_grids\": [\n      {\n        \"id\": \"example.agent.grid\",\n        \"values\": [\n          {\n            \"1\": \"christy.borden\",\n            \"2\": \"0\"\n          },\n          {\n            \"1\": \"marky.mark\",\n            \"2\": \"0\"\n          },\n          {\n            \"1\": \"allen.fawcett\",\n            \"2\": \"0\"\n          },\n          {\n            \"1\": \"jeffery.lozada\",\n            \"2\": \"0\"\n          },\n          {\n            \"1\": \"liza.smith\",\n            \"2\": \"1\"\n          }\n        ]\n      }\n    ],\n    \"service_grids\": [\n      {\n        \"id\": \"example.service.grid\",\n        \"values\": [\n          {\n            \"1\": \"Chat Service\",\n            \"2\": \"2\"\n          },\n          {\n            \"1\": \"1\",\n            \"2\": \"1\"\n          },\n          {\n            \"1\": \"Outbound Voice\",\n            \"2\": \"2\"\n          },\n          {\n            \"1\": \"3\",\n            \"2\": \"1\"\n          },\n          {\n            \"1\": \"Best Chat Service\",\n            \"2\": \"1\"\n          },\n          {\n            \"1\": \"Voice Inbound\",\n            \"2\": \"2\"\n          },\n          {\n            \"1\": \"Support for CSIM\",\n            \"2\": \"2\"\n          },\n          {\n            \"1\": \"Email Svc\",\n            \"2\": \"2\"\n          },\n          {\n            \"1\": \"Nice Inbound\",\n            \"2\": \"1\"\n          },\n          {\n            \"1\": \"2\",\n            \"2\": \"1\"\n          }\n        ]\n      }\n    ],\n    \"stats_totals\": {\n      \"agents_logged\": \"2\",\n      \"in_average_speed_of_answer\": \"\",\n      \"agents_ready\": \"2\"\n    },\n    \"chat_messages\": []\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "39be7994-66f4-480c-baab-7a2307d5efb7",
+          "name": "Delete Subscription",
+          "request": {
+            "name": "Delete Subscription",
+            "description": {
+              "content": "This method deletes the active subscription, and clears the data cache on the server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "statsapi",
+                "subscription",
+                "active"
+              ],
+              "host": [
+                "{{statsapi-subscription-active-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fe4ebf3e-6a09-4446-ace2-203c11a33236",
+              "name": "Delete Subscription",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statsapi",
+                    "subscription",
+                    "active"
+                  ],
+                  "host": [
+                    "{{statsapi-subscription-active-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2288f2a8-5c9d-4dea-a288-33f2afbd75ad",
+          "name": "Get Dispositions",
+          "request": {
+            "name": "Get Dispositions",
+            "description": {
+              "content": "This method gets the disposition names for all supervised services.\n\nOptional URL Parameters\n\nagentCanSelect = 1\n\ninbound = 1\n\noutbound = 1\n\npreview = 1\n\nResponse Codes\n\nCode\nDescription\n\n200\nOK\n\n401\nUnauthorized",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "statsapi",
+                "cfg",
+                "dispositions"
+              ],
+              "host": [
+                "{{statsapi-cfg-dispositions-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fbad1123-7cc8-4396-94b1-a2289d462c38",
+              "name": "Get Dispositions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statsapi",
+                    "cfg",
+                    "dispositions"
+                  ],
+                  "host": [
+                    "{{statsapi-cfg-dispositions-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"Agent failure\",\n  \"Disposition not found\",\n  \"Dropped while talking\",\n  \"Offer rejected\",\n  \"Phone number out of service\",\n  \"Product sold\",\n  \"Silence\",\n  \"System failure\",\n  \"Wrong number\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e509ed0-1c7a-4be8-b7a1-85c29c09cf65",
+          "name": "Get Available Agents",
+          "request": {
+            "name": "Get Available Agents",
+            "description": {
+              "content": "This method gets either the \"true\" or the \"false\" value for agents ready to handle a specific service.\n\nNote:\n\nNo authentication or subscription is needed for this method.\n\nResponse\n\nCode\nDescription\n\n200\nOK\n\nTrue\n\"Number of ready agents\" > 0 for the specific service (i.e., at least one agent is available)\n\nFalse\n\"Number of ready agents\" is 0 for the specific service (i.e., no agent is available)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "statsapi",
+                "info",
+                "check_available_agents"
+              ],
+              "host": [
+                "{{statsapi-info-check_available_agents-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "service",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "53a275d5-5aa7-4997-b220-6804d5e5a4ef",
+              "name": "Get Available Agents",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statsapi",
+                    "info",
+                    "check_available_agents"
+                  ],
+                  "host": [
+                    "{{statsapi-info-check_available_agents-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "service",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"availability\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "65a86c55-8bff-4c6a-a107-c66645365877",
+          "name": "Get Teams",
+          "request": {
+            "name": "Get Teams",
+            "description": {
+              "content": "This method returns the names and internal object IDs of teams configured for the given tenant.\n\nNote that in order to get the above information about a specific team, the account used for API authentication must be assigned as a supervisor to that team.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "statsapi",
+                "cfg",
+                "teams"
+              ],
+              "host": [
+                "{{statsapi-cfg-teams-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "afbb9b25-0758-4f52-9e70-158832ee0243",
+              "name": "Get Teams",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statsapi",
+                    "cfg",
+                    "teams"
+                  ],
+                  "host": [
+                    "{{statsapi-cfg-teams-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"F4ED90FA-5A49-4D76-9487-4E41B24CA45F\",\n    \"name\": \"Customer Service\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "baseUrl"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v1-availability-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v1-parameters-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v1-chats-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v1-chats-active-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v1-chats-chatId-events-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v1-chats-chatId-history-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v1-files-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v1-chats-chatId-files-fileId-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v1-chats-chatId-profilephotos-partyId-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v1-iceservers-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v1-configuration-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-availability-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-parameters-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-chats-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-chats-chatId-notifications-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-chats-active-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-chats-chatId-events-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-chats-chatId-history-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-files-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-chats-chatId-files-fileId-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-chats-chatId-profilephotos-partyId-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-iceservers-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-configuration-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-casehistory-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-closecase-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "clientweb-api-v2-version-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "statsapi-subscription-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "statsapi-subscription-data-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "statsapi-subscription-active-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "statsapi-cfg-dispositions-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "statsapi-info-check_available_agents-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "statsapi-cfg-teams-Url"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2c41903b-5b16-489e-a33d-5d0263acd92c",
+    "name": "Bright Pattern Methods API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Operations tagged Methods across 3 of this provider's published API definitions: bright-pattern-mobile-web-messaging-v1-openapi.yml, bright-pattern-mobile-web-messaging-v2-openapi.yml, bright-pattern-real-time-statistics-openapi.yml. Each path carries the servers of the definition it was published in.\n\nContact Support:\n Name: Bright Pattern",
+      "type": "text/plain"
+    }
+  }
+}

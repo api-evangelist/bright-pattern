@@ -1,0 +1,1752 @@
+{
+  "item": [
+    {
+      "id": "a5ca9938-cf2e-4204-88c7-c18aa3f70ace",
+      "name": "Users",
+      "description": {
+        "content": "With the https://:tenant_url/configapi/v2/user endpoint you can:\n\nCreate new users and define most of their attributes\n\nUpdate existing users\n\nCheck and clear user lockout state\n\nManage agents' skills\n\nDelete existing users\n\nBelow is a brief description of all user attributes that can be accessed via this API. More detailed descriptions of these attributes can be found here.\n\nAll attributes are strings unless otherwise noted.\n\nAll attributes are optional unless otherwise noted.\n\nAttribute\nDescription\n\nloginId\nUsername. Required to create user. Used to identify the user in all subsequent User Management API operations.\n\npassword\nPassword. Format must comply with security policy.\n\nchangePassword\nIndicates whether user must change password on next login. Boolean. Default is false.\n\nfirstName\nFirst name. Required to create user.\n\nlastName\nLast name. Required to create user.\n\nteam\nTeam that the user is assigned to. Required to create user.\n\nextension\nUser's extension number. If not specified, an extension will be created and assigned automatically.\n\nworkPhone\nUser's work phone number.\n\nmobilePhone\nUser's mobile phone number.\n\nemail\nUser's email address.\n\ndisabled\nIndication whether the user account is disabled or enabled. Boolean (true/flase).\n\nskills\nFor agents an array of skills with levels (e.g., \"Support\": 75).\n\nroles\nAn array of user's roles (e.g., Agent).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3ae6d188-7fe6-4321-9ec7-15672c24438e",
+          "name": "Create User",
+          "request": {
+            "name": "Create User",
+            "description": {
+              "content": "Creates a new user in your contact center configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "user"
+              ],
+              "host": [
+                "{{configapi-v2-user-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "beb9fbf6-32dc-4121-ab8b-d5a55101401a",
+              "name": "Create user with a complete data set",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "user"
+                  ],
+                  "host": [
+                    "{{configapi-v2-user-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loginId\": \"testuser006\",\n  \"password\": \"$$$999aaa\",\n  \"firstName\": \"Test\",\n  \"lastName\": \"User006\",\n  \"team\": \"Support Team\",\n  \"workPhone\": \"6373335656\",\n  \"mobilePhone\": \"6374128990\",\n  \"email\": \"testuser006@nowhere.net\",\n  \"disabled\": false,\n  \"changePassword\": true,\n  \"skills\": {\n    \"Support\": 100,\n    \"Mobile\": 100,\n    \"Cable\": 70\n  },\n  \"roles\": [\n    \"Agent\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"OK\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b7dcc849-606a-419d-994c-944673aced14",
+          "name": "Get User Data",
+          "request": {
+            "name": "Get User Data",
+            "description": {
+              "content": "Returns user data, such as name, team, extension, skills, and login information",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "user",
+                ":username"
+              ],
+              "host": [
+                "{{configapi-v2-user-username-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "username",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c6acc70b-20a5-44ea-aa7d-43ad5d9e11c9",
+              "name": "Get user data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "user",
+                    ":username"
+                  ],
+                  "host": [
+                    "{{configapi-v2-user-username-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "username",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n \\\"disabled\\\":false,\\n \\\"changePassword\\\":false,\\n \\\"skills\\\":{},\\n \\\"loginId\\\":\\\"frank.zappa\\\",\\n \\\"firstName\\\":\\\"Frank\\\",\\n \\\"lastName\\\":\\\"Zappa\\\",\\n \\\"team\\\":\\\"Customer Service\\\",\\n \\\"extension\\\":\\\"1048\\\",\\n \\\"email\\\":\\\"frank.zappa@gmail.com\\\",\\n \\\"roles\\\":[\\\"Agent\\\"]\\n \\\"loginInfo\\\": {\\n    \\\"isLoggedIn\\\": true,\\n    \\\"lastLogin\\\": \\\"2024-01-11T20:39:16.000Z\\\",\\n    \\\"lastLogout\\\": \\\"2024-01-11T20:39:16.000Z\\\",\\n    \\\"browser\\\": \\\"Chrome 120.0.0\\\",\\n    \\\"phoneMode\\\": \\\"Browser Secure\\\",\\n    \\\"os\\\": \\\"Linux\\\",\\n    \\\"ipAddress\\\": \\\"172.27.0.1\\\",\\n    \\\"userAgent\\\": \\\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\\\",\\n    \\\"adHelperVersion\\\": \\\"5.20.0.604\\\",\\n    \\\"appType\\\": \\\"Agent Desktop\\\",\\n    \\\"appVersion\\\": \\\"5.24.99.755\\\"\\n  }\\n }\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "332cca7d-9c19-44e4-81d7-9990d4cfaa48",
+          "name": "Update User ",
+          "request": {
+            "name": "Update User ",
+            "description": {
+              "content": "Updates one or more attributes of an existing user. Currently the can be used to update the following properties:\n\nskills\n\ndisabled\n\npassword\n\nchangePassword\n\nteam",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "user",
+                ":username"
+              ],
+              "host": [
+                "{{configapi-v2-user-username-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "username",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d5a00fdb-f801-4ee3-af18-abab816fc78b",
+              "name": "Disable user via Update User",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "user",
+                    ":username"
+                  ],
+                  "host": [
+                    "{{configapi-v2-user-username-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "username",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"disabled\": \"true\",\n  \"team\": \"Accounting\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"OK\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5dd3bcfd-847f-46b7-8599-a090950f4ae5",
+          "name": "Delete User",
+          "request": {
+            "name": "Delete User",
+            "description": {
+              "content": "Deletes an existing user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "user",
+                ":username"
+              ],
+              "host": [
+                "{{configapi-v2-user-username-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "username",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "adea0ea8-7cd4-4307-b272-ac0a1267a733",
+              "name": "Delete User",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "user",
+                    ":username"
+                  ],
+                  "host": [
+                    "{{configapi-v2-user-username-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "username",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"OK\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "751f2d84-8140-46c0-865e-2f19a4692da3",
+          "name": "Get User Lock State",
+          "request": {
+            "name": "Get User Lock State",
+            "description": {
+              "content": "Checks whether user's account has been temporarily locked out after too many invalid login attempts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "user",
+                "lock",
+                ":username"
+              ],
+              "host": [
+                "{{configapi-v2-user-lock-username-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "username",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "208b2559-33a9-428c-be87-f86776f660a6",
+              "name": "Get User Lock State",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "user",
+                    "lock",
+                    ":username"
+                  ],
+                  "host": [
+                    "{{configapi-v2-user-lock-username-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "username",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lockedOut\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5b6fc8ee-c7dd-4513-b037-52faa836d0a2",
+          "name": "Clear User Lock State",
+          "request": {
+            "name": "Clear User Lock State",
+            "description": {
+              "content": "Unlocks user's account that has been temporarily locked out after too many invalid login attempts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "user",
+                "lock",
+                ":username"
+              ],
+              "host": [
+                "{{configapi-v2-user-lock-username-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "username",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c1128b20-eebc-4be9-8202-db3ed8093f0d",
+              "name": "Clear User Lock State",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "user",
+                    "lock",
+                    ":username"
+                  ],
+                  "host": [
+                    "{{configapi-v2-user-lock-username-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "username",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lockedOut\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00c78557-4b0f-484d-ba04-ca2f80c9fbc3",
+          "name": "Get Teams",
+          "request": {
+            "name": "Get Teams",
+            "description": {
+              "content": "This method returns a list of all existing teams in your contact center.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "team"
+              ],
+              "host": [
+                "{{configapi-v2-team-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "85565f72-3819-4a05-ab0d-18145ebff012",
+              "name": "Get Teams",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "team"
+                  ],
+                  "host": [
+                    "{{configapi-v2-team-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"Administrators\"\n  },\n  {\n    \"name\": \"Contact Center Support\"\n  },\n  {\n    \"name\": \"CSIM Support\"\n  },\n  {\n    \"name\": \"Customer Service\"\n  },\n  {\n    \"name\": \"Maintenance Renewal\"\n  },\n  {\n    \"name\": \"Management\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7cfeae3a-c0c1-41bd-9729-c4a272428c45",
+          "name": "Create User",
+          "request": {
+            "name": "Create User",
+            "description": {
+              "content": "This method creates a new user in your contact center configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "scim",
+                "users"
+              ],
+              "host": [
+                "{{configapi-v2-scim-users-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f27db99e-0b55-48cc-976a-1d1a377848ee",
+              "name": "Create user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "scim",
+                    "users"
+                  ],
+                  "host": [
+                    "{{configapi-v2-scim-users-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"urn:ietf:params:scim:schemas:core:2.0:User\"\n  ],\n  \"userName\": \"bjensen@example.com\",\n  \"name\": {\n    \"familyName\": \"Jensen\",\n    \"givenName\": \"Barbara\"\n  },\n  \"nickName\": \"Babs\",\n  \"emails\": [\n    {\n      \"value\": \"bjensen@example.com\"\n    }\n  ],\n  \"addresses\": [\n    {\n      \"locality\": \"Hollywood\",\n      \"region\": \"CA\",\n      \"country\": \"US\"\n    }\n  ],\n  \"phoneNumbers\": [\n    {\n      \"value\": \"555-555-5555\",\n      \"type\": \"work\"\n    },\n    {\n      \"value\": \"555-555-4444\",\n      \"type\": \"mobile\"\n    }\n  ],\n  \"photos\": [\n    {\n      \"value\": \"https://www.brightpattern.com/wp-content/uploads/2017/09/bright-pattern-logo-mini-with-text-30.png\",\n      \"type\": \"photo\"\n    }\n  ],\n  \"title\": \"TSR Level 3\",\n  \"timezone\": \"America/Los_Angeles\",\n  \"active\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"schemas\": [\n    \"urn:ietf:params:scim:schemas:core:2.0:User\"\n  ],\n  \"id\": \"65625121-E207-4AA6-9C9D-317EE309FFBA\",\n  \"externalId\": \"\",\n  \"meta\": {\n    \"resourceType\": \"USER\",\n    \"location\": \"http://localhost:8080/configapi/v2/scim/users/65625121-E207-4AA6-9C9D-317EE309FFBA\"\n  },\n  \"userName\": \"bjensen@example.com\",\n  \"nickName\": \"Babs\",\n  \"name\": {\n    \"familyName\": \"Jensen\",\n    \"givenName\": \"Barbara\"\n  },\n  \"title\": \"TSR Level 3\",\n  \"timezone\": \"America/Los_Angeles\",\n  \"active\": true,\n  \"emails\": [\n    {\n      \"value\": \"bjensen@example.com\",\n      \"primary\": true\n    }\n  ],\n  \"phoneNumbers\": [\n    {\n      \"type\": \"work\",\n      \"value\": \"555-555-5555\"\n    },\n    {\n      \"type\": \"mobile\",\n      \"value\": \"555-555-4444\"\n    },\n    {\n      \"type\": \"extension\",\n      \"value\": \"2083\"\n    }\n  ],\n  \"addresses\": [\n    {\n      \"locality\": \"Hollywood\",\n      \"country\": \"US\"\n    }\n  ],\n  \"roles\": [\n    {\n      \"value\": \"System Administrator\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0be986d6-67c2-4af3-a182-14fc95d8fa79",
+          "name": "Get User by userName",
+          "request": {
+            "name": "Get User by userName",
+            "description": {
+              "content": "This method returns detailed configuration information about an existing user via the userName filter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "scim",
+                "users"
+              ],
+              "host": [
+                "{{configapi-v2-scim-users-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/scim+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "24fdb092-8f3f-452a-a7f5-0d1af0c7b516",
+              "name": "Get User by userName",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "scim",
+                    "users"
+                  ],
+                  "host": [
+                    "{{configapi-v2-scim-users-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/scim+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/scim+json"
+                }
+              ],
+              "body": "{\n  \"schemas\": [\n    \"urn:ietf:params:scim:api:messages:2.0:ListResponse\"\n  ],\n  \"totalResults\": 1,\n  \"Resources\": [\n    {\n      \"schemas\": [\n        \"urn:ietf:params:scim:schemas:core:2.0:User\"\n      ],\n      \"id\": \"1F148A86-BF13-4478-A102-F11A8B664FF8\",\n      \"meta\": {\n        \"resourceType\": \"USER\",\n        \"created\": \"06-03-2020T07:46:33\",\n        \"location\": \"http://yourcompany.brightpattern.com/configapi/v2/scim/users/1F148A86-BF13-4478-A102-F11A8B664FF8\"\n      },\n      \"userName\": \"carlos.clapper\",\n      \"name\": {\n        \"familyName\": \"Clapper\",\n        \"givenName\": \"Carlos\"\n      },\n      \"active\": true,\n      \"emails\": [\n        {\n          \"value\": \"carlos.clapper@contactcenter.office\",\n          \"primary\": true\n        }\n      ],\n      \"phoneNumbers\": [\n        {\n          \"type\": \"extension\",\n          \"value\": \"2025\"\n        }\n      ],\n      \"addresses\": [\n        {}\n      ],\n      \"roles\": [\n        \"Agent\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a96bffcc-8632-408f-9a0d-5ee07701ca80",
+          "name": "Get User by ID",
+          "request": {
+            "name": "Get User by ID",
+            "description": {
+              "content": "This method returns detailed configuration information about an existing user via the user’s ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "scim",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{configapi-v2-scim-users-id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4d6242d6-652a-4899-baf5-a1f245129850",
+              "name": "Get User by ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "scim",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{configapi-v2-scim-users-id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"schemas\": [\n    \"urn:ietf:params:scim:schemas:core:2.0:User\"\n  ],\n  \"id\": \"5974D6AE-66BD-4B2A-A9D6-1AEADD18F669\",\n  \"meta\": {\n    \"resourceType\": \"USER\",\n    \"created\": \"06-03-2020T10:04:30\",\n    \"lastModified\": \"06-03-2020T10:35:28\",\n    \"location\": \"http://yourcompany.brightpattern.com/configapi/v2/scim/users/5974D6AE-66BD-4B2A-A9D6-1AEADD18F669\"\n  },\n  \"userName\": \"elizabeth\",\n  \"name\": {\n    \"familyName\": \"Smith\",\n    \"givenName\": \"Liza\"\n  },\n  \"active\": true,\n  \"emails\": [\n    {\n      \"value\": \"liza@smith.com\",\n      \"primary\": true\n    }\n  ],\n  \"phoneNumbers\": [\n    {\n      \"type\": \"extension\",\n      \"value\": \"2064\"\n    }\n  ],\n  \"addresses\": [\n    {}\n  ],\n  \"roles\": [\n    \"System Administrator\",\n    \"Campaign Administrator\",\n    \"Supervisor\",\n    \"Quality Evaluator\",\n    \"Quality Evaluator Admin\",\n    \"Security Administrator\",\n    \"Campaign Operator\",\n    \"Service Administrator\",\n    \"Reviewer\",\n    \"Manager\",\n    \"Agent\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1620d330-67c3-42ba-8a4d-81d17d4acf98",
+          "name": "Replace User Properties (by replacing all existing attributes with a specified set of replacement attributes)",
+          "request": {
+            "name": "Replace User Properties (by replacing all existing attributes with a specified set of replacement attributes)",
+            "description": {
+              "content": "Replaces all attributes of an existing user with a specified set of replacement attributes. Note that in accordance with RFC7644, the PUT method updates users by replacing all of their current attributes with the ones specified in the body of the method.\n\nNote also that in order for usernames to be changed, service providers must allow this feature for your contact center. For more information, see the Contact Center Administrator Guide, section Users.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "scim",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{configapi-v2-scim-users-id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a4d45425-b1d6-494d-96cd-17f2b071a1cb",
+              "name": "Replace User",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "scim",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{configapi-v2-scim-users-id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"urn:ietf:params:scim:schemas:core:2.0:User\"\n  ],\n  \"userName\": \"bjinsin\",\n  \"name\": {\n    \"familyName\": \"Jinsin\",\n    \"givenName\": \"Borbora\"\n  },\n  \"nickName\": \"Bobs\",\n  \"emails\": [\n    {\n      \"value\": \"bjinsin@example.com\"\n    }\n  ],\n  \"addresses\": [\n    {\n      \"locality\": \"Hollywood\",\n      \"region\": \"CA\",\n      \"country\": \"US\"\n    }\n  ],\n  \"phoneNumbers\": [\n    {\n      \"value\": \"555-555-5555\",\n      \"type\": \"work\"\n    },\n    {\n      \"value\": \"888-888-8888\",\n      \"type\": \"mobile\"\n    }\n  ],\n  \"title\": \"TSR Level 3\",\n  \"timezone\": \"America/Los_Angeles\",\n  \"active\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"schemas\": [\n    \"urn:ietf:params:scim:schemas:core:2.0:User\"\n  ],\n  \"id\": \"7D6A5564-2104-442F-82DA-D55B6D7CFAE9\",\n  \"meta\": {\n    \"resourceType\": \"USER\",\n    \"created\": \"09-03-2020T05:58:01\",\n    \"lastModified\": \"09-03-2020T09:21:44\",\n    \"location\": \"http://mordor.brightpattern.com/configapi/v2/scim/users/7D6A5564-2104-442F-82DA-D55B6D7CFAE9\"\n  },\n  \"userName\": \"bjinsin\",\n  \"nickName\": \"Bobs\",\n  \"name\": {\n    \"familyName\": \"Jinsin\",\n    \"givenName\": \"Borbora\"\n  },\n  \"title\": \"TSR Level 3\",\n  \"timezone\": \"America/Los_Angeles\",\n  \"active\": true,\n  \"emails\": [\n    {\n      \"value\": \"bjinsin@example.com\",\n      \"primary\": true\n    }\n  ],\n  \"phoneNumbers\": [\n    {\n      \"type\": \"work\",\n      \"value\": \"555-555-5555\"\n    },\n    {\n      \"type\": \"mobile\",\n      \"value\": \"888-888-8888\"\n    },\n    {\n      \"type\": \"extension\",\n      \"value\": \"2065\"\n    }\n  ],\n  \"addresses\": [\n    {\n      \"locality\": \"Hollywood\",\n      \"region\": \"CA\",\n      \"country\": \"US\"\n    }\n  ],\n  \"roles\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48248ab8-9aaf-403e-9baf-6e7e3cfbbb04",
+          "name": "Delete User",
+          "request": {
+            "name": "Delete User",
+            "description": {
+              "content": "Deletes an existing user",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "scim",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{configapi-v2-scim-users-id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6f5e9042-c99e-437f-a5e2-915960ff2314",
+              "name": "Delete User",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "scim",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{configapi-v2-scim-users-id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6069bb8-16a8-4833-b2db-d4c97ef3d52a",
+          "name": "Update User (updates only the properties indicated in the specified set)",
+          "request": {
+            "name": "Update User (updates only the properties indicated in the specified set)",
+            "description": {
+              "content": "Updates attributes of an existing user. Note that in accordance with RFC7644, the PATCH method modifies a user with a set of client-specified changes (partial update).\n\nNote also that in order for usernames to be changed, service providers must allow this feature for your contact center. For more information, see the Contact Center Administrator Guide, section Users.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "scim",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{configapi-v2-scim-users-id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/scim+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "12dbc6ea-c7fd-4ddd-b515-797614a29585",
+              "name": "Update User (updates only the properties indicated in the specified set)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "scim",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{configapi-v2-scim-users-id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/scim+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"urn:ietf:params:scim:api:messages:2.0:PatchOp\"\n  ],\n  \"Operations\": [\n    {\n      \"op\": \"replace\",\n      \"path\": \"active\",\n      \"value\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/scim+json"
+                }
+              ],
+              "body": "{\n  \"schemas\": [\n    \"urn:ietf:params:scim:schemas:core:2.0:User\"\n  ],\n  \"id\": \"6BE15F09-BF39-4E20-AB31-A9355CBC01FC\",\n  \"meta\": {\n    \"resourceType\": \"USER\",\n    \"lastModified\": \"2022-04-01T01:07:15\",\n    \"location\": \"http://alexei-maintenance.pl.bugfocus.com/configapi/v2/scim/users/6BE15F09-BF39-4E20-AB31-A9355CBC01FC\"\n  },\n  \"userName\": \"carlos.clapper\",\n  \"name\": {\n    \"familyName\": \"Clapper\",\n    \"givenName\": \"Carlos\"\n  },\n  \"timezone\": \"America/Los_Angeles\",\n  \"active\": false,\n  \"emails\": [\n    {\n      \"value\": \"carlos.clapper@servicepattern.sb.office\",\n      \"primary\": true\n    }\n  ],\n  \"phoneNumbers\": [\n    {\n      \"type\": \"extension\",\n      \"value\": \"2025\"\n    }\n  ],\n  \"addresses\": [],\n  \"roles\": [\n    {\n      \"value\": \"System Administrator\"\n    },\n    {\n      \"value\": \"Agent\"\n    }\n  ],\n  \"groups\": [\n    {\n      \"value\": \"84FB1AD4-1B27-4CFA-A1E0-B8A972F3EFA7\",\n      \"display\": \"CSIM Support\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "baseUrl"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v2-user-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v2-user-username-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v2-user-lock-username-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v2-team-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v2-scim-users-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v2-scim-users-id-Url"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ddec553d-6a02-4832-8689-a989fa983144",
+    "name": "Bright Pattern Users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Operations tagged Users across 2 of this provider's published API definitions: bright-pattern-configuration-openapi.yml, bright-pattern-scim-user-provisioning-openapi.yml. Each path carries the servers of the definition it was published in.\n\nContact Support:\n Name: Bright Pattern",
+      "type": "text/plain"
+    }
+  }
+}

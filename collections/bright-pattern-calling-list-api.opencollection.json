@@ -1,0 +1,248 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BPCC List Management API v2.0 Calling List API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Calling List",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add Many Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/callinglist/addAll/:list_name",
+            "params": [
+              {
+                "name": "list_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method adds multiple new records to the specified calling list. It returns an error if a record with the same values of unique keys as configured in the list definition already exists. \n\nNotes:\n\nField names are provided as they were defined during list creation.\n\nKey fields and required fields are mandatory.\n\nlist_name is the name of the calling list (e.g., list.csv).\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess (may be partial success; additional problem description contained in response"
+        },
+        {
+          "info": {
+            "name": "Add Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/callinglist/add/:list_name",
+            "params": [
+              {
+                "name": "list_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method adds a single new record to the specified calling list. It returns an error if a record with the same values of unique keys as configured in the list definition already exists.\n\nNotes:\n\nField names are provided as they were defined during list creation.\n\nKey fields and required fields are mandatory.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess (response body is empty)\n\n400\nBad request (missing required fields or format not understood)\n\n401\nAuthentication failed\n\n403\nUser authentica"
+        },
+        {
+          "info": {
+            "name": "Delete All Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/callinglist/deleteAll/:list_name",
+            "params": [
+              {
+                "name": "list_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method deletes all records from the calling list. List results are also deleted. It returns OK if the list exists but is empty already. Note that this method erases calling list results and it will do so regardless of whether the results have been exported or not.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (missing required fields or format not understood)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges, or modification of this"
+        },
+        {
+          "info": {
+            "name": "Get All Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/callinglist/getAll/:list_name/:campaign_name",
+            "params": [
+              {
+                "name": "list_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "campaign_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Calling list records are sequentially numbered in order of insertion, beginning from zero. This method returns a list of records in the calling list that has an index that is greater than or to equal to the requested record index.\n\nInput parameters are \"initial record index\" and \"maximum size of returned list.\" Current implementation limits \"maxSize\" to 1000 records. All time values are returned in UTC.\n\nNotes:\n\nThe returned list contains JSON objects sorted by index.\n\nThe “entry” field of these"
+        },
+        {
+          "info": {
+            "name": "Get Completed Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/callinglist/getCompleted/:list_name/:campaign_name",
+            "params": [
+              {
+                "name": "list_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "campaign_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a list of completed records in the calling list that have a completion time that is greater than or equal to the requested initial time (UTC). Input parameters are the initial time in ISO format and the maximum size of the returned list. Current implementation limits \"maxSize\" to 1000 records. All time values are returned in UTC.\n\nNotes:\n\nThe returned list contains JSON objects sorted by completion time.\n\nThe “entry” field of these objects contains a copy of the list entry.\n\n"
+        },
+        {
+          "info": {
+            "name": "Get Updated Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/callinglist/getChanged/:list_name/:campaign_name",
+            "params": [
+              {
+                "name": "list_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "campaign_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns records of the specified calling list that have had any activity within the specified campaign since the requested initial time."
+        },
+        {
+          "info": {
+            "name": "Query a Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/callinglist/get/:list_name/:campaignname",
+            "params": [
+              {
+                "name": "list_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "campaignname",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method queries the status of an existing record in the specified calling list in the specified campaign. It returns an error if a record with the same values of unique keys as configured in the list definition does not exist. All time values are returned in UTC.\n\nNotes:\n\nCampaign name is optional but has to be present.\n\nUse any string value instead.\n\nThe request can contain either a full or partial set of fields for the object, but the key fields are mandatory.\n\nOnly key fields are used for"
+        },
+        {
+          "info": {
+            "name": "Update Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/callinglist/update/:list_name",
+            "params": [
+              {
+                "name": "list_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method updates fields in an existing record in the specified calling list. It returns an error if a record with the same values of unique keys as configured in the list definition does not exist. The unique keys cannot be changed.\n\nNote: Updating a list record requires internal reprocessing of the entire calling list. Thus, if this method is applied to a list within a running campaign, the use of this list within the given campaign will be suspended until list reprocessing is complete. The "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

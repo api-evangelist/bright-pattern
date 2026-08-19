@@ -1,0 +1,719 @@
+{
+  "item": [
+    {
+      "id": "9923abf8-17d7-45c2-93f7-5581d03396c2",
+      "name": "Task Routing",
+      "description": {
+        "content": "The following methods allow tasks within Bright Pattern Contact Center to be queued, canceled, updated, and queried.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ed64e88e-084c-4878-b932-30a9d36cab68",
+          "name": "Queue Task",
+          "request": {
+            "name": "Queue Task",
+            "description": {
+              "content": "Queue a task and associate it with a case and contact.\n\nOptionally, you may provide external IDs to associate with the task, case, or contact to prevent duplicates. When external IDs are provided:\n\nBPCC checks for existing records linked with the provided External IDs for the task, case, or contact.\n\nIf a match is found for an External ID, the corresponding existing record in BPCC is used.\n\nIf no match is found for an External ID, a new record (task, case, or contact) is created in BPCC and associated with that External ID.\n\nFinally, the task (whether found or newly created) is linked to the case and contact entities (whether found or newly created) and queued in the indicated service.\n\nRequest Body\n\nProperty\nDescription\n\nextTaskId\nUnique identifier from an external system such as a CRM or database.  \n- If an existing task in BPCC is already linked with extTaskId, any data in taskInfo, caseInfo and contactInfo are ignored, and the linked task is queued.  \n- If a task linked with extTaskId does not exist in BPCC, a new task will be created with data from taskInfo and linked with the provided extTaskId.  \n- If no extTaskId is provided, a new task will be created and queued with data from taskInfo.  \nOptional.\n\nextCaseId\nUnique identifier from an external system such as a CRM or database.  \n- If an existing case in BPCC is linked with extCaseId, the case is associated with the queued task and any data in caseInfo and contactInfo are ignored.  \n- If a case linked to extCaseId does not exist, a new case is created with data from taskInfo, linked to extCaseId, and associated with the queued task.  \n- If no extCaseId is provided, a new case is created with data from taskInfo and associated with the queued task.  \nOptional.\n\nextContactId\nUnique identifier from an external system such as a CRM or database.  \n- If an existing BPCC contact is linked with extContactId, the contact is associated with the queued task's case, and contactInfo is ignored.  \n- If a contact linked with extContactId does not exist, a BPCC contact is created with data from contactInfo, linked with extContactId, and associated with the queued task's case,.  \n- If no extContactId is provided, a contact is created with data from contactInfo and associated with the queued task's case.  \nOptional.\n\nserviceName\nName of the Service where the task will be queued. Overrides the service specified by the scenario entry indicated by taskLaunchPointId.  \n- Optional if taskLaunchPointId is provided.  \n- Required if taskLaunchPointId is omitted\n\nscreenpop\nThe CRM screen pop URL or regular web URL screen pop to associated with the task. Example formats: SHOW_OBJECT:5551212:task or https://brightpattern.com  \nCRM screen pops can only be displayed to agents using the BPCC widget in a CRM. To configure multiple screen pops, use the screenpopData property.  \nOptional.\n\nscreenpopData\nArray of screenpopData objects.  \n- Multiple web URL screen pops can be displayed if the agent is using the Agent Desktop.  \n- A CRM screen pop will only be displayed to an agent using the Agent Desktop widget embedded in the corresponding CRM application.  \n- Only a single CRM screen pop can be displayed to an agent. If multiple CRM screen pops of a single type appear in the array, the last one will be used.  \nAvailable properties are described below.  \nOptional\n\nwebScreenpopShowInTab\nBoolean specifying if a web URL screenpop should be opened in a new browser tab. Default is false.  \n- When true the screenpop is opened in a new tab.  \n- When false the screenpop is opened in the Agent Desktop.  \n- Must be true in order to display a web URL screenpop to an agent using the BPCC widget in a CRM. If false, the screenpop can not be displayed  \n- Ignored if screenpop is a CRM screenpop URL.  \nOptional.\n\nscreenpopShowUponAnswer\nBoolean specifying if web screenpop should be opened when the agent accepts the task. Default value is false  \n- When true, the screenpop will be displayed after the user answers (accepts) the task.  \n- When false, the screenpop will display immediately as the task is assigned to an agent.  \nThe value of screenpopShowUponAnswer sets the flag popUponAnswer to the Agent Desktop Client-Side JavaScript callback onWebScreenPopCustom.  \nOptional.\n\npriority\nTask priority expressed as a number between 0.01 and 100, inclusive. A higher value will cause a task to move through the queue faster than tasks with a lower value, following the logic of Priority Value in the Set Priority scenario block.  \nIf provided, overrides the priority defined by the Scenario Entry indicated by taskLaunchPointId.  \nIf both priority and taskLaunchPointId are omitted, default value is 1  \nOptional.\n\norder\nQueue order of the task. Default is fifo.  \n- fifo indicates 'First in, first out', meaning that the task will be assigned to an agent before any subsequently-queued tasks are assigned.  \n- lifo indicates 'Last in, first out', meaning that the task will be assigned to an agent only after all previously-queued tasks are assigned. The priority value will be ignored for tasks with lifo ordering.  \nOptional.\n\ncontactInfo\nUsed to create a contact. Required if extContactId is not provided or if no internal contact is associated with the provided extContactId. Available properties are listed below.  \nOptional.\n\ncaseInfo\nUsed to create a case. Required if extCaseId is not provided or if no internal case is linked with extCaseId. Available properties are listed below.  \nOptional.\n\ntaskInfo\nUsed to create a task. Required if extTaskId is not provided, or if no task is linked with extTaskId. Available properties are listed below.  \nOptional.\n\ntaskLaunchPointId\nIndicate the Unique Identifier of the Task Scenario Entry that should be used when queuing the task.  \nTask Scenario Entries provide a default Service with which to associate the task, and may define a default Priority.  \n- The default Service defined by the Scenario Entry can be overridden by indicating a different Service with the s…",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taskroutingapi",
+                "v1",
+                "task"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "32e8f457-223e-48de-bd14-12418d3c176e",
+              "name": "Queue Task",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taskroutingapi",
+                    "v1",
+                    "task"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"extTaskId\": \"task_id_12345_external_crm\",\n  \"extCaseId\": \"case_id_67890_external_crm\",\n  \"extContactId\": \"contact_id_6789_external_crm\",\n  \"serviceName\": \"Task Service\",\n  \"screenpop\": \"SHOW_OBJECT:192837465:task\",\n  \"screenpopData\": [\n    {\n      \"type\": \"web\",\n      \"url\": \"https://www.brightpattern.com\",\n      \"label\": \"The Title\",\n      \"webScreenpopShowInTab\": true\n    },\n    {\n      \"type\": \"web\",\n      \"url\": \"https://www.someotherurl.com\",\n      \"label\": \"A different title that doesn't matter, since it's not opened in a tab\",\n      \"webScreenpopShowInTab\": false\n    },\n    {\n      \"type\": \"dynamicscrm\",\n      \"url\": \"SHOW_OBJECT:5551212:task\",\n      \"screenpopShowUponAnswer\": true\n    }\n  ],\n  \"webScreenpopShowInTab\": true,\n  \"screenpopShowUponAnswer\": false,\n  \"priority\": 2,\n  \"taskLaunchPointId\": \"952e8dc2e0469c349cb9c02c9b31f9150b7afd7a\",\n  \"order\": \"fifo\",\n  \"contactInfo\": {\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"title\": \"Senior Manager\",\n    \"position\": \"Head of Engineering\",\n    \"summary\": \"Experienced leader in software development.\",\n    \"segment\": \"High Value Customer\",\n    \"dob\": \"1980-05-10T00:00:00.000Z\",\n    \"emails\": [\n      {\n        \"type\": \"PRIMARY\",\n        \"address\": \"john.doe@example.com\"\n      },\n      {\n        \"type\": \"BUSINESS\",\n        \"address\": \"john.doe.business@example.com\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"type\": \"PRIMARY\",\n        \"postcode\": \"90210\",\n        \"state\": \"CA\",\n        \"city\": \"Beverly Hills\",\n        \"addressLine1\": \"123 Main Street\",\n        \"addressLine2\": \"Suite 456\",\n        \"country\": \"USA\"\n      }\n    ],\n    \"custom_signup_source\": \"Website\"\n  },\n  \"caseInfo\": {\n    \"category\": \"Technical Support\",\n    \"priority\": 1,\n    \"custom_related_knowledge_base_article\": \"KB-12345\"\n  },\n  \"taskInfo\": {\n    \"subject\": \"Follow up on customer issue\",\n    \"custom_task_notes\": \"Offer a reduced subscription price if customer is not satisfied by the resolution.\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"taskId\": \"66bb3a68bf36507742b4c612\",\n  \"caseId\": \"66bb3a68bf36507742b4c611\",\n  \"contactId\": \"66bb3a68bf36507742b4c610\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a3028d3-5c06-461c-822e-d2eca24bed99",
+          "name": "Cancel Task",
+          "request": {
+            "name": "Cancel Task",
+            "description": {
+              "content": "Removes the queued task specified by the taskId path variable from the queue and sets its disposition to dispositionName. Canceling a task is possible only while the task is still in the service queue or an agent's personal queue.\n\nUse the external query parameter to specify whether taskId is an internal or external identifier.\n\nRequest Body\n\nParameter\nDescription\n\nnote\nAn optional note to be added to the task as it is canceled, providing context for the action.\n\ndispositionName\nThe name of the disposition to be applied to the canceled task, indicating the outcome or reason for closure. Default is Abandoned\n\nResponse Body Parameters\n\nNone",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taskroutingapi",
+                "v1",
+                "task",
+                ":taskid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "external",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taskid",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ab007de9-e5fc-4988-9872-0795b88fb859",
+              "name": "Cancel Task",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taskroutingapi",
+                    "v1",
+                    "task",
+                    ":taskid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "external",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskid",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"note\": \"Cancelled per user request\",\n  \"dispositionName\": \"Abandoned\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "10991caa-c818-45d1-90bb-5874bf572e75",
+          "name": "Update Task",
+          "request": {
+            "name": "Update Task",
+            "description": {
+              "content": "Modify the priority or associated service of the queued task specified by the taskID path variable.\n\nUse the external query parameter to specify whether taskId is an internal or external identifier.\n\nRequest Body\n\nParameter\nDescription\n\nserviceName\nThe name of the service to which the task should be moved. If different from the current service, the task will be re-queued to the new service.\n\npriority\nThe new priority for the task. This only applies to tasks being routed using the lifo order.\n\nBody Parameters\n\nNone",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taskroutingapi",
+                "v1",
+                "task",
+                ":taskid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "external",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taskid",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ace0f8cb-1f28-4671-a277-d810afef1774",
+              "name": "Update Task",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taskroutingapi",
+                    "v1",
+                    "task",
+                    ":taskid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "external",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskid",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"priority\": 100,\n  \"serviceName\": \"New service\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc38d9ae-1f3a-4da5-bc2a-0b0f2d109ff5",
+          "name": "Query Task",
+          "request": {
+            "name": "Query Task",
+            "description": {
+              "content": "Retrieves information about the task specified by the taskId path variable.\n\nUse the external query parameter to specify whether taskId is an internal or external identifier.\n\nRequest Body\n\nNone\n\nResponse Body\n\nParameter\nDescription\n\ntaskStatus\nTask's current status (CREATED, QUEUED, DEFERRED, COMPLETED).\n\nserviceName\nName of the service with which the task is associated.\n\npriority\nTask queue priority.\n\norder\nTask queue order (FIFO/LIFO).\n\ndispositionName\nDisposition name for completed tasks. Empty if task is still queued.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taskroutingapi",
+                "v1",
+                "task",
+                ":taskid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "external",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taskid",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "258bee70-98b0-4c64-872b-37ffa31c8c8c",
+              "name": "Query Task",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taskroutingapi",
+                    "v1",
+                    "task",
+                    ":taskid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "external",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskid",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"taskStatus\": \"DEFERRED\",\n  \"priority\": 5,\n  \"serviceName\": \"New Task Processing Service\",\n  \"order\": \"fifo\",\n  \"dispositionName\": \"Abandoned\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dfc7a787-d75d-4bfb-97b8-81df795f4e69",
+          "name": "Cancel Service Tasks",
+          "request": {
+            "name": "Cancel Service Tasks",
+            "description": {
+              "content": "Cancel all currently queued tasks associated with the service specified by serviceName. The disposition designated by dispositionName and the note specified by note is applied to each canceled task.\n\nRequest Body\n\nParameter\nDescription\n\nserviceName\nThe name of the service for which all associated queued tasks should be canceled.\n\nnote\nAn optional note to be added to each task as it is canceled.\n\ndispositionName\nThe name of the disposition to apply to each canceled tasks.\n\nResponse Body\n\nParameter\nDescription\n\ncount\nThe count of tasks canceled by the operation.\n\ntaskIds\nArray of objects indicating the extTaskId and taskId of each canceled task.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taskroutingapi",
+                "v1",
+                "service"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ac30187b-4d50-4602-9dcd-b625684e8ef9",
+              "name": "Cancel Service Tasks",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taskroutingapi",
+                    "v1",
+                    "service"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"note\": \"This service is no longer being offered.\",\n  \"serviceName\": \"Example Service\",\n  \"dispositionName\": \"Abandoned\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 2,\n  \"taskIds\": [\n    {\n      \"extTaskId\": \"12345\",\n      \"taskId\": \"5432321\"\n    },\n    {\n      \"extTaskId\": \"12346\",\n      \"taskId\": \"5432322\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cccbdb68-d2f3-4bea-8a1c-1550e13243f7",
+    "name": "BPCC Task Routing API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Bright Pattern Contact Center (BPCC) Task Routing API v1 is a RESTful API that enables external systems (such as CRMs) to create, route, modify, cancel, and query tasks in BPCC.\n\nFeatures\n\nThe Task Routing API v1 supports the following:\n\nQueue Task: Create and queue a new task, associating it with a case and a contact.\n\nCancel Task: Remove a specific task from the queue and set its disposition.\n\nCancel Service Tasks: Cancel all queued tasks associated with a particular service.\n\nUpdate Task: Modify attributes of a queued task, such as its service or priority.\n\nQuery Task: Retrieve the status and queue information for a specific task.\n\nSupport for external identifiers: Entities can be referenced using either internal (automatically generated by BPCC) or external (user provided) identifiers.\n\nEntities\n\nThis API interacts with the following core objects within Bright Pattern Contact Center:\n\nTask: A discrete unit of work representing a specific action or activity to be completed by an agent. Tasks are always associated with a case and contact. When a task is queued, it may be associated with an external identifier. Existing tasks may be canceled, updated, and queried by their internal or external identifiers.\n\nCase: A grouping of communications and information related to a specific customer request. Cases are always associated with a contact. When a case is created via API, it may be linked with an external identifier. When a task is queued, an existing case may be associated with the task using the case's external identifier.\n\nContact: A customer or individual involved in interactions. When a contact is created via API, it may be linked with an external identifier. When a task is queued, a contact can be associated with the task using the contact's external identifier.\n\nEndpoint Prefix\n\nThe Task Routing API v1 endpoint prefix is as follows:\n\nhttps://<tenant_url>/taskroutingapi/v1/\n\nAudience\n\nThis documentation is intended for IT personnel and developers responsible for integrating external systems with Bright Pattern Contact Center. Readers should have some familiarity of REST APIs, JSON data structures, and contact center concepts like services, queues, and dispositions. Experience with scripting or programming is recommended for implementing integrations using this API.\n\nUsage\n\nThis documentation includes examples for each API method. These examples can serve as a starting point for developing your integrations. You can load these API descriptions into the Postman API Development Environment to interact with the API using your own access tokens.\n\nTask Routing requests and responses may carry a JSON-encoded body of type application/json. Successful response bodies differ by method. Failed responses return the following:\n\n{\n\"errorCode\": [integer number],\n\"errorMessage\": \"[string with error description]\"\n}\n\nAuthorization\n\nUsers must be granted the Use Task Routing API privilege in order to use the following API methods. Administrators can grant this privilege in the Contact Center under Roles > Service and Campaign Administration\n\nFor more information, refer to the Administration Configuration Guide.\n\nContact Support:\n Name: Bright Pattern",
+      "type": "text/plain"
+    }
+  }
+}

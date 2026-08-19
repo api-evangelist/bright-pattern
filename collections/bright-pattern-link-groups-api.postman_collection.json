@@ -1,0 +1,538 @@
+{
+  "item": [
+    {
+      "id": "40e49f0a-a07b-409b-9f3c-9b91c6906f09",
+      "name": "Link Groups",
+      "description": {
+        "content": "Bright Pattern's List Management API provides the ability to manage Link Groups so several campaigns can be linked together. When processing all records of one campaign is finished, the next campaign in the group will be started automatically. Additionally, see the Link a Campaign and Unlink a Campaign methods descriptions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dbb3f94d-cf4e-4ed1-b07d-759a27e3a183",
+          "name": "Get Link Groups",
+          "request": {
+            "name": "Get Link Groups",
+            "description": {
+              "content": "This method returns all Campaign Link Groups, sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlimit\ninteger, ≤ 100\nyes (specifies the maximum size of the returned list)\n1...100\n\ncursor\nstring\nno (used for pagination)\nFirst request: null  \nSubsequent request: value received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; limit exceeded; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaignlinkgroup",
+                "getAll"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "411bb676-da87-411f-8ca4-fd1ec8278e4b",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaignlinkgroup",
+                    "getAll"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 100,\n  \"cursor\": \"590e9abd4abbf1165862d342\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"6D7C2A7E-7E7A-4D43-9F6D-AB7D6F2B1F1E\",\n    \"name\": \"New\",\n    \"campaignsCount\": 2\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "558a27a9-f33e-4cf3-b162-da1e4223157e",
+          "name": "Get Link Group",
+          "request": {
+            "name": "Get Link Group",
+            "description": {
+              "content": "This method returns the information about a link group, including its name and amount of linked campaigns.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (wrong cursor; format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Link Group was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaignlinkgroup",
+                "getLinkGroup",
+                ":group_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "group_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f24d2a3d-c59b-4475-a0cf-d2db5d82b0c5",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaignlinkgroup",
+                    "getLinkGroup",
+                    ":group_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"New\",\n  \"campaigns\": [\n    {\n      \"campaignId\": \"85389D39-E05C-4CE7-B36D-4401BEA52E14\",\n      \"name\": \"Campaign 1\",\n      \"order\": 0\n    },\n    {\n      \"campaignId\": \"48B91DC5-A8CD-4FCA-9AF8-EC20A4ACC14B\",\n      \"name\": \"Campaign 2\",\n      \"order\": 1\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "20347245-e334-4ba7-b445-021085ac7f6f",
+          "name": "Create Link Group",
+          "request": {
+            "name": "Create Link Group",
+            "description": {
+              "content": "This method creates a new empty link group.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring\nyes\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Format was not found;  \nInvalid URL\n\n409\nDuplicate name error",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaignlinkgroup",
+                "createLinkGroup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8957c6d7-9fe0-4fe8-b501-227d922d935d",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaignlinkgroup",
+                    "createLinkGroup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"6D7C2A7E-7E7A-4D43-9F6D-AB7D6F2B1F1E\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e3a852bd-abd8-4ff9-994b-2f7c7a5074db",
+          "name": "Delete Link Group",
+          "request": {
+            "name": "Delete Link Group",
+            "description": {
+              "content": "This method deletes an empty link group.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Link Group was not found;  \nInvalid URL\n\n409\nSpecified Link Group is not empty",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaignlinkgroup",
+                "deleteLinkGroup",
+                ":group_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "group_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "59330725-41a8-46bc-8fbf-5644654e4a8f",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaignlinkgroup",
+                    "deleteLinkGroup",
+                    ":group_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "09ff72d3-0341-4271-bd11-33178cc5a373",
+    "name": "BPCC List Management API v3.2 Link Groups API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Overview\n\nBright Pattern's List Management API supports a wide range of functionalities previously only accessible within the Contact Center Administrator application. Version 3.2 delivers expanded list and campaign management functionality, introducing comprehensive API support for Do Not Call (DNC) lists and improved methods for accessing Calling List records.\n\nBright Pattern's List Management API 3.2 enables you to:\n\nManage outbound campaigns, including their DNC list (new*) and calling list associations\n\nUpdate outbound campaign states, access their information, and view their results\n\nCreate new lists and new formats\n\nView and update (new*) calling list properties\n\nManage calling list and DNC list records individually or in bulk\n\nRetrieve the contents of Calling Lists not associated with campaigns (new*)\n\nCreate, retrieve, update, and delete DNC lists (new*)\n\nNote: To ensure compatibility with the last API version and facilitate seamless migration, all previously available methods are retained as is. However, methods with a \"DEPRECIATED\" tag in their name are not recommended for usage and have new corresponding methods defined for their respective functionalities.\n\nThis document describes the available REST API methods, specifies their functionality, and provides example requests and responses. Individual methods, as well as the entire List Management API 3.1 collection, can be loaded into Postman and interacted with via your unique Bright Pattern Contact Center access token.\n\nnew* - added since List API 3.0\n\nContact Support:\n Name: Bright Pattern",
+      "type": "text/plain"
+    }
+  }
+}

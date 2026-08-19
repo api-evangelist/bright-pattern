@@ -1,0 +1,163 @@
+openapi: 3.2.0
+info:
+  title: BPCC Configuration Phones API
+  version: 1.0.0
+  description: 'With the Bright Pattern Contact Center (BPCC) Configuraiton API you currently can:
+
+
+    Create, update and delete your contact center users.
+
+
+    Assign and change agent skills and update skill levels.
+
+
+    Unlock a user account that may have been locked according to the security policy.
+
+
+    Get a list of all existing users with their internal and external (DID) phone numbers.
+
+
+    Get a list of all existing extenal numbers with thier current assignments (DID, routing points, etc.)
+
+
+    This document specifies the corresponding REST API methods, with example requests and responses. You can load this API into the Postman API Development Environment to interact with the API with your own access tokens.
+
+
+    Notes
+
+
+    Either HTTP or HTTPS transport can be configured. The same setting applies to the entire Configuration Web Portal server. For production deployments on public Internet only, HTTPS is enabled.'
+  contact:
+    name: Bright Pattern
+    url: https://www.brightpattern.com/contact/
+  x-origin:
+  - format: postman
+    url: https://documenter.getpostman.com/view/6711197/S1EUtanN
+    version: '2.1'
+  x-evidence:
+    fetched: '2026-08-08'
+    source: https://documenter.gw.postman.com/api/collections/6711197/S1EUtanN?segregateAuth=true&versionTag=latest
+    http_status: 200
+    method: derived-from-published-postman-collection
+    note: Mechanically converted from the Postman collection Bright Pattern publishes as its public API reference. No operations, paths, parameters or examples were invented.
+servers:
+- url: https://{tenant_url}
+  description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+  variables:
+    tenant_url:
+      default: example.brightpattern.com
+      description: Your Bright Pattern Contact Center tenant hostname.
+security:
+- bearerAuth: []
+tags:
+- name: Phones
+  description: 'With the https://:tenant/configapi/v2/phone endpoint you can:
+
+
+    Get a list of all contact center users with their extensions and DID numbers
+
+
+    Get a list of all access numbers with thier current assignments (assigned users for DIDs and assigned scenarios for routing points)'
+paths:
+  /configapi/v2/phone/user:
+    get:
+      operationId: getDirectory
+      summary: Get Directory
+      description: Returns list of users with thier extensions and assigned external (DID) numbers.
+      tags:
+      - Phones
+      responses:
+        '200':
+          description: Get Directory
+          content:
+            application/json:
+              example:
+              - extension: '1000'
+                loginId: user
+                firstName: User
+                lastName: Lastname
+                external: '16505555555'
+                voiceMail: true
+                greeting: false
+              - extension: '1001'
+                loginId: navarro
+                firstName: Jose
+                lastName: Navarro
+                voiceMail: false
+                greeting: false
+              - extension: '1002'
+                loginId: wandabui
+                firstName: Wanda
+                lastName: Bui
+                voiceMail: false
+                greeting: false
+              - extension: '1004'
+                loginId: dale.turner
+                firstName: Dale
+                lastName: Turner
+                voiceMail: false
+                greeting: false
+              - extension: '1005'
+                loginId: edna.partee
+                firstName: Edna
+                lastName: Partee
+                voiceMail: false
+                greeting: false
+              - extension: '1006'
+                loginId: eric.chen
+                firstName: Eric
+                lastName: Chen
+                voiceMail: false
+                greeting: false
+              - extension: '1007'
+                loginId: admin
+                firstName: API
+                lastName: User
+                voiceMail: false
+                greeting: false
+              - extension: '2004'
+                loginId: testuser004
+                firstName: Test
+                lastName: User004
+                voiceMail: false
+                greeting: false
+              - extension: '2005'
+                loginId: testuser005
+                firstName: Test
+                lastName: User005
+                voiceMail: false
+                greeting: false
+      security:
+      - bearerAuth: []
+  /configapi/v2/phone/ext:
+    get:
+      operationId: getAccessNumbers
+      summary: Get Access Numbers
+      description: Returns a list of access numbers with current assignments.
+      tags:
+      - Phones
+      responses:
+        '200':
+          description: Get Access Numbers
+          content:
+            application/json:
+              example:
+              - number: '16505555555'
+                media: voice_text
+                type: scenario
+                scenario: Main Inbound
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as `Authorization: Bearer <token>`.'
+    oauth2ClientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client-credentials grant against the Bright Pattern tenant token endpoint.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant_url}/configapi/v2/oauth/token
+          scopes: {}

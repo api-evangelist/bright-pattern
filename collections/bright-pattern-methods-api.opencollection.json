@@ -1,0 +1,988 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bright Pattern Methods API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Methods",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check Availability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v1/availability",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the availability status of the configured hours of operation of the associated Messaging/Chat scenario entry. Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value. Note that the API does not check if there are any agents actually logged in.\n\nStatus Meanings\n\nStatus Name\nDescription\n\navailable\nThe requested service is available.\n\nnotAvailable\nThe office providing the requested "
+        },
+        {
+          "info": {
+            "name": "Expected Parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v1/parameters",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns an array of expected parameters. The parameters are optional. They may be used, for example, to look for the most qualified agents to handle the requested chat sessions and/or to display user information for the agents. These parameters are initially specified for the Messaging/Chat scenario entry through which this mobile application will communicate with the contact center.\n\nCurrently, the following parameter types are supported:\n\nPHONE\n\nTEXT\n\nEMAIL\n\nFIRST_NAME\n\nLAST_NAME\n\n"
+        },
+        {
+          "info": {
+            "name": "Request Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/clientweb/api/v1/chats",
+            "headers": [
+              {
+                "name": "Content",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method initiates a chat session. It provides values of all or some of the expected parameters, and it may also contain the phone number of the mobile device. Depending on the scenario entry configuration, a callback can be initiated automatically to the specified number as soon as the chat request is delivered to the agent.\n\nNotes:\n\nThe Request Chat method may return the ID and parameters of an existing chat session if there are any currently existing chat sessions associated with this spec"
+        },
+        {
+          "info": {
+            "name": "Get Active Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v1/chats/active",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the properties of an active chat session. Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value.\n\nReturns\n\nCode\nDescription\n\n200\nChat session properties (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found"
+        },
+        {
+          "info": {
+            "name": "Get New Chat Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v1/chats/:chatId/events",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns new chat events for the current session. If there are no new events, the server can keep the request active during a timeout (i.e., for about 5–15 seconds). If the client sends another request to get new events while the previous request is kept active, the server will respond with error 400 (Bad request).\n\nReturns\n\nCode\nDescription\n\n200\nArray of chat events (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n400\nBad request\n\n403\nForbidden\n\n404\nNot found"
+        },
+        {
+          "info": {
+            "name": "Send Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/clientweb/api/v1/chats/:chatId/events",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method sends events from the client to the server side.\n\nReturns\n\nCode\nDescription\n\n200\nArray of new chat events from the server side (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found"
+        },
+        {
+          "info": {
+            "name": "Get Chat History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v1/chats/:chatId/history",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns all client events and all server events for the current session. Multiple event objects can be returned; each event's timestamp attribute can be used to restore the correct message order.\n\nReturns\n\nCode\nDescription\n\n200\nArray of chat events (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found"
+        },
+        {
+          "info": {
+            "name": "Upload File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/clientweb/api/v1/files",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method uploads a file to the server. The maximum file size is 25 MB. The server will store up to 1000 files. Newly received files will replace the oldest files. This method can be used, for example, to send pictures from the client mobile application to the contact center agents.\n\nReturns\n\nCode\nDescription\n\n200\nFile ID to be used in the chat_session_file message (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden"
+        },
+        {
+          "info": {
+            "name": "Get File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v1/chats/:chatId/files/:fileId",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method downloads a file from the server using the received file ID. See server event Chat Session File.\n\nReturns\n\nCode\nDescription\n\n200\nFile content type\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found"
+        },
+        {
+          "info": {
+            "name": "Get Agent Profile Photo",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v1/chats/:chatId/profilephotos/:partyId",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "partyId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method downloads a profile photo of the specified agent.\n\nRequest Body\n\nThe request body is the party ID of the agent participating in the current chat session.\n\nNote: The party ID is provided with the chat event (polled at https://{host:port}/clientweb/api/v1/chats/{chatId}/events?tenantUrl={tenantUrl}). For example, you can see party_ID in the event message for chat_session_party_joined.\n\nReturns\n\nCode\nDescription\n\n200\nFile content type\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot fo"
+        },
+        {
+          "info": {
+            "name": "Get ICE servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v1/iceservers",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a list of configured ICE servers to provide to the browser so that an audio-visual session could be added to the chat.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess: JSON response with information of ICE servers\n\nErrors\n\nCode\nDescription\n\n403\nForbidden"
+        },
+        {
+          "info": {
+            "name": "Get Chat Widget Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v1/configuration",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the chat widget configuration for the launch point.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess: JSON response with information of ICE servers\n\nErrors\n\nCode\nDescription\n\n403\nForbidden"
+        },
+        {
+          "info": {
+            "name": "Check Availability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v2/availability",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the availability status of the configured hours of operation of the associated Messaging/Chat scenario entry. Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value. Note that the API does not check if there are any agents actually logged in.\n\nStatus Meanings\n\nStatus Name\nDescription\n\navailable\nThe requested service is available.\n\nnotAvailable\nThe office providing the requested "
+        },
+        {
+          "info": {
+            "name": "Expected Parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v2/parameters",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns an array of expected parameters. The parameters are optional. They may be used, for example, to look for the most qualified agents to handle the requested chat sessions and/or to display user information for the agents. These parameters are initially specified for the Messaging/Chat scenario entry through which this mobile application will communicate with the contact center.\n\nCurrently, the following parameter types are supported:\n\nPHONE\n\nTEXT\n\nEMAIL\n\nFIRST_NAME\n\nLAST_NAME\n\n"
+        },
+        {
+          "info": {
+            "name": "Request Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/clientweb/api/v2/chats",
+            "headers": [
+              {
+                "name": "Content",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method initiates a chat session. It provides values of all or some of the expected parameters, and it may also contain the phone number of the mobile device. Depending on the scenario entry configuration, a callback can be initiated automatically to the specified number as soon as the chat request is delivered to the agent.\n\nNotes:\n\nThe Request Chat method may return the ID and parameters of an existing chat session if there are any currently existing chat sessions associated with this spec"
+        },
+        {
+          "info": {
+            "name": "Mobile Notification Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/clientweb/api/v2/chats/:chatId/notifications",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method is a client application request for either subscribing to or canceling mobile notifications for a chat session.\n\nNotes\n\nThis method should be invoked after invoking the Request Chat method (i.e., the chatId value required for this method is returned in the Request Chat method).\n\nAdditionally, this method should be invoked when its device token is changed.\n\nThe client application may also opt to stop receiving mobile notifications by using this API method\nwith an empty JSON body: {}\n\n"
+        },
+        {
+          "info": {
+            "name": "Get Active Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v2/chats/active",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the properties of an active chat session. Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value.\n\nReturns\n\nCode\nDescription\n\n200\nChat session properties (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found"
+        },
+        {
+          "info": {
+            "name": "Get New Chat Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v2/chats/:chatId/events",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns new chat events for the current session. If there are no new events, the server can keep the request active during a timeout (i.e., for about 5–15 seconds). If the client sends another request to get new events while the previous request is kept active, the server will respond with error 400 (Bad request).\n\nReturns\n\nCode\nDescription\n\n200\nArray of chat events (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot Found\n\n429\nToo many requests"
+        },
+        {
+          "info": {
+            "name": "Send Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/clientweb/api/v2/chats/:chatId/events",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method sends events from the client to the server side.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess\n\nErrors\n\nCode\nDescription\n\n400\nBad Request\n\n403\nForbidden\n\n404\nNot Found"
+        },
+        {
+          "info": {
+            "name": "Get Chat History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v2/chats/:chatId/history",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns all client events and all server events for the current session. Multiple event objects can be returned; each event's timestamp attribute can be used to restore the correct message order.\n\nReturns\n\nCode\nDescription\n\n200\nArray of chat events (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found"
+        },
+        {
+          "info": {
+            "name": "Upload File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/clientweb/api/v2/files",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method uploads a file to the server. The maximum file size is 25 MB. The server will store up to 1000 files. Newly received files will replace the oldest files. This method can be used, for example, to send pictures from the client mobile application to the contact center agents.\n\nReturns\n\nCode\nDescription\n\n200\nFile ID to be used in the chat_session_file message (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n400\nBad Request\n\n403\nForbidden"
+        },
+        {
+          "info": {
+            "name": "Get File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v2/chats/:chatId/files/:fileId",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method downloads a file from the server using the received file ID. See server event Chat Session File.\n\nReturns\n\nCode\nDescription\n\n200\nFile content type\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found"
+        },
+        {
+          "info": {
+            "name": "Get Agent Profile Photo",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v2/chats/:chatId/profilephotos/:partyId",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "partyId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method downloads a profile photo of the specified agent.\n\nRequest Body\n\nThe request body is the party ID of the agent participating in the current chat session.\n\nNote: The party ID is provided with the chat event (polled at https://{host:port}/clientweb/api/v1/chats/{chatId}/events?tenantUrl={tenantUrl}). For example, you can see party_ID in the event message for chat_session_party_joined.\n\nReturns\n\nCode\nDescription\n\n200\nFile content type\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot fo"
+        },
+        {
+          "info": {
+            "name": "Get ICE servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v2/iceservers",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a list of configured ICE servers to provide to the browser so that an audio-visual session could be added to the chat.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess: JSON response with information of ICE servers\n\nErrors\n\nCode\nDescription\n\n403\nForbidden"
+        },
+        {
+          "info": {
+            "name": "Get Chat Widget Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v2/configuration",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the chat widget configuration for the launch point.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess: JSON response with information of ICE servers\n\nErrors\n\nCode\nDescription\n\n403\nForbidden"
+        },
+        {
+          "info": {
+            "name": "Get Case History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v2/casehistory",
+            "headers": [
+              {
+                "name": "User",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the combined transcripts of all chat sessions (i.e., the chat thread) linked to the specific CRM case object. Note that this request should be made only after the chat_session_case_set server event is received; if the scenario has not specified a case, the request will return an error.\n\nReturns\n\nCode\nDescription\n\n200\nSuccess: application/json\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found\n\n406\nNot acceptable: If the scenario did not specify a case"
+        },
+        {
+          "info": {
+            "name": "Close Case",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/clientweb/api/v2/closecase",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method invokes a client application request to close the case associated with the chat session. Note that this request should be made only after the chat_session_case_set server event is received; if the scenario has not specified a case, the request will return an error.\n\nReturns\n\nCode\nDescription\n\n200\nCase successfully closed\n\nErrors\n\nCode\nDescription\n\n403\nForbidden\n\n404\nNot found\n\n406\nNot acceptable: If scenario did not specify a case\n\n500\nServer error: Case is specified but cannot be cl"
+        },
+        {
+          "info": {
+            "name": "Get Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/clientweb/api/v2/version",
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenantUrl",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the Bright Pattern Contact Center software version of the server. It may be used for informational purposes (e.g., adding the version number to the bottom of an application window or in an informational dialog window, as well as seeing the server version in the client application logs). Note that this method is not available in the Mobile/Web Messaging API v1.\n\nReturns\n\nCode\nDescription\n\n200\nOK: success\n\nErrors\n\nCode\nDescription\n\n404\nNot found: For example, if the existing Mo"
+        },
+        {
+          "info": {
+            "name": "Create Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/statsapi/subscription",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method creates a subscription for a specific set of metrics. Each client can have only one active subscription.\n\nResponse Codes\n\nCode\nDescription\n\n200\nOK subscription was created\n\n400\nBad request\n\n401\nUnauthorized\n\n409\nLimit of active subscriptions exceeded for tenant"
+        },
+        {
+          "info": {
+            "name": "Get Subscription Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/statsapi/subscription/data",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method gets the statistics data of an active subscription.\n\nNote:\n\nYour user must be the supervisor of a team in order to retrieve agent_grid information.\n\nResponse Codes\n\nCode\nDescription\n\n200\nOK\n\n204\nNo content (data is not ready yet)\n\n401\nUnauthorized\n\n404\nBad request (there is no active subscription)"
+        },
+        {
+          "info": {
+            "name": "Delete Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant_url}/statsapi/subscription/active",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method deletes the active subscription, and clears the data cache on the server."
+        },
+        {
+          "info": {
+            "name": "Get Dispositions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/statsapi/cfg/dispositions",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method gets the disposition names for all supervised services.\n\nOptional URL Parameters\n\nagentCanSelect = 1\n\ninbound = 1\n\noutbound = 1\n\npreview = 1\n\nResponse Codes\n\nCode\nDescription\n\n200\nOK\n\n401\nUnauthorized"
+        },
+        {
+          "info": {
+            "name": "Get Available Agents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/statsapi/info/check_available_agents",
+            "params": [
+              {
+                "name": "service",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method gets either the \"true\" or the \"false\" value for agents ready to handle a specific service.\n\nNote:\n\nNo authentication or subscription is needed for this method.\n\nResponse\n\nCode\nDescription\n\n200\nOK\n\nTrue\n\"Number of ready agents\" > 0 for the specific service (i.e., at least one agent is available)\n\nFalse\n\"Number of ready agents\" is 0 for the specific service (i.e., no agent is available)"
+        },
+        {
+          "info": {
+            "name": "Get Teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/statsapi/cfg/teams",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the names and internal object IDs of teams configured for the given tenant.\n\nNote that in order to get the above information about a specific team, the account used for API authentication must be assigned as a supervisor to that team."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BPCC List Management API v2.0 Do Not Call List API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Do Not Call List",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add Records to DNC",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/donotcalllist/add/:do_not_call_list_name",
+            "params": [
+              {
+                "name": "do_not_call_list_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method adds new records to the specified Do Not Call (DNC) list and returns the number of added (i.e., appended) records. Duplicates are ignored.\n\nAn optional comment field value is inserted in the comment field of a geographic (postal) DNC record, campaign name field of an internal DNC record, and in the comment field of area codes DNC record. This method is supported for internal, geographic postal, area codes, and record exclusion DNC lists.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess"
+        },
+        {
+          "info": {
+            "name": "Replace Records in DNC",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/donotcalllist/replaceAll/:do_not_call_list_name",
+            "params": [
+              {
+                "name": "do_not_call_list_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The method replaces all records in the specified Do Not Call (DNC) list and returns the number of newly inserted records. Duplicates are ignored. An optional comment field value is inserted in the comment field of a geographic (postal) DNC record, campaign name field of an internal DNC record, and in the comment field of area codes DNC record. This method is supported for internal, geographic postal area codes, and accounts' DNC lists.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad requ"
+        },
+        {
+          "info": {
+            "name": "Delete All Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/donotcalllist/deleteAll/:do_not_call_list_name",
+            "params": [
+              {
+                "name": "do_not_call_list_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method deletes all records from the specified DNC List and returns the number of deleted records.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges, or modification of this type of list is not allowed\n\n404\nDNC List is not found or invalid URL"
+        },
+        {
+          "info": {
+            "name": "Delete Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v2/donotcalllist/delete/:do_not_call_list_name",
+            "params": [
+              {
+                "name": "do_not_call_list_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method deletes the list of specified records from the DNC List, returns the number of deleted records and list of errors if there are.\n\nInput parameters:\n\nList of DNC list record JSON objects\n\nOnly the \"key\" field is required.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges, or modification of this type of list is not allowed\n\n404\nDNC List is not found or invali"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

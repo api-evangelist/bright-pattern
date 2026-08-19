@@ -1,0 +1,328 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bright Pattern DNC Lists API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DNC Lists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delete All Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/donotcalllist/deleteAll/:do_not_call_list_id",
+            "params": [
+              {
+                "name": "do_not_call_list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Privileges required:\n\nService and Campaign Administration -> Manage Lists\n\nThis method deletes all records from the specified DNC List and returns the number of deleted records.\n\nResponse Codes:\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood/1 or more required fields are missed or have unsupported value)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges, or modification of this type of list is not allowed\n\n404\nDNC List is not found"
+        },
+        {
+          "info": {
+            "name": "Delete Many Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/donotcalllist/delete/:do_not_call_list_id",
+            "params": [
+              {
+                "name": "do_not_call_list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Privileges required:\n\nService and Campaign Administration -> Manage Lists\n\nThis method deletes the list of specified records from the DNC List, returns the number of deleted records and list of errors if there are.\n\nThe following errors should be caught:\n\nmissingKey - one or more key fields are missed;\n\nformatError - one or more fields has wrong format (e.g. string value for an integer field).\n\nInput parameters: list of DNC list record JSON objects, only key field is required.\n\nResponse Codes:\n\n"
+        },
+        {
+          "info": {
+            "name": "Add Many Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/donotcalllist/addAll/:do_not_call_list_id",
+            "params": [
+              {
+                "name": "do_not_call_list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Privileges required:\n\nService and Campaign Administration -> Manage Lists\n\nThis method adds new records to the specified Do Not Call (DNC) list and returns the number of added (i.e., appended) records. Duplicates are ignored.\n\nThe following errors should be caught:\n\nmissingKey - one or more key fields are missed;\n\nduplicateKey - a record with the same key already exists;\n\nformatError - one or more fields has wrong format (e.g. string value for an integer field) or unsupported fields are sent;\n\nI"
+        },
+        {
+          "info": {
+            "name": "Add Records DEPRECATED",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/donotcalllist/add/:do_not_call_list_id",
+            "params": [
+              {
+                "name": "do_not_call_list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Privileges required:\n\nService and Campaign Administration -> Manage Lists\n\nThis method adds new records to the specified Do Not Call (DNC) list and returns the number of added (i.e., appended) records. Duplicates are ignored.\n\nResponse Codes:\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood/1 or more required fields are missed or have unsupported value)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges, or modification of this type o"
+        },
+        {
+          "info": {
+            "name": "Replace Records DEPRECATED",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/donotcalllist/replaceAll/:do_not_call_list_id",
+            "params": [
+              {
+                "name": "do_not_call_list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Privileges required:\n\nService and Campaign Administration -> Manage Lists\n\nThe method deletes all records in the specified Do Not Call (DNC) list, inserts new ones and returns the number of newly inserted records. Duplicates are ignored.\n\nResponse Codes:\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood/1 or more required fields are missed or have unsupported value)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges, or modification of"
+        },
+        {
+          "info": {
+            "name": "Get DNC Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v3/donotcalllist/getDNCRecords/:do_not_call_list_id",
+            "params": [
+              {
+                "name": "do_not_call_list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a list of all records, including their in an existing DNC List, specified in the path variable, do_not_call_list_id. The records are returned and sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlimit\nin"
+        },
+        {
+          "info": {
+            "name": "Get DNC Lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v3/donotcalllist/getAll",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns all DNC Lists, sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlimit\ninteger, ≤ 100\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...100\n\ncursor\nstring\nno (u"
+        },
+        {
+          "info": {
+            "name": "Get DNC List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v3/donotcalllist/getDNCList/:do_not_call_list_id",
+            "params": [
+              {
+                "name": "do_not_call_list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the detailed information about a specified DNC list, including it's name, type and total number of records, as well as exipartion and reset settings, if applicable.\n\nAdditionally, this method returns information about the campaigns associated with that DNC list, if any.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; limit exceeded; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid t"
+        },
+        {
+          "info": {
+            "name": "Create DNC List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/donotcalllist/createDNCList",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method creates a new empty DNC list. Depending on the specified DNC list type, the creation process is as follows:\n\nFor Internal, Geographic, Area Codes - new DNC lists are created using the fixed format corresponding to the list type\n\nFor Record Exclusion - the exclusion field has to be explicitly specified in the request body\n\nAdditionally, for DNC lists of Area Codes and Geographic Postal types, the ISO country code has to be explicitly specified in the request body.\n\nNote: For Area Code"
+        },
+        {
+          "info": {
+            "name": "Delete DNC List",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant_url}/configapi/v3/donotcalllist/deleteDNCList/:do_not_call_list_id",
+            "params": [
+              {
+                "name": "do_not_call_list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method deletes the DNC list specified in the path variable, do_not_call_list_id.\n\nOnce the DNC List is deleted, all records previously blocked by it in the associated campaign(s) become dialable again.\n\nNote: Archivation of DNC Lists and DNS List records is not supported in the Admin Portal, so no special considerations should be made for List API."
+        },
+        {
+          "info": {
+            "name": "Bind DNC List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/bindDNCList/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method adds a DNC list to the campaign, referenced by its ID in the path variable.\n\nNote: Manipulating calling lists associated with a campaign requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ndncListId\nstring\nyes\n-\n\ndisposition\nstring  \n  \nNote: Specifies disposition to be attached to call attempts and completed records in case of a match against DNC record\nyes\n-\n\napplyToLinkGroup\nboolean  "
+        },
+        {
+          "info": {
+            "name": "Unbind DNC List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/campaign/unbindDNCList/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method removes the DNC list from the associated campaign, referenced by its ID in the path variable., campaign_id.\n\nThe DNC list to be removed is specified in the request body by its unique identifier, dncListId.\n\nNote: Manipulating calling lists associated with a campaign requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ndncListId\nstring\nyes\n-"
+        },
+        {
+          "info": {
+            "name": "Update DNC List Properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant_url}/configapi/v3/donotcalllist/updateDNCProperties/:do_not_call_list_id",
+            "params": [
+              {
+                "name": "do_not_call_list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method allows to change properties and settings of an existing DNC list, specified in the path variable, do_not_call_list_id.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring, ≤ 255 characters  \n  \nNote: DNC list name must be unique within the contact center\nno\n-\n\ntype\nstring\nno\n“INTERNAL”  \n“GEOGRAPHIC_POSTAL”  \n“AREA_CODES”  \n“EXCLUSION”\n\ncountry\nISO country code;  \nOR “prefixed” (applicable only to DNC lists of Area Codes type)\nno, only applicable to DNC lists "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

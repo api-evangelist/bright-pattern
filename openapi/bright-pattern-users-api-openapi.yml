@@ -1,0 +1,698 @@
+openapi: 3.2.0
+info:
+  title: Bright Pattern Users API
+  version: 1.0.0
+  contact:
+    name: Bright Pattern
+    url: https://www.brightpattern.com/contact/
+  description: 'Operations tagged Users across 2 of this provider''s published API definitions: bright-pattern-configuration-openapi.yml, bright-pattern-scim-user-provisioning-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://{tenant_url}
+  description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+  variables:
+    tenant_url:
+      default: example.brightpattern.com
+      description: Your Bright Pattern Contact Center tenant hostname.
+security:
+- bearerAuth: []
+tags:
+- name: Users
+  description: 'With the https://:tenant_url/configapi/v2/user endpoint you can:
+
+
+    Create new users and define most of their attributes
+
+
+    Update existing users
+
+
+    Check and clear user lockout state
+
+
+    Manage agents'' skills
+
+
+    Delete existing users
+
+
+    Below is a brief description of all user attributes that can be accessed via this API. More detailed descriptions of these attributes can be found here.
+
+
+    All attributes are strings unless otherwise noted.
+
+
+    All attributes are optional unless otherwise noted.
+
+
+    Attribute
+
+    Description
+
+
+    loginId
+
+    Username. Required to create user. Used to identify the user in all subsequent User Management API operations.
+
+
+    password
+
+    Password. Format must comply with security policy.
+
+
+    changePassword
+
+    Indicates whether user must change password on next login. Boolean. Default is false.
+
+
+    firstName
+
+    First name. Required to create user.
+
+
+    lastName
+
+    Last name. Required to create user.
+
+
+    team
+
+    Team that the user is assigned to. Required to create user.
+
+
+    extension
+
+    User''s extension number. If not specified, an extension will be created and assigned automatically.
+
+
+    workPhone
+
+    User''s work phone number.
+
+
+    mobilePhone
+
+    User''s mobile phone number.
+
+
+    email
+
+    User''s email address.
+
+
+    disabled
+
+    Indication whether the user account is disabled or enabled. Boolean (true/flase).
+
+
+    skills
+
+    For agents an array of skills with levels (e.g., "Support": 75).
+
+
+    roles
+
+    An array of user''s roles (e.g., Agent).'
+paths:
+  /configapi/v2/user:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: createUser
+      summary: Create User
+      description: Creates a new user in your contact center configuration.
+      tags:
+      - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              loginId: testuser006
+              password: $$$999aaa
+              firstName: Test
+              lastName: User006
+              team: Support Team
+              workPhone: '6373335656'
+              mobilePhone: '6374128990'
+              email: testuser006@nowhere.net
+              disabled: false
+              changePassword: true
+              skills:
+                Support: 100
+                Mobile: 100
+                Cable: 70
+              roles:
+              - Agent
+      responses:
+        '200':
+          description: Create user with a complete data set
+          content:
+            application/json:
+              example: OK
+      security:
+      - bearerAuth: []
+  /configapi/v2/user/{username}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getUserData
+      summary: Get User Data
+      description: Returns user data, such as name, team, extension, skills, and login information
+      tags:
+      - Users
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get user data
+          content:
+            application/json:
+              example: "{\n \"disabled\":false,\n \"changePassword\":false,\n \"skills\":{},\n \"loginId\":\"frank.zappa\",\n \"firstName\":\"Frank\",\n \"lastName\":\"Zappa\",\n \"team\":\"Customer Service\",\n \"extension\":\"1048\",\n \"email\":\"frank.zappa@gmail.com\",\n \"roles\":[\"Agent\"]\n \"loginInfo\": {\n    \"isLoggedIn\": true,\n    \"lastLogin\": \"2024-01-11T20:39:16.000Z\",\n    \"lastLogout\": \"2024-01-11T20:39:16.000Z\",\n    \"browser\": \"Chrome 120.0.0\",\n    \"phoneMode\": \"Browser Secure\",\n    \"os\": \"Linux\",\n    \"ipAddress\": \"172.27.0.1\",\n    \"userAgent\": \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",\n    \"adHelperVersion\": \"5.20.0.604\",\n    \"appType\": \"Agent Desktop\",\n    \"appVersion\": \"5.24.99.755\"\n  }\n }"
+      security:
+      - bearerAuth: []
+    put:
+      operationId: updateUser
+      summary: 'Update User '
+      description: 'Updates one or more attributes of an existing user. Currently the can be used to update the following properties:
+
+
+        skills
+
+
+        disabled
+
+
+        password
+
+
+        changePassword
+
+
+        team'
+      tags:
+      - Users
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              disabled: 'true'
+              team: Accounting
+      responses:
+        '200':
+          description: Disable user via Update User
+          content:
+            application/json:
+              example: OK
+      security:
+      - bearerAuth: []
+    delete:
+      operationId: deleteUser
+      summary: Delete User
+      description: Deletes an existing user.
+      tags:
+      - Users
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Delete User
+          content:
+            application/json:
+              example: OK
+      security:
+      - bearerAuth: []
+  /configapi/v2/user/lock/{username}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getUserLockState
+      summary: Get User Lock State
+      description: Checks whether user's account has been temporarily locked out after too many invalid login attempts.
+      tags:
+      - Users
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get User Lock State
+          content:
+            application/json:
+              example:
+                lockedOut: true
+      security:
+      - bearerAuth: []
+    put:
+      operationId: clearUserLockState
+      summary: Clear User Lock State
+      description: Unlocks user's account that has been temporarily locked out after too many invalid login attempts.
+      tags:
+      - Users
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Clear User Lock State
+          content:
+            application/json:
+              example:
+                lockedOut: false
+      security:
+      - bearerAuth: []
+  /configapi/v2/team:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getTeams
+      summary: Get Teams
+      description: This method returns a list of all existing teams in your contact center.
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Get Teams
+          content:
+            application/json:
+              example:
+              - name: Administrators
+              - name: Contact Center Support
+              - name: CSIM Support
+              - name: Customer Service
+              - name: Maintenance Renewal
+              - name: Management
+      security:
+      - bearerAuth: []
+  /configapi/v2/scim/users:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: createUser
+      summary: Create User
+      description: This method creates a new user in your contact center configuration.
+      tags:
+      - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              schemas:
+              - urn:ietf:params:scim:schemas:core:2.0:User
+              userName: bjensen@example.com
+              name:
+                familyName: Jensen
+                givenName: Barbara
+              nickName: Babs
+              emails:
+              - value: bjensen@example.com
+              addresses:
+              - locality: Hollywood
+                region: CA
+                country: US
+              phoneNumbers:
+              - value: 555-555-5555
+                type: work
+              - value: 555-555-4444
+                type: mobile
+              photos:
+              - value: https://www.brightpattern.com/wp-content/uploads/2017/09/bright-pattern-logo-mini-with-text-30.png
+                type: photo
+              title: TSR Level 3
+              timezone: America/Los_Angeles
+              active: true
+      responses:
+        '201':
+          description: Create user
+          content:
+            application/json:
+              example:
+                schemas:
+                - urn:ietf:params:scim:schemas:core:2.0:User
+                id: 65625121-E207-4AA6-9C9D-317EE309FFBA
+                externalId: ''
+                meta:
+                  resourceType: USER
+                  location: http://localhost:8080/configapi/v2/scim/users/65625121-E207-4AA6-9C9D-317EE309FFBA
+                userName: bjensen@example.com
+                nickName: Babs
+                name:
+                  familyName: Jensen
+                  givenName: Barbara
+                title: TSR Level 3
+                timezone: America/Los_Angeles
+                active: true
+                emails:
+                - value: bjensen@example.com
+                  primary: true
+                phoneNumbers:
+                - type: work
+                  value: 555-555-5555
+                - type: mobile
+                  value: 555-555-4444
+                - type: extension
+                  value: '2083'
+                addresses:
+                - locality: Hollywood
+                  country: US
+                roles:
+                - value: System Administrator
+      security:
+      - bearerAuth: []
+    get:
+      operationId: getUserByUsername
+      summary: Get User by userName
+      description: This method returns detailed configuration information about an existing user via the userName filter.
+      tags:
+      - Users
+      parameters:
+      - name: filter
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get User by userName
+          content:
+            application/scim+json:
+              example:
+                schemas:
+                - urn:ietf:params:scim:api:messages:2.0:ListResponse
+                totalResults: 1
+                Resources:
+                - schemas:
+                  - urn:ietf:params:scim:schemas:core:2.0:User
+                  id: 1F148A86-BF13-4478-A102-F11A8B664FF8
+                  meta:
+                    resourceType: USER
+                    created: 06-03-2020T07:46:33
+                    location: http://yourcompany.brightpattern.com/configapi/v2/scim/users/1F148A86-BF13-4478-A102-F11A8B664FF8
+                  userName: carlos.clapper
+                  name:
+                    familyName: Clapper
+                    givenName: Carlos
+                  active: true
+                  emails:
+                  - value: carlos.clapper@contactcenter.office
+                    primary: true
+                  phoneNumbers:
+                  - type: extension
+                    value: '2025'
+                  addresses:
+                  - {}
+                  roles:
+                  - Agent
+      security:
+      - bearerAuth: []
+  /configapi/v2/scim/users/{id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getUserById
+      summary: Get User by ID
+      description: This method returns detailed configuration information about an existing user via the user’s ID.
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get User by ID
+          content:
+            application/json:
+              example:
+                schemas:
+                - urn:ietf:params:scim:schemas:core:2.0:User
+                id: 5974D6AE-66BD-4B2A-A9D6-1AEADD18F669
+                meta:
+                  resourceType: USER
+                  created: 06-03-2020T10:04:30
+                  lastModified: 06-03-2020T10:35:28
+                  location: http://yourcompany.brightpattern.com/configapi/v2/scim/users/5974D6AE-66BD-4B2A-A9D6-1AEADD18F669
+                userName: elizabeth
+                name:
+                  familyName: Smith
+                  givenName: Liza
+                active: true
+                emails:
+                - value: liza@smith.com
+                  primary: true
+                phoneNumbers:
+                - type: extension
+                  value: '2064'
+                addresses:
+                - {}
+                roles:
+                - System Administrator
+                - Campaign Administrator
+                - Supervisor
+                - Quality Evaluator
+                - Quality Evaluator Admin
+                - Security Administrator
+                - Campaign Operator
+                - Service Administrator
+                - Reviewer
+                - Manager
+                - Agent
+      security:
+      - bearerAuth: []
+    put:
+      operationId: replaceUserProperties
+      summary: Replace User Properties (by replacing all existing attributes with a specified set of replacement attributes)
+      description: 'Replaces all attributes of an existing user with a specified set of replacement attributes. Note that in accordance with RFC7644, the PUT method updates users by replacing all of their current attributes with the ones specified in the body of the method.
+
+
+        Note also that in order for usernames to be changed, service providers must allow this feature for your contact center. For more information, see the Contact Center Administrator Guide, section Users.'
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              schemas:
+              - urn:ietf:params:scim:schemas:core:2.0:User
+              userName: bjinsin
+              name:
+                familyName: Jinsin
+                givenName: Borbora
+              nickName: Bobs
+              emails:
+              - value: bjinsin@example.com
+              addresses:
+              - locality: Hollywood
+                region: CA
+                country: US
+              phoneNumbers:
+              - value: 555-555-5555
+                type: work
+              - value: 888-888-8888
+                type: mobile
+              title: TSR Level 3
+              timezone: America/Los_Angeles
+              active: true
+      responses:
+        '200':
+          description: Replace User
+          content:
+            application/json:
+              example:
+                schemas:
+                - urn:ietf:params:scim:schemas:core:2.0:User
+                id: 7D6A5564-2104-442F-82DA-D55B6D7CFAE9
+                meta:
+                  resourceType: USER
+                  created: 09-03-2020T05:58:01
+                  lastModified: 09-03-2020T09:21:44
+                  location: http://mordor.brightpattern.com/configapi/v2/scim/users/7D6A5564-2104-442F-82DA-D55B6D7CFAE9
+                userName: bjinsin
+                nickName: Bobs
+                name:
+                  familyName: Jinsin
+                  givenName: Borbora
+                title: TSR Level 3
+                timezone: America/Los_Angeles
+                active: true
+                emails:
+                - value: bjinsin@example.com
+                  primary: true
+                phoneNumbers:
+                - type: work
+                  value: 555-555-5555
+                - type: mobile
+                  value: 888-888-8888
+                - type: extension
+                  value: '2065'
+                addresses:
+                - locality: Hollywood
+                  region: CA
+                  country: US
+                roles: []
+      security:
+      - bearerAuth: []
+    delete:
+      operationId: deleteUser
+      summary: Delete User
+      description: Deletes an existing user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Delete User
+      security:
+      - bearerAuth: []
+    patch:
+      operationId: updateUser
+      summary: Update User (updates only the properties indicated in the specified set)
+      description: 'Updates attributes of an existing user. Note that in accordance with RFC7644, the PATCH method modifies a user with a set of client-specified changes (partial update).
+
+
+        Note also that in order for usernames to be changed, service providers must allow this feature for your contact center. For more information, see the Contact Center Administrator Guide, section Users.'
+      tags:
+      - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              schemas:
+              - urn:ietf:params:scim:api:messages:2.0:PatchOp
+              Operations:
+              - op: replace
+                path: active
+                value: false
+      responses:
+        '200':
+          description: Update User (updates only the properties indicated in the specified set)
+          content:
+            application/scim+json:
+              example:
+                schemas:
+                - urn:ietf:params:scim:schemas:core:2.0:User
+                id: 6BE15F09-BF39-4E20-AB31-A9355CBC01FC
+                meta:
+                  resourceType: USER
+                  lastModified: '2022-04-01T01:07:15'
+                  location: http://alexei-maintenance.pl.bugfocus.com/configapi/v2/scim/users/6BE15F09-BF39-4E20-AB31-A9355CBC01FC
+                userName: carlos.clapper
+                name:
+                  familyName: Clapper
+                  givenName: Carlos
+                timezone: America/Los_Angeles
+                active: false
+                emails:
+                - value: carlos.clapper@servicepattern.sb.office
+                  primary: true
+                phoneNumbers:
+                - type: extension
+                  value: '2025'
+                addresses: []
+                roles:
+                - value: System Administrator
+                - value: Agent
+                groups:
+                - value: 84FB1AD4-1B27-4CFA-A1E0-B8A972F3EFA7
+                  display: CSIM Support
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      x-normalized-from: /configapi/v2/scim/users/6BE15F09-BF39-4E20-AB31-A9355CBC01FC (the published collection hard-codes an example user id in the URL)
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as `Authorization: Bearer <token>`.'
+    oauth2ClientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client-credentials grant against the Bright Pattern tenant token endpoint.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant_url}/configapi/v2/oauth/token
+          scopes: {}
+x-refined-from:
+- bright-pattern-configuration-openapi.yml
+- bright-pattern-scim-user-provisioning-openapi.yml

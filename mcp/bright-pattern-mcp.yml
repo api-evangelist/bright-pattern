@@ -868,3 +868,9 @@ tools:
   source_operation: openapi/bright-pattern-task-routing-openapi.yml#cancelServiceTasks
   method: DELETE
   path: /taskroutingapi/v1/service
+deployment:
+  mode: none
+  verified: derived
+  tools: 169
+  checked: '2026-08-12'
+  source: catalog MCP census

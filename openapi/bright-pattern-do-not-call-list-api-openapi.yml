@@ -1,0 +1,305 @@
+openapi: 3.2.0
+info:
+  title: BPCC List Management API v2.0 Do Not Call List API
+  version: 1.0.0
+  description: 'Introduction
+
+
+    With the BPCC List Management API you currently can:
+
+
+    Manage the contents of outbound calling lists
+
+
+    Manage the contents of Do Not Call lists
+
+
+    Get information about enabled outbound campaigns
+
+
+    This document specifies the corresponding REST API methods, with example requests and responses. You can load this API into the Postman API Development Environment to interact with the API with your own access tokens.'
+  contact:
+    name: Bright Pattern
+    url: https://www.brightpattern.com/contact/
+  x-origin:
+  - format: postman
+    url: https://documenter.getpostman.com/view/6735878/T1DtdFDu
+    version: '2.1'
+  x-evidence:
+    fetched: '2026-08-08'
+    source: https://documenter.gw.postman.com/api/collections/6735878/T1DtdFDu?segregateAuth=true&versionTag=latest
+    http_status: 200
+    method: derived-from-published-postman-collection
+    note: Mechanically converted from the Postman collection Bright Pattern publishes as its public API reference. No operations, paths, parameters or examples were invented.
+servers:
+- url: https://{tenant_url}
+  description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+  variables:
+    tenant_url:
+      default: example.brightpattern.com
+      description: Your Bright Pattern Contact Center tenant hostname.
+security:
+- bearerAuth: []
+tags:
+- name: Do Not Call List
+paths:
+  /configapi/v2/donotcalllist/add/{do_not_call_list_name}:
+    post:
+      operationId: addRecordsToDnc
+      summary: Add Records to DNC
+      description: 'This method adds new records to the specified Do Not Call (DNC) list and returns the number of added (i.e., appended) records. Duplicates are ignored.
+
+
+        An optional comment field value is inserted in the comment field of a geographic (postal) DNC record, campaign name field of an internal DNC record, and in the comment field of area codes DNC record. This method is supported for internal, geographic postal, area codes, and record exclusion DNC lists.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges, or modification of this type of list is not allowed
+
+
+        404
+
+        Calling List is not found or invalid URL'
+      tags:
+      - Do Not Call List
+      parameters:
+      - name: do_not_call_list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "[\n    [\n        \"123456789\",\n        \"optional comment\"\n    ],\n   …\n   [\n        \"9999999999\",\n        \"optional comment\"\n    ]\n]"
+      responses:
+        '200':
+          description: Add Records to DNC
+          content:
+            application/json:
+              example:
+                added: 2
+      security:
+      - bearerAuth: []
+  /configapi/v2/donotcalllist/replaceAll/{do_not_call_list_name}:
+    post:
+      operationId: replaceRecordsInDnc
+      summary: Replace Records in DNC
+      description: 'The method replaces all records in the specified Do Not Call (DNC) list and returns the number of newly inserted records. Duplicates are ignored. An optional comment field value is inserted in the comment field of a geographic (postal) DNC record, campaign name field of an internal DNC record, and in the comment field of area codes DNC record. This method is supported for internal, geographic postal area codes, and accounts'' DNC lists.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges, or modification of this type of list is not allowed
+
+
+        404
+
+        Calling List is not found or invalid URL'
+      tags:
+      - Do Not Call List
+      parameters:
+      - name: do_not_call_list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "[\n    [\n        \"123456789\",\n        \"optional comment\"\n    ],\n   …\n   [\n        \"9999999999\",\n        \"optional comment\"\n    ]\n]"
+      responses:
+        '200':
+          description: Replace Records in DNC
+          content:
+            application/json:
+              example:
+                added: 2
+      security:
+      - bearerAuth: []
+  /configapi/v2/donotcalllist/deleteAll/{do_not_call_list_name}:
+    post:
+      operationId: deleteAllRecordsDoNotCallList
+      summary: Delete All Records
+      description: 'This method deletes all records from the specified DNC List and returns the number of deleted records.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges, or modification of this type of list is not allowed
+
+
+        404
+
+        DNC List is not found or invalid URL'
+      tags:
+      - Do Not Call List
+      parameters:
+      - name: do_not_call_list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Delete All Records
+      security:
+      - bearerAuth: []
+  /configapi/v2/donotcalllist/delete/{do_not_call_list_name}:
+    post:
+      operationId: deleteRecords
+      summary: Delete Records
+      description: 'This method deletes the list of specified records from the DNC List, returns the number of deleted records and list of errors if there are.
+
+
+        Input parameters:
+
+
+        List of DNC list record JSON objects
+
+
+        Only the "key" field is required.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges, or modification of this type of list is not allowed
+
+
+        404
+
+        DNC List is not found or invalid URL'
+      tags:
+      - Do Not Call List
+      parameters:
+      - name: do_not_call_list_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+            example:
+            - key: '9999999'
+            - key: '8888888'
+      responses:
+        '200':
+          description: Delete Records
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as `Authorization: Bearer <token>`.'
+    oauth2ClientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client-credentials grant against the Bright Pattern tenant token endpoint.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant_url}/configapi/v2/oauth/token
+          scopes: {}

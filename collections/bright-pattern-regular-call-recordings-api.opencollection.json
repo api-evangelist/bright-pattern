@@ -1,0 +1,105 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BPCC Interaction Content Regular Call Recordings API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Regular Call Recordings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Regular Recording Audio File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v2/recordings/audio",
+            "params": [
+              {
+                "name": "giid",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "stepid",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns an audio file with voices of all participants for the specified call recording in the GSM format."
+        },
+        {
+          "info": {
+            "name": "Erase Call Recordings",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant_url}/configapi/v2/recordings/audio",
+            "params": [
+              {
+                "name": "giid",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "reason",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method erases locally stored call recordings; the interaction’s Global Interaction Identifier (GIID) must be included as a query parameter in the request URL\n\nNotes\n\nReason is an optional query parameter.\n\nThis method applies to locally stored recordings only.\n\nIf multiple recordings are associated with the specified GIID, all of them will be erased.\n\nThe erasure of recordings is:\nTracked via the Audit Log\n\nReflected in Interaction Records Search Results\n\nReflected in case activity history"
+        },
+        {
+          "info": {
+            "name": "Get Interaction Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v2/recordings/metadata",
+            "params": [
+              {
+                "name": "giid",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "stepid",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the following metadata for the specified interaction:\n\nData Item\nDescription\n\nStart Time\nInteraction start time\n\nAgent loginId\nUsername of the agent who last handled this call\n\nAgent First Name\nFirst name of the agent who last handled this call\n\nAgent Last Name\nLast name of the agent who last handled this call\n\nCustomer phone\nCustomer’s phone number (technically, the phone number of the party opposite to the above agent)\n\nDirection\nCall direction relative to the above agent, Inbound or O"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

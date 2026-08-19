@@ -1,0 +1,2405 @@
+openapi: 3.2.0
+info:
+  title: Bright Pattern Methods API
+  version: 1.0.0
+  contact:
+    name: Bright Pattern
+    url: https://www.brightpattern.com/contact/
+  description: 'Operations tagged Methods across 3 of this provider''s published API definitions: bright-pattern-mobile-web-messaging-v1-openapi.yml, bright-pattern-mobile-web-messaging-v2-openapi.yml, bright-pattern-real-time-statistics-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://{tenant_url}
+  description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+  variables:
+    tenant_url:
+      default: example.brightpattern.com
+      description: Your Bright Pattern Contact Center tenant hostname.
+security:
+- bearerAuth: []
+tags:
+- name: Methods
+paths:
+  /clientweb/api/v1/availability:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: checkAvailability
+      summary: Check Availability
+      description: 'This method returns the availability status of the configured hours of operation of the associated Messaging/Chat scenario entry. Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value. Note that the API does not check if there are any agents actually logged in.
+
+
+        Status Meanings
+
+
+        Status Name
+
+        Description
+
+
+        available
+
+        The requested service is available.
+
+
+        notAvailable
+
+        The office providing the requested service is currently closed.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success: Returns the scenario entry’s current status / EWT (optionally)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Check Availability Example
+          content:
+            application/json:
+              example:
+                chat: <available|notAvailable>
+                ewt: <estimated wait time in seconds for a chat in state queued>
+      security:
+      - bearerAuth: []
+  /clientweb/api/v1/parameters:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: expectedParameters
+      summary: Expected Parameters
+      description: 'This method returns an array of expected parameters. The parameters are optional. They may be used, for example, to look for the most qualified agents to handle the requested chat sessions and/or to display user information for the agents. These parameters are initially specified for the Messaging/Chat scenario entry through which this mobile application will communicate with the contact center.
+
+
+        Currently, the following parameter types are supported:
+
+
+        PHONE
+
+
+        TEXT
+
+
+        EMAIL
+
+
+        FIRST_NAME
+
+
+        LAST_NAME
+
+
+        ACCOUNT
+
+
+        COMPANY
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        application/json with names and types of parameters that may be expected from the client application
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Expected Parameters Example
+          content:
+            application/json:
+              example:
+                parameters:
+                - <name>: <type>
+                - '...'
+      security:
+      - bearerAuth: []
+  /clientweb/api/v1/chats:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: requestChat
+      summary: Request Chat
+      description: "This method initiates a chat session. It provides values of all or some of the expected parameters, and it may also contain the phone number of the mobile device. Depending on the scenario entry configuration, a callback can be initiated automatically to the specified number as soon as the chat request is delivered to the agent.\n\nNotes:\n\nThe Request Chat method may return the ID and parameters of an existing chat session if there are any currently existing chat sessions associated with this specific client. For example, the client app created a chat session, which was then closed or crashed, then restarted before the session timed out on the server. \n\nThe is_new_chat response attribute is specified if the chat is a new session or existing session. The client application will handle these differently (e.g., if in an existing session the app may request session history and show the previous content.\n\nIf the associated mobile/web scenario entry is not configured for automatic callback, the agent can still use this number to call the mobile user manually, either upon the agent's own initiative or when asked to do this via a chat message from the mobile user.\n\nThe parameter from may be used to specify either the device owner’s name or phone number. It will be placed in the scenario variable $(item.from).\n\nParameters returned in the parameters attribute are propagated into the scenario variable $(item.externalChatData).\n\nOptionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value. This might be important for the clients with strict JSON serialization (i.e., the client app may fail deserializing the JSON if the attribute is missing).\n\nReturns\n\nCode\nDescription\n\n200\nChat session properties (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n400\nBad request\n\n403\nForbidden"
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: Content
+        in: header
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "{\n    \"phone_number\":\"<phone number for callback, if necessary>\",\n    \"from\":\"<propagated into scenario variable $(item.from)>\",\n    \"parameters\":{\n        \"parameter_1\":\"value_1\",\n        \"...\",\n        \"parameter_n\":\"value_n\"\n    }\n}"
+      responses:
+        '200':
+          description: Request Chat Example
+          content:
+            application/json:
+              example:
+                chat_id: <chat ID>
+                state: <queued|connected|ivr|establishing>
+                ewt: <estimated wait time for a chat in state queued>
+                is_new_chat: true|false
+                phone_number: phone number that will be used for callback
+      security:
+      - bearerAuth: []
+  /clientweb/api/v1/chats/active:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getActiveChat
+      summary: Get Active Chat
+      description: 'This method returns the properties of an active chat session. Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Chat session properties (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Active Chat Example
+          content:
+            application/json:
+              example:
+                chat_id: <chat ID>
+                state: <queued|connected|ivr|establishing>
+                ewt: <estimated wait time for a chat in state queued>
+                phone_number: <phone number that will be used for callback>
+      security:
+      - bearerAuth: []
+  /clientweb/api/v1/chats/{chatId}/events:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: sendEvents
+      summary: Send Events
+      description: 'This method sends events from the client to the server side.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Array of new chat events from the server side (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "{\n “events”: [<array of chat events>\n    ]\n}"
+      responses:
+        '200':
+          description: Send Events Example
+          content:
+            application/json:
+              example:
+                events:
+                - <array of new chat events from server>
+      security:
+      - bearerAuth: []
+    get:
+      operationId: getNewChatEvents
+      summary: Get New Chat Events
+      description: 'This method returns new chat events for the current session. If there are no new events, the server can keep the request active during a timeout (i.e., for about 5–15 seconds). If the client sends another request to get new events while the previous request is kept active, the server will respond with error 400 (Bad request).
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Array of chat events (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        400
+
+        Bad request
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get New Chat Events Example
+          content:
+            application/json:
+              example:
+                events:
+                - <array of chat events>
+      security:
+      - bearerAuth: []
+  /clientweb/api/v1/chats/{chatId}/history:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getChatHistory
+      summary: Get Chat History
+      description: 'This method returns all client events and all server events for the current session. Multiple event objects can be returned; each event''s timestamp attribute can be used to restore the correct message order.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Array of chat events (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Chat History Example
+          content:
+            application/json:
+              example:
+                events:
+                - <array of chat events>
+      security:
+      - bearerAuth: []
+  /clientweb/api/v1/files:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: uploadFile
+      summary: Upload File
+      description: 'This method uploads a file to the server. The maximum file size is 25 MB. The server will store up to 1000 files. Newly received files will replace the oldest files. This method can be used, for example, to send pictures from the client mobile application to the contact center agents.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        File ID to be used in the chat_session_file message (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Upload File Example
+          content:
+            application/json:
+              example:
+                file_id: file ID
+      security:
+      - bearerAuth: []
+  /clientweb/api/v1/chats/{chatId}/files/{fileId}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getFile
+      summary: Get File
+      description: 'This method downloads a file from the server using the received file ID. See server event Chat Session File.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        File content type
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get File Example
+          content:
+            application/json:
+              example: File content type
+      security:
+      - bearerAuth: []
+  /clientweb/api/v1/chats/{chatId}/profilephotos/{partyId}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getAgentProfilePhoto
+      summary: Get Agent Profile Photo
+      description: 'This method downloads a profile photo of the specified agent.
+
+
+        Request Body
+
+
+        The request body is the party ID of the agent participating in the current chat session.
+
+
+        Note: The party ID is provided with the chat event (polled at https://{host:port}/clientweb/api/v1/chats/{chatId}/events?tenantUrl={tenantUrl}). For example, you can see party_ID in the event message for chat_session_party_joined.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        File content type
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: partyId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Agent Profile Photo Example
+          content:
+            application/json:
+              example: File content type
+      security:
+      - bearerAuth: []
+  /clientweb/api/v1/iceservers:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getIceServers
+      summary: Get ICE servers
+      description: 'This method returns a list of configured ICE servers to provide to the browser so that an audio-visual session could be added to the chat.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success: JSON response with information of ICE servers
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get ICE servers
+          content:
+            application/json:
+              example:
+                servers:
+                - url: <url>
+                  username: <(optional) username>
+                  credential: <(optional) password>
+      security:
+      - bearerAuth: []
+  /clientweb/api/v1/configuration:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getChatWidgetConfiguration
+      summary: Get Chat Widget Configuration
+      description: 'This method returns the chat widget configuration for the launch point.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success: JSON response with information of ICE servers
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Chat Widget Configuration
+          content:
+            application/json:
+              example: "{\n  \"widgets\":[\n     {\n       \"name\": \"<widget name>\",\n       \"urls\":[\"<url>\", …],\n       \"definition\": {\n         \"contact_tab\":{\n           \"enabled\": true|false,\n           \"location\": \"top_left|top_middle|top_right\n                       |right_top|right_middle|right_bottom\n                       |bottom_left| bottom_middle|bottom_right\n                       |left_top|left_middle|left_bottom\",\n           \"color\": \"<color>\",\n           \"bg_color\": \"color\",\n           \"font\": {\n             \"family\": \"<font family>\",\n             \"size\": \"<font size>\",\n             \"style\": \"<font style>\",\n             \"weight\": \"<font weight>\"   \n           },\n           \"agents_available_msg\": \"<msg>\",\n           \"agents_not_available_msg\": \"<msg>\",\n           \"out_of_hours_msg\": \"<msg>\",\n           \"show_ewt_out_of_hours\": true|false  \n         }\n       },\n\t    \"styles\":{\n\t\t    \"style1\":{\n                \"contentMargin\" : {\n                    \"margin\": \"\"\n                },\n                \"titleFont\" : {\n                    \"font-family\": \"\",\n                    \"font-style\": \"\",\n                    \"font-size\": \"\",\n                    \"font-weight\": \"\"\t\n                },\n                \"contactTabFont\" : {\n                    \"font-family\": \"\",\n                    \"font-style\": \"\",\n                    \"font-size\": \"\",\n                    \"font-weight\": \"\"\t\n                },\n                \"systemMessage\" : {\n                    \"background-color\": \"\"\n                },\n                \"agentMessage\" : {\n                    \"background-color\": \"\"\n                },\n                \"widgetBorder\" : {\n                    \"border\": \"1px solid etc...\",\n                    \"border-radius\": \"\"\n                },\n                \"contactTabBorder\": {\n                    \"border\": \"1px solid etc...\",\n                    \"border-radius\": \"\"\n                },\n                \"widgetBackground\" {\n                    \"background\": \"url(img.png) #fff repeat-y\"        \n                },\n                \"baseFont\": {\n                    \"font-family\": \"\",\n                    \"font-style\": \"\",\n                    \"font-size\": \"\",\n                    \"font-weight\": \"\",\n                    \"color\": \"\"\n                },    \n                \"dialogShadow\": {\n                    \"box-shadow\":\"\"\n                }    \n            }\n        } \n     }\n  ]\n}\n"
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/availability:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: checkAvailability
+      summary: Check Availability
+      description: 'This method returns the availability status of the configured hours of operation of the associated Messaging/Chat scenario entry. Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value. Note that the API does not check if there are any agents actually logged in.
+
+
+        Status Meanings
+
+
+        Status Name
+
+        Description
+
+
+        available
+
+        The requested service is available.
+
+
+        notAvailable
+
+        The office providing the requested service is currently closed.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success: Returns the scenario entry’s current status / EWT (optionally)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        503
+
+        Service Unavailable'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Check Availability Example
+          content:
+            application/json:
+              example:
+                chat: available
+                ewt: '3'
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/parameters:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: expectedParameters
+      summary: Expected Parameters
+      description: 'This method returns an array of expected parameters. The parameters are optional. They may be used, for example, to look for the most qualified agents to handle the requested chat sessions and/or to display user information for the agents. These parameters are initially specified for the Messaging/Chat scenario entry through which this mobile application will communicate with the contact center.
+
+
+        Currently, the following parameter types are supported:
+
+
+        PHONE
+
+
+        TEXT
+
+
+        EMAIL
+
+
+        FIRST_NAME
+
+
+        LAST_NAME
+
+
+        ACCOUNT
+
+
+        COMPANY
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        application/json with names and types of parameters that may be expected from the client application
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Expected Parameters Example
+          content:
+            application/json:
+              example:
+                parameters:
+                - <name>: <type>
+                - '...'
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: requestChat
+      summary: Request Chat
+      description: 'This method initiates a chat session. It provides values of all or some of the expected parameters, and it may also contain the phone number of the mobile device. Depending on the scenario entry configuration, a callback can be initiated automatically to the specified number as soon as the chat request is delivered to the agent.
+
+
+        Notes:
+
+
+        The Request Chat method may return the ID and parameters of an existing chat session if there are any currently existing chat sessions associated with this specific client. For example, the client app created a chat session, which was then closed or crashed, then restarted before the session timed out on the server.
+
+
+        The is_new_chat response attribute is specified if the chat is a new session or existing session. The client application will handle these differently (e.g., if in an existing session the app may request session history and show the previous content.
+
+
+        If the associated mobile/web scenario entry is not configured for automatic callback, the agent can still use this number to call the mobile user manually, either upon the agent''s own initiative or when asked to do this via a chat message from the mobile user.
+
+
+        The parameter from may be used to specify either the device owner’s name or phone number. It will be placed in the scenario variable $(item.from).
+
+
+        Parameters returned in the parameters attribute are propagated into the scenario variable $(item.externalChatData).
+
+
+        Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value. This might be important for the clients with strict JSON serialization (i.e., the client app may fail deserializing the JSON if the attribute is missing).
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Chat session properties (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        503
+
+        Service Unavailable'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: Content
+        in: header
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "{\n    \"phone_number\":\"<phone number for callback, if necessary>\",\n    \"from\":\"<propagated into scenario variable $(item.from)>\",\n    \"parameters\":{\n        \"parameter_1\":\"value_1\",\n        \"...\",\n        \"parameter_n\":\"value_n\"\n    }\n}"
+      responses:
+        '200':
+          description: Request Chat Example
+          content:
+            application/json:
+              example:
+                state: ivr
+                ewt: '0'
+                chat_id: d6c1adc2-385b-42e5-9e0a-1883c2bc5f81
+                is_new_chat: true
+                phone_number: '16508888888'
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats/{chatId}/notifications:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: mobileNotificationSubscription
+      summary: Mobile Notification Subscription
+      description: 'This method is a client application request for either subscribing to or canceling mobile notifications for a chat session.
+
+
+        Notes
+
+
+        This method should be invoked after invoking the Request Chat method (i.e., the chatId value required for this method is returned in the Request Chat method).
+
+
+        Additionally, this method should be invoked when its device token is changed.
+
+
+        The client application may also opt to stop receiving mobile notifications by using this API method
+
+        with an empty JSON body: {}
+
+
+        Request Parameters
+
+
+        The mobile application will specify one of the following parameters, depending on the application’s
+
+        operating system and used notification framework.
+
+
+        Parameter Name
+
+        Description
+
+
+        ios_apns_device_token
+
+        The iOS application using native APNs
+
+
+        ios_app_bundle_id
+
+        For iOS devices using native APNs, this parameter is required and is used as the APNs topic
+
+
+        ios_firebase_device_token
+
+        The iOS application using Firebase notifications
+
+
+        android_firebase_device_token
+
+        The android application using Firebase notifications
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Names of configured services with current status
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        406
+
+        Not acceptable: Too many parameters/corresponding notifications are not configured for the Messaging/Chat entry'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "// For Apple Push Notification service (APNs):\n{\n    \"ios_apns_device_token\": \"<iOS APNs device token>\",\n    \"ios_app_bundle_id\": \"<iOS app ID>\"\n}\n// For Apple Firebase:\n{\n    \"ios_firebase_device_token\": \"<Firebase token>\"\n}\n//For Android Firebase:\n{\n    \"android_firebase_device_token\": \"<Firebase token>\"\n}"
+      responses:
+        '200':
+          description: Mobile Notification Subscription
+          content:
+            application/json:
+              example: {}
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats/active:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getActiveChat
+      summary: Get Active Chat
+      description: 'This method returns the properties of an active chat session. Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Chat session properties (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Active Chat Example
+          content:
+            application/json:
+              example:
+                chat_id: <chat ID>
+                state: <queued|connected|ivr>
+                ewt: <estimated wait time for a chat in state queued>
+                phone_number: <phone number that will be used for callback>
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats/{chatId}/events:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: sendEvents
+      summary: Send Events
+      description: 'This method sends events from the client to the server side.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        400
+
+        Bad Request
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not Found'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              events:
+              - <array of new chat events from server>
+      responses:
+        '200':
+          description: Send Events Example
+      security:
+      - bearerAuth: []
+    get:
+      operationId: getNewChatEvents
+      summary: Get New Chat Events
+      description: 'This method returns new chat events for the current session. If there are no new events, the server can keep the request active during a timeout (i.e., for about 5–15 seconds). If the client sends another request to get new events while the previous request is kept active, the server will respond with error 400 (Bad request).
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Array of chat events (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not Found
+
+
+        429
+
+        Too many requests'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get New Chat Events Example
+          content:
+            application/json:
+              example:
+                events:
+                - <array of chat events>
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats/{chatId}/history:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getChatHistory
+      summary: Get Chat History
+      description: 'This method returns all client events and all server events for the current session. Multiple event objects can be returned; each event''s timestamp attribute can be used to restore the correct message order.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Array of chat events (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Chat History Example
+          content:
+            application/json:
+              example:
+                events:
+                - <array of chat events>
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/files:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: uploadFile
+      summary: Upload File
+      description: 'This method uploads a file to the server. The maximum file size is 25 MB. The server will store up to 1000 files. Newly received files will replace the oldest files. This method can be used, for example, to send pictures from the client mobile application to the contact center agents.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        File ID to be used in the chat_session_file message (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        400
+
+        Bad Request
+
+
+        403
+
+        Forbidden'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Upload File Example
+          content:
+            application/json:
+              example:
+                file_id: file ID to use in chat_session_file message
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats/{chatId}/files/{fileId}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getFile
+      summary: Get File
+      description: 'This method downloads a file from the server using the received file ID. See server event Chat Session File.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        File content type
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get File Example
+          content:
+            application/json:
+              example: File content type
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/chats/{chatId}/profilephotos/{partyId}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getAgentProfilePhoto
+      summary: Get Agent Profile Photo
+      description: 'This method downloads a profile photo of the specified agent.
+
+
+        Request Body
+
+
+        The request body is the party ID of the agent participating in the current chat session.
+
+
+        Note: The party ID is provided with the chat event (polled at https://{host:port}/clientweb/api/v1/chats/{chatId}/events?tenantUrl={tenantUrl}). For example, you can see party_ID in the event message for chat_session_party_joined.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        File content type
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found'
+      tags:
+      - Methods
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: partyId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Agent Profile Photo Example
+          content:
+            application/json:
+              example: File content type
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/iceservers:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getIceServers
+      summary: Get ICE servers
+      description: 'This method returns a list of configured ICE servers to provide to the browser so that an audio-visual session could be added to the chat.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success: JSON response with information of ICE servers
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get ICE servers
+          content:
+            application/json:
+              example:
+                servers:
+                - url: <url>
+                  username: <(optional) username>
+                  credential: <(optional) password>
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/configuration:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getChatWidgetConfiguration
+      summary: Get Chat Widget Configuration
+      description: 'This method returns the chat widget configuration for the launch point.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success: JSON response with information of ICE servers
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Chat Widget Configuration
+          content:
+            application/json:
+              example: "{\n  \"widgets\":[\n     {\n       \"name\": \"<widget name>\",\n       \"urls\":[\"<url>\", …],\n       \"definition\": {\n         \"contact_tab\":{\n           \"enabled\": true|false,\n           \"location\": \"top_left|top_middle|top_right\n                       |right_top|right_middle|right_bottom\n                       |bottom_left| bottom_middle|bottom_right\n                       |left_top|left_middle|left_bottom\",\n           \"color\": \"<color>\",\n           \"bg_color\": \"color\",\n           \"font\": {\n             \"family\": \"<font family>\",\n             \"size\": \"<font size>\",\n             \"style\": \"<font style>\",\n             \"weight\": \"<font weight>\"   \n           },\n           \"agents_available_msg\": \"<msg>\",\n           \"agents_not_available_msg\": \"<msg>\",\n           \"out_of_hours_msg\": \"<msg>\",\n           \"show_ewt_out_of_hours\": true|false  \n         }\n       },\n\t    \"styles\":{\n\t\t    \"style1\":{\n                \"contentMargin\" : {\n                    \"margin\": \"\"\n                },\n                \"titleFont\" : {\n                    \"font-family\": \"\",\n                    \"font-style\": \"\",\n                    \"font-size\": \"\",\n                    \"font-weight\": \"\"\t\n                },\n                \"contactTabFont\" : {\n                    \"font-family\": \"\",\n                    \"font-style\": \"\",\n                    \"font-size\": \"\",\n                    \"font-weight\": \"\"\t\n                },\n                \"systemMessage\" : {\n                    \"background-color\": \"\"\n                },\n                \"agentMessage\" : {\n                    \"background-color\": \"\"\n                },\n                \"widgetBorder\" : {\n                    \"border\": \"1px solid etc...\",\n                    \"border-radius\": \"\"\n                },\n                \"contactTabBorder\": {\n                    \"border\": \"1px solid etc...\",\n                    \"border-radius\": \"\"\n                },\n                \"widgetBackground\" {\n                    \"background\": \"url(img.png) #fff repeat-y\"        \n                },\n                \"baseFont\": {\n                    \"font-family\": \"\",\n                    \"font-style\": \"\",\n                    \"font-size\": \"\",\n                    \"font-weight\": \"\",\n                    \"color\": \"\"\n                },    \n                \"dialogShadow\": {\n                    \"box-shadow\":\"\"\n                }    \n            }\n        } \n     }\n  ]\n}\n"
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/casehistory:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getCaseHistory
+      summary: Get Case History
+      description: 'This method returns the combined transcripts of all chat sessions (i.e., the chat thread) linked to the specific CRM case object. Note that this request should be made only after the chat_session_case_set server event is received; if the scenario has not specified a case, the request will return an error.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success: application/json
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found
+
+
+        406
+
+        Not acceptable: If the scenario did not specify a case'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Case History
+          content:
+            application/json:
+              example: "{\n    \"sessions\": [\n        {\n            \"chat_id\":\"<session 1 ID>\",\n            \"created_time\":<Unix timestamp in seconds>,\n            \"events\":<array of events from this chat session>\n        },\n        ...\n        {\n            \"chat_id\":\"<session 4 ID>\",\n            \"created_time\":<Unix timestamp in seconds>,\n            \"events\":<array of events from this chat session>\n        },\n        ...     \n    ]\n}"
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/closecase:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: closeCase
+      summary: Close Case
+      description: 'This method invokes a client application request to close the case associated with the chat session. Note that this request should be made only after the chat_session_case_set server event is received; if the scenario has not specified a case, the request will return an error.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Case successfully closed
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        403
+
+        Forbidden
+
+
+        404
+
+        Not found
+
+
+        406
+
+        Not acceptable: If scenario did not specify a case
+
+
+        500
+
+        Server error: Case is specified but cannot be closed (i.e., the CRM server responded with an error)'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Close Case
+          content:
+            application/json:
+              example: {}
+      security:
+      - bearerAuth: []
+  /clientweb/api/v2/version:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getVersion
+      summary: Get Version
+      description: 'This method returns the Bright Pattern Contact Center software version of the server. It may be used for informational purposes (e.g., adding the version number to the bottom of an application window or in an informational dialog window, as well as seeing the server version in the client application logs). Note that this method is not available in the Mobile/Web Messaging API v1.
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        OK: success
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        404
+
+        Not found: For example, if the existing Mobile/Web Messaging API v1 endpoint is called instead of the v2 endpoint'
+      tags:
+      - Methods
+      parameters:
+      - name: tenantUrl
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Version
+          content:
+            application/json:
+              example:
+                server_version: 5.5.6.12345 (Stable)
+      security:
+      - bearerAuth: []
+  /statsapi/subscription:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: createSubscription
+      summary: Create Subscription
+      description: 'This method creates a subscription for a specific set of metrics. Each client can have only one active subscription.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        OK subscription was created
+
+
+        400
+
+        Bad request
+
+
+        401
+
+        Unauthorized
+
+
+        409
+
+        Limit of active subscriptions exceeded for tenant'
+      tags:
+      - Methods
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example: "{\n    \"<app id>\": {\n        \"stats_totals\": [\"statistic name\" ], //array of statistics\n        \"service_grids\": [//array of service grid definitions \n            {\n                \"id\": \"<grid Id>\",\n                \"columns\": [//array of stats for columns\n                    {\n                        \"id\": \"<column id>\",\n                        \"stat_name\": \"<statistic protocol name>\"\n                    }\n                ], \n                \"order_by\": \"<column id>\",\n                \"order_dir\": \"ASC|DESC\",\n                \"limit\": \"<count of top records>\",\n                \"filter_by\": \"<column id>\",\n                \"filter_value\": \"<value>\",\n                \"filter_operation\": \"EQ|NE|LT|GT|LE|GE\"\n            }\n        ],\n        \"agent_grids\": [ //array of agent grid definitions  \n            {\n                \"id\": \"<grid Id>\",\n                \"columns\": [//array of stats for columns\n                    {\n                        \"id\": \"<column id>\",\n                        \"stat_name\": \"<statistic protocol name>\", \n                        \"dispositions\": [\"<(optional)list of dispositions>\"]\n                    }\n                ], \n                \"order_by\": \"<column id>\",\n                \"order_dir\": \"ASC|DESC\",\n                \"limit\": \"<count of top records>\",\n                \"filter_by\": \"<column id>\",\n                \"filter_value\": \"<value>\",\n                \"filter_operation\": \"EQ|NE|LT|GT|LE|GE\"\n            }\n        ],\n        \"chat_messages\": {//top of internal chat messages  \n        \"filter\": \"<filter by message content>\",\n        \"limit\": \"<count of top records>\"\n        }\n    }\n}"
+      responses:
+        '200':
+          description: Create Subscription
+      security:
+      - bearerAuth: []
+  /statsapi/subscription/data:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getSubscriptionData
+      summary: Get Subscription Data
+      description: 'This method gets the statistics data of an active subscription.
+
+
+        Note:
+
+
+        Your user must be the supervisor of a team in order to retrieve agent_grid information.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        OK
+
+
+        204
+
+        No content (data is not ready yet)
+
+
+        401
+
+        Unauthorized
+
+
+        404
+
+        Bad request (there is no active subscription)'
+      tags:
+      - Methods
+      responses:
+        '200':
+          description: Get Subscription Data
+          content:
+            application/json:
+              example:
+                example.subscription.string:
+                  agent_grids:
+                  - id: example.agent.grid
+                    values:
+                    - '1': christy.borden
+                      '2': '0'
+                    - '1': marky.mark
+                      '2': '0'
+                    - '1': allen.fawcett
+                      '2': '0'
+                    - '1': jeffery.lozada
+                      '2': '0'
+                    - '1': liza.smith
+                      '2': '1'
+                  service_grids:
+                  - id: example.service.grid
+                    values:
+                    - '1': Chat Service
+                      '2': '2'
+                    - '1': '1'
+                      '2': '1'
+                    - '1': Outbound Voice
+                      '2': '2'
+                    - '1': '3'
+                      '2': '1'
+                    - '1': Best Chat Service
+                      '2': '1'
+                    - '1': Voice Inbound
+                      '2': '2'
+                    - '1': Support for CSIM
+                      '2': '2'
+                    - '1': Email Svc
+                      '2': '2'
+                    - '1': Nice Inbound
+                      '2': '1'
+                    - '1': '2'
+                      '2': '1'
+                  stats_totals:
+                    agents_logged: '2'
+                    in_average_speed_of_answer: ''
+                    agents_ready: '2'
+                  chat_messages: []
+      security:
+      - bearerAuth: []
+  /statsapi/subscription/active:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    delete:
+      operationId: deleteSubscription
+      summary: Delete Subscription
+      description: This method deletes the active subscription, and clears the data cache on the server.
+      tags:
+      - Methods
+      responses:
+        '200':
+          description: Delete Subscription
+      security:
+      - bearerAuth: []
+  /statsapi/cfg/dispositions:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getDispositions
+      summary: Get Dispositions
+      description: 'This method gets the disposition names for all supervised services.
+
+
+        Optional URL Parameters
+
+
+        agentCanSelect = 1
+
+
+        inbound = 1
+
+
+        outbound = 1
+
+
+        preview = 1
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        OK
+
+
+        401
+
+        Unauthorized'
+      tags:
+      - Methods
+      responses:
+        '200':
+          description: Get Dispositions
+          content:
+            application/json:
+              example:
+              - Agent failure
+              - Disposition not found
+              - Dropped while talking
+              - Offer rejected
+              - Phone number out of service
+              - Product sold
+              - Silence
+              - System failure
+              - Wrong number
+      security:
+      - bearerAuth: []
+  /statsapi/info/check_available_agents:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getAvailableAgents
+      summary: Get Available Agents
+      description: 'This method gets either the "true" or the "false" value for agents ready to handle a specific service.
+
+
+        Note:
+
+
+        No authentication or subscription is needed for this method.
+
+
+        Response
+
+
+        Code
+
+        Description
+
+
+        200
+
+        OK
+
+
+        True
+
+        "Number of ready agents" > 0 for the specific service (i.e., at least one agent is available)
+
+
+        False
+
+        "Number of ready agents" is 0 for the specific service (i.e., no agent is available)'
+      tags:
+      - Methods
+      parameters:
+      - name: service
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get Available Agents
+          content:
+            application/json:
+              example:
+                availability: true
+      security:
+      - bearerAuth: []
+  /statsapi/cfg/teams:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getTeams
+      summary: Get Teams
+      description: 'This method returns the names and internal object IDs of teams configured for the given tenant.
+
+
+        Note that in order to get the above information about a specific team, the account used for API authentication must be assigned as a supervisor to that team.'
+      tags:
+      - Methods
+      responses:
+        '200':
+          description: Get Teams
+          content:
+            application/json:
+              example:
+              - id: F4ED90FA-5A49-4D76-9487-4E41B24CA45F
+                name: Customer Service
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as `Authorization: Bearer <token>`.'
+    oauth2ClientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client-credentials grant against the Bright Pattern tenant token endpoint.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant_url}/configapi/v2/oauth/token
+          scopes: {}
+x-refined-from:
+- bright-pattern-mobile-web-messaging-v1-openapi.yml
+- bright-pattern-mobile-web-messaging-v2-openapi.yml
+- bright-pattern-real-time-statistics-openapi.yml

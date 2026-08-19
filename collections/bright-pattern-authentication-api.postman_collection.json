@@ -1,0 +1,537 @@
+{
+  "item": [
+    {
+      "id": "06234a0a-6907-4c1b-8cf0-6724174c4a38",
+      "name": "Authentication",
+      "description": {
+        "content": "The OAuth 2.0 Client Credentials Grant is used to authenticate clients of this API. The authenticated user is checked for having appropriate privileges to perform the requested operation. The complete list of privileges can be found here. Privileges are assigned to users via one or more Roles.\n\nTo obtain an access token:\n\nLogin to your BPCC configuraiton portal.\n\nNavigate to Users page.\n\nSelect or create a user with privileges corresponding to the tasks you wish to perform via the BPCC Configuraiton API.\n\nClick the Generate button to generate an API secret key. Copy the generated key and note the username for the next steps.\n\nUse the Get Access Token method to obtain an access token. Set the client_id to the username and client_secret to the generated API secrect key.\n\nUse the value of access_token returned in the response to set the Authorization: Bearer [access token] header of each subsequent request made via the BPCC Configuraiton API.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ce71852f-f1c8-4dc4-b9cf-0e22355868e5",
+          "name": "Get Access Token",
+          "request": {
+            "name": "Get Access Token",
+            "description": {
+              "content": "Returns an access token that will be used to authenticate each subsequent request made via this API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "oauth",
+                "token"
+              ],
+              "host": [
+                "{{configapi-v2-oauth-token-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "Username of a BP user authorized to manage users and/or phones."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_secret",
+                  "value": "<string>",
+                  "description": "API secret key generated for the above user."
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "Your contact center domain name, e.g., example.brightpattern.com."
+                },
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>",
+                  "description": "Grant type. Must be set to client_credentials."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4cbc0bc9-29f5-4002-9810-046fcae77eaa",
+              "name": "Get Access Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{configapi-v2-oauth-token-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Username of a BP user authorized to manage users and/or phones.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": ""
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "API secret key generated for the above user.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": ""
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Your contact center domain name, e.g., example.brightpattern.com.",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": ""
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Grant type. Must be set to client_credentials.",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"CCE2C2EB964827XXXXXXXXXX3E1DEB2867C86D6C7ECDCE36C18D56XXXXXXXXXX\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": \"3600\",\n  \"scope\": \"yourcompany.brightpattern.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7af742a8-64d2-4225-b25d-3767f85fcf5d",
+          "name": "Get Access Token",
+          "request": {
+            "name": "Get Access Token",
+            "description": {
+              "content": "This method returns an access token that will be used to authenticate each subsequent request made via this API.\n\nNote: Access Tokens expire after 1 hour and require renewal.\n\nSupplementing invalid credentials in any of the parameters will return a 401 Authentification failed response. Client authentification will also fail if the selected user is locked out or disabled, or the chosen tenant is inactive.\n\nNote: Clients are authenticated using OAuth 2.0 Client Credentials Grant, therefore, thegrant_type parameter is always set to 'client_credentials'. Examples of other parameter values can be found in the Request body below.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "oauth",
+                "token"
+              ],
+              "host": [
+                "{{configapi-v3-oauth-token-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "client_secret",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "eeff99fc-8252-4abc-92fa-48e5459c56ae",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{configapi-v3-oauth-token-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "client_id",
+                      "value": "Username "
+                    },
+                    {
+                      "disabled": false,
+                      "key": "client_secret",
+                      "value": "API secret"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "scope",
+                      "value": "<tenant_URL>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "grant_type",
+                      "value": "client_credentials"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"9E266F3C6189F70D10CBDCB6C7D457FB690C0BF401841F3FB29C463D9251FB1D\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": \"3480\",\n  \"scope\": \"example.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9c05f998-8b76-472d-a752-2b5f2c88d3ff",
+          "name": "Authenticate",
+          "request": {
+            "name": "Authenticate",
+            "description": {
+              "content": "Authenticate - Deprecated\n\nNote: This method is no longer supported; use the Get Access Token method instead.\n\nThis method authenticates a user on a server. In the case of successful authentication, the server sets session cookies.\n\nResponse Codes\n\nCode\nDescription\n\n200\nOK\n\n401\nUnauthorized\n\n403\nForbidden (BPCC version 5.36 and later; Basic Authentication no longer supported)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "statsapi",
+                "auth"
+              ],
+              "host": [
+                "{{statsapi-auth-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "341c50d4-39eb-4f1d-a177-69023634c588",
+              "name": "Authenticate",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statsapi",
+                    "auth"
+                  ],
+                  "host": [
+                    "{{statsapi-auth-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tenant_url\": \"<tenant_url>\",\n  \"username\": \"<username>\",\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"token\": \"61XXXXX2-XEX5-4XBX-81C3-14CXXXXXX721\",\n  \"privileges\": [\n    \"PUSH_PULL_GLOBAL_WALLBOARDS\",\n    \"CUSTOMIZE_WALLBOARDS\",\n    \"SYS_USE_AGENT_SEAT_MAPS\"\n  ],\n  \"user_id\": \"XXXC49E4-E9XX-4XFX-X4X4-62XXXXXXXX8E\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "baseUrl"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v2-oauth-token-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-oauth-token-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "statsapi-auth-Url"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1d8dc091-f6da-4a13-b6d0-45be158ef37d",
+    "name": "Bright Pattern Authentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Operations tagged Authentication across 9 of this provider's published API definitions: bright-pattern-configuration-openapi.yml, bright-pattern-interaction-content-openapi.yml, bright-pattern-list-management-v2-openapi.yml, bright-pattern-list-management-v3-2-openapi.yml, bright-pattern-list-management-v3-openapi.yml, bright-pattern-real-time-statistics-openapi.yml, bright-pattern-scim-user-provisioning-openapi.yml, bright-pattern-sms-mms-openapi.yml, bright-pattern-task-routing-openapi.yml. Each path carries the servers of the definition it was published in.\n\nContact Support:\n Name: Bright Pattern",
+      "type": "text/plain"
+    }
+  }
+}

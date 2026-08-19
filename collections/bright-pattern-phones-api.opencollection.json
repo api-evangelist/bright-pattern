@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BPCC Configuration Phones API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Phones",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Directory",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v2/phone/user",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns list of users with thier extensions and assigned external (DID) numbers."
+        },
+        {
+          "info": {
+            "name": "Get Access Numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v2/phone/ext",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of access numbers with current assignments."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

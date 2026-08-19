@@ -1,0 +1,496 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bright Pattern Lists API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Lists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Records DEPRECATED",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/getAll/:list_id/:campaign_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a list of records from a calling list associated with a campaign.\n\nRecords are referenced by indexes, assigned to each record in the list in sequential order of insertion (beginning from 0). All records with an index greater than or equal to the requested record index, fromIndex, are returned in the response.\n\nNote: The returned recordset contains JSON objects sorted by the index field. List Record JSON Object has two sub-objects, entry and status, defined as follows:\n\nentry "
+        },
+        {
+          "info": {
+            "name": "Get Updated Records DEPRECATED",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/getChanged/:list_id/:campaign_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a list of records from a calling list that have had any activity within the associated campaign since the requested initial time, fromTime.\n\nNote: The returned record set contains JSON objects sorted by the index field. List Record JSON Object has two sub-objects, entry and status, defined as follows:\n\nentry object: contains a copy of the list entry\n\nfield names are retained as defined at list creation\n\ncustom fields are returned with the prefix 'custom_' added to the name de"
+        },
+        {
+          "info": {
+            "name": "Query a Record DEPRECATED",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/get/:list_id/:campaign_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a copy of an existing record in a calling list of an associated campaign. The list is specified in the path variable, list_id, by its unique identifier returned in the response body of the Get Campaign method (see here). The campaign is specified in the path variable, campaign_id, by its unique identifier returned in the response body of the Get Campaigns method (see here).\n\nThe record search is performed by its unique identifier, id, returned in the response body of the Get "
+        },
+        {
+          "info": {
+            "name": "Fetch All Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/fetchAll/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a list of records from an existing calling list, specified in the path variable, list_id.\n\nRecords are referenced by indexes, assigned to each record in the list in sequential order of insertion (beginning from 0). All records with an index greater than or equal to the requested record index, fromIndex, are returned in the response.\n\nNote: The returned recordset contains JSON objects sorted by the index field. List Record JSON Object contains:\n\nentry object: contains a copy o"
+        },
+        {
+          "info": {
+            "name": "Fetch Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/fetch/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns a copy of one or more existing records in a calling list. The search for the records is performed based on the defined key fields.\n\nNote: Time and date field values are returned in UTC format.\n\nNote: If a PHONE type field is defined as a key, the record value is checked for a full match with the value stored in the database or the original source (if the data was modified upon loading into the database).\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format "
+        },
+        {
+          "info": {
+            "name": "Get Lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/getAll",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns all Calling Lists, sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlimit\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\ncursor\nstring"
+        },
+        {
+          "info": {
+            "name": "Get List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/getList/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the information about a list, including its name, the format name, timezone settings, and amount of records of the specified list. Additionally, it returns the information about the associated campaign of that list, if any.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (wrong cursor; format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthenticatio"
+        },
+        {
+          "info": {
+            "name": "Delete List and Orphaned Format",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/deleteList/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method deletes a list, archiving all records with associated campaign results associated with that list. If the last list using a specific format was deleted, that format is removed as well.\n\nNote: Bright Pattern Contact Center solution supports several voice campaign modes (see here). Depending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns\nUpon instance deletion, all active, i.e. in a d"
+        },
+        {
+          "info": {
+            "name": "Create List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/createList",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method creates a new empty list using an existing format. The format is specified by its unique identifier, formatId, returned in the response body of the Get Lists method (see here).\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nformatId\nstring\nyes (can be found in the Get Lists  response)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed "
+        },
+        {
+          "info": {
+            "name": "Create List with New Format",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/createListWithNewFormat",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method creates a new empty list and a new format corresponding to that list.\n\nWhen creating the new list format, the fields must be defined with the following properties in mind:\n\nField Property\nDescription\n\nname (string)\nRequired property that defines field names. The names must be unique.  \nDefault value: -\n\ntype (string)\nRequired property that indicates the type of data the field contains.  \nNote: See the table below for available data types.  \nDefault value: -\n\nrequired (boolean)\nOption"
+        },
+        {
+          "info": {
+            "name": "Update List Properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/updateListProperties/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method allows to change the name and the expiration settings of an existing calling list, specified in the path variable, list_id.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring, ≤ 255 characters  \n  \nNote: Calling list name must be unique within the contact center\nno\n-\n\nexpireRecords\nboolean\nno\nDefault = false\n\nexpirationPeriod\ninteger, [0, 365]  \n  \nNote: Specifies number of days since record was added to the Calling list, after which that records is considere"
+        },
+        {
+          "info": {
+            "name": "Add Many Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/addAll/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method updates fields in existing records of a calling list and returns the number of successfully updated records.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nlimitExceeded - the maximum total number of rows across all existing lists has been reached\n\nmissingKey - one or more key field values"
+        },
+        {
+          "info": {
+            "name": "Add Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/add/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method adds a single new record to a calling list.\n\nBefore the record is added, the uniqueness of its key values is checked against the contents of the list. If the list does not already have a record with the specified key values, the new record is added successfully.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or"
+        },
+        {
+          "info": {
+            "name": "Update Many Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/updateAll/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method updates fields in existing records of a calling list and returns the number of successfully updated records. Additionally, this method can reset optional parameters to their default values by passing \" \" or null to these parameters.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nmissingKey"
+        },
+        {
+          "info": {
+            "name": "Update Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/update/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method updates fields in an existing record of a calling list. Additionally, this method can reset an optional parameter to its default value by passing \" \" or null to that parameter.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nThe search for the record is performed based on the defined key fields. The request can contain either a full or partial set of fields of the List Record JSON Object, but the ke"
+        },
+        {
+          "info": {
+            "name": "Delete Many Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/delete/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method deletes records from a list and returns the number of successfully deleted records.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nRecords are searched for by one or many criteria defined in correspondence with the associated list fields. At least one of the available filtering criteria has to be specified. Otherwise, no record is deleted.\n\nThe method supports filtering records by:\n\nkey and searcha"
+        },
+        {
+          "info": {
+            "name": "Erase Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/erase/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method removes a record from a list and all associated campaign results. The search for the record is performed based on the defined key fields. An error is returned if a record does not exist.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nBright Pattern Contact Center solution supports several voice campaign modes (see here). If the last record is being deleted, depending on the mode of the associated c"
+        },
+        {
+          "info": {
+            "name": "Delete All Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/configapi/v3/callinglist/deleteAll/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method removes all records from a list and returns the number of successfully deleted records.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nBright Pattern Contact Center solution supports several voice campaign modes (see here). Depending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns\nUpon instance de"
+        },
+        {
+          "info": {
+            "name": "Get Job Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/configapi/v3/job/:job_id",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This method returns the status of the record deletion job, requested in Delete Many Records or Delete All Records methods. The job is referenced in the path variable by its unique identifier, returned in the response body of the above methods.\n\nDepending on the status of the record deletion job, the following parameters are retuned in the response body:\n\ncompletion_percentage: calculated as the current number of succesfully deleted records over the total number of records to be deleted (multipli"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

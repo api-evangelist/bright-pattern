@@ -1,0 +1,2905 @@
+{
+  "item": [
+    {
+      "id": "e0fcfc94-705e-4d12-a8c5-c2ee131c3468",
+      "name": "Lists",
+      "description": {
+        "content": "Bright Pattern's List Management API streamlines the creation and deletion of lists and formats and provides a convenient way to manage list records.\n\nNote: Performing operations on lists requires the user to have the \"Manage Lists\" privilege, configured in the Contact Center Administrator application. Additional privileges required are explicitly specified in the corresponding method description.\n\nAll of the methods described below use the path variable, list_id, to specify the list an operation is to be performed on. The unique identifier of a list can be found by opening that list in the Contact Center Administrator application, Lists section. The id will be displayed in the '#LISTS:LISTS_PROPERTIES:' fragment of the URL.\n\nAlternatively, list_id, can be found in the response body of the Get Lists method (see here).\n\nMethods retained from the previous version of the List management API, tagged as \"DEPRECIATED\", require an additional path variable, campaign_id, to reference the campaign associated with the selected list. The unique identifier of a campaign can be found by opening that campaign in the Contact Center Administrator application, Services & Campaigns section. The id will be displayed in the '#SERVICES_CAMPAIGNS:SERVICES_PROPERTIES:' fragment of the URL.\n\nAlternatively, campaign_id, can be found in the response body of the Get Campaigns method (see here).\n\nNote: When importing records or updating records it is important to remember that:\n\nAll leading and trailing whitespaces should be deleted.\n\nFor all PHONE numbers:\n\nIf a number begins with “+”, the leading \"+\" sign will be removed.\n\nIf a number contains non-numeric characters, they will be removed.\n\nAt least one PHONE number is required.\n\nFor the United States and Canada PHONE numbers:\n\nIf a number begins with “011”, it will be kept as is.\n\nIf a number begins with “1” and has eleven digits, it will be kept as is.\n\nIf a number does not begin with “1” and has ten digits, “1” will be prepended.\n\nIf a number begins with “1” and has ten digits, the record will not be imported, returning a format error.\n\nIn any other case, the record will not be imported, returning a format error.\n\nRemove prefix and Default country code fields will be ignored.\n\nFor Other countries PHONE numbers:\n\nIf a number begins with prefix matching Remove prefix, the prefix will be deleted.\n\nIf a number does not begin with prefix matching Remove prefix, it will be kept as is.\n\nIf a number does not begin with prefix matching Default country code, Default country code will be added.\n\nFor all INTEGER fields:\n\nIf the value is presented as a string, it should be converted to an integer.\n\nValues presented as integers should be supported.\n\nFor all fields that expect strings (ACCOUNT, AGENT_LOGIN_ID, FIRST_NAME, LAST_NAME, etc.) integer values should be converted to strings.\n\nCapitalization matters: values with different capitalizations are treated as distinct.\n\nFor all DATE/TIME and DATE/TIME - SCHEDULE CALL AT fields:\n\nIf a…",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8d1d7bf5-e481-4465-bfe7-1e0fc0410276",
+          "name": "Get All Records DEPRECATED",
+          "request": {
+            "name": "Get All Records DEPRECATED",
+            "description": {
+              "content": "This method returns a list of records from a calling list associated with a campaign.\n\nRecords are referenced by indexes, assigned to each record in the list in sequential order of insertion (beginning from 0). All records with an index greater than or equal to the requested record index, fromIndex, are returned in the response.\n\nNote: The returned recordset contains JSON objects sorted by the index field. List Record JSON Object has two sub-objects, entry and status, defined as follows:\n\nentry object: contains a copy of the list entry\n\nfield names are retained as defined at list creation\n\ncustom fields are returned with the prefix 'custom_' added to the name defined in the Administrator Application\n\nNote: The value returned in the id field can be used to reference this record in further API requests.\n\nstatusobject: contains the campaign results for this specific record\n\nomitted if the list is not assigned to the campaign or the campaign doesn't exist\n\nfield names are predefined\n\ncompleted field is always present, while the other fields may be absent if the record was never called or never reached an agent.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nmaxSize\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\nfromIndex\nstring\nyes (specifies initial record index, used for pagination)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Campaign was not found;  \nSpecified List was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "getAll",
+                ":list_id",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-getAll-list_id-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6d5232fb-6e3b-413e-9fea-d61968804bff",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "getAll",
+                    ":list_id",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-getAll-list_id-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fromIndex\": 0,\n  \"maxSize\": \"100\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"entry\": {\n      \"firstname\": \"Graham\",\n      \"phone\": \"16509999999\",\n      \"id\": \"1\",\n      \"lastname\": \"Smith\",\n      \"status\": \"Gold\"\n    },\n    \"index\": 0,\n    \"status\": {\n      \"globalInteractionID\": \"0B767156-D012-4F63-A3E2-12ACFC2F26EA\",\n      \"lastCallDuration\": 0,\n      \"lastDisposition\": \"No disposition\",\n      \"totalAttempts\": 1,\n      \"completed\": false,\n      \"lastAgent\": \"elizabeth\",\n      \"lastPhone\": \"16509999999\",\n      \"lastDate\": \"2021-02-19T19:11:40.000\"\n    }\n  },\n  {\n    \"entry\": {\n      \"firstname\": \"Mike\",\n      \"phone\": \"16507777777\",\n      \"id\": \"2\",\n      \"lastname\": \"Miller\",\n      \"status\": \"Platinum\"\n    },\n    \"index\": 1,\n    \"status\": {\n      \"globalInteractionID\": \"3F4F2ACD-1233-42E3-8092-3A9F7D9D84BC\",\n      \"lastCallDuration\": 0,\n      \"lastDisposition\": \"Try again later\",\n      \"totalAttempts\": 1,\n      \"completed\": false,\n      \"lastAgent\": \"elizabeth\",\n      \"lastPhone\": \"16507777777\",\n      \"lastDate\": \"2021-02-19T19:12:21.000\"\n    }\n  },\n  {\n    \"entry\": {\n      \"firstname\": \"Katrina\",\n      \"phone\": \"16505555555\",\n      \"id\": \"3\",\n      \"lastname\": \"Johnson\",\n      \"status\": \"Silver\"\n    },\n    \"index\": 2,\n    \"status\": {\n      \"globalInteractionID\": \"9D914127-C1C4-4587-8B30-4E2A9790D184\",\n      \"lastCallDuration\": 0,\n      \"lastDisposition\": \"Product sold\",\n      \"totalAttempts\": 1,\n      \"completed\": true,\n      \"completedTime\": \"2021-02-19T19:12:37.000\",\n      \"lastAgent\": \"elizabeth\",\n      \"lastPhone\": \"16505555555\",\n      \"lastDate\": \"2021-02-19T19:12:37.000\"\n    }\n  },\n  {\n    \"entry\": {\n      \"firstname\": \"Jenny\",\n      \"phone\": \"16502222222\",\n      \"id\": \"4\",\n      \"lastname\": \"Green\",\n      \"status\": \"Gold\"\n    },\n    \"index\": 3,\n    \"status\": {\n      \"globalInteractionID\": \"35DE77AC-5A37-4907-97CA-50B09B30ECDF\",\n      \"lastCallDuration\": 0,\n      \"lastDisposition\": \"Fast busy\",\n      \"totalAttempts\": 1,\n      \"completed\": false,\n      \"lastAgent\": \"elizabeth\",\n      \"lastPhone\": \"16502222222\",\n      \"lastDate\": \"2021-02-19T19:13:08.000\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8730e5cc-3884-41ce-85b0-2f182ff1db4b",
+          "name": "Get Updated Records DEPRECATED",
+          "request": {
+            "name": "Get Updated Records DEPRECATED",
+            "description": {
+              "content": "This method returns a list of records from a calling list that have had any activity within the associated campaign since the requested initial time, fromTime.\n\nNote: The returned record set contains JSON objects sorted by the index field. List Record JSON Object has two sub-objects, entry and status, defined as follows:\n\nentry object: contains a copy of the list entry\n\nfield names are retained as defined at list creation\n\ncustom fields are returned with the prefix 'custom_' added to the name defined in the Administrator Application\n\ntime and date field values are returned in UTC format\n\nstatusobject: contains the campaign results for this specific record\n\nomitted if the list is not assigned to the campaign or the campaign doesn't exist\n\nfield names are predefined\n\ncompleted field is always present, while the other fields may be absent if the record was never called or never reached an agent.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nmaxSize\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\nfromTime\nstring\nyes (specifies initial time)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Campaign was not found;  \nSpecified List was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "getChanged",
+                ":list_id",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-getChanged-list_id-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e4a79efe-769d-4df6-9eb4-9e1ceb833502",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "getChanged",
+                    ":list_id",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-getChanged-list_id-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fromTime\": \"2013-03-01T13:15:06.456\",\n  \"maxSize\": \"100\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"entry\": {\n      \"firstname\": \"Graham\",\n      \"phone\": \"16509999999\",\n      \"id\": \"1\",\n      \"lastname\": \"Smith\",\n      \"status\": \"Gold\"\n    },\n    \"completed\": false,\n    \"recordDisposition\": \"\",\n    \"recordDispositionCode\": \"\",\n    \"totalAttempts\": 1,\n    \"attempts\": [\n      {\n        \"call_attempted\": false,\n        \"disposition\": \"No disposition\",\n        \"dispositionCode\": \"\",\n        \"date\": \"2021-02-19T19:11:40.000\",\n        \"phone\": \"16509999999\",\n        \"callDuration\": 0,\n        \"dialingDuration\": 0,\n        \"callNotes\": \"\",\n        \"agent\": \"elizabeth\",\n        \"globalInteractionID\": \"0B767156-D012-4F63-A3E2-12ACFC2F26EA\",\n        \"CPADuration\": 0\n      }\n    ]\n  },\n  {\n    \"entry\": {\n      \"firstname\": \"Mike\",\n      \"phone\": \"16507777777\",\n      \"id\": \"2\",\n      \"lastname\": \"Miller\",\n      \"status\": \"Platinum\"\n    },\n    \"completed\": false,\n    \"recordDisposition\": \"\",\n    \"recordDispositionCode\": \"\",\n    \"totalAttempts\": 1,\n    \"attempts\": [\n      {\n        \"call_attempted\": false,\n        \"disposition\": \"Try again later\",\n        \"dispositionCode\": \"\",\n        \"date\": \"2021-02-19T19:12:21.000\",\n        \"phone\": \"16507777777\",\n        \"callDuration\": 0,\n        \"dialingDuration\": 0,\n        \"callNotes\": \"\",\n        \"agent\": \"elizabeth\",\n        \"globalInteractionID\": \"3F4F2ACD-1233-42E3-8092-3A9F7D9D84BC\",\n        \"CPADuration\": 0\n      }\n    ]\n  },\n  {\n    \"entry\": {\n      \"firstname\": \"Katrina\",\n      \"phone\": \"16505555555\",\n      \"id\": \"3\",\n      \"lastname\": \"Johnson\",\n      \"status\": \"Silver\"\n    },\n    \"completed\": true,\n    \"recordDisposition\": \"Product sold\",\n    \"recordDispositionCode\": \"\",\n    \"totalAttempts\": 1,\n    \"attempts\": [\n      {\n        \"call_attempted\": false,\n        \"disposition\": \"Product sold\",\n        \"dispositionCode\": \"\",\n        \"date\": \"2021-02-19T19:12:37.000\",\n        \"phone\": \"16505555555\",\n        \"callDuration\": 0,\n        \"dialingDuration\": 0,\n        \"callNotes\": \"\",\n        \"agent\": \"elizabeth\",\n        \"globalInteractionID\": \"9D914127-C1C4-4587-8B30-4E2A9790D184\",\n        \"CPADuration\": 0\n      }\n    ]\n  },\n  {\n    \"entry\": {\n      \"firstname\": \"Jenny\",\n      \"phone\": \"16502222222\",\n      \"id\": \"4\",\n      \"lastname\": \"Green\",\n      \"status\": \"Gold\"\n    },\n    \"completed\": false,\n    \"recordDisposition\": \"\",\n    \"recordDispositionCode\": \"\",\n    \"totalAttempts\": 1,\n    \"attempts\": [\n      {\n        \"call_attempted\": false,\n        \"disposition\": \"Fast busy\",\n        \"dispositionCode\": \"\",\n        \"date\": \"2021-02-19T19:13:08.000\",\n        \"phone\": \"16502222222\",\n        \"callDuration\": 0,\n        \"dialingDuration\": 0,\n        \"callNotes\": \"\",\n        \"agent\": \"elizabeth\",\n        \"globalInteractionID\": \"35DE77AC-5A37-4907-97CA-50B09B30ECDF\",\n        \"CPADuration\": 0\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4f9a6bcb-a794-486d-a6d3-22ef3549bde3",
+          "name": "Query a Record DEPRECATED",
+          "request": {
+            "name": "Query a Record DEPRECATED",
+            "description": {
+              "content": "This method returns a copy of an existing record in a calling list of an associated campaign. The list is specified in the path variable, list_id, by its unique identifier returned in the response body of the Get Campaign method (see here). The campaign is specified in the path variable, campaign_id, by its unique identifier returned in the response body of the Get Campaigns method (see here).\n\nThe record search is performed by its unique identifier, id, returned in the response body of the Get All Records method (see here). If the list has been added to the specified campaign more than once, the method returns an array of records. An error is returned if a record with the specified id does not exist in the selected list.\n\nNote: The response body contains the List Record JSON Object, defined by two sub-objects as follows:\n\nentry object: contains a copy of the list entry\nfield names are retained as defined at list creation\ncustom fields are returned with the prefix 'custom_' added to the name defined in the Administrator Application\n\ntime and date field values are returned in UTC format\n\nstatusobject: contains the campaign results for this specific record\nomitted if the list is not assigned to the campaign or the campaign doesn't exist\n\nfield names are predefined\n\ncompleted field is always present, while the other fields may be absent if the record was never called or never reached an agent.\n\nNote: If a PHONE type field is defined as a key, the record value is checked for a full match with the value stored in the database or the original source (if the data was modified upon loading into the database).\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nSpecified Record was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "get",
+                ":list_id",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-get-list_id-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "694eaf87-9b25-4660-89f9-dc0fa31ee22c",
+              "name": "0 instances - 200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "get",
+                    ":list_id",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-get-list_id-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"N4\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entry\": {\n    \"firstname\": \"Mike\",\n    \"phone\": \"16505555555\",\n    \"id\": \"2\",\n    \"lastname\": \"Miller\",\n    \"status\": \"Platinum\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2431618a-5ec5-4ebb-ac2f-705e42d0ea80",
+          "name": "Fetch All Records",
+          "request": {
+            "name": "Fetch All Records",
+            "description": {
+              "content": "This method returns a list of records from an existing calling list, specified in the path variable, list_id.\n\nRecords are referenced by indexes, assigned to each record in the list in sequential order of insertion (beginning from 0). All records with an index greater than or equal to the requested record index, fromIndex, are returned in the response.\n\nNote: The returned recordset contains JSON objects sorted by the index field. List Record JSON Object contains:\n\nentry object: contains a copy of the list entry\n\nfield names are retained as defined at list creation\n\nNote: This method doesn't return custom fields\n\nNote: The value returned in the id field can be used to reference this record in further API requests.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nmaxSize\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\nfromIndex\nstring\nyes (specifies initial record index, used for pagination)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "fetchAll",
+                ":list_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-fetchAll-list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3acd7bfd-6a9e-4dc2-9cc6-f60f54f5b1d4",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "fetchAll",
+                    ":list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-fetchAll-list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fromIndex\": 0,\n  \"maxSize\": \"100\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"[\\n  {\\n    \\\"entry\\\": {\\n      \\\"firstname\\\": \\\"Graham\\\",\\n      \\\"phone\\\": \\\"16509999999\\\",\\n      \\\"id\\\": \\\"1\\\",\\n      \\\"lastname\\\": \\\"Smith\\\",\\n      \\\"status\\\": \\\"Gold\\\"\\n    },\\n    \\\"index\\\": 0,\\n    },\\n  {\\n    \\\"entry\\\": {\\n      \\\"firstname\\\": \\\"Mike\\\",\\n      \\\"phone\\\": \\\"16507777777\\\",\\n      \\\"id\\\": \\\"2\\\",\\n      \\\"lastname\\\": \\\"Miller\\\",\\n      \\\"status\\\": \\\"Platinum\\\"\\n    },\\n    \\\"index\\\": 1,\\n    },\\n  {\\n    \\\"entry\\\": {\\n      \\\"firstname\\\": \\\"Katrina\\\",\\n      \\\"phone\\\": \\\"16505555555\\\",\\n      \\\"id\\\": \\\"3\\\",\\n      \\\"lastname\\\": \\\"Johnson\\\",\\n      \\\"status\\\": \\\"Silver\\\"\\n    },\\n    \\\"index\\\": 2,\\n    },\\n  {\\n    \\\"entry\\\": {\\n      \\\"firstname\\\": \\\"Jenny\\\",\\n      \\\"phone\\\": \\\"16502222222\\\",\\n      \\\"id\\\": \\\"4\\\",\\n      \\\"lastname\\\": \\\"Green\\\",\\n      \\\"status\\\": \\\"Gold\\\"\\n    },\\n    \\\"index\\\": 3, \\n    }\\n  }\\n]\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "942f402a-9505-4d6d-ba38-26080f41b17f",
+          "name": "Fetch Record",
+          "request": {
+            "name": "Fetch Record",
+            "description": {
+              "content": "This method returns a copy of one or more existing records in a calling list. The search for the records is performed based on the defined key fields.\n\nNote: Time and date field values are returned in UTC format.\n\nNote: If a PHONE type field is defined as a key, the record value is checked for a full match with the value stored in the database or the original source (if the data was modified upon loading into the database).\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "fetch",
+                ":list_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-fetch-list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a0150fa1-36b3-4fd9-8556-769bcc4713fe",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "fetch",
+                    ":list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-fetch-list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone\": [\n    \"16505555555\",\n    \"16505555556\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entry\": {\n    \"firstname\": \"Mike\",\n    \"phone\": \"16505555555\",\n    \"id\": \"2\",\n    \"lastname\": \"Miller\",\n    \"status\": \"Platinum\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9e6a90a-afe0-4695-904b-51d0b51fc6f9",
+          "name": "Get Lists",
+          "request": {
+            "name": "Get Lists",
+            "description": {
+              "content": "This method returns all Calling Lists, sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlimit\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\ncursor\nstring\nno (used for pagination)\nFirst request: null  \nSubsequent request: value received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (limit exceeded; format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "getAll"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-getAll-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eeefaa06-1b8d-465e-898b-bf1241e7e2f9",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "getAll"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-getAll-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 100,\n  \"cursor\": \"590e9abd4abbf1165862d342\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next_cursor\": \"590e9abd4abbf1165862d342\",\n  \"records\": [\n    {\n      \"id\": \"635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D\",\n      \"name\": \"List 1.csv\",\n      \"formatId\": \"31002C90-7188-11EE-A565-0800200C9A66\",\n      \"formatName\": \"format 1\",\n      \"allowUsingDefaultTimezone\": true,\n      \"defaultTimezone\": \"Europe/Dublin\",\n      \"totalRecords\": 100\n    },\n    {\n      \"id\": \"635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D\",\n      \"name\": \"List 2.csv\",\n      \"formatId\": \"31002C90-7188-11EE-A565-0800200C9A66\",\n      \"formatName\": \"format 1\",\n      \"allowUsingDefaultTimezone\": false,\n      \"totalRecords\": 100\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "785885e7-41a9-4f25-ab3d-6f36a6f63bd7",
+          "name": "Get List",
+          "request": {
+            "name": "Get List",
+            "description": {
+              "content": "This method returns the information about a list, including its name, the format name, timezone settings, and amount of records of the specified list. Additionally, it returns the information about the associated campaign of that list, if any.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (wrong cursor; format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "getList",
+                ":list_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-getList-list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6cfdae73-e95f-49a9-8146-0bc3fb3c41e5",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "getList",
+                    ":list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-getList-list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"List 1.csv\",\n  \"formatId\": \"31002C90-7188-11EE-A565-0800200C9A66\",\n  \"formatName\": \"format 1\",\n  \"allowUsingDefaultTimezone\": true,\n  \"defaultTimezone\": \"Europe/Dublin\",\n  \"totalRecords\": 100,\n  \"campaigns\": [\n    {\n      \"campaignName\": \"Campaign name 1\",\n      \"campaignId\": \"99B6B870-6CC5-11EE-807C-0800200C9A66\",\n      \"instanceId\": \"94D63B10-6CF1-11EE-807C-0800200C9A66\"\n    },\n    {\n      \"campaignName\": \"Campaign name 1\",\n      \"campaignId\": \"99B6B870-6CC5-11EE-807C-0800200C9A66\",\n      \"instanceId\": \"9EA07CA0-6CF1-11EE-807C-0800200C9A66\"\n    },\n    {\n      \"campaignName\": \"Campaign name 2\",\n      \"campaignId\": \"7E57DE70-6CF1-11EE-807C-0800200C9A66\",\n      \"instanceId\": \"A5F55160-6CF1-11EE-807C-0800200C9A66\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0339aa96-a18e-42bf-875f-7cb4971cdbd5",
+          "name": "Delete List and Orphaned Format",
+          "request": {
+            "name": "Delete List and Orphaned Format",
+            "description": {
+              "content": "This method deletes a list, archiving all records with associated campaign results associated with that list. If the last list using a specific format was deleted, that format is removed as well.\n\nNote: Bright Pattern Contact Center solution supports several voice campaign modes (see here). Depending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns\nUpon instance deletion, all active, i.e. in a dialing state, within a script, or connected to an agent, calls are dropped\n\nPreview campaigns\nUpon instance deletion, only the calls not yet picked up by an agent are dropped. In-progress and connected calls are not affected\n\nThe results of completed calls are archived and available for downloading in the Contact Center Administrator application (see here). Interaction results for dropped calls are not saved.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "deleteList",
+                ":list_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-deleteList-list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bac6733b-615c-4468-b80d-d3ff038be434",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "deleteList",
+                    ":list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-deleteList-list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "97ddb661-93ba-465c-82e8-b19bdb990e9a",
+          "name": "Create List",
+          "request": {
+            "name": "Create List",
+            "description": {
+              "content": "This method creates a new empty list using an existing format. The format is specified by its unique identifier, formatId, returned in the response body of the Get Lists method (see here).\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nformatId\nstring\nyes (can be found in the Get Lists  response)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Format was not found;  \nInvalid URL\n\n409\nDuplicate name error",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "createList"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-createList-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "15f99ad1-ef03-46ec-9282-0979de3ff864",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "createList"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-createList-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"List 3.csv\",\n  \"formatId\": \"31002C90-7188-11EE-A565-0800200C9A66\",\n  \"allowUsingDefaultTimezone\": true,\n  \"defaultTimezone\": \"Europe/Dublin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2fad49fe-5589-4f27-b16a-415a27ae97d0",
+          "name": "Create List with New Format",
+          "request": {
+            "name": "Create List with New Format",
+            "description": {
+              "content": "This method creates a new empty list and a new format corresponding to that list.\n\nWhen creating the new list format, the fields must be defined with the following properties in mind:\n\nField Property\nDescription\n\nname (string)\nRequired property that defines field names. The names must be unique.  \nDefault value: -\n\ntype (string)\nRequired property that indicates the type of data the field contains.  \nNote: See the table below for available data types.  \nDefault value: -\n\nrequired (boolean)\nOptional property that indicates that the data in this field is required.  \nDefault value: false\n\nsearchable (boolean)\nOptional property that indicates that this field will be used for record lookups.  \nDefault value: false\n\nskip (boolean)\nOptional property that indicates that the data in this field is non-essential. Such data will not be included in Campaign Results/Archives, returned in API requests, or imported into the database. However, including such fields in the request body should not result in an error since the fields are simply ignored.  \nNote: Skipped fields cannot be set as required, searchable, or key.  \nDefault value: false\n\nkey (boolean)\nOptional property that indicates that this field will be used to identify list records uniquely. The key will be used to detect duplicated and reference Campgin Results data.  \nDefault value: false\n\nNote: The following properties are not used when the method is called: CUSTOM_DELIMITER(default 'COMMA' value is set), DEFAULT_ENCODING(default 'UTF-8' value is set), DELIMITER_TYPE, FORMAT_TYPE(default 'DELIMITED' value is set),NAMES_IN_FIRST_LINE, SOURCE_TYPE.\n\nField types\n\nField Type\nDescription\n\nACCOUNT\nAccount type fields can be used to store customer's unique identifiers. The values from such fields are stored in the Call History and can be used for interaction record search.  \nNote: List formats can only have one field of this type.\n\nAGENT_LOGIN_ID\nFields of this type are used to assign records to specific agents in preview and progressive campaign modes.  \nNote: This field will be ignored if used in predictive or automatic campaigns.\n\nCALLING_NUMBER\nFields of this type contain the numbers to be displayed as caller IDs when dialing the corresponding records from campaigns.  \nNOTE: Fields of this type are required to enable the From list field of type \"Caller ID\" caller id assignment method.\n\nCOMPANY\nCompany type fields can be used to store the information about a business/company the record belongs to, e.g. company name.\n\nDATETIME\nFields of this type can be used to specify the date and time a callback request was made. Typically, such information is provided in opt-in callback lists. Fields of this type have additional properties, timeZone and format.  \n  \nSupported formats:  \nMM/dd/yyyy ::mm(Default);  \ndd.MM.yyyy HH:mm;  \nyyyy-MM-dd HH:mm;  \nyyyy-MM-dd;  \ndd-MM-yyyy;  \nMM-dd-yyyy;  \nMM/dd/yyyy HH:mm:ss\n\nDATETIME_CALL_AT\nFields of this type can be used to specify the date and time the record should be called. Fields of this type have additional properties, timeZone and format(see above for details about supported formats).\n\nFIRST_NAME\nFields of this type store the first name of the contact.\n\nINTEGER\nInteger type fields store semantically numeric data, e.g. age or account balance. Such fields can be used to set campaign quotas.\n\nLAST_NAME\nFields of this type store the last name of the contact.\n\nOTHER\nOther is used to specify that the field has a type different than the predefined types outlined here.\n\nPHONE\nPhone type fields store the phone numbers to be dialed during campaigns.  \nNote: Fields of this type have additional properties defined in the table below.  \nNote: List formats must have at least one Phone field defined.\n\nZIP_CODE\nFields of this type store the postal code of the contact.  \nNote: Fields of this type are required to enable the Use safe calling hours setting.\n\nPRIORITY\nPriority type fields indicate that the record must be attempted before the other records in the list. Fileds of this type  \nhave additional properties:order,i.e. First-in-First-out or Last-in-FIrst-Out, andexpiresAfter,used to set the expiration date of the priority setting.\n\nSTATE\nFields of this type store the state the contact lives in.  \nNote: Fields of this or the ZIP_CODE type are required to enable the Comply with State calling hours setting.\n\nPhone Type Properties\n\nName\nType\nRequired?\nPossible/Default Values\n\nphoneType\nstring\nno (if =US_CANADA, sets hasCountryCode to true)\nOTHER (Default);  \nUS_CANADA\n\nremovePrefix\nstring\nyes ( ignore this field if phoneType = US_CANADA)\n-\n\ndefaultCoutryCode\nstring\nno (ignore this field if phoneType = US_CANADA)\n-\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nformatName\nstring\nyes\n-\n\nfields\nlist of JSON Objects\nyes\n-\n\nlistName\nstring\nno (appropriate list format must be defined by \"FORMAT: $(formatName)\")\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL\n\n409\nDuplicate name error",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "createListWithNewFormat"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-createListWithNewFormat-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7b56b8c7-931f-4db6-a925-8786f4cda9c0",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "createListWithNewFormat"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-createListWithNewFormat-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"formatName\": \"format 1\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"OTHER\",\n      \"required\": true,\n      \"searchable\": false,\n      \"skip\": false,\n      \"key\": false\n    },\n    {\n      \"name\": \"timeZone\",\n      \"type\": \"TIMEZONE\",\n      \"required\": true,\n      \"searchable\": false,\n      \"skip\": false,\n      \"key\": false,\n      \"default\": false\n    },\n    {\n      \"name\": \"phone\",\n      \"type\": \"PHONE\",\n      \"required\": true,\n      \"searchable\": true,\n      \"skip\": false,\n      \"key\": true,\n      \"phoneType\": \"OTHER\",\n      \"removePrefix\": \"\",\n      \"defaultCountryCode\": \"\",\n      \"overrideTimezone\": \"timeZone\"\n    }\n  ],\n  \"listName\": \"List 3.csv\",\n  \"allowUsingDefaultTimezone\": true,\n  \"defaultTimezone\": \"Europe/Dublin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D\",\n  \"formatId\": \"31002C90-7188-11EE-A565-0800200C9A66\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ab92fa83-e052-4b42-bf9e-9fc06489b980",
+          "name": "Update List Properties",
+          "request": {
+            "name": "Update List Properties",
+            "description": {
+              "content": "This method allows to change the name and the expiration settings of an existing calling list, specified in the path variable, list_id.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring, ≤ 255 characters  \n  \nNote: Calling list name must be unique within the contact center\nno\n-\n\nexpireRecords\nboolean\nno\nDefault = false\n\nexpirationPeriod\ninteger, [0, 365]  \n  \nNote: Specifies number of days since record was added to the Calling list, after which that records is considered expired by the Dialer\nrequired, if expireRecords = true\nDefault = 90 days\n\nexpirationMode\nFiled name to be set as \"key\" for records exclusion  \n  \nNote: Must contain a valid field from the available calling list formats.\nrequired, if expireRecords = true\n-“INSERTION”  \n-“DATE_FIELD”  \n  \nDefault = “INSERTION”\n\ndateField\nFiled name to be set as \"key\" for record expiration  \n  \nNote: Must contain a valid Date/time field from the available calling list formats.\nrequired, if expirationMode = “DATE_FIELD”\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL\n\n409\nDuplicate name error",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "updateListProperties",
+                ":list_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-updateListProperties-list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "65af027a-41b2-42b8-b9d2-fbbc6e748381",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "updateListProperties",
+                    ":list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-updateListProperties-list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated Calling List Name\",\n  \"expireRecords\": true,\n  \"expirationPeriod\": 90,\n  \"expirationMode\": \"INSERTION\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4fd424a1-7fba-4f99-88fd-70dc16c75c36",
+          "name": "Add Many Records",
+          "request": {
+            "name": "Add Many Records",
+            "description": {
+              "content": "This method updates fields in existing records of a calling list and returns the number of successfully updated records.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nlimitExceeded - the maximum total number of rows across all existing lists has been reached\n\nmissingKey - one or more key field values were not found;\n\nduplicateKey - a record with the same key already exists in the list;\n\nmissingRequired - one or more required fields are missing values;\n\nformatError - format was mismatched in one or more field values (e.g. string value was defined for an integer field); one or more unsupported fields were defined in the request body\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privilegesv\n\n404\nSpecified List was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "addAll",
+                ":list_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-addAll-list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<array>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1106e794-e814-46b1-b051-53879888530d",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "addAll",
+                    ":list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-addAll-list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"firstname\": \"Firstname4\",\n    \"date_time\": \"01-11-2023\",\n    \"phone\": \"1004\",\n    \"id\": \"N4\",\n    \"lastname\": \"Lastname4\"\n  },\n  {\n    \"firstname\": \"Firstname5\",\n    \"date_time\": \"12-11-2023\",\n    \"phone\": \"10045\",\n    \"id\": \"N5\",\n    \"lastname\": \"Lastname5\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"added\": 1,\n  \"error\": {\n    \"duplicateKey\": [\n      {\n        \"firstname\": \"Firstname4\",\n        \"date_time\": \"01-11-2023\",\n        \"phone\": \"1004\",\n        \"id\": \"N4\",\n        \"lastname\": \"Lastname4\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "24ecb92e-fa9d-4142-b1e5-649612773abb",
+          "name": "Add Record",
+          "request": {
+            "name": "Add Record",
+            "description": {
+              "content": "This method adds a single new record to a calling list.\n\nBefore the record is added, the uniqueness of its key values is checked against the contents of the list. If the list does not already have a record with the specified key values, the new record is added successfully.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL\n\n409\nDuplicate key error",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "add",
+                ":list_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-add-list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d92c6c1c-0221-4301-a87f-3682a215dd2e",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "add",
+                    ":list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-add-list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstname\": \"Firstname4\",\n  \"date_time\": \"01-11-2023\",\n  \"phone\": \"1004\",\n  \"id\": \"N4\",\n  \"lastname\": \"Lastname4\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6edd4be9-9ed1-41df-92cf-bba737e0893d",
+          "name": "Update Many Records",
+          "request": {
+            "name": "Update Many Records",
+            "description": {
+              "content": "This method updates fields in existing records of a calling list and returns the number of successfully updated records. Additionally, this method can reset optional parameters to their default values by passing \" \" or null to these parameters.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nmissingKey - one or more key field values were not found;\n\nkeyNotFound - a record with the same key already exists in the DNC list;\n\nformatError - format was mismatched in one or more field values (e.g. string value was defined for an integer field); one or more unsupported fields were defined in the request body\n\nNote: This method is similar to the Update Record method. However, the input parameters differ to accommodate updating multiple records within one request. This is done to account for the fact that each request requires reprocessing of the entire calling list.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nDNC List Record JSON Objects\nlist\nyes (only the key fields are required)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "updateAll",
+                ":list_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-updateAll-list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<array>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f936b61f-3b68-42f6-891c-7715cfdabf7a",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "updateAll",
+                    ":list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-updateAll-list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"date_time\": \"01-11-2023\",\n    \"phone\": \"1004\"\n  },\n  {\n    \"date_time\": \"12-11-2023\",\n    \"phone\": \"10045\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"updated\": 1,\n  \"error\": {\n    \"keyNotFound\": [\n      {\n        \"phone\": \"1004\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b0ff9462-5f8f-400a-bbfd-8ddb0a15fef4",
+          "name": "Update Record",
+          "request": {
+            "name": "Update Record",
+            "description": {
+              "content": "This method updates fields in an existing record of a calling list. Additionally, this method can reset an optional parameter to its default value by passing \" \" or null to that parameter.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nThe search for the record is performed based on the defined key fields. The request can contain either a full or partial set of fields of the List Record JSON Object, but the key fields are mandatory and must be retained as configured during list creation.\n\nBefore the record is queried, its existence in the specified list is checked by its unique key values. If the record does exist in the specified list, the record is updated successfully.\n\nNote: If a PHONE type field is defined as a key, the record value is checked for a full match with the value stored in the database or the original source (if the data was modified upon loading into the database).\n\nTo avoid disruptions in the campaign work caused by the list reprocessing time, the Dialer ignores the changes made to the record until it makes a call attempt to that record. Thus, if a list containing the updated record has Filters or Sorting configured, the changes made to that record will not affect that filtering or sorting order.\n\nNote: Always remember to reapply the desired Filters or Sorting settings if you wish for it to reflect the changes made to the updated record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nDNC List Record JSON Object\nstring\nyes (can provide either all or some fields; key fields are mandatory and must have a value)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nSpecified Record was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "update",
+                ":list_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-update-list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "52103c75-6724-43e2-ad85-2abae552c5c7",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "update",
+                    ":list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-update-list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date_time\": \"01-11-2023\",\n  \"phone\": \"1004\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7f63d6db-a079-4d3c-b832-429d892a74a0",
+          "name": "Delete Many Records",
+          "request": {
+            "name": "Delete Many Records",
+            "description": {
+              "content": "This method deletes records from a list and returns the number of successfully deleted records.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nRecords are searched for by one or many criteria defined in correspondence with the associated list fields. At least one of the available filtering criteria has to be specified. Otherwise, no record is deleted.\n\nThe method supports filtering records by:\n\nkey and searchable fields (defined in the fields.some_field parameter);\n\nstatus in the associated campaign (defined in the byCampaignResult.policy parameter);\n\ncreation date (defined in the createdFrom and createdTo parameters);\n\ncombination of the above\nNote: If several criteria are specified, the record should match all of them\n\nNote: Filtered records will be deleted from all campaigns the list is associated with.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nfields.some_field\nstring\nno (specifies the fields to be used for search; the field must be searchable or key)\n-\n\nbyCampaignResult.campaignId\nstring\nno (specifies that the records are to be filtered by their associated campaign; campaignId is required (can be found in the Get List response)\n-\n\nbyCampaignResult.policy\nstring\nno (specifies that the records are to be filtered by their state; if = ONLY_COMPLETED, both completed and expired records are removed)\nALL (Default);  \nONLY_COMPLETED;  \nONLY_NEVER_ATTEMPTED;\n\ncreatedFrom\ntime (UTC)\nno (allows filtering by creation date; must be less than createdTo, if configured)\n-\n\ncreatedTo\ntime (UTC)\nno (allows filtering by creation date; must be more than createdFrom, if configured)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL\n\n422\n????????????????????????????????????????1 or more required fields are missing",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "delete",
+                ":list_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-delete-list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2575780b-12a0-4ad4-b645-878c1f513ce5",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "delete",
+                    ":list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-delete-list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fields\": {\n    \"accountId\": [\n      \"id1\",\n      \"id2\",\n      \"id3\"\n    ]\n  },\n  \"byCampaignResult\": {\n    \"campaignId\": \"85389D39-E05C-4CE7-B36D-4401BEA52E14\",\n    \"policy\": \"ALL\"\n  },\n  \"createdFrom\": \"2023-01-01T00:00:00.000\",\n  \"createdTo\": \"2023-01-10T00:00:00.000\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deleted\": 3\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b221b66b-ccbd-49ec-8e6b-4b3de1e05e8c",
+          "name": "Erase Record",
+          "request": {
+            "name": "Erase Record",
+            "description": {
+              "content": "This method removes a record from a list and all associated campaign results. The search for the record is performed based on the defined key fields. An error is returned if a record does not exist.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nBright Pattern Contact Center solution supports several voice campaign modes (see here). If the last record is being deleted, depending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns\nUpon instance deletion, all active, i.e. in a dialing state, within a script, or connected to an agent, calls are dropped\n\nPreview campaigns\nUpon instance deletion, only the calls not yet picked up by an agent are dropped. In-progress and connected calls are not affected\n\nOtherwise, if there are still other records in the list, the method won't impact any calls.\n\nThe list of deleted records with completed calls, as well as their results, are archived and available for downloading in the Contact Center Administrator application (see here). Interaction results for dropped calls are not saved.\n\nNote: This method does not delete contacts, activities, voice recordings, transcriptions, or screen recordings. This functionality is covered by other APIs.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nfields\nstring\nyes (specifies the key fields to be used for the object search; the non-key fields are ignored)\n-\n\nreason\nstring\nyes (used to specify the reason for audit log purposes)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nSpecified Record was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "erase",
+                ":list_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-erase-list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fdd97cfc-57e2-47da-9b5a-44d953624193",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "erase",
+                    ":list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-erase-list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fields\": {\n    \"phone\": \"1004\"\n  },\n  \"reason\": \"for audit log\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ccd1b8f5-995e-4ec9-8411-4deb1a19dc4a",
+          "name": "Delete All Records",
+          "request": {
+            "name": "Delete All Records",
+            "description": {
+              "content": "This method removes all records from a list and returns the number of successfully deleted records.\n\nNote: Manipulating the content of calling lists requires the user to have an additional \"Update content of calling list\" privilege.\n\nBright Pattern Contact Center solution supports several voice campaign modes (see here). Depending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns\nUpon instance deletion, all active, i.e. in a dialing state, within a script, or connected to an agent, calls are dropped\n\nPreview campaigns\nUpon instance deletion, only the calls not yet picked up by an agent are dropped. In-progress and connected calls are not affected\n\nThe list of deleted records with completed calls, as well as their results, are archived and available for downloading in the Contact Center Administrator application (see here). Interaction results for dropped calls are not saved.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified List was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "callinglist",
+                "deleteAll",
+                ":list_id"
+              ],
+              "host": [
+                "{{configapi-v3-callinglist-deleteAll-list_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b2cc617d-004d-4bb1-a224-145855639f21",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "callinglist",
+                    "deleteAll",
+                    ":list_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-callinglist-deleteAll-list_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "list_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deleted\": 2\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "92d0b6a3-70d0-439f-a682-45748fbaa9eb",
+          "name": "Get Job Status",
+          "request": {
+            "name": "Get Job Status",
+            "description": {
+              "content": "This method returns the status of the record deletion job, requested in Delete Many Records or Delete All Records methods. The job is referenced in the path variable by its unique identifier, returned in the response body of the above methods.\n\nDepending on the status of the record deletion job, the following parameters are retuned in the response body:\n\ncompletion_percentage: calculated as the current number of succesfully deleted records over the total number of records to be deleted (multiplied by 100)\n\nreturned always\n\njob_complete: status of the record deletion job, i.e. complete, processing, or failed\n\nreturned always\n\nerror_message: reason why the record deletion job could not be comleted\n\nreturned if the job was failed ( job_complete= failed)\n\ndeleted: the total number of successfully deleted records\n\nretuned if the job was completed ( job_complete= complete)\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Job was not found",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "job",
+                ":job_id"
+              ],
+              "host": [
+                "{{configapi-v3-job-job_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "18bb1628-621c-42cb-9fd6-c2cea62e9e1e",
+              "name": "200 OK: Job Processing",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "job",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-job-job_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"completion_percentage\": 31,\n  \"job_complete\": \"processing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "baseUrl"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-getAll-list_id-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-getChanged-list_id-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-get-list_id-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-fetchAll-list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-fetch-list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-getAll-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-getList-list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-deleteList-list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-createList-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-createListWithNewFormat-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-updateListProperties-list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-addAll-list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-add-list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-updateAll-list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-update-list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-delete-list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-erase-list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-callinglist-deleteAll-list_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-job-job_id-Url"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5c57defe-f9de-4f69-adac-d06cbd6632c3",
+    "name": "Bright Pattern Lists API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Operations tagged Lists across 2 of this provider's published API definitions: bright-pattern-list-management-v3-2-openapi.yml, bright-pattern-list-management-v3-openapi.yml. Each path carries the servers of the definition it was published in.\n\nContact Support:\n Name: Bright Pattern",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BPCC Task Routing API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Task Routing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Queue Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant_url}/taskroutingapi/v1/task",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Queue a task and associate it with a case and contact.\n\nOptionally, you may provide external IDs to associate with the task, case, or contact to prevent duplicates. When external IDs are provided:\n\nBPCC checks for existing records linked with the provided External IDs for the task, case, or contact.\n\nIf a match is found for an External ID, the corresponding existing record in BPCC is used.\n\nIf no match is found for an External ID, a new record (task, case, or contact) is created in BPCC and asso"
+        },
+        {
+          "info": {
+            "name": "Query Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant_url}/taskroutingapi/v1/task/:taskid",
+            "params": [
+              {
+                "name": "taskid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "external",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves information about the task specified by the taskId path variable.\n\nUse the external query parameter to specify whether taskId is an internal or external identifier.\n\nRequest Body\n\nNone\n\nResponse Body\n\nParameter\nDescription\n\ntaskStatus\nTask's current status (CREATED, QUEUED, DEFERRED, COMPLETED).\n\nserviceName\nName of the service with which the task is associated.\n\npriority\nTask queue priority.\n\norder\nTask queue order (FIFO/LIFO).\n\ndispositionName\nDisposition name for completed tasks. Em"
+        },
+        {
+          "info": {
+            "name": "Update Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant_url}/taskroutingapi/v1/task/:taskid",
+            "params": [
+              {
+                "name": "taskid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "external",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Modify the priority or associated service of the queued task specified by the taskID path variable.\n\nUse the external query parameter to specify whether taskId is an internal or external identifier.\n\nRequest Body\n\nParameter\nDescription\n\nserviceName\nThe name of the service to which the task should be moved. If different from the current service, the task will be re-queued to the new service.\n\npriority\nThe new priority for the task. This only applies to tasks being routed using the lifo order.\n\nBo"
+        },
+        {
+          "info": {
+            "name": "Cancel Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant_url}/taskroutingapi/v1/task/:taskid",
+            "params": [
+              {
+                "name": "taskid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "external",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes the queued task specified by the taskId path variable from the queue and sets its disposition to dispositionName. Canceling a task is possible only while the task is still in the service queue or an agent's personal queue.\n\nUse the external query parameter to specify whether taskId is an internal or external identifier.\n\nRequest Body\n\nParameter\nDescription\n\nnote\nAn optional note to be added to the task as it is canceled, providing context for the action.\n\ndispositionName\nThe name of the "
+        },
+        {
+          "info": {
+            "name": "Cancel Service Tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant_url}/taskroutingapi/v1/service",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel all currently queued tasks associated with the service specified by serviceName. The disposition designated by dispositionName and the note specified by note is applied to each canceled task.\n\nRequest Body\n\nParameter\nDescription\n\nserviceName\nThe name of the service for which all associated queued tasks should be canceled.\n\nnote\nAn optional note to be added to each task as it is canceled.\n\ndispositionName\nThe name of the disposition to apply to each canceled tasks.\n\nResponse Body\n\nParamete"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

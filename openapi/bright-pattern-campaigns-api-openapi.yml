@@ -1,0 +1,1376 @@
+openapi: 3.2.0
+info:
+  title: Bright Pattern Campaigns API
+  version: 1.0.0
+  contact:
+    name: Bright Pattern
+    url: https://www.brightpattern.com/contact/
+  description: 'Operations tagged Campaigns across 3 of this provider''s published API definitions: bright-pattern-list-management-v2-openapi.yml, bright-pattern-list-management-v3-2-openapi.yml, bright-pattern-list-management-v3-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://{tenant_url}
+  description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+  variables:
+    tenant_url:
+      default: example.brightpattern.com
+      description: Your Bright Pattern Contact Center tenant hostname.
+security:
+- bearerAuth: []
+tags:
+- name: Campaigns
+paths:
+  /configapi/v2/campaign/getAll:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getCampaigns
+      summary: Get Campaigns
+      description: 'This method returns the list of enabled campaigns and the calling lists currently associated with such campaigns. It does not return any disabled campaigns.
+
+
+        Notes:
+
+
+        An empty array can be returned if there are no enabled campaigns.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        OK
+
+
+        400
+
+        Bad request (missing required fields or format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges'
+      tags:
+      - Campaigns
+      responses:
+        '200':
+          description: Get Campaigns
+          content:
+            application/json:
+              example:
+              - name: CupIQ Dynamics Preview
+                state: STOPPED
+                lists:
+                - CupIQ Dynamics Preview.csv
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/getCampaign/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getCampaign
+      summary: Get Campaign
+      description: "This method returns all campaign settings. To request only specific parts of the settings (e.g., only assigned teams), use the include query parameter with comma-separated values. If include is not specified, the method behaves the same as Get Campaign 3.1 (backward compatible). Possible values for include are:\n\n\\\\*: Returns all settings\n\ngeneralSettings\n\ncallerIdSettings\n\noutboundGeneral\n\nteams\n\ncallerIDs\n\ndispositions\n\nlists\n\ndncLists\n\nNote: The include query parameter is not supported for Outbound Messaging campaigns.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nInclude parameter is not supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 'Outbound Voice: no include'
+          content:
+            application/json:
+              example:
+                name: Campaign name
+                enabled: true
+                state: STOPPED
+                direction: OUTBOUND_VOICE
+                lists:
+                - id: 635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D
+                  name: List 1.csv
+                  instanceId: DBA3A9B0-6CC4-11EE-807C-0800200C9A66
+                  instanceName: ''
+                  enabled: true
+                  order: 1
+                  dialingRatio: 1
+                  sortingOrder:
+                    type: CUSTOM
+                    sortingFields:
+                    - fieldId: f1
+                      fieldName: Priority
+                      sortOrder: ASC
+                  totalRecords: 100
+                - id: 92A7FE1C-3EC1-4A4E-A662-7A8E57E6CA78
+                  name: List 2.csv
+                  instanceId: 99B6B870-6CC5-11EE-807C-0800200C9A66
+                  instanceName: filtered
+                  enabled: false
+                  order: 1
+                  dialingRatio: 1
+                  sortingOrder:
+                    type: NATURAL
+                    sortingFields: []
+                  totalRecords: 50
+                dncLists:
+                - id: A5717BD2-C610-4AE9-B1B3-0DBE34CA31BD
+                  name: List 1
+                  type: GEOGRAPHIC_AREACODE
+                  Country: US
+                  disposition: Number matches DNC
+                - id: B494BB83-C359-4432-A720-9858A6990E06
+                  name: List 2
+                  type: EXCLUSION
+                  listField: accountId
+                  disposition: Number matches DNC
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/getAll:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getCampaigns
+      summary: Get Campaigns
+      description: 'This method returns a list of enabled outbound campaigns, their current states, and unique identifiers. Based on the user privileges configured, the list will contain all campaigns or only those assigned to this user (see here). An empty list will be returned if no outbound campaign is currently enabled or the user has no assigned campaigns.
+
+
+        Note: A campaign''s unique identifier returned in the response body can be used to reference that campaign in the path variables of further API requests.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood; 1 or more required fields are missing or have an unsupported value)
+
+
+        401
+
+        Authentication failed (invalid token format; token is expired)
+
+
+        403
+
+        Authentication succeeded but the user does not have sufficient privileges
+
+
+        404
+
+        Invalid URL'
+      tags:
+      - Campaigns
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+              - id: 85389D39-E05C-4CE7-B36D-4401BEA52E14
+                name: Campaign name
+                state: STOPPED
+              - id: 48B91DC5-A8CD-4FCA-9AF8-EC20A4ACC14B
+                name: Campaign name 2
+                state: RUNNING
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/getStatus/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    get:
+      operationId: getCampaignStatus
+      summary: Get Campaign Status
+      description: "This method returns the current state, i.e. STOPPED or RUNNING, of an enabled or disabled campaign.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '404':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                name: Campaign name
+                enabled: true
+                state: STOPPED
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/start/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: start
+      summary: Start
+      description: "This method starts an enabled campaign, first checking that the campaign is not disabled or already running.\n\nNote: Manipulating campaign states requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n409\nSpecified campaign is disabled or already running"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example: "{\n  \"state\": “RUNNING”\n}"
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/stop/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: stop
+      summary: Stop
+      description: "This method stops an enabled campaign, first checking that the campaign is not disabled or already stopped.\n\nNote: Manipulating campaign states requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n409\nSpecified campaign is disabled or already stopped"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example: "{\n  \"state\": “STOPPED”\n}"
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/bindList/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: bindList
+      summary: Bind List
+      description: "This method adds a list to the selected campaign.\n\nOnce added, an instance of the list associated with this particular campaign is created. The ID of such an instance is returned in the response body, together with the total number of records inside the original list.\n\nNote: The instance's unique identifier can be further used to unbind or update the list, get campaign results, or query a record from that list.\n\nNote: Manipulating calling lists associated with a campaign requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlistId\nstring\nyes (can be found in the Get Campaign  response)\n-\n\ninstanceName\nstring\nno\n-\n\nenabled\nboolean\nno\nfalse (Default);  \ntrue\n\norder\ninteger, > 0\nno\n1(Default);  \n2,...\n\ndialingRatio\ninteger, > 0\nno\n1(Default);  \n2,...\n\nsortingOrder\nstring\nno\nNATURAL; (Default)  \nRANDOM;  \nCUSTOM\n\nsortingOrder.sortingFields.fieldName\nstring\nyes, if sortingOrder.type = custom\n-\n\nsortingOrder.sortingFields.sortOrder\nstring\nyes, if sortingOrder.type = custom\nASC (Default);  \nDESC\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nSpecifed list was not found;  \nInvalid URL"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              listId: 635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D
+              instanceName: ''
+              enabled: true
+              order: 1
+              dialingRatio: 1
+              sortingOrder:
+                type: CUSTOM
+                sortingFields:
+                - fieldName: Expected result
+                  sortOrder: ASC
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                instanceId: DBA3A9B0-6CC4-11EE-807C-0800200C9A66
+                totalRecords: 100
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/updateList/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    patch:
+      operationId: updateList
+      summary: Update List
+      description: "This method changes the properties of an instance of a list in the associated campaign. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here). Additionally, this method can reset an optional parameter to its default value by passing \" \" or null to that parameter.\n\nBefore the list is updated, its binding to the specified campaign is checked. If the instance is bound to the specified campaign, the list is updated successfully.\n\nNote: Manipulating the content of calling lists associated with a campaign requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ninstanceId\nstring\nyes (can be found in the Get Campaign response)\n-\n\ninstanceName\nstring\nno\n-\n\nenabled\nboolean\nno\nfalse (Default);  \ntrue\n\norder\ninteger, > 0\nno\n1(Default);  \n2,...\n\ndialingRatio\ninteger, > 0\nno\n1(Default);  \n2,...\n\nsortingOrder\nstring\nno\nNATURAL; (Default)  \nRANDOM;  \nCUSTOM\n\nsortingOrder.sortingFields.fieldName\nstring\nyes, if sortingOrder.type = custom\n-\n\nsortingOrder.sortingFields.sortOrder\nstring\nyes, if sortingOrder.type = custom\nASC (Default);  \nDESC\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nSpecified instance was not found;  \nInvalid URL\n\n409\nSpecified instance is not bound to the selected campaign"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              instanceId: DBA3A9B0-6CC4-11EE-807C-0800200C9A66
+              instanceName: ''
+              enabled: true
+              order: 1
+              dialingRatio: 1
+              sortingOrder:
+                type: CUSTOM
+                sortingFields:
+                - fieldName: Expected result
+                  sortOrder: ASC
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                totalRecords: 50
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/unbindList/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: unbindList
+      summary: Unbind List
+      description: "This method removes the instance of a list from the associated campaign. The instance to be removed is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here).\n\nNote: Bright Pattern Contact Center solution supports several voice campaign modes (see here). Depending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns\nUpon instance deletion, all active, i.e. in a dialing state, within a script, or connected to an agent, calls are dropped\n\nPreview campaigns\nUpon instance deletion, only the calls not yet picked up by an agent are dropped. In-progress and connected calls are not affected\n\nThe results of completed calls are archived and available for downloading in the Contact Center Administrator application (see here). Interaction results for dropped calls are not saved.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ninstanceId\nstring\nyes (can be found in the Get Campaign  response)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nSpecified instance was not found;  \nInvalid URL\n\n409\nSpecified instance is not bound to the selected campaign"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              instanceId: DBA3A9B0-6CC4-11EE-807C-0800200C9A66
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/getAllRecords/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: getAllRecords
+      summary: Get All Records
+      description: "This method returns a list of all records in an instance. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here). Optionally, this method can also display request attempts made. The records are returned and sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ninstanceId\nstring\nyes (can be found in the Get Campaign  response)\n-\n\nextractAttempts\nboolean\nno (if true,the method returns the list of all attempts)\nfalse (Default);  \ntrue\n\nlimit\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\ncursor\nstring\nno (used for pagination)\nFirst request: null  \nSubsequent request: value received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n409\nSpecified instance is not bound to the selected campaign"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              instanceId: DBA3A9B0-6CC4-11EE-807C-0800200C9A66
+              extractAttempts: true
+              limit: 1000
+              cursor: 590e9abd4abbf1165862d342
+      responses:
+        '200':
+          description: All
+          content:
+            application/json:
+              example:
+                next_cursor: 590e9abd4abbf1165862d342
+                records:
+                - entry:
+                    firstname: Firstname4
+                    date_time: 29-12-2023
+                    phone: '1004'
+                    id: N4
+                    lastname: Lastname4
+                  status:
+                    globalInteractionID: ''
+                    lastCallDuration: 0
+                    lastDisposition: ''
+                    totalAttempts: 0
+                    completed: false
+                    completedTime: ''
+                    lastAgent: ''
+                    lastPhone: ''
+                    lastDate: ''
+                  attempts: []
+                - entry:
+                    firstname: Firstname2
+                    date_time: 01-12-2023
+                    phone: '1002'
+                    id: N2
+                    lastname: Lastname2
+                  status:
+                    globalInteractionID: F944CE77-2B21-472F-BE85-8BDE356A9500
+                    lastCallDuration: 30
+                    lastDisposition: Appointment approved
+                    totalAttempts: 1
+                    completed: true
+                    completedTime: '2023-01-19T20:46:35.000'
+                    lastAgent: katie.kent
+                    lastPhone: '1003'
+                    lastDate: '2023-01-19T20:46:35.000'
+                    custom_field_1: value1
+                    custom_field_2: value2
+                  attempts:
+                  - call_attempted: true
+                    disposition: Appointment approved
+                    date: '2023-01-19T20:46:35.000'
+                    phone: '1003'
+                    timezone: Europe/Dublin
+                    timezoneBy: field
+                    callDuration: 30
+                    dialingDuration: 5
+                    callNotes: ''
+                    agent: katie.kent
+                    globalInteractionID: F944CE77-2B21-472F-BE85-8BDE356A9500
+                    CPADuration: 2
+                    CPAResult: Voice
+                    custom_field_1: value1
+                    custom_field_2: value2
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/getCompletedRecords/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: getCompletedRecords
+      summary: Get Completed Records
+      description: "This method returns a list of all completed records within an instance. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here). Optionally, the user can view request attempts and specify the completion time frame for which they want to display the completed records list. The records are returned and sorted by completion time (MongoDB completedTime field).\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id and the completedTimefields are concatenated and used as the \"cursor\" to reference the last served record.\n\nNote: The input parameters defined for this method in the List Management API 3.0 differ from the previous version.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ninstanceId\nstring\nyes (can be found in the Get Campaign  response)\n-\n\nstartTime\ntime (UTC)\nno (if specified, the method returns all records completed at or after the startTime)\n-\n\nendTime\ntime (UTC)\nno (if specified, the method returns all records completed before the endTime)\n-\n\nextractAttempts\nboolean\nno (if true,the method returns the list of all attempts)\nfalse (Default);  \ntrue\n\nlimit\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\ncursor\nstring\nno (used for pagination)\nFirst request: null  \nSubsequent request:  \nvalue received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n409\nSpecified instance is not bound to the selected campaign"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              instanceId: DBA3A9B0-6CC4-11EE-807C-0800200C9A66
+              startTime: '2023-01-01T00:00:00.000'
+              endTime: '2023-01-30T00:00:00.000'
+              extractAttempts: true
+              limit: 1000
+              cursor: 2023-01-10T12:13:59.001_590e9abd4abbf1165862d342
+      responses:
+        '200':
+          description: Completed
+          content:
+            application/json:
+              example: "{\n    \"next_cursor\": \"2023-01-15T18:13:59.111_6870e9abd4abbf1165862d22\",\n    \"records\": [\n        {\n            \"entry\": {\n                \"firstname\": \"Firstname2\",\n                \"date_time\": \"01-12-2023\",\n                \"phone\": \"1002\",\n                \"id\": \"N2\",\n                \"lastname\": \"Lastname2\"\n            },\n            \"status\": {\n                \"globalInteractionID\": \"F944CE77-2B21-472F-BE85-8BDE356A9500\",\n                \"lastCallDuration\": 30,\n                \"lastDisposition\": \"Appointment approved\",\n                \"totalAttempts\": 1,\n                \"completed\": true,\n                \"completedTime\": \"2023-01-19T20:46:35.000\",\n                \"lastAgent\": \"katie.kent\",\n                \"lastPhone\": \"1002\",\n                \"lastDate\": \"2023-01-19T20:46:35.000\",\n                \"custom_field_1\": \"value1\",\n                \"custom_field_2\": \"value2\"\n            },\n            \"attempts\": [\n                           {\n                                \"call_attempted\": true,\n                                \"disposition\": \"Appointment approved\",\n                                \"date\": \"2023-01-19T20:46:35.000\",\n                                \"phone\": \"1003\",\n                                \"phoneTimezone\": \"Europe/Dublin\", //Dialer 2.5\n                                \"postalCodeTimezone\": \"\", //Dialer 2.5\n                                \"timezonesBy\": \"field\", //Dialer 2.5\n                                \"callDuration\": 30,\n                                \"dialingDuration\": 5,\n                                \"callNotes\": \"\",\n                                \"agent\": \"katie.kent\",\n                                \"globalInteractionID\": \"F944CE77-2B21-472F-BE85-8BDE356A9500\",\n                                \"CPADuration\": 2,\n                                \"CPAResult\": \"Voice\",\n                                \"custom_field_1\": \"value1\",\n                                \"custom_field_2\": \"value2\"\n                            }\n            ]\n        }\n    ]\n}"
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/getUpdatedRecords/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: getUpdatedRecords
+      summary: Get Updated Records
+      description: "This method returns a list of all updated records within an instance. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method. Optionally, the user can view request attempts and specify the time frame for which they want to display the updated records list. The records are returned and sorted by the last date attempted (MongoDB lastDate field).\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id and the lastDatefields are concatenated and used as the \"cursor\" to reference the last served record.\n\nNote: The input parameters defined for this method in the List Management API 3.0 differ from the previous version.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ninstanceId\nstring\nyes (can be found in the Get Campaign  response)\n-\n\nstartTime\ntime (UTC)\nno (if specified, the method returns all records completed at or after the startTime)\n-\n\nendTime\ntime (UTC)\nno (if specified, the method returns all records completed before the endTime)\n-\n\nextractAttempts\nboolean\nno (if true,the method returns the list of all attempts)\nfalse (Default);  \ntrue\n\nlimit\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\ncursor\nstring\nno (mn for pagination)\nFirst request: null  \nSubsequent request:  \nvalue received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n409\nSpecified instance is not bound to the selected campaign"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              instanceId: DBA3A9B0-6CC4-11EE-807C-0800200C9A66
+              startTime: '2023-01-01T00:00:00.000'
+              endTime: '2023-01-30T00:00:00.000'
+              extractAttempts: true
+              limit: 1000
+              cursor: 2023-01-10T12:13:59.001_590e9abd4abbf1165862d342
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              example: "{\n    \"next_cursor\": \"2023-01-15T18:13:59.111_6870e9abd4abbf1165862d22\",\n    \"records\": [\n        {\n            \"entry\": {\n                \"firstname\": \"Firstname2\",\n                \"date_time\": \"01-12-2023\",\n                \"phone\": \"1002\",\n                \"id\": \"N2\",\n                \"lastname\": \"Lastname2\"\n            },\n            \"status\": {\n                \"globalInteractionID\": \"F944CE77-2B21-472F-BE85-8BDE356A9500\",\n                \"lastCallDuration\": 30,\n                \"lastDisposition\": \"Appointment approved\",\n                \"totalAttempts\": 1,\n                \"completed\": true,\n                \"completedTime\": \"2023-01-19T20:46:35.000\",\n                \"lastAgent\": \"katie.kent\",\n                \"lastPhone\": \"1002\",\n                \"lastDate\": \"2023-01-19T20:46:35.000\",\n                \"custom_field_1\": \"value1\",\n                \"custom_field_2\": \"value2\"\n            },\n            \"attempts\": [\n                           {\n                                \"call_attempted\": true,\n                                \"disposition\": \"Appointment approved\",\n                                \"date\": \"2023-01-19T20:46:35.000\",\n                                \"phone\": \"1003\",\n                                \"phoneTimezone\": \"Europe/Dublin\", //Dialer 2.5\n                                \"postalCodeTimezone\": \"\", //Dialer 2.5\n                                \"timezonesBy\": \"field\", //Dialer 2.5                       \n                                \"callDuration\": 30,\n                                \"dialingDuration\": 5,\n                                \"callNotes\": \"\",\n                                \"agent\": \"katie.kent\",\n                                \"globalInteractionID\": \"F944CE77-2B21-472F-BE85-8BDE356A9500\",\n                                \"CPADuration\": 2,\n                                \"CPAResult\": \"Voice\",\n                                \"custom_field_1\": \"value1\",\n                                \"custom_field_2\": \"value2\"\n                            }\n            ]\n        }\n    ]\n}"
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/queryRecord/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: queryARecord
+      summary: Query a Record
+      description: "This method returns a copy of an existing record in an instance, as well as the information about the last interaction associated with this record. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here). The search for the record is performed based on the defined key fields.\n\nBefore the record is queried, its existence in the specified list is checked. If the record does exist in the specified list, the record is queried successfully.\n\nNote: If a PHONE type field is defined as a key, the record value is checked for a full match with the value stored in the database or the original source (if the data was modified upon loading into the database).\n\nNote: The response body contains the List Record JSON Object, defined by two sub-objects as follows:\n\nentry object: contains a copy of the list entry\nfield names are retained as defined at list creation\ncustom fields are returned with the prefix 'custom_' added to the name defined in the Administrator Application\n\ntime and date field values are returned in UTC format\n\nstatusobject: contains the campaign results for this specific record\nomitted if the list is not assigned to the campaign or the campaign doesn't exist\n\nfield names are predefined\n\ncompleted field is always present, while the other fields may be absent if the record was never called or never reached an agent.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ninstanceId\nstring\nyes (can be found in the Get Campaign  response)\n-\n\nfields\nlist of JSON Objects\nyes (specifies the key fields to be used for the object search; the non-key fields are ignored)\n-\n\nextractAttempts\nboolean\nno (if true,the method returns the list of all attempts)\nfalse (Default);  \ntrue\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nSpecified record was not found;  \nInvalid URL\n\n409\nSpecified instance is not bound to the selected campaign"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              instanceId: DBA3A9B0-6CC4-11EE-807C-0800200C9A66
+              extractAttempts: false
+              fields:
+                id: '1'
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                entry:
+                  firstname: Firstname4
+                  date_time: 29-12-2023
+                  phone: '1004'
+                  id: N4
+                  lastname: Lastname4
+                status:
+                  globalInteractionID: ''
+                  lastCallDuration: 0
+                  lastDisposition: ''
+                  totalAttempts: 0
+                  completed: false
+                  completedTime: ''
+                  lastAgent: ''
+                  lastPhone: ''
+                  lastDate: ''
+                  custom_field_1: ''
+                  custom_field_2: ''
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/deleteCampaign/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    delete:
+      operationId: deleteCampaign
+      summary: Delete Campaign
+      description: "This method deletes the campaign and erases call results, including all archived results for the campaign.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nDepending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns: Upon instance deletion, all active, i.e. in a dialing state, within a script, or connected to an agent, calls are dropped.\n\nPreview campaigns: Upon instance deletion, only the calls not yet picked up by an agent are dropped. In-progress and connected calls are not affected.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/unlinkCampaign/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: unlinkACampaign
+      summary: Unlink a Campaign
+      description: "This method removes the selected campaign from its link group. Once deleted, the group becomes re-ordered.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified link group was not found;  \nSpecified campaign was not found;  \nInvalid URL\n\n409\nSpecified campaign is not linked to the selected link group\n\n422\nNot supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/linkCampaign/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: linkACampaign
+      summary: Link a Campaign
+      description: "This method adds a campaign to the selected link group or changes its order. When adding, this will reset campaign type, teams assigned, hours, additional skills, and term to the settings of campaigns already in the group. Also call quota will be disabled. Once added, the group becomes re-ordered.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ngroupId\nstring\nyes\n-\n\nstartAfterCampaignId\nstring\nno\n- (will be added first, if empty)\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified link group was not found;  \nSpecifed campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              groupId: 6D7C2A7E-7E7A-4D43-9F6D-AB7D6F2B1F1E
+              startAfterCampaignId: 48B91DC5-A8CD-4FCA-9AF8-EC20A4ACC14B
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/updateDisposition/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    patch:
+      operationId: updateDisposition
+      summary: Update Disposition
+      description: "This method updates the selected disposition and associated dial rule by its id (both custom and system).\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nSee Add Disposition format.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nSpecified disposition id was not found;  \nInvalid URL\n\n409\nSpecified disposition id is not associated with the selected campaign\n\n422\nNot supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              id: 0758F19D-448E-4EE3-B34F-DF5014D1156E
+              scope:
+                preview: false
+                outbound: true
+                inbound: false
+              folder: Non-final
+              orderNumber: 15
+              name: Wrong person
+              description: The business purpose ...
+              code: null
+              type: CONTINUE
+              agentCanSelect: true
+              agentCanReschedule: true
+              dialRule:
+                action: WAIT
+                doRetry: false
+                maxRetries: null
+                retryIntervalMin: null
+                minWaitMin: 1440
+                rescheduleMin: null
+                scenarioId: null
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/deleteDispositions/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: deleteDispositions
+      summary: Delete Dispositions
+      description: "This method deletes multiple custom dispositions from the campaign by matching the provided identifiers. The disposition IDs can be obtained using the Get Campaign method with ?include=dispositions (see here).\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nidsNotFound - dispositions were not found or not associated with the selected campaign;\n\nisSystem - system dispositions (cannot be deleted);\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              dispositions:
+              - 0758F19D-448E-4EE3-B34F-DF5014D1156E
+              - A9B7ED52-CD95-48E1-BCB1-0754214309BF
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                removed: 1
+                error:
+                  idsNotFound:
+                    ids:
+                    - '111'
+                  isSystem:
+                    ids:
+                    - A9B7ED52-CD95-48E1-BCB1-0754214309BF
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/addDisposition/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: addDisposition
+      summary: Add Disposition
+      description: "This method add a disposition to the campaign.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nscope.outbound\nboolean\nno\ntrue (Default);  \nfalse\n\nscope.inbound\nboolean\nno\nfalse (Default);  \ntrue\n\nscope.preview\nboolean\nno\nfalse (Default);  \ntrue\n\nfolder\nstring\nyes\nFolder name for grouping\n\norderNumber\ninteger\nno\nDefault: last + 1\n\nname\nstring\nyes\nDisposition label shown to users\n\ndescription\nstring\nno\n-\n\ncode\nstring or null\nno\nExternal code used in scenarios; if provided, must be a string\n\ntype\nstring (enum)\nno\nSUCCESS (Default);  \nFAILURE;  \nCONTINUE;  \nDO_NOT_CALL\n\nagentCanSelect\nboolean\nno\ntrue(Default);  \nfalse\n\nagentCanReschedule\nboolean\nno\nfalse (Default);  \ntrue\n\ndialRule.action\nstring (enum) or null\nno\nDial rule action:  \nWAIT(Default);  \nRESCHEDULE;  \nSCENARIO;  \nSTOP_NUMBER;  \nSTOP_RECORD;  \nSTOP_NUMBER_ALL;  \nnull\n\ndialRule.doRetry\nboolean\nno\nfalse (Default);  \ntrue\n\ndialRule.maxRetries\ninteger or null\nno\n[1..2147483647],  \nDefault: 1\n\ndialRule.retryIntervalMin\ninteger or null\nno\n[0..10] minutes,  \nDefault: 10\n\ndialRule.minWaitMin\ninteger or null\nno\n[2..2147483647] minutes,  \nDefault: 1440\n\ndialRule.rescheduleMin\ninteger or null\nno\n[2..2147483647] minutes,  \nDefault: 1440\n\ndialRule.scenarioId\nstring (UUID) or null\nyes, when action=SCENARIO\nScenario to start after this disposition\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              scope:
+                preview: false
+                outbound: true
+                inbound: false
+              folder: Non-final
+              orderNumber: 15
+              name: Wrong person
+              description: The business purpose ...
+              code: null
+              type: CONTINUE
+              agentCanSelect: true
+              agentCanReschedule: true
+              dialRule:
+                action: WAIT
+                doRetry: false
+                maxRetries: null
+                retryIntervalMin: null
+                minWaitMin: 1440
+                rescheduleMin: null
+                scenarioId: null
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/addDispositions/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: addDispositions
+      summary: Add Dispositions
+      description: "This method adds multiple custom dispositions to the campaign.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nmissingRequired - one or more required field values were not found;\n\nformatError - format was mismatched in one or more field values (e.g. string value was defined for an integer field); one or more unsupported fields were defined in the request body;\n\nduplicateName - dispositions were not found or not associated with the selected campaign;\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ndispositions\narray of objects\nyes\nArray of disposition objects to add, see Add Disposition input parameters\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              dispositions:
+              - scope:
+                  preview: false
+                  outbound: true
+                  inbound: false
+                folder: Final
+                orderNumber: 0
+                name: Product sold
+                description: The business purpose ...
+                code: null
+                type: SUCCESS
+                agentCanSelect: true
+                agentCanReschedule: false
+              - scope:
+                  preview: false
+                  outbound: true
+                  inbound: false
+                folder: Non-final
+                orderNumber: 15
+                name: Wrong person
+                description: The business purpose ...
+                code: null
+                type: CONTINUE
+                agentCanSelect: true
+                agentCanReschedule: true
+                dialRule:
+                  action: WAIT
+                  doRetry: false
+                  maxRetries: null
+                  retryIntervalMin: null
+                  minWaitMin: 1440
+                  rescheduleMin: null
+                  scenarioId: null
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                added: 0
+                error:
+                  duplicateName:
+                  - scope:
+                      preview: false
+                      outbound: true
+                      inbound: false
+                    folder: Non-final
+                    orderNumber: 15
+                    name: Wrong person
+                    description: The business purpose ...
+                    code: null
+                    type: CONTINUE
+                    agentCanSelect: true
+                    agentCanReschedule: true
+                    dialRule:
+                      action: WAIT
+                      doRetry: false
+                      maxRetries: null
+                      retryIntervalMin: null
+                      minWaitMin: 1440
+                      rescheduleMin: null
+                      scenarioId: null
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/unassignCallerIds/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: unassignCallerIds
+      summary: Unassign Caller IDs
+      description: "This method removes one or more caller IDs from the campaign by matching the provided identifiers. The caller IDs can be obtained using the Get Campaign method with ?include=callerIds (see here).\n\nNote: Manipulating Caller IDs requires the user to have an additional \"Manage caller IDs within services and campaigns\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nidsNotFound - one or more caller ID was not found or is not associated with the selected campaign;\n\nisDefault - One or more caller ID cannot be deleted because its set as default, and default is required for the selection method;\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              callerIds:
+              - 131564DC-D093-4BA2-8EBD-22269B96C702
+              - 22250E7D90E-C424-46AD-BA49-7773BBFAD5AD
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                removed: 1
+                error:
+                  idsNotFound:
+                  - 50E7D90E-C424-46AD-BA49-7773BBFAD5AD
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/assignCallerIds/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: assignCallerIds
+      summary: Assign Caller IDs
+      description: "This method assigns one or more caller IDs to the campaign by matching the provided phone numbers.\n\nNote: Manipulating Caller IDs requires the user to have an additional \"Manage caller IDs within services and campaigns\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nnumbersNotFound - numbers were not found;\n\nformatError - format was mismatched in one or more field values (e.g. string value was defined for an integer field); one or more unsupported fields were defined in the request body;\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ncallerIds\narray of objects\nyes\n-\n\ncallerIds.number\nstring\nyes\n-\n\ncallerIds.stateProvince\nstring\nno\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              callerIds:
+              - number: '111'
+                stateProvince: null
+              - number: '222'
+                stateProvince: CA
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                added: 1
+                error:
+                  numbersNotFound:
+                  - '222'
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/unassignTeams/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: unassignTeams
+      summary: Unassign Teams
+      description: "This method unassigns multiple teams from the campaign by matching the provided identifiers. The team ID can be found by opening that team in the Contact Center Administrator application, Teams section. The id will be displayed in the '#GROUPS:GROUP_PROPERTIES:' fragment of the URL.\n\nNote: Manipulating teams requires the user to have an additional \"Manage all teams\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nidsNotFound - teams were not found or not associated with the selected campaign;\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              teams:
+              - BB71650B-C60A-4299-B111-84FA271E90C2
+              - 7DE27874-B524-4DFA-9CC3-23817096837F
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                removed: 1
+                error:
+                  idsNotFound:
+                  - 7DE27874-B524-4DFA-9CC3-23817096837F
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/assignTeams/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: assignTeams
+      summary: Assign Teams
+      description: "This method assigns multiple teams to a campaign and specifies the Service skill level to be assigned to the team members. Teams are matched by the provided identifiers. The team ID can be found by opening that team in the Contact Center Administrator application, Teams section. The id will be displayed in the '#GROUPS:GROUP_PROPERTIES:' fragment of the URL.\n\nNote: Manipulating teams requires the user to have an additional \"Manage all teams\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nidsNotFound - teams were not found;\n\nduplicateIDs - teams are already added;\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nteams\narray of strings\nyes\n-\n\nskillLevel\nstring\nno\nDefault: 100\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              teams:
+              - BB71650B-C60A-4299-B111-84FA271E90C2
+              - 7DE27874-B524-4DFA-9CC3-23817096837F
+              skillLevel: 100
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                added: 1
+                error:
+                  idsNotFound:
+                  - 7DE27874-B524-4DFA-9CC3-23817096837F
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/updateCallerIDSettings/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    patch:
+      operationId: updateCallerIdSettings
+      summary: Update Caller ID Settings
+      description: "This method changes the specified properties of the selected campaign. Additionally, this method can reset an optional parameter to its default value by passing \" \" or null to that parameter.\n\nNote: Manipulating Caller ID Settings requires the user to have an additional \"Manage caller IDs within services and campaigns\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ncallerIdSelectionMethod\nstring\nno\nDEFAULT(Default);  \nRND_WITHIN_LIST;  \nRND_WITHIN_STATE_OW_DEFAULT  \nRND_WITHIN_STATE_OW_LIST  \nRECORD_CALLING_NUMBER  \nGEOGRAPHIC_PROXIMITY  \nDMAPPING_INT_NUMBERS\n\ndefaultCallerId\nstring or null\nyes, if the method requires a fallback\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL or defaultCallerId is not found\n\n409\ndefaultCaller Id is not associated with the campaign\n\n422\nNot supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              callerIdSelectionMethod: DEFAULT
+              defaultCallerId: '111'
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/updateGeneralSettings/{campaign_id}:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    patch:
+      operationId: updateGeneralAndOutboundSettings
+      summary: Update General and Outbound Settings
+      description: "This method changes the specified properties of the selected campaign. Additionally, this method can reset an optional parameter to its default value by passing \" \" or null to that parameter.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring\nno\n-\n\nenabled\nboolean\nno\nfalse (Default);  \ntrue\n\noutboundGeneral.type\nstring\nno\nPREVIEW (Default);  \nPROGRESSIVE;  \nPREDICTIVE;  \nAUTOMATIC\n\noutboundGeneral.progressive.noAnswerTimeoutSec\ninteger\nno\n[0..2147483647], Default: 45\n\noutboundGeneral.progressive.overdialRatePcnt\ninteger\nno\n[100..100000],  \nDefault: 100\n\noutboundGeneral.progressive.autoAdjustOverdialRate\nboolean\nno\nfalse;  \ntrue (Default)\n\noutboundGeneral.predictive.noAnswerTimeoutSec\ninteger\nno\n[0..2147483647], Default: 45\n\noutboundGeneral.predictive.initialOverdialRatePcnt\ninteger\nno\n[100..100000],  \nDefault: 100\n\noutboundGeneral.automatic.noAnswerTimeoutSec\ninteger\nno\n[0..2147483647], Default: 45\n\noutboundGeneral.automatic.maxConcurrentCalls\ninteger\nno\n[1..2147483647],  \nDefault: 1\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL\n\n409\nAttempt to change an immutable field\n\n422\nNot supported for Outbound Messaging campaigns"
+      tags:
+      - Campaigns
+      parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              name: Campaign name
+              enabled: true
+              outboundGeneral:
+                type: PREVIEW
+                progressive:
+                  noAnswerTimeoutSec: 45
+                  overdialRatePcnt: 100
+                  autoAdjustOverdialRate: true
+                predictive:
+                  noAnswerTimeoutSec: 45
+                  initialOverdialRatePcnt: 100
+                automatic:
+                  noAnswerTimeoutSec: 45
+                  maxConcurrentCalls: 300
+      responses:
+        '200':
+          description: 200 OK
+      security:
+      - bearerAuth: []
+  /configapi/v3/campaign/duplicateCampaign:
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
+    post:
+      operationId: duplicateCampaign
+      summary: Duplicate Campaign
+      description: 'This method creates a copy of the specified campaign.
+
+
+        Note: This method is not supported for Outbound Messaging campaigns.
+
+
+        The new campaign is always created disabled and in the STOPPED state.
+
+
+        Calling lists are not inherited.
+
+
+        Disposition IDs are newly generated, while disposition names and all other settings are inherited.
+
+
+        Settings, dialing mode, teams, roles, caller ids, and calling hours are also inherited from the original campaign.
+
+
+        Input parameters
+
+
+        Name
+
+        Type
+
+        Required?
+
+        Possible/Default Values
+
+
+        name
+
+        string
+
+        no
+
+        Clone of Source Campaign Name
+
+
+        sourceCampaignId
+
+        string
+
+        yes
+
+        -
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood; 1 or more required fields are missing or have an unsupported value)
+
+
+        401
+
+        Authentication failed (invalid token format; token is expired)
+
+
+        403
+
+        Authentication succeeded but the user does not have sufficient privileges
+
+
+        404
+
+        Invalid URL or source campaign was not found
+
+
+        409
+
+        Duplicate name error
+
+
+        422
+
+        Not supported for Outbound Messaging campaigns'
+      tags:
+      - Campaigns
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              name: Campaign name
+              sourceCampaignId: 31002C90-7188-11EE-A565-0800200C9A66
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              example:
+                id: 85389D39-E05C-4CE7-B36D-4401BEA52E14
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token issued by the Bright Pattern token endpoint, sent as `Authorization: Bearer <token>`.'
+    oauth2ClientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client-credentials grant against the Bright Pattern tenant token endpoint.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant_url}/configapi/v2/oauth/token
+          scopes: {}
+x-refined-from:
+- bright-pattern-list-management-v2-openapi.yml
+- bright-pattern-list-management-v3-2-openapi.yml
+- bright-pattern-list-management-v3-openapi.yml

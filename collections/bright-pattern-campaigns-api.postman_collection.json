@@ -1,0 +1,4016 @@
+{
+  "item": [
+    {
+      "id": "06ab3499-1f2b-477c-8e8f-2baf24a823d3",
+      "name": "Campaigns",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "22d46104-3a25-4b4f-a226-352e45865443",
+          "name": "Get Campaigns",
+          "request": {
+            "name": "Get Campaigns",
+            "description": {
+              "content": "This method returns the list of enabled campaigns and the calling lists currently associated with such campaigns. It does not return any disabled campaigns.\n\nNotes:\n\nAn empty array can be returned if there are no enabled campaigns.\n\nResponse Codes\n\nCode\nDescription\n\n200\nOK\n\n400\nBad request (missing required fields or format not understood)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v2",
+                "campaign",
+                "getAll"
+              ],
+              "host": [
+                "{{configapi-v2-campaign-getAll-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "353dd3c2-5b37-4e58-937d-94d1731605f7",
+              "name": "Get Campaigns",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v2",
+                    "campaign",
+                    "getAll"
+                  ],
+                  "host": [
+                    "{{configapi-v2-campaign-getAll-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"CupIQ Dynamics Preview\",\n    \"state\": \"STOPPED\",\n    \"lists\": [\n      \"CupIQ Dynamics Preview.csv\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ddf23e05-f890-4a31-b720-da1937cbb354",
+          "name": "Get Campaign",
+          "request": {
+            "name": "Get Campaign",
+            "description": {
+              "content": "This method returns all campaign settings. To request only specific parts of the settings (e.g., only assigned teams), use the include query parameter with comma-separated values. If include is not specified, the method behaves the same as Get Campaign 3.1 (backward compatible). Possible values for include are:\n\n\\\\*: Returns all settings\n\ngeneralSettings\n\ncallerIdSettings\n\noutboundGeneral\n\nteams\n\ncallerIDs\n\ndispositions\n\nlists\n\ndncLists\n\nNote: The include query parameter is not supported for Outbound Messaging campaigns.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nInclude parameter is not supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "getCampaign",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-getCampaign-campaign_id-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c7c2f06a-281f-440e-85e0-ceeed8b9a7ec",
+              "name": "Outbound Voice: no include",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "getCampaign",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-getCampaign-campaign_id-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Campaign name\",\n  \"enabled\": true,\n  \"state\": \"STOPPED\",\n  \"direction\": \"OUTBOUND_VOICE\",\n  \"lists\": [\n    {\n      \"id\": \"635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D\",\n      \"name\": \"List 1.csv\",\n      \"instanceId\": \"DBA3A9B0-6CC4-11EE-807C-0800200C9A66\",\n      \"instanceName\": \"\",\n      \"enabled\": true,\n      \"order\": 1,\n      \"dialingRatio\": 1,\n      \"sortingOrder\": {\n        \"type\": \"CUSTOM\",\n        \"sortingFields\": [\n          {\n            \"fieldId\": \"f1\",\n            \"fieldName\": \"Priority\",\n            \"sortOrder\": \"ASC\"\n          }\n        ]\n      },\n      \"totalRecords\": 100\n    },\n    {\n      \"id\": \"92A7FE1C-3EC1-4A4E-A662-7A8E57E6CA78\",\n      \"name\": \"List 2.csv\",\n      \"instanceId\": \"99B6B870-6CC5-11EE-807C-0800200C9A66\",\n      \"instanceName\": \"filtered\",\n      \"enabled\": false,\n      \"order\": 1,\n      \"dialingRatio\": 1,\n      \"sortingOrder\": {\n        \"type\": \"NATURAL\",\n        \"sortingFields\": []\n      },\n      \"totalRecords\": 50\n    }\n  ],\n  \"dncLists\": [\n    {\n      \"id\": \"A5717BD2-C610-4AE9-B1B3-0DBE34CA31BD\",\n      \"name\": \"List 1\",\n      \"type\": \"GEOGRAPHIC_AREACODE\",\n      \"Country\": \"US\",\n      \"disposition\": \"Number matches DNC\"\n    },\n    {\n      \"id\": \"B494BB83-C359-4432-A720-9858A6990E06\",\n      \"name\": \"List 2\",\n      \"type\": \"EXCLUSION\",\n      \"listField\": \"accountId\",\n      \"disposition\": \"Number matches DNC\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "99f32c32-a63f-4b22-aea6-333431beee4d",
+          "name": "Get Campaigns",
+          "request": {
+            "name": "Get Campaigns",
+            "description": {
+              "content": "This method returns a list of enabled outbound campaigns, their current states, and unique identifiers. Based on the user privileges configured, the list will contain all campaigns or only those assigned to this user (see here). An empty list will be returned if no outbound campaign is currently enabled or the user has no assigned campaigns.\n\nNote: A campaign's unique identifier returned in the response body can be used to reference that campaign in the path variables of further API requests.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "getAll"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-getAll-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1acdbeed-a34a-411b-bf34-b8168436656b",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "getAll"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-getAll-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"85389D39-E05C-4CE7-B36D-4401BEA52E14\",\n    \"name\": \"Campaign name\",\n    \"state\": \"STOPPED\"\n  },\n  {\n    \"id\": \"48B91DC5-A8CD-4FCA-9AF8-EC20A4ACC14B\",\n    \"name\": \"Campaign name 2\",\n    \"state\": \"RUNNING\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3261a47-45a9-4086-8586-3e891fabb4bd",
+          "name": "Get Campaign Status",
+          "request": {
+            "name": "Get Campaign Status",
+            "description": {
+              "content": "This method returns the current state, i.e. STOPPED or RUNNING, of an enabled or disabled campaign.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "getStatus",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-getStatus-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c4276d89-a7e9-4365-a3a3-6941cb6fc86a",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "getStatus",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-getStatus-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Campaign name\",\n  \"enabled\": true,\n  \"state\": \"STOPPED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1b047c3d-5dd3-4b7a-8997-47c0f8132c70",
+          "name": "Start",
+          "request": {
+            "name": "Start",
+            "description": {
+              "content": "This method starts an enabled campaign, first checking that the campaign is not disabled or already running.\n\nNote: Manipulating campaign states requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n409\nSpecified campaign is disabled or already running",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "start",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-start-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6890c38b-5d44-42a7-9f70-cc16150bd4ac",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "start",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-start-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"state\\\": “RUNNING”\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0f9a1ba2-f544-4e6f-b690-9103a9e5dc79",
+          "name": "Stop",
+          "request": {
+            "name": "Stop",
+            "description": {
+              "content": "This method stops an enabled campaign, first checking that the campaign is not disabled or already stopped.\n\nNote: Manipulating campaign states requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n409\nSpecified campaign is disabled or already stopped",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "stop",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-stop-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d337a156-1b6b-4f20-9ac0-a5454884e749",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "stop",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-stop-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"state\\\": “STOPPED”\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ab60935-4f1b-4ca4-80a4-c53ba57271f3",
+          "name": "Bind List",
+          "request": {
+            "name": "Bind List",
+            "description": {
+              "content": "This method adds a list to the selected campaign.\n\nOnce added, an instance of the list associated with this particular campaign is created. The ID of such an instance is returned in the response body, together with the total number of records inside the original list.\n\nNote: The instance's unique identifier can be further used to unbind or update the list, get campaign results, or query a record from that list.\n\nNote: Manipulating calling lists associated with a campaign requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlistId\nstring\nyes (can be found in the Get Campaign  response)\n-\n\ninstanceName\nstring\nno\n-\n\nenabled\nboolean\nno\nfalse (Default);  \ntrue\n\norder\ninteger, > 0\nno\n1(Default);  \n2,...\n\ndialingRatio\ninteger, > 0\nno\n1(Default);  \n2,...\n\nsortingOrder\nstring\nno\nNATURAL; (Default)  \nRANDOM;  \nCUSTOM\n\nsortingOrder.sortingFields.fieldName\nstring\nyes, if sortingOrder.type = custom\n-\n\nsortingOrder.sortingFields.sortOrder\nstring\nyes, if sortingOrder.type = custom\nASC (Default);  \nDESC\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nSpecifed list was not found;  \nInvalid URL",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "bindList",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-bindList-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ebb54ecd-da04-4acc-9d6b-ff7d06b6904b",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "bindList",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-bindList-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"listId\": \"635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D\",\n  \"instanceName\": \"\",\n  \"enabled\": true,\n  \"order\": 1,\n  \"dialingRatio\": 1,\n  \"sortingOrder\": {\n    \"type\": \"CUSTOM\",\n    \"sortingFields\": [\n      {\n        \"fieldName\": \"Expected result\",\n        \"sortOrder\": \"ASC\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"instanceId\": \"DBA3A9B0-6CC4-11EE-807C-0800200C9A66\",\n  \"totalRecords\": 100\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d494b3bd-6566-4336-8eab-057f55272a7c",
+          "name": "Update List",
+          "request": {
+            "name": "Update List",
+            "description": {
+              "content": "This method changes the properties of an instance of a list in the associated campaign. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here). Additionally, this method can reset an optional parameter to its default value by passing \" \" or null to that parameter.\n\nBefore the list is updated, its binding to the specified campaign is checked. If the instance is bound to the specified campaign, the list is updated successfully.\n\nNote: Manipulating the content of calling lists associated with a campaign requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ninstanceId\nstring\nyes (can be found in the Get Campaign response)\n-\n\ninstanceName\nstring\nno\n-\n\nenabled\nboolean\nno\nfalse (Default);  \ntrue\n\norder\ninteger, > 0\nno\n1(Default);  \n2,...\n\ndialingRatio\ninteger, > 0\nno\n1(Default);  \n2,...\n\nsortingOrder\nstring\nno\nNATURAL; (Default)  \nRANDOM;  \nCUSTOM\n\nsortingOrder.sortingFields.fieldName\nstring\nyes, if sortingOrder.type = custom\n-\n\nsortingOrder.sortingFields.sortOrder\nstring\nyes, if sortingOrder.type = custom\nASC (Default);  \nDESC\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nSpecified instance was not found;  \nInvalid URL\n\n409\nSpecified instance is not bound to the selected campaign",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "updateList",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-updateList-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6e015de7-f835-4462-963b-8409cdcd00ec",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "updateList",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-updateList-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instanceId\": \"DBA3A9B0-6CC4-11EE-807C-0800200C9A66\",\n  \"instanceName\": \"\",\n  \"enabled\": true,\n  \"order\": 1,\n  \"dialingRatio\": 1,\n  \"sortingOrder\": {\n    \"type\": \"CUSTOM\",\n    \"sortingFields\": [\n      {\n        \"fieldName\": \"Expected result\",\n        \"sortOrder\": \"ASC\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalRecords\": 50\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50133bbc-02d1-430d-81d5-ba13abfad088",
+          "name": "Unbind List",
+          "request": {
+            "name": "Unbind List",
+            "description": {
+              "content": "This method removes the instance of a list from the associated campaign. The instance to be removed is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here).\n\nNote: Bright Pattern Contact Center solution supports several voice campaign modes (see here). Depending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns\nUpon instance deletion, all active, i.e. in a dialing state, within a script, or connected to an agent, calls are dropped\n\nPreview campaigns\nUpon instance deletion, only the calls not yet picked up by an agent are dropped. In-progress and connected calls are not affected\n\nThe results of completed calls are archived and available for downloading in the Contact Center Administrator application (see here). Interaction results for dropped calls are not saved.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ninstanceId\nstring\nyes (can be found in the Get Campaign  response)\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nSpecified instance was not found;  \nInvalid URL\n\n409\nSpecified instance is not bound to the selected campaign",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "unbindList",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-unbindList-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9f937097-30b1-40d9-aaa3-778a1edaf149",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "unbindList",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-unbindList-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instanceId\": \"DBA3A9B0-6CC4-11EE-807C-0800200C9A66\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a53ce9f6-4610-469d-91fb-b1c20da1dcdd",
+          "name": "Get All Records",
+          "request": {
+            "name": "Get All Records",
+            "description": {
+              "content": "This method returns a list of all records in an instance. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here). Optionally, this method can also display request attempts made. The records are returned and sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ninstanceId\nstring\nyes (can be found in the Get Campaign  response)\n-\n\nextractAttempts\nboolean\nno (if true,the method returns the list of all attempts)\nfalse (Default);  \ntrue\n\nlimit\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\ncursor\nstring\nno (used for pagination)\nFirst request: null  \nSubsequent request: value received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n409\nSpecified instance is not bound to the selected campaign",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "getAllRecords",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-getAllRecords-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7f096bbe-b551-4886-94b3-09d4d568d183",
+              "name": "All",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "getAllRecords",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-getAllRecords-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instanceId\": \"DBA3A9B0-6CC4-11EE-807C-0800200C9A66\",\n  \"extractAttempts\": true,\n  \"limit\": 1000,\n  \"cursor\": \"590e9abd4abbf1165862d342\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next_cursor\": \"590e9abd4abbf1165862d342\",\n  \"records\": [\n    {\n      \"entry\": {\n        \"firstname\": \"Firstname4\",\n        \"date_time\": \"29-12-2023\",\n        \"phone\": \"1004\",\n        \"id\": \"N4\",\n        \"lastname\": \"Lastname4\"\n      },\n      \"status\": {\n        \"globalInteractionID\": \"\",\n        \"lastCallDuration\": 0,\n        \"lastDisposition\": \"\",\n        \"totalAttempts\": 0,\n        \"completed\": false,\n        \"completedTime\": \"\",\n        \"lastAgent\": \"\",\n        \"lastPhone\": \"\",\n        \"lastDate\": \"\"\n      },\n      \"attempts\": []\n    },\n    {\n      \"entry\": {\n        \"firstname\": \"Firstname2\",\n        \"date_time\": \"01-12-2023\",\n        \"phone\": \"1002\",\n        \"id\": \"N2\",\n        \"lastname\": \"Lastname2\"\n      },\n      \"status\": {\n        \"globalInteractionID\": \"F944CE77-2B21-472F-BE85-8BDE356A9500\",\n        \"lastCallDuration\": 30,\n        \"lastDisposition\": \"Appointment approved\",\n        \"totalAttempts\": 1,\n        \"completed\": true,\n        \"completedTime\": \"2023-01-19T20:46:35.000\",\n        \"lastAgent\": \"katie.kent\",\n        \"lastPhone\": \"1003\",\n        \"lastDate\": \"2023-01-19T20:46:35.000\",\n        \"custom_field_1\": \"value1\",\n        \"custom_field_2\": \"value2\"\n      },\n      \"attempts\": [\n        {\n          \"call_attempted\": true,\n          \"disposition\": \"Appointment approved\",\n          \"date\": \"2023-01-19T20:46:35.000\",\n          \"phone\": \"1003\",\n          \"timezone\": \"Europe/Dublin\",\n          \"timezoneBy\": \"field\",\n          \"callDuration\": 30,\n          \"dialingDuration\": 5,\n          \"callNotes\": \"\",\n          \"agent\": \"katie.kent\",\n          \"globalInteractionID\": \"F944CE77-2B21-472F-BE85-8BDE356A9500\",\n          \"CPADuration\": 2,\n          \"CPAResult\": \"Voice\",\n          \"custom_field_1\": \"value1\",\n          \"custom_field_2\": \"value2\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6333e61-29e3-48cf-abb5-7bf2afc7c81d",
+          "name": "Get Completed Records",
+          "request": {
+            "name": "Get Completed Records",
+            "description": {
+              "content": "This method returns a list of all completed records within an instance. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here). Optionally, the user can view request attempts and specify the completion time frame for which they want to display the completed records list. The records are returned and sorted by completion time (MongoDB completedTime field).\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id and the completedTimefields are concatenated and used as the \"cursor\" to reference the last served record.\n\nNote: The input parameters defined for this method in the List Management API 3.0 differ from the previous version.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ninstanceId\nstring\nyes (can be found in the Get Campaign  response)\n-\n\nstartTime\ntime (UTC)\nno (if specified, the method returns all records completed at or after the startTime)\n-\n\nendTime\ntime (UTC)\nno (if specified, the method returns all records completed before the endTime)\n-\n\nextractAttempts\nboolean\nno (if true,the method returns the list of all attempts)\nfalse (Default);  \ntrue\n\nlimit\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\ncursor\nstring\nno (used for pagination)\nFirst request: null  \nSubsequent request:  \nvalue received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n409\nSpecified instance is not bound to the selected campaign",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "getCompletedRecords",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-getCompletedRecords-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "06308130-3671-43d6-8145-7149e0b1a9f9",
+              "name": "Completed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "getCompletedRecords",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-getCompletedRecords-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instanceId\": \"DBA3A9B0-6CC4-11EE-807C-0800200C9A66\",\n  \"startTime\": \"2023-01-01T00:00:00.000\",\n  \"endTime\": \"2023-01-30T00:00:00.000\",\n  \"extractAttempts\": true,\n  \"limit\": 1000,\n  \"cursor\": \"2023-01-10T12:13:59.001_590e9abd4abbf1165862d342\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"next_cursor\\\": \\\"2023-01-15T18:13:59.111_6870e9abd4abbf1165862d22\\\",\\n    \\\"records\\\": [\\n        {\\n            \\\"entry\\\": {\\n                \\\"firstname\\\": \\\"Firstname2\\\",\\n                \\\"date_time\\\": \\\"01-12-2023\\\",\\n                \\\"phone\\\": \\\"1002\\\",\\n                \\\"id\\\": \\\"N2\\\",\\n                \\\"lastname\\\": \\\"Lastname2\\\"\\n            },\\n            \\\"status\\\": {\\n                \\\"globalInteractionID\\\": \\\"F944CE77-2B21-472F-BE85-8BDE356A9500\\\",\\n                \\\"lastCallDuration\\\": 30,\\n                \\\"lastDisposition\\\": \\\"Appointment approved\\\",\\n                \\\"totalAttempts\\\": 1,\\n                \\\"completed\\\": true,\\n                \\\"completedTime\\\": \\\"2023-01-19T20:46:35.000\\\",\\n                \\\"lastAgent\\\": \\\"katie.kent\\\",\\n                \\\"lastPhone\\\": \\\"1002\\\",\\n                \\\"lastDate\\\": \\\"2023-01-19T20:46:35.000\\\",\\n                \\\"custom_field_1\\\": \\\"value1\\\",\\n                \\\"custom_field_2\\\": \\\"value2\\\"\\n            },\\n            \\\"attempts\\\": [\\n                           {\\n                                \\\"call_attempted\\\": true,\\n                                \\\"disposition\\\": \\\"Appointment approved\\\",\\n                                \\\"date\\\": \\\"2023-01-19T20:46:35.000\\\",\\n                                \\\"phone\\\": \\\"1003\\\",\\n                                \\\"phoneTimezone\\\": \\\"Europe/Dublin\\\", //Dialer 2.5\\n                                \\\"postalCodeTimezone\\\": \\\"\\\", //Dialer 2.5\\n                                \\\"timezonesBy\\\": \\\"field\\\", //Dialer 2.5\\n                                \\\"callDuration\\\": 30,\\n                                \\\"dialingDuration\\\": 5,\\n                                \\\"callNotes\\\": \\\"\\\",\\n                                \\\"agent\\\": \\\"katie.kent\\\",\\n                                \\\"globalInteractionID\\\": \\\"F944CE77-2B21-472F-BE85-8BDE356A9500\\\",\\n                                \\\"CPADuration\\\": 2,\\n                                \\\"CPAResult\\\": \\\"Voice\\\",\\n                                \\\"custom_field_1\\\": \\\"value1\\\",\\n                                \\\"custom_field_2\\\": \\\"value2\\\"\\n                            }\\n            ]\\n        }\\n    ]\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66740b08-e617-4864-8ec6-8e3222b5cd20",
+          "name": "Get Updated Records",
+          "request": {
+            "name": "Get Updated Records",
+            "description": {
+              "content": "This method returns a list of all updated records within an instance. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method. Optionally, the user can view request attempts and specify the time frame for which they want to display the updated records list. The records are returned and sorted by the last date attempted (MongoDB lastDate field).\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id and the lastDatefields are concatenated and used as the \"cursor\" to reference the last served record.\n\nNote: The input parameters defined for this method in the List Management API 3.0 differ from the previous version.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ninstanceId\nstring\nyes (can be found in the Get Campaign  response)\n-\n\nstartTime\ntime (UTC)\nno (if specified, the method returns all records completed at or after the startTime)\n-\n\nendTime\ntime (UTC)\nno (if specified, the method returns all records completed before the endTime)\n-\n\nextractAttempts\nboolean\nno (if true,the method returns the list of all attempts)\nfalse (Default);  \ntrue\n\nlimit\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\ncursor\nstring\nno (mn for pagination)\nFirst request: null  \nSubsequent request:  \nvalue received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n409\nSpecified instance is not bound to the selected campaign",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "getUpdatedRecords",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-getUpdatedRecords-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4655a164-d220-4cb5-b614-1c6f38ce065b",
+              "name": "Updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "getUpdatedRecords",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-getUpdatedRecords-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instanceId\": \"DBA3A9B0-6CC4-11EE-807C-0800200C9A66\",\n  \"startTime\": \"2023-01-01T00:00:00.000\",\n  \"endTime\": \"2023-01-30T00:00:00.000\",\n  \"extractAttempts\": true,\n  \"limit\": 1000,\n  \"cursor\": \"2023-01-10T12:13:59.001_590e9abd4abbf1165862d342\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n    \\\"next_cursor\\\": \\\"2023-01-15T18:13:59.111_6870e9abd4abbf1165862d22\\\",\\n    \\\"records\\\": [\\n        {\\n            \\\"entry\\\": {\\n                \\\"firstname\\\": \\\"Firstname2\\\",\\n                \\\"date_time\\\": \\\"01-12-2023\\\",\\n                \\\"phone\\\": \\\"1002\\\",\\n                \\\"id\\\": \\\"N2\\\",\\n                \\\"lastname\\\": \\\"Lastname2\\\"\\n            },\\n            \\\"status\\\": {\\n                \\\"globalInteractionID\\\": \\\"F944CE77-2B21-472F-BE85-8BDE356A9500\\\",\\n                \\\"lastCallDuration\\\": 30,\\n                \\\"lastDisposition\\\": \\\"Appointment approved\\\",\\n                \\\"totalAttempts\\\": 1,\\n                \\\"completed\\\": true,\\n                \\\"completedTime\\\": \\\"2023-01-19T20:46:35.000\\\",\\n                \\\"lastAgent\\\": \\\"katie.kent\\\",\\n                \\\"lastPhone\\\": \\\"1002\\\",\\n                \\\"lastDate\\\": \\\"2023-01-19T20:46:35.000\\\",\\n                \\\"custom_field_1\\\": \\\"value1\\\",\\n                \\\"custom_field_2\\\": \\\"value2\\\"\\n            },\\n            \\\"attempts\\\": [\\n                           {\\n                                \\\"call_attempted\\\": true,\\n                                \\\"disposition\\\": \\\"Appointment approved\\\",\\n                                \\\"date\\\": \\\"2023-01-19T20:46:35.000\\\",\\n                                \\\"phone\\\": \\\"1003\\\",\\n                                \\\"phoneTimezone\\\": \\\"Europe/Dublin\\\", //Dialer 2.5\\n                                \\\"postalCodeTimezone\\\": \\\"\\\", //Dialer 2.5\\n                                \\\"timezonesBy\\\": \\\"field\\\", //Dialer 2.5                       \\n                                \\\"callDuration\\\": 30,\\n                                \\\"dialingDuration\\\": 5,\\n                                \\\"callNotes\\\": \\\"\\\",\\n                                \\\"agent\\\": \\\"katie.kent\\\",\\n                                \\\"globalInteractionID\\\": \\\"F944CE77-2B21-472F-BE85-8BDE356A9500\\\",\\n                                \\\"CPADuration\\\": 2,\\n                                \\\"CPAResult\\\": \\\"Voice\\\",\\n                                \\\"custom_field_1\\\": \\\"value1\\\",\\n                                \\\"custom_field_2\\\": \\\"value2\\\"\\n                            }\\n            ]\\n        }\\n    ]\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e8a1f0d-10c3-43d1-979e-975ab957d636",
+          "name": "Query a Record",
+          "request": {
+            "name": "Query a Record",
+            "description": {
+              "content": "This method returns a copy of an existing record in an instance, as well as the information about the last interaction associated with this record. The instance is specified by its unique identifier, instanceID, returned in the response body of the Get Campaign method (see here). The search for the record is performed based on the defined key fields.\n\nBefore the record is queried, its existence in the specified list is checked. If the record does exist in the specified list, the record is queried successfully.\n\nNote: If a PHONE type field is defined as a key, the record value is checked for a full match with the value stored in the database or the original source (if the data was modified upon loading into the database).\n\nNote: The response body contains the List Record JSON Object, defined by two sub-objects as follows:\n\nentry object: contains a copy of the list entry\nfield names are retained as defined at list creation\ncustom fields are returned with the prefix 'custom_' added to the name defined in the Administrator Application\n\ntime and date field values are returned in UTC format\n\nstatusobject: contains the campaign results for this specific record\nomitted if the list is not assigned to the campaign or the campaign doesn't exist\n\nfield names are predefined\n\ncompleted field is always present, while the other fields may be absent if the record was never called or never reached an agent.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ninstanceId\nstring\nyes (can be found in the Get Campaign  response)\n-\n\nfields\nlist of JSON Objects\nyes (specifies the key fields to be used for the object search; the non-key fields are ignored)\n-\n\nextractAttempts\nboolean\nno (if true,the method returns the list of all attempts)\nfalse (Default);  \ntrue\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nSpecified record was not found;  \nInvalid URL\n\n409\nSpecified instance is not bound to the selected campaign",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "queryRecord",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-queryRecord-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8337dec4-e312-4fe2-ba6e-c60cda42bb70",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "queryRecord",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-queryRecord-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instanceId\": \"DBA3A9B0-6CC4-11EE-807C-0800200C9A66\",\n  \"extractAttempts\": false,\n  \"fields\": {\n    \"id\": \"1\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entry\": {\n    \"firstname\": \"Firstname4\",\n    \"date_time\": \"29-12-2023\",\n    \"phone\": \"1004\",\n    \"id\": \"N4\",\n    \"lastname\": \"Lastname4\"\n  },\n  \"status\": {\n    \"globalInteractionID\": \"\",\n    \"lastCallDuration\": 0,\n    \"lastDisposition\": \"\",\n    \"totalAttempts\": 0,\n    \"completed\": false,\n    \"completedTime\": \"\",\n    \"lastAgent\": \"\",\n    \"lastPhone\": \"\",\n    \"lastDate\": \"\",\n    \"custom_field_1\": \"\",\n    \"custom_field_2\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ee36642-7acc-44ef-9c60-a88c7c6bfaf0",
+          "name": "Delete Campaign",
+          "request": {
+            "name": "Delete Campaign",
+            "description": {
+              "content": "This method deletes the campaign and erases call results, including all archived results for the campaign.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nDepending on the mode of the associated campaign, the active call behavior will differentiate as follows:\n\nProgressive, Predictive, or Automatic (IVR) campaigns: Upon instance deletion, all active, i.e. in a dialing state, within a script, or connected to an agent, calls are dropped.\n\nPreview campaigns: Upon instance deletion, only the calls not yet picked up by an agent are dropped. In-progress and connected calls are not affected.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "deleteCampaign",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-deleteCampaign-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0184b224-401e-4434-b422-45b2221bcc97",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "deleteCampaign",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-deleteCampaign-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "60eec533-3a19-4a97-9529-5c429d704207",
+          "name": "Unlink a Campaign",
+          "request": {
+            "name": "Unlink a Campaign",
+            "description": {
+              "content": "This method removes the selected campaign from its link group. Once deleted, the group becomes re-ordered.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified link group was not found;  \nSpecified campaign was not found;  \nInvalid URL\n\n409\nSpecified campaign is not linked to the selected link group\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "unlinkCampaign",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-unlinkCampaign-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2997cfec-7f09-4b7b-8650-7ee615912e17",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "unlinkCampaign",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-unlinkCampaign-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5477b638-83bd-42d0-93ef-d2924cc1ba1f",
+          "name": "Link a Campaign",
+          "request": {
+            "name": "Link a Campaign",
+            "description": {
+              "content": "This method adds a campaign to the selected link group or changes its order. When adding, this will reset campaign type, teams assigned, hours, additional skills, and term to the settings of campaigns already in the group. Also call quota will be disabled. Once added, the group becomes re-ordered.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ngroupId\nstring\nyes\n-\n\nstartAfterCampaignId\nstring\nno\n- (will be added first, if empty)\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified link group was not found;  \nSpecifed campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "linkCampaign",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-linkCampaign-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cb22d9e1-a83f-495f-a454-20abc49cda4b",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "linkCampaign",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-linkCampaign-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"groupId\": \"6D7C2A7E-7E7A-4D43-9F6D-AB7D6F2B1F1E\",\n  \"startAfterCampaignId\": \"48B91DC5-A8CD-4FCA-9AF8-EC20A4ACC14B\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1ea04596-f148-4c46-88d4-b8f2ac3e2578",
+          "name": "Update Disposition",
+          "request": {
+            "name": "Update Disposition",
+            "description": {
+              "content": "This method updates the selected disposition and associated dial rule by its id (both custom and system).\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nSee Add Disposition format.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nSpecified disposition id was not found;  \nInvalid URL\n\n409\nSpecified disposition id is not associated with the selected campaign\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "updateDisposition",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-updateDisposition-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c6310a4f-02f5-47df-ba02-53228bbcd98e",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "updateDisposition",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-updateDisposition-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"0758F19D-448E-4EE3-B34F-DF5014D1156E\",\n  \"scope\": {\n    \"preview\": false,\n    \"outbound\": true,\n    \"inbound\": false\n  },\n  \"folder\": \"Non-final\",\n  \"orderNumber\": 15,\n  \"name\": \"Wrong person\",\n  \"description\": \"The business purpose ...\",\n  \"code\": null,\n  \"type\": \"CONTINUE\",\n  \"agentCanSelect\": true,\n  \"agentCanReschedule\": true,\n  \"dialRule\": {\n    \"action\": \"WAIT\",\n    \"doRetry\": false,\n    \"maxRetries\": null,\n    \"retryIntervalMin\": null,\n    \"minWaitMin\": 1440,\n    \"rescheduleMin\": null,\n    \"scenarioId\": null\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "951c8ec1-c553-42b3-a1ad-ca566d95f359",
+          "name": "Delete Dispositions",
+          "request": {
+            "name": "Delete Dispositions",
+            "description": {
+              "content": "This method deletes multiple custom dispositions from the campaign by matching the provided identifiers. The disposition IDs can be obtained using the Get Campaign method with ?include=dispositions (see here).\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nidsNotFound - dispositions were not found or not associated with the selected campaign;\n\nisSystem - system dispositions (cannot be deleted);\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "deleteDispositions",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-deleteDispositions-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8b3098da-ace5-41bd-a789-739be98792d0",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "deleteDispositions",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-deleteDispositions-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dispositions\": [\n    \"0758F19D-448E-4EE3-B34F-DF5014D1156E\",\n    \"A9B7ED52-CD95-48E1-BCB1-0754214309BF\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"removed\": 1,\n  \"error\": {\n    \"idsNotFound\": {\n      \"ids\": [\n        \"111\"\n      ]\n    },\n    \"isSystem\": {\n      \"ids\": [\n        \"A9B7ED52-CD95-48E1-BCB1-0754214309BF\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63e0e1bb-8a65-4ff9-a9a8-c6b751985ef0",
+          "name": "Add Disposition",
+          "request": {
+            "name": "Add Disposition",
+            "description": {
+              "content": "This method add a disposition to the campaign.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nscope.outbound\nboolean\nno\ntrue (Default);  \nfalse\n\nscope.inbound\nboolean\nno\nfalse (Default);  \ntrue\n\nscope.preview\nboolean\nno\nfalse (Default);  \ntrue\n\nfolder\nstring\nyes\nFolder name for grouping\n\norderNumber\ninteger\nno\nDefault: last + 1\n\nname\nstring\nyes\nDisposition label shown to users\n\ndescription\nstring\nno\n-\n\ncode\nstring or null\nno\nExternal code used in scenarios; if provided, must be a string\n\ntype\nstring (enum)\nno\nSUCCESS (Default);  \nFAILURE;  \nCONTINUE;  \nDO_NOT_CALL\n\nagentCanSelect\nboolean\nno\ntrue(Default);  \nfalse\n\nagentCanReschedule\nboolean\nno\nfalse (Default);  \ntrue\n\ndialRule.action\nstring (enum) or null\nno\nDial rule action:  \nWAIT(Default);  \nRESCHEDULE;  \nSCENARIO;  \nSTOP_NUMBER;  \nSTOP_RECORD;  \nSTOP_NUMBER_ALL;  \nnull\n\ndialRule.doRetry\nboolean\nno\nfalse (Default);  \ntrue\n\ndialRule.maxRetries\ninteger or null\nno\n[1..2147483647],  \nDefault: 1\n\ndialRule.retryIntervalMin\ninteger or null\nno\n[0..10] minutes,  \nDefault: 10\n\ndialRule.minWaitMin\ninteger or null\nno\n[2..2147483647] minutes,  \nDefault: 1440\n\ndialRule.rescheduleMin\ninteger or null\nno\n[2..2147483647] minutes,  \nDefault: 1440\n\ndialRule.scenarioId\nstring (UUID) or null\nyes, when action=SCENARIO\nScenario to start after this disposition\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "addDisposition",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-addDisposition-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "620f20c4-d610-40f5-b6dc-3a6d9df1496e",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "addDisposition",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-addDisposition-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"scope\": {\n    \"preview\": false,\n    \"outbound\": true,\n    \"inbound\": false\n  },\n  \"folder\": \"Non-final\",\n  \"orderNumber\": 15,\n  \"name\": \"Wrong person\",\n  \"description\": \"The business purpose ...\",\n  \"code\": null,\n  \"type\": \"CONTINUE\",\n  \"agentCanSelect\": true,\n  \"agentCanReschedule\": true,\n  \"dialRule\": {\n    \"action\": \"WAIT\",\n    \"doRetry\": false,\n    \"maxRetries\": null,\n    \"retryIntervalMin\": null,\n    \"minWaitMin\": 1440,\n    \"rescheduleMin\": null,\n    \"scenarioId\": null\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ecde7039-9598-4428-b183-db6e5bb2d499",
+          "name": "Add Dispositions",
+          "request": {
+            "name": "Add Dispositions",
+            "description": {
+              "content": "This method adds multiple custom dispositions to the campaign.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nmissingRequired - one or more required field values were not found;\n\nformatError - format was mismatched in one or more field values (e.g. string value was defined for an integer field); one or more unsupported fields were defined in the request body;\n\nduplicateName - dispositions were not found or not associated with the selected campaign;\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ndispositions\narray of objects\nyes\nArray of disposition objects to add, see Add Disposition input parameters\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "addDispositions",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-addDispositions-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2b2c1830-306f-48c1-9d12-c8e443bd42db",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "addDispositions",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-addDispositions-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dispositions\": [\n    {\n      \"scope\": {\n        \"preview\": false,\n        \"outbound\": true,\n        \"inbound\": false\n      },\n      \"folder\": \"Final\",\n      \"orderNumber\": 0,\n      \"name\": \"Product sold\",\n      \"description\": \"The business purpose ...\",\n      \"code\": null,\n      \"type\": \"SUCCESS\",\n      \"agentCanSelect\": true,\n      \"agentCanReschedule\": false\n    },\n    {\n      \"scope\": {\n        \"preview\": false,\n        \"outbound\": true,\n        \"inbound\": false\n      },\n      \"folder\": \"Non-final\",\n      \"orderNumber\": 15,\n      \"name\": \"Wrong person\",\n      \"description\": \"The business purpose ...\",\n      \"code\": null,\n      \"type\": \"CONTINUE\",\n      \"agentCanSelect\": true,\n      \"agentCanReschedule\": true,\n      \"dialRule\": {\n        \"action\": \"WAIT\",\n        \"doRetry\": false,\n        \"maxRetries\": null,\n        \"retryIntervalMin\": null,\n        \"minWaitMin\": 1440,\n        \"rescheduleMin\": null,\n        \"scenarioId\": null\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"added\": 0,\n  \"error\": {\n    \"duplicateName\": [\n      {\n        \"scope\": {\n          \"preview\": false,\n          \"outbound\": true,\n          \"inbound\": false\n        },\n        \"folder\": \"Non-final\",\n        \"orderNumber\": 15,\n        \"name\": \"Wrong person\",\n        \"description\": \"The business purpose ...\",\n        \"code\": null,\n        \"type\": \"CONTINUE\",\n        \"agentCanSelect\": true,\n        \"agentCanReschedule\": true,\n        \"dialRule\": {\n          \"action\": \"WAIT\",\n          \"doRetry\": false,\n          \"maxRetries\": null,\n          \"retryIntervalMin\": null,\n          \"minWaitMin\": 1440,\n          \"rescheduleMin\": null,\n          \"scenarioId\": null\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2f5a84e7-9e92-48fe-8a92-cd20f05cd19f",
+          "name": "Unassign Caller IDs",
+          "request": {
+            "name": "Unassign Caller IDs",
+            "description": {
+              "content": "This method removes one or more caller IDs from the campaign by matching the provided identifiers. The caller IDs can be obtained using the Get Campaign method with ?include=callerIds (see here).\n\nNote: Manipulating Caller IDs requires the user to have an additional \"Manage caller IDs within services and campaigns\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nidsNotFound - one or more caller ID was not found or is not associated with the selected campaign;\n\nisDefault - One or more caller ID cannot be deleted because its set as default, and default is required for the selection method;\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "unassignCallerIds",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-unassignCallerIds-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7afd753c-3d38-4c04-b18f-5749e8d52de5",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "unassignCallerIds",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-unassignCallerIds-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callerIds\": [\n    \"131564DC-D093-4BA2-8EBD-22269B96C702\",\n    \"22250E7D90E-C424-46AD-BA49-7773BBFAD5AD\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"removed\": 1,\n  \"error\": {\n    \"idsNotFound\": [\n      \"50E7D90E-C424-46AD-BA49-7773BBFAD5AD\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6ecdca23-007a-420d-bba6-b2bfa259842b",
+          "name": "Assign Caller IDs",
+          "request": {
+            "name": "Assign Caller IDs",
+            "description": {
+              "content": "This method assigns one or more caller IDs to the campaign by matching the provided phone numbers.\n\nNote: Manipulating Caller IDs requires the user to have an additional \"Manage caller IDs within services and campaigns\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nnumbersNotFound - numbers were not found;\n\nformatError - format was mismatched in one or more field values (e.g. string value was defined for an integer field); one or more unsupported fields were defined in the request body;\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ncallerIds\narray of objects\nyes\n-\n\ncallerIds.number\nstring\nyes\n-\n\ncallerIds.stateProvince\nstring\nno\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "assignCallerIds",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-assignCallerIds-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a037f391-63aa-4363-b207-a0325cef60e8",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "assignCallerIds",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-assignCallerIds-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callerIds\": [\n    {\n      \"number\": \"111\",\n      \"stateProvince\": null\n    },\n    {\n      \"number\": \"222\",\n      \"stateProvince\": \"CA\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"added\": 1,\n  \"error\": {\n    \"numbersNotFound\": [\n      \"222\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ac3d88c2-5570-4b1d-b223-d0746864ec68",
+          "name": "Unassign Teams",
+          "request": {
+            "name": "Unassign Teams",
+            "description": {
+              "content": "This method unassigns multiple teams from the campaign by matching the provided identifiers. The team ID can be found by opening that team in the Contact Center Administrator application, Teams section. The id will be displayed in the '#GROUPS:GROUP_PROPERTIES:' fragment of the URL.\n\nNote: Manipulating teams requires the user to have an additional \"Manage all teams\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nidsNotFound - teams were not found or not associated with the selected campaign;\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "unassignTeams",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-unassignTeams-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "003082a7-3114-4f27-8116-26aea38e0252",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "unassignTeams",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-unassignTeams-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teams\": [\n    \"BB71650B-C60A-4299-B111-84FA271E90C2\",\n    \"7DE27874-B524-4DFA-9CC3-23817096837F\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"removed\": 1,\n  \"error\": {\n    \"idsNotFound\": [\n      \"7DE27874-B524-4DFA-9CC3-23817096837F\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "71224f65-e3d7-4ee6-87b9-1ddf2210f4e3",
+          "name": "Assign Teams",
+          "request": {
+            "name": "Assign Teams",
+            "description": {
+              "content": "This method assigns multiple teams to a campaign and specifies the Service skill level to be assigned to the team members. Teams are matched by the provided identifiers. The team ID can be found by opening that team in the Contact Center Administrator application, Teams section. The id will be displayed in the '#GROUPS:GROUP_PROPERTIES:' fragment of the URL.\n\nNote: Manipulating teams requires the user to have an additional \"Manage all teams\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThis method catches and displays the following errors (if any were encountered during the request execution):\n\nidsNotFound - teams were not found;\n\nduplicateIDs - teams are already added;\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nteams\narray of strings\nyes\n-\n\nskillLevel\nstring\nno\nDefault: 100\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nInvalid URL\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "assignTeams",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-assignTeams-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "baecf2f7-271f-40aa-a0a6-8c364e528097",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "assignTeams",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-assignTeams-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teams\": [\n    \"BB71650B-C60A-4299-B111-84FA271E90C2\",\n    \"7DE27874-B524-4DFA-9CC3-23817096837F\"\n  ],\n  \"skillLevel\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"added\": 1,\n  \"error\": {\n    \"idsNotFound\": [\n      \"7DE27874-B524-4DFA-9CC3-23817096837F\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce2ca543-9043-4482-bb3c-31a60377a583",
+          "name": "Update Caller ID Settings",
+          "request": {
+            "name": "Update Caller ID Settings",
+            "description": {
+              "content": "This method changes the specified properties of the selected campaign. Additionally, this method can reset an optional parameter to its default value by passing \" \" or null to that parameter.\n\nNote: Manipulating Caller ID Settings requires the user to have an additional \"Manage caller IDs within services and campaigns\" privilege.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ncallerIdSelectionMethod\nstring\nno\nDEFAULT(Default);  \nRND_WITHIN_LIST;  \nRND_WITHIN_STATE_OW_DEFAULT  \nRND_WITHIN_STATE_OW_LIST  \nRECORD_CALLING_NUMBER  \nGEOGRAPHIC_PROXIMITY  \nDMAPPING_INT_NUMBERS\n\ndefaultCallerId\nstring or null\nyes, if the method requires a fallback\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL or defaultCallerId is not found\n\n409\ndefaultCaller Id is not associated with the campaign\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "updateCallerIDSettings",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-updateCallerIDSettings-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "28397a37-43f6-4b47-8647-4eca8e33fefc",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "updateCallerIDSettings",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-updateCallerIDSettings-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callerIdSelectionMethod\": \"DEFAULT\",\n  \"defaultCallerId\": \"111\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9cc485d-e308-4aa0-b8c7-59f71df6957d",
+          "name": "Update General and Outbound Settings",
+          "request": {
+            "name": "Update General and Outbound Settings",
+            "description": {
+              "content": "This method changes the specified properties of the selected campaign. Additionally, this method can reset an optional parameter to its default value by passing \" \" or null to that parameter.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring\nno\n-\n\nenabled\nboolean\nno\nfalse (Default);  \ntrue\n\noutboundGeneral.type\nstring\nno\nPREVIEW (Default);  \nPROGRESSIVE;  \nPREDICTIVE;  \nAUTOMATIC\n\noutboundGeneral.progressive.noAnswerTimeoutSec\ninteger\nno\n[0..2147483647], Default: 45\n\noutboundGeneral.progressive.overdialRatePcnt\ninteger\nno\n[100..100000],  \nDefault: 100\n\noutboundGeneral.progressive.autoAdjustOverdialRate\nboolean\nno\nfalse;  \ntrue (Default)\n\noutboundGeneral.predictive.noAnswerTimeoutSec\ninteger\nno\n[0..2147483647], Default: 45\n\noutboundGeneral.predictive.initialOverdialRatePcnt\ninteger\nno\n[100..100000],  \nDefault: 100\n\noutboundGeneral.automatic.noAnswerTimeoutSec\ninteger\nno\n[0..2147483647], Default: 45\n\noutboundGeneral.automatic.maxConcurrentCalls\ninteger\nno\n[1..2147483647],  \nDefault: 1\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL\n\n409\nAttempt to change an immutable field\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "updateGeneralSettings",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-updateGeneralSettings-campaign_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5a2f5a98-eead-4ac2-b7ac-416441579860",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "updateGeneralSettings",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-updateGeneralSettings-campaign_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Campaign name\",\n  \"enabled\": true,\n  \"outboundGeneral\": {\n    \"type\": \"PREVIEW\",\n    \"progressive\": {\n      \"noAnswerTimeoutSec\": 45,\n      \"overdialRatePcnt\": 100,\n      \"autoAdjustOverdialRate\": true\n    },\n    \"predictive\": {\n      \"noAnswerTimeoutSec\": 45,\n      \"initialOverdialRatePcnt\": 100\n    },\n    \"automatic\": {\n      \"noAnswerTimeoutSec\": 45,\n      \"maxConcurrentCalls\": 300\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed7331d1-e68a-4fca-ace7-e9772ac4ec4b",
+          "name": "Duplicate Campaign",
+          "request": {
+            "name": "Duplicate Campaign",
+            "description": {
+              "content": "This method creates a copy of the specified campaign.\n\nNote: This method is not supported for Outbound Messaging campaigns.\n\nThe new campaign is always created disabled and in the STOPPED state.\n\nCalling lists are not inherited.\n\nDisposition IDs are newly generated, while disposition names and all other settings are inherited.\n\nSettings, dialing mode, teams, roles, caller ids, and calling hours are also inherited from the original campaign.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring\nno\nClone of Source Campaign Name\n\nsourceCampaignId\nstring\nyes\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL or source campaign was not found\n\n409\nDuplicate name error\n\n422\nNot supported for Outbound Messaging campaigns",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configapi",
+                "v3",
+                "campaign",
+                "duplicateCampaign"
+              ],
+              "host": [
+                "{{configapi-v3-campaign-duplicateCampaign-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Bright Pattern Contact Center tenant hostname.",
+                  "type": "any",
+                  "value": "{{tenant_url}}",
+                  "key": "tenant_url"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f82bb565-0073-47e6-a134-b4fce3dfd4f4",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configapi",
+                    "v3",
+                    "campaign",
+                    "duplicateCampaign"
+                  ],
+                  "host": [
+                    "{{configapi-v3-campaign-duplicateCampaign-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Bright Pattern Contact Center tenant hostname.",
+                      "type": "any",
+                      "value": "{{tenant_url}}",
+                      "key": "tenant_url"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Campaign name\",\n  \"sourceCampaignId\": \"31002C90-7188-11EE-A565-0800200C9A66\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"85389D39-E05C-4CE7-B36D-4401BEA52E14\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "baseUrl"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v2-campaign-getAll-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-getCampaign-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-getAll-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-getStatus-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-start-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-stop-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-bindList-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-updateList-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-unbindList-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-getAllRecords-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-getCompletedRecords-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-getUpdatedRecords-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-queryRecord-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-deleteCampaign-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-unlinkCampaign-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-linkCampaign-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-updateDisposition-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-deleteDispositions-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-addDisposition-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-addDispositions-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-unassignCallerIds-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-assignCallerIds-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-unassignTeams-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-assignTeams-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-updateCallerIDSettings-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-updateGeneralSettings-campaign_id-Url"
+    },
+    {
+      "description": {
+        "content": "Your Bright Pattern Contact Center tenant hostname.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "example.brightpattern.com",
+      "key": "tenant_url"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant_url}}",
+      "key": "configapi-v3-campaign-duplicateCampaign-Url"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5c940c22-9110-4b51-8e21-72656b64f27a",
+    "name": "Bright Pattern Campaigns API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Operations tagged Campaigns across 3 of this provider's published API definitions: bright-pattern-list-management-v2-openapi.yml, bright-pattern-list-management-v3-2-openapi.yml, bright-pattern-list-management-v3-openapi.yml. Each path carries the servers of the definition it was published in.\n\nContact Support:\n Name: Bright Pattern",
+      "type": "text/plain"
+    }
+  }
+}
