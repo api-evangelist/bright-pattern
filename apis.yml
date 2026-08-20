@@ -382,6 +382,8 @@ apis:
   humanURL: https://help.brightpattern.com/latest:Api
   baseURL: https://{tenant}.brightpattern.com/configapi/v2
   tags:
+  - List
+  tags_raw:
   - Lists
   properties:
   - type: OpenAPI
@@ -413,7 +415,8 @@ apis:
   description: The Methods API from Bright Pattern — 32 operation(s) for methods.
   humanURL: https://help.brightpattern.com/latest:Api
   baseURL: https://{tenant}.brightpattern.com/configapi/v2
-  tags:
+  tags: []
+  tags_raw:
   - Methods
   properties:
   - type: OpenAPI
@@ -832,6 +835,8 @@ apis:
   humanURL: https://help.brightpattern.com/latest:Api
   baseURL: https://{tenant}.brightpattern.com/configapi/v2
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
