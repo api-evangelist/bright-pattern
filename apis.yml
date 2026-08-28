@@ -9,6 +9,18 @@ description: 'Bright Pattern is a cloud contact center (CCaaS) software company 
   Statistics, and the Mobile/Web Messaging APIs (v1 and v2) that back the iOS and Android Mobile SDKs.
   The public API reference is published as Postman documenter collections linked from the Bright Pattern
   documentation wiki.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.brightpattern.com/wp-content/uploads/2025/02/Brightpattern-Homepage-Logo.png
 url: https://raw.githubusercontent.com/api-evangelist/bright-pattern/refs/heads/main/apis.yml
 x-type: company
