@@ -1,0 +1,78 @@
+slug: bright-pattern
+provider: Bright Pattern
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Telecommunications
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: Task Routing
+  spec_file: bright-pattern-task-routing-api-openapi.yml
+  capability_id: BC-430.30
+  capability_id_l1: BC-430
+  capability_name: Contact Centre Operations Management
+  confidence: 0.75
+  evidence: '"Queue Task: Create and queue a new task, associating it with a case and a contact"; "Cancel
+    Service Tasks: Cancel all queued tasks associated with a particular service"; "Modify attributes of
+    a queued task, such as its service or priority"'
+  reason: Queueing, prioritising, routing and cancelling work items to contact-centre agents — routing/queue
+    management is squarely contact centre operations. Not generic workflow automation governance, since
+    the objects are contact-centre tasks tied to cases and contacts.
+- tag: Calling List
+  spec_file: bright-pattern-calling-list-api-openapi.yml
+  capability_id: BC-430.30
+  capability_id_l1: BC-430
+  capability_name: Contact Centre Operations Management
+  confidence: 0.7
+  evidence: Manage the contents of outbound calling lists ... Get information about enabled outbound campaigns
+  reason: Operations add, update, delete and query records in outbound calling lists tied to dialer campaigns
+    — operational running of a contact centre's outbound dialing, best fitting contact centre operations
+    management.
+- tag: Campaigns
+  spec_file: bright-pattern-campaigns-api-openapi.yml
+  capability_id: BC-430.30
+  capability_id_l1: BC-430
+  capability_name: Contact Centre Operations Management
+  confidence: 0.7
+  evidence: POST /configapi/v3/campaign/start/{campaign_id}  start  Start ... POST /configapi/v3/campaign/bindList/{campaign_id}  bindList  Bind
+    List
+  reason: These are outbound dialer campaigns in a CCaaS platform — start/stop campaign, bind calling
+    lists, retrieve dialing results — i.e. contact centre outbound operations, not marketing campaign
+    strategy.
+- tag: Lists
+  spec_file: bright-pattern-lists-api-openapi.yml
+  capability_id: BC-430.30
+  capability_id_l1: BC-430
+  capability_name: Contact Centre Operations Management
+  confidence: 0.7
+  evidence: POST /configapi/v3/callinglist/createList  createList  Create List ... PATCH /configapi/v3/callinglist/updateListProperties/{list_id}
+  reason: Creation and record-level maintenance of calling lists and formats used by outbound campaigns
+    — operational contact-centre dialing list administration.
+- tag: Multichannel Call Recordings
+  spec_file: bright-pattern-multichannel-call-recordings-api-openapi.yml
+  capability_id: BC-430.30
+  capability_id_l1: BC-430
+  capability_name: Contact Centre Operations Management
+  confidence: 0.7
+  evidence: Obtain a regular audio recording of a service voice call in GSM format ... audio recordings
+    of individual participants
+  reason: Retrieval of service call metadata and per-participant audio recordings from the contact centre
+    — call recording is part of running contact centre operations and quality monitoring.
+- tag: Regular Call Recordings
+  spec_file: bright-pattern-regular-call-recordings-api-openapi.yml
+  capability_id: BC-430.30
+  capability_id_l1: BC-430
+  capability_name: Contact Centre Operations Management
+  confidence: 0.7
+  evidence: '"Obtain a regular audio recording of a service voice call in GSM format"; getInteractionMetadata
+    "Get Interaction Metadata"; eraseCallRecordings'
+  reason: Retrieval, metadata and erasure of contact-centre voice call recordings — a core contact centre
+    operations / quality management surface for a CCaaS platform. Mapped at contact centre operations
+    rather than any telecom network capability because the recordings are of agent-customer service interactions.

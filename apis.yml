@@ -876,6 +876,9 @@ apis:
   - type: Postman
     url: https://documenter.getpostman.com/view/6735877/T1LHGpBY
 common:
+- type: CapabilityMap
+  url: capabilities/bright-pattern-capability-edges.yml
+  name: Bright Pattern Business Capability Map
 - type: MCPServer
   url: mcp/bright-pattern-mcp.yml
 - type: AgenticAccess
