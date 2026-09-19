@@ -523,6 +523,8 @@ apis:
   humanURL: https://help.brightpattern.com/latest:Api
   baseURL: https://{tenant}.brightpattern.com/configapi/v2
   tags:
+  - Phone
+  tags_raw:
   - Phones
   properties:
   - type: OpenAPI
