@@ -41,6 +41,9 @@ x-source: harvest:secondary-market
 specificationVersion: '0.23'
 created: '2026-08-08'
 modified: '2026-08-08'
+x-docs-platform: postman
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-20
 tags:
 - Company
 - Contact Center
