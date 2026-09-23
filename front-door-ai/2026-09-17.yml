@@ -1,0 +1,32 @@
+# Front Door AI Index — bright-pattern — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: bright-pattern
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.brightpattern.com
+  final_host: www.brightpattern.com
+  ownership: own
+  owner: bright-pattern
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 15
+  host_score: 15
+  density: 12.22
+  words: 1227
+  tiers:
+    agentic: 2
+    core: 13
+    model: 0
+  ambiguous: 15
+  top_terms:
+    AI: 11
+    agent: 11
+    artificial intelligence: 2
+    intelligence: 2
+    AI agent: 1
+    automation: 1
+    predictive: 1
+    prompts: 1

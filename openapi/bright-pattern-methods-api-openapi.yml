@@ -5,6 +5,9 @@ info:
   contact:
     name: Bright Pattern
     url: https://www.brightpattern.com/contact/
+  x-refined-note:
+  - x-evidence differs across the merged source definitions and was not carried
+  - x-origin differs across the merged source definitions and was not carried
   description: 'Operations tagged Methods across 3 of this provider''s published API definitions: bright-pattern-mobile-web-messaging-v1-openapi.yml, bright-pattern-mobile-web-messaging-v2-openapi.yml, bright-pattern-real-time-statistics-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{tenant_url}
@@ -19,13 +22,6 @@ tags:
 - name: Methods
 paths:
   /clientweb/api/v1/availability:
-    servers:
-    - url: https://{tenant_url}
-      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
-      variables:
-        tenant_url:
-          default: example.brightpattern.com
-          description: Your Bright Pattern Contact Center tenant hostname.
     get:
       operationId: checkAvailability
       summary: Check Availability
@@ -97,7 +93,6 @@ paths:
                 ewt: <estimated wait time in seconds for a chat in state queued>
       security:
       - bearerAuth: []
-  /clientweb/api/v1/parameters:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -105,6 +100,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v1/parameters:
     get:
       operationId: expectedParameters
       summary: Expected Parameters
@@ -183,7 +179,6 @@ paths:
                 - '...'
       security:
       - bearerAuth: []
-  /clientweb/api/v1/chats:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -191,10 +186,63 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v1/chats:
     post:
       operationId: requestChat
       summary: Request Chat
-      description: "This method initiates a chat session. It provides values of all or some of the expected parameters, and it may also contain the phone number of the mobile device. Depending on the scenario entry configuration, a callback can be initiated automatically to the specified number as soon as the chat request is delivered to the agent.\n\nNotes:\n\nThe Request Chat method may return the ID and parameters of an existing chat session if there are any currently existing chat sessions associated with this specific client. For example, the client app created a chat session, which was then closed or crashed, then restarted before the session timed out on the server. \n\nThe is_new_chat response attribute is specified if the chat is a new session or existing session. The client application will handle these differently (e.g., if in an existing session the app may request session history and show the previous content.\n\nIf the associated mobile/web scenario entry is not configured for automatic callback, the agent can still use this number to call the mobile user manually, either upon the agent's own initiative or when asked to do this via a chat message from the mobile user.\n\nThe parameter from may be used to specify either the device owner’s name or phone number. It will be placed in the scenario variable $(item.from).\n\nParameters returned in the parameters attribute are propagated into the scenario variable $(item.externalChatData).\n\nOptionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value. This might be important for the clients with strict JSON serialization (i.e., the client app may fail deserializing the JSON if the attribute is missing).\n\nReturns\n\nCode\nDescription\n\n200\nChat session properties (content type: application/json)\n\nErrors\n\nCode\nDescription\n\n400\nBad request\n\n403\nForbidden"
+      description: 'This method initiates a chat session. It provides values of all or some of the expected parameters, and it may also contain the phone number of the mobile device. Depending on the scenario entry configuration, a callback can be initiated automatically to the specified number as soon as the chat request is delivered to the agent.
+
+
+        Notes:
+
+
+        The Request Chat method may return the ID and parameters of an existing chat session if there are any currently existing chat sessions associated with this specific client. For example, the client app created a chat session, which was then closed or crashed, then restarted before the session timed out on the server.
+
+
+        The is_new_chat response attribute is specified if the chat is a new session or existing session. The client application will handle these differently (e.g., if in an existing session the app may request session history and show the previous content.
+
+
+        If the associated mobile/web scenario entry is not configured for automatic callback, the agent can still use this number to call the mobile user manually, either upon the agent''s own initiative or when asked to do this via a chat message from the mobile user.
+
+
+        The parameter from may be used to specify either the device owner’s name or phone number. It will be placed in the scenario variable $(item.from).
+
+
+        Parameters returned in the parameters attribute are propagated into the scenario variable $(item.externalChatData).
+
+
+        Optionally, Estimated Wait time (EWT) (in seconds) may be returned but could be missing if the server does not have enough data to estimate the EWT value. This might be important for the clients with strict JSON serialization (i.e., the client app may fail deserializing the JSON if the attribute is missing).
+
+
+        Returns
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Chat session properties (content type: application/json)
+
+
+        Errors
+
+
+        Code
+
+        Description
+
+
+        400
+
+        Bad request
+
+
+        403
+
+        Forbidden'
       tags:
       - Methods
       parameters:
@@ -233,7 +281,6 @@ paths:
                 phone_number: phone number that will be used for callback
       security:
       - bearerAuth: []
-  /clientweb/api/v1/chats/active:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -241,6 +288,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v1/chats/active:
     get:
       operationId: getActiveChat
       summary: Get Active Chat
@@ -301,7 +349,6 @@ paths:
                 phone_number: <phone number that will be used for callback>
       security:
       - bearerAuth: []
-  /clientweb/api/v1/chats/{chatId}/events:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -309,6 +356,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v1/chats/{chatId}/events:
     post:
       operationId: sendEvents
       summary: Send Events
@@ -447,7 +495,6 @@ paths:
                 - <array of chat events>
       security:
       - bearerAuth: []
-  /clientweb/api/v1/chats/{chatId}/history:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -455,6 +502,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v1/chats/{chatId}/history:
     get:
       operationId: getChatHistory
       summary: Get Chat History
@@ -518,7 +566,6 @@ paths:
                 - <array of chat events>
       security:
       - bearerAuth: []
-  /clientweb/api/v1/files:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -526,6 +573,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v1/files:
     post:
       operationId: uploadFile
       summary: Upload File
@@ -588,7 +636,6 @@ paths:
                 file_id: file ID
       security:
       - bearerAuth: []
-  /clientweb/api/v1/chats/{chatId}/files/{fileId}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -596,6 +643,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v1/chats/{chatId}/files/{fileId}:
     get:
       operationId: getFile
       summary: Get File
@@ -652,7 +700,6 @@ paths:
               example: File content type
       security:
       - bearerAuth: []
-  /clientweb/api/v1/chats/{chatId}/profilephotos/{partyId}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -660,6 +707,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v1/chats/{chatId}/profilephotos/{partyId}:
     get:
       operationId: getAgentProfilePhoto
       summary: Get Agent Profile Photo
@@ -725,7 +773,6 @@ paths:
               example: File content type
       security:
       - bearerAuth: []
-  /clientweb/api/v1/iceservers:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -733,6 +780,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v1/iceservers:
     get:
       operationId: getIceServers
       summary: Get ICE servers
@@ -788,7 +836,6 @@ paths:
                   credential: <(optional) password>
       security:
       - bearerAuth: []
-  /clientweb/api/v1/configuration:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -796,6 +843,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v1/configuration:
     get:
       operationId: getChatWidgetConfiguration
       summary: Get Chat Widget Configuration
@@ -847,7 +895,6 @@ paths:
               example: "{\n  \"widgets\":[\n     {\n       \"name\": \"<widget name>\",\n       \"urls\":[\"<url>\", …],\n       \"definition\": {\n         \"contact_tab\":{\n           \"enabled\": true|false,\n           \"location\": \"top_left|top_middle|top_right\n                       |right_top|right_middle|right_bottom\n                       |bottom_left| bottom_middle|bottom_right\n                       |left_top|left_middle|left_bottom\",\n           \"color\": \"<color>\",\n           \"bg_color\": \"color\",\n           \"font\": {\n             \"family\": \"<font family>\",\n             \"size\": \"<font size>\",\n             \"style\": \"<font style>\",\n             \"weight\": \"<font weight>\"   \n           },\n           \"agents_available_msg\": \"<msg>\",\n           \"agents_not_available_msg\": \"<msg>\",\n           \"out_of_hours_msg\": \"<msg>\",\n           \"show_ewt_out_of_hours\": true|false  \n         }\n       },\n\t    \"styles\":{\n\t\t    \"style1\":{\n                \"contentMargin\" : {\n                    \"margin\": \"\"\n                },\n                \"titleFont\" : {\n                    \"font-family\": \"\",\n                    \"font-style\": \"\",\n                    \"font-size\": \"\",\n                    \"font-weight\": \"\"\t\n                },\n                \"contactTabFont\" : {\n                    \"font-family\": \"\",\n                    \"font-style\": \"\",\n                    \"font-size\": \"\",\n                    \"font-weight\": \"\"\t\n                },\n                \"systemMessage\" : {\n                    \"background-color\": \"\"\n                },\n                \"agentMessage\" : {\n                    \"background-color\": \"\"\n                },\n                \"widgetBorder\" : {\n                    \"border\": \"1px solid etc...\",\n                    \"border-radius\": \"\"\n                },\n                \"contactTabBorder\": {\n                    \"border\": \"1px solid etc...\",\n                    \"border-radius\": \"\"\n                },\n                \"widgetBackground\" {\n                    \"background\": \"url(img.png) #fff repeat-y\"        \n                },\n                \"baseFont\": {\n                    \"font-family\": \"\",\n                    \"font-style\": \"\",\n                    \"font-size\": \"\",\n                    \"font-weight\": \"\",\n                    \"color\": \"\"\n                },    \n                \"dialogShadow\": {\n                    \"box-shadow\":\"\"\n                }    \n            }\n        } \n     }\n  ]\n}\n"
       security:
       - bearerAuth: []
-  /clientweb/api/v2/availability:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -855,6 +902,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/availability:
     get:
       operationId: checkAvailability
       summary: Check Availability
@@ -931,7 +979,6 @@ paths:
                 ewt: '3'
       security:
       - bearerAuth: []
-  /clientweb/api/v2/parameters:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -939,6 +986,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/parameters:
     get:
       operationId: expectedParameters
       summary: Expected Parameters
@@ -1017,7 +1065,6 @@ paths:
                 - '...'
       security:
       - bearerAuth: []
-  /clientweb/api/v2/chats:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -1025,6 +1072,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/chats:
     post:
       operationId: requestChat
       summary: Request Chat
@@ -1119,7 +1167,6 @@ paths:
                 phone_number: '16508888888'
       security:
       - bearerAuth: []
-  /clientweb/api/v2/chats/{chatId}/notifications:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -1127,6 +1174,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/chats/{chatId}/notifications:
     post:
       operationId: mobileNotificationSubscription
       summary: Mobile Notification Subscription
@@ -1242,7 +1290,6 @@ paths:
               example: {}
       security:
       - bearerAuth: []
-  /clientweb/api/v2/chats/active:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -1250,6 +1297,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/chats/active:
     get:
       operationId: getActiveChat
       summary: Get Active Chat
@@ -1310,7 +1358,6 @@ paths:
                 phone_number: <phone number that will be used for callback>
       security:
       - bearerAuth: []
-  /clientweb/api/v2/chats/{chatId}/events:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -1318,6 +1365,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/chats/{chatId}/events:
     post:
       operationId: sendEvents
       summary: Send Events
@@ -1458,7 +1506,6 @@ paths:
                 - <array of chat events>
       security:
       - bearerAuth: []
-  /clientweb/api/v2/chats/{chatId}/history:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -1466,6 +1513,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/chats/{chatId}/history:
     get:
       operationId: getChatHistory
       summary: Get Chat History
@@ -1529,7 +1577,6 @@ paths:
                 - <array of chat events>
       security:
       - bearerAuth: []
-  /clientweb/api/v2/files:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -1537,6 +1584,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/files:
     post:
       operationId: uploadFile
       summary: Upload File
@@ -1604,7 +1652,6 @@ paths:
                 file_id: file ID to use in chat_session_file message
       security:
       - bearerAuth: []
-  /clientweb/api/v2/chats/{chatId}/files/{fileId}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -1612,6 +1659,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/chats/{chatId}/files/{fileId}:
     get:
       operationId: getFile
       summary: Get File
@@ -1668,7 +1716,6 @@ paths:
               example: File content type
       security:
       - bearerAuth: []
-  /clientweb/api/v2/chats/{chatId}/profilephotos/{partyId}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -1676,6 +1723,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/chats/{chatId}/profilephotos/{partyId}:
     get:
       operationId: getAgentProfilePhoto
       summary: Get Agent Profile Photo
@@ -1741,7 +1789,6 @@ paths:
               example: File content type
       security:
       - bearerAuth: []
-  /clientweb/api/v2/iceservers:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -1749,6 +1796,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/iceservers:
     get:
       operationId: getIceServers
       summary: Get ICE servers
@@ -1804,7 +1852,6 @@ paths:
                   credential: <(optional) password>
       security:
       - bearerAuth: []
-  /clientweb/api/v2/configuration:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -1812,6 +1859,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/configuration:
     get:
       operationId: getChatWidgetConfiguration
       summary: Get Chat Widget Configuration
@@ -1863,7 +1911,6 @@ paths:
               example: "{\n  \"widgets\":[\n     {\n       \"name\": \"<widget name>\",\n       \"urls\":[\"<url>\", …],\n       \"definition\": {\n         \"contact_tab\":{\n           \"enabled\": true|false,\n           \"location\": \"top_left|top_middle|top_right\n                       |right_top|right_middle|right_bottom\n                       |bottom_left| bottom_middle|bottom_right\n                       |left_top|left_middle|left_bottom\",\n           \"color\": \"<color>\",\n           \"bg_color\": \"color\",\n           \"font\": {\n             \"family\": \"<font family>\",\n             \"size\": \"<font size>\",\n             \"style\": \"<font style>\",\n             \"weight\": \"<font weight>\"   \n           },\n           \"agents_available_msg\": \"<msg>\",\n           \"agents_not_available_msg\": \"<msg>\",\n           \"out_of_hours_msg\": \"<msg>\",\n           \"show_ewt_out_of_hours\": true|false  \n         }\n       },\n\t    \"styles\":{\n\t\t    \"style1\":{\n                \"contentMargin\" : {\n                    \"margin\": \"\"\n                },\n                \"titleFont\" : {\n                    \"font-family\": \"\",\n                    \"font-style\": \"\",\n                    \"font-size\": \"\",\n                    \"font-weight\": \"\"\t\n                },\n                \"contactTabFont\" : {\n                    \"font-family\": \"\",\n                    \"font-style\": \"\",\n                    \"font-size\": \"\",\n                    \"font-weight\": \"\"\t\n                },\n                \"systemMessage\" : {\n                    \"background-color\": \"\"\n                },\n                \"agentMessage\" : {\n                    \"background-color\": \"\"\n                },\n                \"widgetBorder\" : {\n                    \"border\": \"1px solid etc...\",\n                    \"border-radius\": \"\"\n                },\n                \"contactTabBorder\": {\n                    \"border\": \"1px solid etc...\",\n                    \"border-radius\": \"\"\n                },\n                \"widgetBackground\" {\n                    \"background\": \"url(img.png) #fff repeat-y\"        \n                },\n                \"baseFont\": {\n                    \"font-family\": \"\",\n                    \"font-style\": \"\",\n                    \"font-size\": \"\",\n                    \"font-weight\": \"\",\n                    \"color\": \"\"\n                },    \n                \"dialogShadow\": {\n                    \"box-shadow\":\"\"\n                }    \n            }\n        } \n     }\n  ]\n}\n"
       security:
       - bearerAuth: []
-  /clientweb/api/v2/casehistory:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -1871,6 +1918,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/casehistory:
     get:
       operationId: getCaseHistory
       summary: Get Case History
@@ -1932,7 +1980,6 @@ paths:
               example: "{\n    \"sessions\": [\n        {\n            \"chat_id\":\"<session 1 ID>\",\n            \"created_time\":<Unix timestamp in seconds>,\n            \"events\":<array of events from this chat session>\n        },\n        ...\n        {\n            \"chat_id\":\"<session 4 ID>\",\n            \"created_time\":<Unix timestamp in seconds>,\n            \"events\":<array of events from this chat session>\n        },\n        ...     \n    ]\n}"
       security:
       - bearerAuth: []
-  /clientweb/api/v2/closecase:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -1940,6 +1987,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/closecase:
     post:
       operationId: closeCase
       summary: Close Case
@@ -2006,7 +2054,6 @@ paths:
               example: {}
       security:
       - bearerAuth: []
-  /clientweb/api/v2/version:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -2014,6 +2061,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /clientweb/api/v2/version:
     get:
       operationId: getVersion
       summary: Get Version
@@ -2066,7 +2114,6 @@ paths:
                 server_version: 5.5.6.12345 (Stable)
       security:
       - bearerAuth: []
-  /statsapi/subscription:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -2074,6 +2121,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /statsapi/subscription:
     post:
       operationId: createSubscription
       summary: Create Subscription
@@ -2120,7 +2168,6 @@ paths:
           description: Create Subscription
       security:
       - bearerAuth: []
-  /statsapi/subscription/data:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -2128,6 +2175,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /statsapi/subscription/data:
     get:
       operationId: getSubscriptionData
       summary: Get Subscription Data
@@ -2218,7 +2266,6 @@ paths:
                   chat_messages: []
       security:
       - bearerAuth: []
-  /statsapi/subscription/active:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -2226,6 +2273,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /statsapi/subscription/active:
     delete:
       operationId: deleteSubscription
       summary: Delete Subscription
@@ -2237,7 +2285,6 @@ paths:
           description: Delete Subscription
       security:
       - bearerAuth: []
-  /statsapi/cfg/dispositions:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -2245,6 +2292,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /statsapi/cfg/dispositions:
     get:
       operationId: getDispositions
       summary: Get Dispositions
@@ -2301,7 +2349,6 @@ paths:
               - Wrong number
       security:
       - bearerAuth: []
-  /statsapi/info/check_available_agents:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -2309,6 +2356,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /statsapi/info/check_available_agents:
     get:
       operationId: getAvailableAgents
       summary: Get Available Agents
@@ -2359,7 +2407,6 @@ paths:
                 availability: true
       security:
       - bearerAuth: []
-  /statsapi/cfg/teams:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -2367,6 +2414,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /statsapi/cfg/teams:
     get:
       operationId: getTeams
       summary: Get Teams
@@ -2386,6 +2434,13 @@ paths:
                 name: Customer Service
       security:
       - bearerAuth: []
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
 components:
   securitySchemes:
     bearerAuth:

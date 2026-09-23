@@ -5,6 +5,9 @@ info:
   contact:
     name: Bright Pattern
     url: https://www.brightpattern.com/contact/
+  x-refined-note:
+  - x-evidence differs across the merged source definitions and was not carried
+  - x-origin differs across the merged source definitions and was not carried
   description: 'Operations tagged DNC Lists across 2 of this provider''s published API definitions: bright-pattern-list-management-v3-2-openapi.yml, bright-pattern-list-management-v3-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{tenant_url}
@@ -17,16 +20,9 @@ security:
 - bearerAuth: []
 tags:
 - name: DNC Lists
-  description: "Bright Pattern's List Management API makes it easy to manage the contents of Do Not Call (DNC) lists with bulk delete, add, and replace actions. The API methods described in this section fully support Internal, Geographic (Postal), Geographic (Area codes), and Record Exclusion DNC list types. Geographic (State/Province) DNC List type is not supported in the current implementation.\n\nNote: Performing operations on DNC lists requires the user to have the \"Manage Lists\" privilege, configured in the Contact Center Administrator application.\n\nThe functionality of the API methods described in this section is built upon a DNC List Record JSON Object with a required non-empty key field and an optional comment field. Depending on the DNC list type, the object's field values vary as follows:\n\nDNC List Type\nField Values\n\nInternal\nkey (required field): Phone number  \ncomment (optional field): Campaign Name\n\nGeographic (Postal)\nkey (required field): Postal Code  \ncomment (optional field): Notes\n\nGeographic (Area Codes)\nkey (required field): Area code  \ncomment (optional field): Notes\n\nRecord Exclusion\nkey (required field): Exclusion field  \ncomment (optional field): -\n\nNote: When importing records or updating records it is important to remember that:\n\nAll leading and trailing whitespaces should be deleted.\n\nAll integer values should be converted to strings.\n\nCapitalization matters: values with different capitalizations are treated as distinct.\n\nThe search can be performed by both the original values created in third-party systems and their transformed equivalents visible in the Administrator Application and Agent Desktop."
+  description: Bright Pattern's List Management API makes it easy to manage the contents of Do Not Call (DNC) lists with bulk delete, add, and replace actions.
 paths:
   /configapi/v3/donotcalllist/deleteAll/{do_not_call_list_id}:
-    servers:
-    - url: https://{tenant_url}
-      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
-      variables:
-        tenant_url:
-          default: example.brightpattern.com
-          description: Your Bright Pattern Contact Center tenant hostname.
     post:
       operationId: deleteAllRecordsDNCLists
       summary: Delete All Records
@@ -87,7 +83,6 @@ paths:
                 deleted: 2
       security:
       - bearerAuth: []
-  /configapi/v3/donotcalllist/delete/{do_not_call_list_id}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -95,6 +90,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v3/donotcalllist/delete/{do_not_call_list_id}:
     post:
       operationId: deleteManyRecordsDNCLists
       summary: Delete Many Records
@@ -179,7 +175,6 @@ paths:
                   - key: '9999999'
       security:
       - bearerAuth: []
-  /configapi/v3/donotcalllist/addAll/{do_not_call_list_id}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -187,6 +182,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v3/donotcalllist/addAll/{do_not_call_list_id}:
     post:
       operationId: addManyRecordsDNCLists
       summary: Add Many Records
@@ -276,7 +272,6 @@ paths:
                   - key: '8888888'
       security:
       - bearerAuth: []
-  /configapi/v3/donotcalllist/add/{do_not_call_list_id}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -284,6 +279,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v3/donotcalllist/add/{do_not_call_list_id}:
     post:
       operationId: addRecordsDeprecated
       summary: Add Records DEPRECATED
@@ -355,7 +351,6 @@ paths:
                 added: 2
       security:
       - bearerAuth: []
-  /configapi/v3/donotcalllist/replaceAll/{do_not_call_list_id}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -363,6 +358,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v3/donotcalllist/replaceAll/{do_not_call_list_id}:
     post:
       operationId: replaceRecordsDeprecated
       summary: Replace Records DEPRECATED
@@ -434,7 +430,6 @@ paths:
                 added: 2
       security:
       - bearerAuth: []
-  /configapi/v3/donotcalllist/getDNCRecords/{do_not_call_list_id}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -442,10 +437,83 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v3/donotcalllist/getDNCRecords/{do_not_call_list_id}:
     get:
       operationId: getDncRecords
       summary: Get DNC Records
-      description: "This method returns a list of all records, including their in an existing DNC List, specified in the path variable, do_not_call_list_id. The records are returned and sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlimit\ninteger, ≤ 1000\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...1000\n\ncursor\nstring\nno (used for pagination)\nFirst request: null  \nSubsequent request: value received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges;  \nModification of this type of list is not allowed\n\n404\nSpecified DNC List was not found;  \nInvalid URL"
+      description: 'This method returns a list of all records, including their in an existing DNC List, specified in the path variable, do_not_call_list_id. The records are returned and sorted by the standard MongoDB _id field.
+
+
+        Note: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the "cursor" to reference the last served record.
+
+
+        Input parameters
+
+
+        Name
+
+        Type
+
+        Required?
+
+        Possible/Default Values
+
+
+        limit
+
+        integer, ≤ 1000
+
+        yes (Specifies the maximum number of records per page when using cursor-based pagination)
+
+        1...1000
+
+
+        cursor
+
+        string
+
+        no (used for pagination)
+
+        First request: null
+
+        Subsequent request: value received in the response to the previous request
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood; 1 or more required fields are missing or have an unsupported value)
+
+
+        401
+
+        Authentication failed (invalid token format; token is expired)
+
+
+        403
+
+        Authentication succeeded but the user does not have sufficient privileges;
+
+        Modification of this type of list is not allowed
+
+
+        404
+
+        Specified DNC List was not found;
+
+        Invalid URL'
       tags:
       - DNC Lists
       parameters:
@@ -473,7 +541,6 @@ paths:
                   expireAt: '2023-02-09T20:46:35.000'
       security:
       - bearerAuth: []
-  /configapi/v3/donotcalllist/getAll:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -481,10 +548,79 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v3/donotcalllist/getAll:
     get:
       operationId: getDncLists
       summary: Get DNC Lists
-      description: "This method returns all DNC Lists, sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlimit\ninteger, ≤ 100\nyes (Specifies the maximum number of records per page when using cursor-based pagination)\n1...100\n\ncursor\nstring\nno (used for pagination)\nFirst request: null  \nSubsequent request: value received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; limit exceeded; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL"
+      description: 'This method returns all DNC Lists, sorted by the standard MongoDB _id field.
+
+
+        Note: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the "cursor" to reference the last served record.
+
+
+        Input parameters
+
+
+        Name
+
+        Type
+
+        Required?
+
+        Possible/Default Values
+
+
+        limit
+
+        integer, ≤ 100
+
+        yes (Specifies the maximum number of records per page when using cursor-based pagination)
+
+        1...100
+
+
+        cursor
+
+        string
+
+        no (used for pagination)
+
+        First request: null
+
+        Subsequent request: value received in the response to the previous request
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood; limit exceeded; 1 or more required fields are missing or have an unsupported value)
+
+
+        401
+
+        Authentication failed (invalid token format; token is expired)
+
+
+        403
+
+        Authentication succeeded but the user does not have sufficient privileges
+
+
+        404
+
+        Invalid URL'
       tags:
       - DNC Lists
       responses:
@@ -495,7 +631,6 @@ paths:
               example: "{\n    \"next_cursor\": \"590e9abd4abbf1165862d342\",\n    \"records\": [\n        {\n            \"id\": \"635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D\",\n            \"name\": \"DNC - July\",\n            \"type\": \"Internal\"\n            \"creationDate\": \"2024-07-01T19:11:40.000\",\n            \"totalRecords\": 29\n        },\n        {\n            \"id\": \"635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2C\",\n            \"name\": \"DNC - June\",\n            \"type\": \"Internal\"\n            \"creationDate\": \"2025-06-01T19:11:41.000\",\n            \"totalRecords\": 34\n        }\n    ]\n}\n"
       security:
       - bearerAuth: []
-  /configapi/v3/donotcalllist/getDNCList/{do_not_call_list_id}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -503,6 +638,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v3/donotcalllist/getDNCList/{do_not_call_list_id}:
     get:
       operationId: getDncList
       summary: Get DNC List
@@ -559,7 +695,6 @@ paths:
               example: "{ \n  \"id\": \"635DB66C-AA54-41C9-9F0E-AC3A9B5EDB2D\",\n  \"name\": \"DNC - July\",\n  \"type\": \"INTERNAL\",\n  \"creationDate\": \"2024-07-01T19:11:40.000\",\n  \"totalRecords\": 100,\n  \"expireRecords\": true,\n  \"defaultExpirationPeriod\": 120,\n  \"resetDaily\" : true,\n  \"resetTime\" : \"12:00:00 PM -08:00\"\n\n  \"campaigns\": [\n    {\n      \"campaignName\": \"Campaign name 1\",\n      \"campaignId\": \"99B6B870-6CC5-11EE-807C-0800200C9A66\",\n      \"disposition\": \"Requested DNC\",\n\t  \"allowAppend\": true\n    },\n    {\n      \"campaignName\": \"Campaign name 2\",\n      \"campaignId\": \"99B6B870-6CC5-11EE-807C-0800200C9A66\",\n      \"disposition\": \"Requested DNC\",\n      \"allowAppend\": true\n    },\n    {\n      \"campaignName\": \"Campaign name 3\",\n      \"campaignId\": \"7E57DE70-6CF1-11EE-807C-0800200C9A66\",\n      \"disposition\": \"Matched DNC\",\n      \"allowAppend\": false\n    }\n  ]\n} "
       security:
       - bearerAuth: []
-  /configapi/v3/donotcalllist/createDNCList:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -567,10 +702,175 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v3/donotcalllist/createDNCList:
     post:
       operationId: createDncList
       summary: Create DNC List
-      description: "This method creates a new empty DNC list. Depending on the specified DNC list type, the creation process is as follows:\n\nFor Internal, Geographic, Area Codes - new DNC lists are created using the fixed format corresponding to the list type\n\nFor Record Exclusion - the exclusion field has to be explicitly specified in the request body\n\nAdditionally, for DNC lists of Area Codes and Geographic Postal types, the ISO country code has to be explicitly specified in the request body.\n\nNote: For Area Codes, additional option “Each area code had country prefix” is available. This option can be specified using “Prefixed” as the country value.\n\nOn succesfull excution, the response should contain the ID of the newly created DNC list.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring, ≤ 255 characters  \n  \nNote: DNC list name must be unique within the contact center\nyes\n-\n\ntype\nstring\nyes\n“INTERNAL”  \n“GEOGRAPHIC_POSTAL”  \n“AREA_CODES”  \n“EXCLUSION”\n\ncountry\nISO country code;  \nOR “prefixed” (applicable only to DNC lists of Area Codes type)\nonly required for DNC lists of Area Codes and Geographic Postal types\n\nexpireRecords\nboolean\nonly required for DNC lists of Internal and Record Exclusion types\nDefault = false\n\ndefaultExpirationPeriod\ninteger, [0, 365]  \nNote: Specifies number of days since record was added to the DNC list, after which that records is considered expired by the Dialer\nrequired, if expireRecords = true\nDefault = 90 days\n\nexclusionField\nFiled name to be set as \"key\" for records exclusion  \n  \nNote: Must contain a valid field from the available calling list formats.\nonly required for DNC lists of Record Exclusion type\n-\n\nresetDaily\nboolean\nonly required for DNC lists of Record Exclusion type\nDefault = false\n\nresetPeriod\nJSON object, consisting of:  \n  \nresetTime, formatted as HH:mm:ss  \nAND  \n  \ntimezoneID, formatted as {Area}/{Location}  \ne.g., \"America/New_York\"\nrequired, if resetDaily = true\nDefault resetTime = 00:00:00  \n  \nDefault timezoneID = user’s timezone\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL\n\n409\nDuplicate name error"
+      description: 'This method creates a new empty DNC list. Depending on the specified DNC list type, the creation process is as follows:
+
+
+        For Internal, Geographic, Area Codes - new DNC lists are created using the fixed format corresponding to the list type
+
+
+        For Record Exclusion - the exclusion field has to be explicitly specified in the request body
+
+
+        Additionally, for DNC lists of Area Codes and Geographic Postal types, the ISO country code has to be explicitly specified in the request body.
+
+
+        Note: For Area Codes, additional option “Each area code had country prefix” is available. This option can be specified using “Prefixed” as the country value.
+
+
+        On succesfull excution, the response should contain the ID of the newly created DNC list.
+
+
+        Input parameters
+
+
+        Name
+
+        Type
+
+        Required?
+
+        Possible/Default Values
+
+
+        name
+
+        string, ≤ 255 characters
+
+
+        Note: DNC list name must be unique within the contact center
+
+        yes
+
+        -
+
+
+        type
+
+        string
+
+        yes
+
+        “INTERNAL”
+
+        “GEOGRAPHIC_POSTAL”
+
+        “AREA_CODES”
+
+        “EXCLUSION”
+
+
+        country
+
+        ISO country code;
+
+        OR “prefixed” (applicable only to DNC lists of Area Codes type)
+
+        only required for DNC lists of Area Codes and Geographic Postal types
+
+
+        expireRecords
+
+        boolean
+
+        only required for DNC lists of Internal and Record Exclusion types
+
+        Default = false
+
+
+        defaultExpirationPeriod
+
+        integer, [0, 365]
+
+        Note: Specifies number of days since record was added to the DNC list, after which that records is considered expired by the Dialer
+
+        required, if expireRecords = true
+
+        Default = 90 days
+
+
+        exclusionField
+
+        Filed name to be set as "key" for records exclusion
+
+
+        Note: Must contain a valid field from the available calling list formats.
+
+        only required for DNC lists of Record Exclusion type
+
+        -
+
+
+        resetDaily
+
+        boolean
+
+        only required for DNC lists of Record Exclusion type
+
+        Default = false
+
+
+        resetPeriod
+
+        JSON object, consisting of:
+
+
+        resetTime, formatted as HH:mm:ss
+
+        AND
+
+
+        timezoneID, formatted as {Area}/{Location}
+
+        e.g., "America/New_York"
+
+        required, if resetDaily = true
+
+        Default resetTime = 00:00:00
+
+
+        Default timezoneID = user’s timezone
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood; 1 or more required fields are missing or have an unsupported value)
+
+
+        401
+
+        Authentication failed (invalid token format; token is expired)
+
+
+        403
+
+        Authentication succeeded but the user does not have sufficient privileges
+
+
+        404
+
+        Invalid URL
+
+
+        409
+
+        Duplicate name error'
       tags:
       - DNC Lists
       requestBody:
@@ -589,7 +889,6 @@ paths:
                 id: 31CAA7DA-0AE2-4D1A-BE8C-07CA1A4C39AE
       security:
       - bearerAuth: []
-  /configapi/v3/donotcalllist/deleteDNCList/{do_not_call_list_id}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -597,6 +896,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v3/donotcalllist/deleteDNCList/{do_not_call_list_id}:
     delete:
       operationId: deleteDncList
       summary: Delete DNC List
@@ -620,7 +920,6 @@ paths:
           description: 200 OK
       security:
       - bearerAuth: []
-  /configapi/v3/campaign/bindDNCList/{campaign_id}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -628,10 +927,108 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v3/campaign/bindDNCList/{campaign_id}:
     post:
       operationId: bindDncList
       summary: Bind DNC List
-      description: "This method adds a DNC list to the campaign, referenced by its ID in the path variable.\n\nNote: Manipulating calling lists associated with a campaign requires the user to have an additional \"Start campaigns and enable lists\" privilege.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\ndncListId\nstring\nyes\n-\n\ndisposition\nstring  \n  \nNote: Specifies disposition to be attached to call attempts and completed records in case of a match against DNC record\nyes\n-\n\napplyToLinkGroup\nboolean  \n  \nNote: Allows to automatically apply DNC to all other campaigns in link group\nno\n-\n\nallowAppend\nboolean  \n  \nNote: Allows numbers to be added to Internal DNC list based on “Add to DNC” disposition set by agents during the given campaign\nonly required for DNC lists of Internal type\nDefault = false\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified campaign was not found;  \nSpecifed DNC list was not found;  \nInvalid URL"
+      description: 'This method adds a DNC list to the campaign, referenced by its ID in the path variable.
+
+
+        Note: Manipulating calling lists associated with a campaign requires the user to have an additional "Start campaigns and enable lists" privilege.
+
+
+        Input parameters
+
+
+        Name
+
+        Type
+
+        Required?
+
+        Possible/Default Values
+
+
+        dncListId
+
+        string
+
+        yes
+
+        -
+
+
+        disposition
+
+        string
+
+
+        Note: Specifies disposition to be attached to call attempts and completed records in case of a match against DNC record
+
+        yes
+
+        -
+
+
+        applyToLinkGroup
+
+        boolean
+
+
+        Note: Allows to automatically apply DNC to all other campaigns in link group
+
+        no
+
+        -
+
+
+        allowAppend
+
+        boolean
+
+
+        Note: Allows numbers to be added to Internal DNC list based on “Add to DNC” disposition set by agents during the given campaign
+
+        only required for DNC lists of Internal type
+
+        Default = false
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood; 1 or more required fields are missing or have an unsupported value)
+
+
+        401
+
+        Authentication failed (invalid token format; token is expired)
+
+
+        403
+
+        Authentication succeeded but the user does not have sufficient privileges
+
+
+        404
+
+        Specified campaign was not found;
+
+        Specifed DNC list was not found;
+
+        Invalid URL'
       tags:
       - DNC Lists
       parameters:
@@ -656,7 +1053,6 @@ paths:
           description: 200 OK
       security:
       - bearerAuth: []
-  /configapi/v3/campaign/unbindDNCList/{campaign_id}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -664,6 +1060,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v3/campaign/unbindDNCList/{campaign_id}:
     post:
       operationId: unbindDncList
       summary: Unbind DNC List
@@ -716,7 +1113,6 @@ paths:
           description: 200 OK
       security:
       - bearerAuth: []
-  /configapi/v3/donotcalllist/updateDNCProperties/{do_not_call_list_id}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -724,10 +1120,160 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v3/donotcalllist/updateDNCProperties/{do_not_call_list_id}:
     patch:
       operationId: updateDncListProperties
       summary: Update DNC List Properties
-      description: "This method allows to change properties and settings of an existing DNC list, specified in the path variable, do_not_call_list_id.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring, ≤ 255 characters  \n  \nNote: DNC list name must be unique within the contact center\nno\n-\n\ntype\nstring\nno\n“INTERNAL”  \n“GEOGRAPHIC_POSTAL”  \n“AREA_CODES”  \n“EXCLUSION”\n\ncountry\nISO country code;  \nOR “prefixed” (applicable only to DNC lists of Area Codes type)\nno, only applicable to DNC lists of Area Codes and Geographic Postal types\n\nexpireRecords\nboolean\nno, only applicable to DNC lists of Internal and Record Exclusion types\nDefault = false\n\ndefaultExpirationPeriod\ninteger, [0, 365]  \nNote: Specifies number of days since record was added to the DNC list, after which that records is considered expired by the Dialer\nrequired, if expireRecords = true\nDefault = 90 days\n\nexclusionField\nFiled name to be set as \"key\" for records exclusion  \n  \nNote: Must contain a valid field from the available calling list formats.\nno, only applicable to DNC lists of Record Exclusion type\n-\n\nresetDaily\nboolean\nno, only applicable to DNC lists of Record Exclusion type\nDefault = false\n\nresetPeriod\nJSON object, consisting of:  \n  \nresetTime, formatted as HH:mm:ss  \nAND  \n  \ntimezoneID, formatted as {Area}/{Location}  \ne.g., \"America/New_York\"\nrequired, if resetDaily = true\nDefault resetTime = 00:00:00  \n  \nDefault timezoneID = user’s timezone\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL\n\n409\nDuplicate name error"
+      description: 'This method allows to change properties and settings of an existing DNC list, specified in the path variable, do_not_call_list_id.
+
+
+        Input parameters
+
+
+        Name
+
+        Type
+
+        Required?
+
+        Possible/Default Values
+
+
+        name
+
+        string, ≤ 255 characters
+
+
+        Note: DNC list name must be unique within the contact center
+
+        no
+
+        -
+
+
+        type
+
+        string
+
+        no
+
+        “INTERNAL”
+
+        “GEOGRAPHIC_POSTAL”
+
+        “AREA_CODES”
+
+        “EXCLUSION”
+
+
+        country
+
+        ISO country code;
+
+        OR “prefixed” (applicable only to DNC lists of Area Codes type)
+
+        no, only applicable to DNC lists of Area Codes and Geographic Postal types
+
+
+        expireRecords
+
+        boolean
+
+        no, only applicable to DNC lists of Internal and Record Exclusion types
+
+        Default = false
+
+
+        defaultExpirationPeriod
+
+        integer, [0, 365]
+
+        Note: Specifies number of days since record was added to the DNC list, after which that records is considered expired by the Dialer
+
+        required, if expireRecords = true
+
+        Default = 90 days
+
+
+        exclusionField
+
+        Filed name to be set as "key" for records exclusion
+
+
+        Note: Must contain a valid field from the available calling list formats.
+
+        no, only applicable to DNC lists of Record Exclusion type
+
+        -
+
+
+        resetDaily
+
+        boolean
+
+        no, only applicable to DNC lists of Record Exclusion type
+
+        Default = false
+
+
+        resetPeriod
+
+        JSON object, consisting of:
+
+
+        resetTime, formatted as HH:mm:ss
+
+        AND
+
+
+        timezoneID, formatted as {Area}/{Location}
+
+        e.g., "America/New_York"
+
+        required, if resetDaily = true
+
+        Default resetTime = 00:00:00
+
+
+        Default timezoneID = user’s timezone
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood; 1 or more required fields are missing or have an unsupported value)
+
+
+        401
+
+        Authentication failed (invalid token format; token is expired)
+
+
+        403
+
+        Authentication succeeded but the user does not have sufficient privileges
+
+
+        404
+
+        Invalid URL
+
+
+        409
+
+        Duplicate name error'
       tags:
       - DNC Lists
       requestBody:
@@ -754,6 +1300,13 @@ paths:
         schema:
           type: string
       x-normalized-from: '/configapi/v3/donotcalllist/updateDNCProperties/do_not_call_list_id (the published collection omits the : parameter marker)'
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
 components:
   securitySchemes:
     bearerAuth:

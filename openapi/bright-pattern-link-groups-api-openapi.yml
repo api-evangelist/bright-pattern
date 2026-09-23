@@ -5,40 +5,7 @@ info:
   description: 'Overview
 
 
-    Bright Pattern''s List Management API supports a wide range of functionalities previously only accessible within the Contact Center Administrator application. Version 3.2 delivers expanded list and campaign management functionality, introducing comprehensive API support for Do Not Call (DNC) lists and improved methods for accessing Calling List records.
-
-
-    Bright Pattern''s List Management API 3.2 enables you to:
-
-
-    Manage outbound campaigns, including their DNC list (new*) and calling list associations
-
-
-    Update outbound campaign states, access their information, and view their results
-
-
-    Create new lists and new formats
-
-
-    View and update (new*) calling list properties
-
-
-    Manage calling list and DNC list records individually or in bulk
-
-
-    Retrieve the contents of Calling Lists not associated with campaigns (new*)
-
-
-    Create, retrieve, update, and delete DNC lists (new*)
-
-
-    Note: To ensure compatibility with the last API version and facilitate seamless migration, all previously available methods are retained as is. However, methods with a "DEPRECIATED" tag in their name are not recommended for usage and have new corresponding methods defined for their respective functionalities.
-
-
-    This document describes the available REST API methods, specifies their functionality, and provides example requests and responses. Individual methods, as well as the entire List Management API 3.1 collection, can be loaded into Postman and interacted with via your unique Bright Pattern Contact Center access token.
-
-
-    new* - added since List API 3.0'
+    Bright Pattern''s List Management API supports a wide range of functionalities previously only accessible within the Contact Center Administrator application.'
   contact:
     name: Bright Pattern
     url: https://www.brightpattern.com/contact/
@@ -69,7 +36,75 @@ paths:
     post:
       operationId: getLinkGroups
       summary: Get Link Groups
-      description: "This method returns all Campaign Link Groups, sorted by the standard MongoDB _id field.\n\nNote: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the \"cursor\" to reference the last served record.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nlimit\ninteger, ≤ 100\nyes (specifies the maximum size of the returned list)\n1...100\n\ncursor\nstring\nno (used for pagination)\nFirst request: null  \nSubsequent request: value received in the response to the previous request\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; limit exceeded; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nInvalid URL"
+      description: 'This method returns all Campaign Link Groups, sorted by the standard MongoDB _id field.
+
+
+        Note: To accommodate the display of large numbers of list records, Bright Pattern Contact Solution utilizes Cursor-based pagination (see here). The _id field is used as the "cursor" to reference the last served record.
+
+
+        Input parameters
+
+
+        Name
+
+        Type
+
+        Required?
+
+        Possible/Default Values
+
+
+        limit
+
+        integer, ≤ 100
+
+        yes (specifies the maximum size of the returned list)
+
+        1...100
+
+
+        cursor
+
+        string
+
+        no (used for pagination)
+
+        First request: null
+
+        Subsequent request: value received in the response to the previous request
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood; limit exceeded; 1 or more required fields are missing or have an unsupported value)
+
+
+        401
+
+        Authentication failed (invalid token format; token is expired)
+
+
+        403
+
+        Authentication succeeded but the user does not have sufficient privileges
+
+
+        404
+
+        Invalid URL'
       tags:
       - Link Groups
       requestBody:
@@ -96,7 +131,42 @@ paths:
     get:
       operationId: getLinkGroup
       summary: Get Link Group
-      description: "This method returns the information about a link group, including its name and amount of linked campaigns.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (wrong cursor; format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Link Group was not found;  \nInvalid URL"
+      description: 'This method returns the information about a link group, including its name and amount of linked campaigns.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (wrong cursor; format not understood; 1 or more required fields are missing or have an unsupported value)
+
+
+        401
+
+        Authentication failed (invalid token format; token is expired)
+
+
+        403
+
+        Authentication succeeded but the user does not have sufficient privileges
+
+
+        404
+
+        Specified Link Group was not found;
+
+        Invalid URL'
       tags:
       - Link Groups
       parameters:
@@ -125,7 +195,68 @@ paths:
     post:
       operationId: createLinkGroup
       summary: Create Link Group
-      description: "This method creates a new empty link group.\n\nInput parameters\n\nName\nType\nRequired?\nPossible/Default Values\n\nname\nstring\nyes\n-\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Format was not found;  \nInvalid URL\n\n409\nDuplicate name error"
+      description: 'This method creates a new empty link group.
+
+
+        Input parameters
+
+
+        Name
+
+        Type
+
+        Required?
+
+        Possible/Default Values
+
+
+        name
+
+        string
+
+        yes
+
+        -
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood; 1 or more required fields are missing or have an unsupported value)
+
+
+        401
+
+        Authentication failed (invalid token format; token is expired)
+
+
+        403
+
+        Authentication succeeded but the user does not have sufficient privileges
+
+
+        404
+
+        Specified Format was not found;
+
+        Invalid URL
+
+
+        409
+
+        Duplicate name error'
       tags:
       - Link Groups
       requestBody:
@@ -149,7 +280,47 @@ paths:
     delete:
       operationId: deleteLinkGroup
       summary: Delete Link Group
-      description: "This method deletes an empty link group.\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess\n\n400\nBad request (format not understood; 1 or more required fields are missing or have an unsupported value)\n\n401\nAuthentication failed (invalid token format; token is expired)\n\n403\nAuthentication succeeded but the user does not have sufficient privileges\n\n404\nSpecified Link Group was not found;  \nInvalid URL\n\n409\nSpecified Link Group is not empty"
+      description: 'This method deletes an empty link group.
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success
+
+
+        400
+
+        Bad request (format not understood; 1 or more required fields are missing or have an unsupported value)
+
+
+        401
+
+        Authentication failed (invalid token format; token is expired)
+
+
+        403
+
+        Authentication succeeded but the user does not have sufficient privileges
+
+
+        404
+
+        Specified Link Group was not found;
+
+        Invalid URL
+
+
+        409
+
+        Specified Link Group is not empty'
       tags:
       - Link Groups
       parameters:

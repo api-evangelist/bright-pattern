@@ -5,6 +5,9 @@ info:
   contact:
     name: Bright Pattern
     url: https://www.brightpattern.com/contact/
+  x-refined-note:
+  - x-evidence differs across the merged source definitions and was not carried
+  - x-origin differs across the merged source definitions and was not carried
   description: 'Operations tagged Users across 2 of this provider''s published API definitions: bright-pattern-configuration-openapi.yml, bright-pattern-scim-user-provisioning-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{tenant_url}
@@ -35,92 +38,9 @@ tags:
     Delete existing users
 
 
-    Below is a brief description of all user attributes that can be accessed via this API. More detailed descriptions of these attributes can be found here.
-
-
-    All attributes are strings unless otherwise noted.
-
-
-    All attributes are optional unless otherwise noted.
-
-
-    Attribute
-
-    Description
-
-
-    loginId
-
-    Username. Required to create user. Used to identify the user in all subsequent User Management API operations.
-
-
-    password
-
-    Password. Format must comply with security policy.
-
-
-    changePassword
-
-    Indicates whether user must change password on next login. Boolean. Default is false.
-
-
-    firstName
-
-    First name. Required to create user.
-
-
-    lastName
-
-    Last name. Required to create user.
-
-
-    team
-
-    Team that the user is assigned to. Required to create user.
-
-
-    extension
-
-    User''s extension number. If not specified, an extension will be created and assigned automatically.
-
-
-    workPhone
-
-    User''s work phone number.
-
-
-    mobilePhone
-
-    User''s mobile phone number.
-
-
-    email
-
-    User''s email address.
-
-
-    disabled
-
-    Indication whether the user account is disabled or enabled. Boolean (true/flase).
-
-
-    skills
-
-    For agents an array of skills with levels (e.g., "Support": 75).
-
-
-    roles
-
-    An array of user''s roles (e.g., Agent).'
+    Below is a brief description of all user attributes that can be accessed via this API.'
 paths:
   /configapi/v2/user:
-    servers:
-    - url: https://{tenant_url}
-      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
-      variables:
-        tenant_url:
-          default: example.brightpattern.com
-          description: Your Bright Pattern Contact Center tenant hostname.
     post:
       operationId: createUser
       summary: Create User
@@ -158,7 +78,6 @@ paths:
               example: OK
       security:
       - bearerAuth: []
-  /configapi/v2/user/{username}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -166,6 +85,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v2/user/{username}:
     get:
       operationId: getUserData
       summary: Get User Data
@@ -188,7 +108,7 @@ paths:
       - bearerAuth: []
     put:
       operationId: updateUser
-      summary: 'Update User '
+      summary: Update User
       description: 'Updates one or more attributes of an existing user. Currently the can be used to update the following properties:
 
 
@@ -250,7 +170,6 @@ paths:
               example: OK
       security:
       - bearerAuth: []
-  /configapi/v2/user/lock/{username}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -258,6 +177,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v2/user/lock/{username}:
     get:
       operationId: getUserLockState
       summary: Get User Lock State
@@ -300,7 +220,6 @@ paths:
                 lockedOut: false
       security:
       - bearerAuth: []
-  /configapi/v2/team:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -308,6 +227,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v2/team:
     get:
       operationId: getTeams
       summary: Get Teams
@@ -328,7 +248,6 @@ paths:
               - name: Management
       security:
       - bearerAuth: []
-  /configapi/v2/scim/users:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -336,6 +255,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v2/scim/users:
     post:
       operationId: createUser
       summary: Create User
@@ -457,7 +377,6 @@ paths:
                   - Agent
       security:
       - bearerAuth: []
-  /configapi/v2/scim/users/{id}:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -465,6 +384,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v2/scim/users/{id}:
     get:
       operationId: getUserById
       summary: Get User by ID
@@ -520,7 +440,7 @@ paths:
       - bearerAuth: []
     put:
       operationId: replaceUserProperties
-      summary: Replace User Properties (by replacing all existing attributes with a specified set of replacement attributes)
+      summary: Replace User Properties (by replacing all existing attributes with a specified…
       description: 'Replaces all attributes of an existing user with a specified set of replacement attributes. Note that in accordance with RFC7644, the PUT method updates users by replacing all of their current attributes with the ones specified in the body of the method.
 
 
@@ -680,6 +600,13 @@ paths:
         schema:
           type: string
       x-normalized-from: /configapi/v2/scim/users/6BE15F09-BF39-4E20-AB31-A9355CBC01FC (the published collection hard-codes an example user id in the URL)
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
 components:
   securitySchemes:
     bearerAuth:

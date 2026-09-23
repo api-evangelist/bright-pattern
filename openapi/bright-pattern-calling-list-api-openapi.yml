@@ -47,7 +47,52 @@ paths:
     post:
       operationId: addManyRecords
       summary: Add Many Records
-      description: "This method adds multiple new records to the specified calling list. It returns an error if a record with the same values of unique keys as configured in the list definition already exists. \n\nNotes:\n\nField names are provided as they were defined during list creation.\n\nKey fields and required fields are mandatory.\n\nlist_name is the name of the calling list (e.g., list.csv).\n\nResponse Codes\n\nCode\nDescription\n\n200\nSuccess (may be partial success; additional problem description contained in response)\n\n400\nBad request (format not understood)\n\n401\nAuthentication failed\n\n403\nUser authenticated but does not have sufficient privileges\n\n404\nCalling List is not found or invalid URL"
+      description: 'This method adds multiple new records to the specified calling list. It returns an error if a record with the same values of unique keys as configured in the list definition already exists.
+
+
+        Notes:
+
+
+        Field names are provided as they were defined during list creation.
+
+
+        Key fields and required fields are mandatory.
+
+
+        list_name is the name of the calling list (e.g., list.csv).
+
+
+        Response Codes
+
+
+        Code
+
+        Description
+
+
+        200
+
+        Success (may be partial success; additional problem description contained in response)
+
+
+        400
+
+        Bad request (format not understood)
+
+
+        401
+
+        Authentication failed
+
+
+        403
+
+        User authenticated but does not have sufficient privileges
+
+
+        404
+
+        Calling List is not found or invalid URL'
       tags:
       - Calling List
       parameters:

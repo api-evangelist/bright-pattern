@@ -5,28 +5,7 @@ info:
   description: 'With the Bright Pattern Contact Center (BPCC) Configuraiton API you currently can:
 
 
-    Create, update and delete your contact center users.
-
-
-    Assign and change agent skills and update skill levels.
-
-
-    Unlock a user account that may have been locked according to the security policy.
-
-
-    Get a list of all existing users with their internal and external (DID) phone numbers.
-
-
-    Get a list of all existing extenal numbers with thier current assignments (DID, routing points, etc.)
-
-
-    This document specifies the corresponding REST API methods, with example requests and responses. You can load this API into the Postman API Development Environment to interact with the API with your own access tokens.
-
-
-    Notes
-
-
-    Either HTTP or HTTPS transport can be configured. The same setting applies to the entire Configuration Web Portal server. For production deployments on public Internet only, HTTPS is enabled.'
+    Create, update and delete your contact center users.'
   contact:
     name: Bright Pattern
     url: https://www.brightpattern.com/contact/

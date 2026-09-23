@@ -5,7 +5,10 @@ info:
   contact:
     name: Bright Pattern
     url: https://www.brightpattern.com/contact/
-  description: 'Operations tagged Authentication across 9 of this provider''s published API definitions: bright-pattern-configuration-openapi.yml, bright-pattern-interaction-content-openapi.yml, bright-pattern-list-management-v2-openapi.yml, bright-pattern-list-management-v3-2-openapi.yml, bright-pattern-list-management-v3-openapi.yml, bright-pattern-real-time-statistics-openapi.yml, bright-pattern-scim-user-provisioning-openapi.yml, bright-pattern-sms-mms-openapi.yml, bright-pattern-task-routing-openapi.yml. Each path carries the servers of the definition it was published in.'
+  x-refined-note:
+  - x-evidence differs across the merged source definitions and was not carried
+  - x-origin differs across the merged source definitions and was not carried
+  description: 'Operations tagged Authentication across 9 of this provider''s published API definitions: bright-pattern-configuration-openapi.yml, bright-pattern-interaction-content-openapi.yml, bright-pattern-list-management-v2-openapi.yml, bright-pattern-list-management-v3-2-openapi.yml, bright-pattern-list-management-v3-openapi.yml, bright-pattern-real-time-statistics-openapi.yml, bright-pattern-scim-user-provisioning-openapi.yml, bright-pattern-sms-mms-openapi.yml, bright-pattern-task-routing-openapi.yml.'
 servers:
 - url: https://{tenant_url}
   description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -17,37 +20,9 @@ security:
 - bearerAuth: []
 tags:
 - name: Authentication
-  description: 'The OAuth 2.0 Client Credentials Grant is used to authenticate clients of this API. The authenticated user is checked for having appropriate privileges to perform the requested operation. The complete list of privileges can be found here. Privileges are assigned to users via one or more Roles.
-
-
-    To obtain an access token:
-
-
-    Login to your BPCC configuraiton portal.
-
-
-    Navigate to Users page.
-
-
-    Select or create a user with privileges corresponding to the tasks you wish to perform via the BPCC Configuraiton API.
-
-
-    Click the Generate button to generate an API secret key. Copy the generated key and note the username for the next steps.
-
-
-    Use the Get Access Token method to obtain an access token. Set the client_id to the username and client_secret to the generated API secrect key.
-
-
-    Use the value of access_token returned in the response to set the Authorization: Bearer [access token] header of each subsequent request made via the BPCC Configuraiton API.'
+  description: The OAuth 2.0 Client Credentials Grant is used to authenticate clients of this API.
 paths:
   /configapi/v2/oauth/token:
-    servers:
-    - url: https://{tenant_url}
-      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
-      variables:
-        tenant_url:
-          default: example.brightpattern.com
-          description: Your Bright Pattern Contact Center tenant hostname.
     post:
       operationId: getAccessToken
       summary: Get Access Token
@@ -89,7 +64,6 @@ paths:
                 expires_in: '3600'
                 scope: yourcompany.brightpattern.com
       security: []
-  /configapi/v3/oauth/token:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -97,6 +71,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /configapi/v3/oauth/token:
     post:
       operationId: getAccessToken
       summary: Get Access Token
@@ -143,7 +118,6 @@ paths:
                 expires_in: '3480'
                 scope: example.com
       security: []
-  /statsapi/auth:
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
@@ -151,6 +125,7 @@ paths:
         tenant_url:
           default: example.brightpattern.com
           description: Your Bright Pattern Contact Center tenant hostname.
+  /statsapi/auth:
     post:
       operationId: authenticate
       summary: Authenticate
@@ -210,6 +185,13 @@ paths:
                 user_id: XXXC49E4-E9XX-4XFX-X4X4-62XXXXXXXX8E
       security:
       - bearerAuth: []
+    servers:
+    - url: https://{tenant_url}
+      description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
+      variables:
+        tenant_url:
+          default: example.brightpattern.com
+          description: Your Bright Pattern Contact Center tenant hostname.
 components:
   securitySchemes:
     bearerAuth:

@@ -5,16 +5,7 @@ info:
   description: 'With the BPCC Interaction Content API you currently can:
 
 
-    Obtain general metadata for a service voice call.
-
-
-    Obtain a regular audio recording of a service voice call in GSM format (a regular recording includes all call segments and voices of all call participants).
-
-
-    Obtain audio recordings of individual participants in uncompressed PCM format (such recordings will be available if the multichannel call recording capability is enabled for your contact center).
-
-
-    This document specifies the corresponding REST API methods, with example requests and responses. You can load this API into the Postman API Development Environment to interact with the API with your own access tokens.'
+    Obtain general metadata for a service voice call.'
   contact:
     name: Bright Pattern
     url: https://www.brightpattern.com/contact/
