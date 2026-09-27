@@ -257,7 +257,7 @@ paths:
           description: Your Bright Pattern Contact Center tenant hostname.
   /configapi/v2/scim/users:
     post:
-      operationId: createUser
+      operationId: postConfigapiV2ScimUsers
       summary: Create User
       description: This method creates a new user in your contact center configuration.
       tags:
@@ -331,6 +331,8 @@ paths:
                 - value: System Administrator
       security:
       - bearerAuth: []
+      x-operation-id-source: normalized
+      x-operation-id-original: createUser
     get:
       operationId: getUserByUsername
       summary: Get User by userName
@@ -521,7 +523,7 @@ paths:
       security:
       - bearerAuth: []
     delete:
-      operationId: deleteUser
+      operationId: deleteConfigapiV2ScimUsersById
       summary: Delete User
       description: Deletes an existing user
       tags:
@@ -537,8 +539,10 @@ paths:
           description: Delete User
       security:
       - bearerAuth: []
+      x-operation-id-source: normalized
+      x-operation-id-original: deleteUser
     patch:
-      operationId: updateUser
+      operationId: patchConfigapiV2ScimUsersById
       summary: Update User (updates only the properties indicated in the specified set)
       description: 'Updates attributes of an existing user. Note that in accordance with RFC7644, the PATCH method modifies a user with a set of client-specified changes (partial update).
 
@@ -600,6 +604,8 @@ paths:
         schema:
           type: string
       x-normalized-from: /configapi/v2/scim/users/6BE15F09-BF39-4E20-AB31-A9355CBC01FC (the published collection hard-codes an example user id in the URL)
+      x-operation-id-source: normalized
+      x-operation-id-original: updateUser
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.

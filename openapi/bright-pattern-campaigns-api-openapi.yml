@@ -227,7 +227,7 @@ paths:
           description: Your Bright Pattern Contact Center tenant hostname.
   /configapi/v3/campaign/getAll:
     get:
-      operationId: getCampaigns
+      operationId: getConfigapiV3CampaignGetAll
       summary: Get Campaigns
       description: 'This method returns a list of enabled outbound campaigns, their current states, and unique identifiers. Based on the user privileges configured, the list will contain all campaigns or only those assigned to this user (see here). An empty list will be returned if no outbound campaign is currently enabled or the user has no assigned campaigns.
 
@@ -282,6 +282,8 @@ paths:
                 state: RUNNING
       security:
       - bearerAuth: []
+      x-operation-id-source: normalized
+      x-operation-id-original: getCampaigns
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.

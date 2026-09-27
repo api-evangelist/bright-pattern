@@ -73,7 +73,7 @@ paths:
           description: Your Bright Pattern Contact Center tenant hostname.
   /configapi/v3/oauth/token:
     post:
-      operationId: getAccessToken
+      operationId: postConfigapiV3OauthToken
       summary: Get Access Token
       description: 'This method returns an access token that will be used to authenticate each subsequent request made via this API.
 
@@ -118,6 +118,8 @@ paths:
                 expires_in: '3480'
                 scope: example.com
       security: []
+      x-operation-id-source: normalized
+      x-operation-id-original: getAccessToken
     servers:
     - url: https://{tenant_url}
       description: Bright Pattern is multi-tenant; the base host is the customer contact-center tenant domain.
