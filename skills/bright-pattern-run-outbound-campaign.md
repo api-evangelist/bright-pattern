@@ -2,7 +2,7 @@
 name: Load a calling list and run an outbound campaign
 description: Create a calling list, load records into it, bind it plus a Do Not Call list to a campaign, start and stop the campaign, and read completed records back.
 api: openapi/bright-pattern-list-management-v3-2-openapi.yml
-operations: [getAccessToken, createList, addManyRecords, bindList, bindDncList, start, getCampaignStatus, stop, getCompletedRecords, getUpdatedRecords]
+operations: [postConfigapiV3OauthToken, createList, addManyRecords, bindList, bindDncList, start, getCampaignStatus, stop, getCompletedRecords, getUpdatedRecords]
 generated: '2026-08-08'
 method: generated
 ---

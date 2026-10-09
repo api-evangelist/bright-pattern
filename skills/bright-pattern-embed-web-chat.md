@@ -2,7 +2,7 @@
 name: Build a customer-facing web or mobile chat against Bright Pattern
 description: Check service availability, request a chat session, long-poll the event stream, send events and files, and close the case using the Mobile/Web Messaging API v2.
 api: openapi/bright-pattern-mobile-web-messaging-v2-openapi.yml
-operations: [checkAvailability, expectedParameters, getChatWidgetConfiguration, requestChat, getActiveChat, getNewChatEvents, sendEvents, uploadFile, getFile, getIceServers, mobileNotificationSubscription, getCaseHistory, closeCase]
+operations: [getClientwebApiV2Availability, getClientwebApiV2Parameters, getClientwebApiV2Configuration, postClientwebApiV2Chats, getClientwebApiV2ChatsActive, getClientwebApiV2ChatsByChatIdEvents, postClientwebApiV2ChatsByChatIdEvents, postClientwebApiV2Files, getClientwebApiV2ChatsByChatIdFilesByFileId, getClientwebApiV2Iceservers, mobileNotificationSubscription, getCaseHistory, closeCase]
 generated: '2026-08-08'
 method: generated
 ---

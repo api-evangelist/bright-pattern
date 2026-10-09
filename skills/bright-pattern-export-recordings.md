@@ -2,7 +2,7 @@
 name: Export call recordings and interaction metadata for compliance
 description: Pull regular and multichannel call recording audio plus interaction metadata out of Bright Pattern, and erase recordings with a recorded reason.
 api: openapi/bright-pattern-interaction-content-openapi.yml
-operations: [getAccessToken, getInteractionMetadata, getRegularRecordingAudioFile, getMultichannelRecordingStructure, getMultichannelRecordingSegmentAudioFile, eraseCallRecordings]
+operations: [postConfigapiV3OauthToken, getInteractionMetadata, getRegularRecordingAudioFile, getMultichannelRecordingStructure, getMultichannelRecordingSegmentAudioFile, eraseCallRecordings]
 generated: '2026-08-08'
 method: generated
 ---

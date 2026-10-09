@@ -2,7 +2,7 @@
 name: Queue a CRM task into Bright Pattern and track it to completion
 description: Authenticate against a Bright Pattern tenant, queue a task from an external CRM with de-duplicating external identifiers, then query, update or cancel it.
 api: openapi/bright-pattern-task-routing-openapi.yml
-operations: [getAccessToken, queueTask, queryTask, updateTask, cancelTask, cancelServiceTasks]
+operations: [postConfigapiV3OauthToken, queueTask, queryTask, updateTask, cancelTask, cancelServiceTasks]
 generated: '2026-08-08'
 method: generated
 ---

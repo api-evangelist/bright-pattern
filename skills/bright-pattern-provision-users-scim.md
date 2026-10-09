@@ -2,7 +2,7 @@
 name: Provision Bright Pattern users over SCIM 2.0
 description: Create, read, update, replace and delete contact-center users through the SCIM-compliant provisioning endpoint, and fall back to the Configuration API for team and lock-state operations.
 api: openapi/bright-pattern-scim-user-provisioning-openapi.yml
-operations: [getAccessToken, createUser, getUserById, getUserByUsername, replaceUserProperties, updateUser, deleteUser]
+operations: [postConfigapiV3OauthToken, postConfigapiV2ScimUsers, getUserById, getUserByUsername, replaceUserProperties, patchConfigapiV2ScimUsersById, deleteConfigapiV2ScimUsersById]
 generated: '2026-08-08'
 method: generated
 ---
